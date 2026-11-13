@@ -4,8 +4,11 @@ const DAY_MS = 86_400_000;
 const MIN_INTERVAL_DAYS = 1 / 24;
 const MAX_INTERVAL_DAYS = 180;
 
-const finiteNonNegative = (value: number, fallback = 0): number =>
-  Number.isFinite(value) && value >= 0 ? value : fallback;
+const finiteNonNegative = (value: unknown, fallback = 0): number =>
+  typeof value === "number" && Number.isFinite(value) && value >= 0 ? value : fallback;
+
+const isMasteryLevel = (value: unknown): value is MasteryLevel =>
+  value === "unlearned" || value === "weak" || value === "learning" || value === "mastered";
 
 export function updateProgress(
   previous: QuestionProgress | undefined,
@@ -26,19 +29,19 @@ export function updateProgress(
     lastAnsweredAt: 0,
   };
 
+  const oldRepetition = Math.floor(finiteNonNegative(old.repetition));
+  const oldEaseFactor = Math.max(1.3, Math.min(2.8, finiteNonNegative(old.easeFactor, 2.5)));
+  const oldIntervalDays = finiteNonNegative(old.intervalDays);
   const quickCorrect = correct && responseTimeMs <= 12_000;
-  const repetition = quickCorrect ? old.repetition + 1 : 0;
-  const easeFactor = Math.max(
-    1.3,
-    Math.min(2.8, old.easeFactor + (quickCorrect ? 0.1 : -0.2)),
-  );
+  const repetition = quickCorrect ? oldRepetition + 1 : 0;
+  const easeFactor = Math.max(1.3, Math.min(2.8, oldEaseFactor + (quickCorrect ? 0.1 : -0.2)));
   const rawInterval = !quickCorrect
     ? MIN_INTERVAL_DAYS
     : repetition === 1
       ? 1
       : repetition === 2
         ? 3
-        : Math.max(4, old.intervalDays * easeFactor);
+        : Math.max(4, oldIntervalDays * easeFactor);
   const intervalDays = Math.min(MAX_INTERVAL_DAYS, rawInterval);
   const mastery: MasteryLevel = !correct
     ? "weak"
@@ -53,8 +56,8 @@ export function updateProgress(
     repetition,
     easeFactor,
     nextReviewAt: answeredAt + intervalDays * DAY_MS,
-    correctCount: old.correctCount + (correct ? 1 : 0),
-    incorrectCount: old.incorrectCount + (correct ? 0 : 1),
+    correctCount: finiteNonNegative(old.correctCount) + (correct ? 1 : 0),
+    incorrectCount: finiteNonNegative(old.incorrectCount) + (correct ? 0 : 1),
     lastAnsweredAt: answeredAt,
   };
 }
@@ -67,12 +70,11 @@ function reviewScore(progress: QuestionProgress | undefined, now: number): numbe
   const daysOverdue = progress.nextReviewAt > 0
     ? Math.max(0, now - progress.nextReviewAt) / DAY_MS
     : 0;
-  const errorRate = progress.incorrectCount /
-    Math.max(1, progress.correctCount + progress.incorrectCount);
-
+  const attempts = progress.correctCount + progress.incorrectCount;
+  const errorRate = attempts > 0 ? progress.incorrectCount / attempts : 0;
   const weakBoost = progress.mastery === "weak" ? 100 : 0;
   const unlearnedBoost = progress.mastery === "unlearned" ? 20 : 0;
-  const dueBoost = progress.nextReviewAt <= now ? 35 : 0;
+  const dueBoost = progress.nextReviewAt > 0 && progress.nextReviewAt <= now ? 35 : 0;
   const forgettingBoost = Math.min(30, daysSinceAnswer * 1.5);
   const errorBoost = errorRate * 25;
 
@@ -95,7 +97,7 @@ export function rankForReview<T extends { id: string }>(
     .map(({ item }) => item);
 }
 
-/** Migrate records created before lastAnsweredAt was introduced. */
+/** Upgrade older progress records and safely repair malformed numeric fields. */
 export function normalizeProgress(
   progress: Readonly<Record<string, QuestionProgress>>,
   logs: readonly AnswerLog[],
@@ -103,20 +105,28 @@ export function normalizeProgress(
   const latestById = new Map<string, number>();
   for (const log of logs) {
     const previous = latestById.get(log.questionId) ?? 0;
-    if (log.answeredAt > previous) latestById.set(log.questionId, log.answeredAt);
+    const timestamp = finiteNonNegative(log.answeredAt);
+    if (timestamp > previous) latestById.set(log.questionId, timestamp);
   }
 
   return Object.fromEntries(
-    Object.entries(progress).map(([id, item]) => [
-      id,
-      {
-        ...item,
-        lastAnsweredAt: Number.isFinite(item.lastAnsweredAt)
-          ? item.lastAnsweredAt
-          : latestById.get(id) ?? 0,
-        correctCount: finiteNonNegative(item.correctCount),
-        incorrectCount: finiteNonNegative(item.incorrectCount),
-      },
-    ]),
+    Object.entries(progress).map(([id, raw]) => {
+      const item = raw && typeof raw === "object" ? raw : {} as QuestionProgress;
+      const correctCount = finiteNonNegative(item.correctCount);
+      const incorrectCount = finiteNonNegative(item.incorrectCount);
+      const lastAnsweredAt = finiteNonNegative(item.lastAnsweredAt, latestById.get(id) ?? 0);
+      const repaired: QuestionProgress = {
+        questionId: id,
+        mastery: isMasteryLevel(item.mastery) ? item.mastery : "unlearned",
+        intervalDays: Math.min(MAX_INTERVAL_DAYS, finiteNonNegative(item.intervalDays)),
+        repetition: Math.floor(finiteNonNegative(item.repetition)),
+        easeFactor: Math.max(1.3, Math.min(2.8, finiteNonNegative(item.easeFactor, 2.5))),
+        nextReviewAt: finiteNonNegative(item.nextReviewAt),
+        correctCount,
+        incorrectCount,
+        lastAnsweredAt,
+      };
+      return [id, repaired];
+    }),
   );
 }
