@@ -1,0 +1,16 @@
+{
+  "repository": "MANABIXX/content-registry",
+  "commit": "46cccacf8fe0a42f5ed2b6c3fcc9becb0180eedc",
+  "datasets": [
+    "question-bank",
+    "public-exam",
+    "summary-foundation",
+    "summary-assets",
+    "knowledge-base",
+    "famous-quotes",
+    "motivation-200",
+    "supplementary",
+    "supplementary-beta",
+    "mock-exams"
+  ]
+}
