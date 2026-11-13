@@ -17,12 +17,17 @@ export function getJstDateKey(timestamp: number): string {
     throw new RangeError("timestamp must be a finite number");
   }
 
+  const date = new Date(timestamp);
+  if (!Number.isFinite(date.getTime())) {
+    throw new RangeError("timestamp is outside the supported Date range");
+  }
+
   const parts = new Intl.DateTimeFormat("en-CA", {
     timeZone: "Asia/Tokyo",
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
-  }).formatToParts(new Date(timestamp));
+  }).formatToParts(date);
 
   const values = Object.fromEntries(
     parts.map((part) => [part.type, part.value]),
@@ -70,9 +75,13 @@ export function getStudyStats(
     ? Math.max(1, Math.floor(dailyGoal))
     : 20;
 
-  const todayLogs = logs.filter(
-    (log) => getJstDateKey(log.answeredAt) === today,
-  );
+  const todayLogs = logs.filter((log) => {
+    try {
+      return getJstDateKey(log.answeredAt) === today;
+    } catch {
+      return false;
+    }
+  });
 
   // Count distinct questions, not repeated attempts, toward the daily target.
   const completedIds = new Set(todayLogs.map((log) => log.questionId));
