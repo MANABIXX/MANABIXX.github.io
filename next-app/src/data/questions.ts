@@ -31,7 +31,6 @@ const baseQuestions: Question[] = [
 ];
 
 
-type QuestionSeed = Pick<Question, "id" | "subject" | "category" | "unit" | "prompt" | "choices" | "correctIndex" | "explanation"> & { tags?: string[]; mode?: Question["mode"] };
 const additionalQuestions: Question[] = [
   // 英語：時制・助動詞・不定詞・比較・受動態・会話・語彙
   {id:"eng-006",subject:"english",category:"grammar",unit:"時制",tags:["過去形"],mode:"general",prompt:"「彼は昨日、図書館へ行きました。」正しい英文は？",choices:["He goes to the library yesterday.","He went to the library yesterday.","He go to the library yesterday.","He going to the library yesterday."],correctIndex:1,explanation:"yesterday は過去を表す語。go の過去形 went を使う。"},
