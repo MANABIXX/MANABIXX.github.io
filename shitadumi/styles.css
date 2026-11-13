@@ -32,3 +32,19 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,te
   outline: 2px solid #8ed5b4;
   outline-offset: 3px;
 }
+
+
+/* Exam countdown and daily mission */
+.exam-countdown-wrap{display:grid;gap:12px;margin:16px 0}.exam-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.exam-card,.exam-mission{min-width:0;padding:19px;border:1px solid var(--sd-line);border-radius:15px;background:linear-gradient(145deg,#17263a,#111d2d)}
+.exam-card.warning{border-color:#8d713f;background:linear-gradient(145deg,#382e20,#1d2430)}.exam-card.sprint{border-color:#9b5360;background:linear-gradient(145deg,#3a202b,#1c2230)}.exam-card.passed{border-color:#477a68}
+.exam-card-head,.exam-mission-top,.exam-message,.exam-progress-label{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.exam-card-head small,.exam-mission-top>div>small{font-size:9px;letter-spacing:1.4px;color:var(--sd-muted);font-weight:800}.exam-card h3,.exam-mission h3{font-size:15px;margin:5px 0 0}
+.exam-status{padding:5px 8px;border-radius:30px;background:#ffffff12;color:#b8cbe4;font-size:8px;font-weight:800;white-space:nowrap}.exam-card.warning .exam-status{color:#f2cc83}.exam-card.sprint .exam-status{color:#ffabb5}
+.exam-days{display:flex;align-items:baseline;gap:7px;margin-top:14px}.exam-days b{font-size:49px;line-height:1;font-weight:850;letter-spacing:-2px}.exam-days span{font-size:13px;color:var(--sd-muted);font-weight:700}
+.exam-time{margin:5px 0 13px;color:#c2d0e2;font-size:11px;font-weight:700}.exam-progress-label{font-size:9px;color:var(--sd-muted)}
+.exam-track{height:7px;margin-top:7px;overflow:hidden;border-radius:10px;background:#293a50}.exam-track i{display:block;height:100%;border-radius:10px;background:#8ed5b4;transition:width .4s}.exam-card.warning .exam-track i{background:#e8b75d}.exam-card.sprint .exam-track i{background:#e87987}
+.exam-total{margin:12px 0 3px;color:#e4edf9;font-size:11px;font-weight:750}.exam-provisional{display:block;margin-top:7px;color:#8499b5;font-size:8px}.exam-passed{display:block;margin-top:17px;font-size:21px}.exam-card.passed p{color:var(--sd-muted);font-size:11px}
+.exam-mission{background:linear-gradient(120deg,#172d36,#142333)}.exam-mission-top h3{font-size:16px;margin-top:5px}.exam-done{text-align:right}.exam-done b{display:block;font-size:22px}.exam-done b small{font-size:11px;color:var(--sd-muted)}.exam-done span{font-size:10px;color:#8ed5b4;font-weight:800}
+.mission-track{height:9px}.mission-track i{background:#8ed5b4}.exam-message{margin-top:13px;align-items:flex-start}.exam-message p{margin:0;color:#c6d5e8;font-size:11px;line-height:1.8}.exam-message span{white-space:nowrap;color:#a9c8ff;font-size:9px;font-weight:800}
+@media(max-width:650px){.exam-grid{grid-template-columns:1fr}.exam-card,.exam-mission{padding:15px}.exam-days b{font-size:43px}.exam-message{flex-direction:column;gap:6px}}
