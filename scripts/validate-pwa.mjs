@@ -21,4 +21,5 @@ for (const icon of manifest.icons) {
 if (manifest.display !== 'standalone' && manifest.display !== 'fullscreen') {
   throw new Error('Study should be installable as a standalone app.');
 }
-console.log(`PWA manifest OK: ${manifest.name} (${manifest.icons.length} icon(s))`);
+await fs.access(path.join(root, 'src', 'service-worker.js'));
+console.log(`PWA configuration OK: ${manifest.name} (${manifest.icons.length} icon(s), offline worker enabled)`);
