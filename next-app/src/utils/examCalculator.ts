@@ -9,10 +9,11 @@ export function localDateTime(date: string): Date {
 
 export function calculateExam(exam: ExamDefinition, now: Date) {
   const target = localDateTime(exam.date);
-  const diff = target.getTime() - now.getTime();
-  const passed = diff <= 0;
-  const remainingMs = Math.max(0, diff);
-  const remainingDays = Math.ceil(remainingMs / DAY_MS);
+  const endOfExamDay = target.getTime() + DAY_MS - 1;
+  const passed = now.getTime() > endOfExamDay;
+  const remainingMs = Math.max(0, endOfExamDay - now.getTime());
+  const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+  const remainingDays = Math.max(0, Math.ceil((target.getTime() - todayStart) / DAY_MS));
   const totalMinutes = Math.floor(remainingMs / 60000);
   const hours = Math.floor(totalMinutes / 60) % 24;
   const minutes = totalMinutes % 60;
@@ -20,8 +21,8 @@ export function calculateExam(exam: ExamDefinition, now: Date) {
   const duration = Math.max(1, target.getTime() - start);
   const elapsed = Math.min(duration, Math.max(0, now.getTime() - start));
   const elapsedPercent = Math.round((elapsed / duration) * 100);
-  const urgency = (passed ? "passed" : remainingDays <= 7 ? "sprint" : remainingDays <= 30 ? "warning" : "normal") as const;
-  const phase = (passed ? "passed" : remainingDays <= 14 ? "sprint" : remainingDays <= 60 ? "practice" : "foundation") as const;
+  const urgency: "passed" | "sprint" | "warning" | "normal" = passed ? "passed" : remainingDays <= 7 ? "sprint" : remainingDays <= 30 ? "warning" : "normal";
+  const phase: "passed" | "sprint" | "practice" | "foundation" = passed ? "passed" : remainingDays <= 14 ? "sprint" : remainingDays <= 60 ? "practice" : "foundation";
   return { passed, remainingMs, remainingDays, hours, minutes, elapsedPercent, urgency, phase };
 }
 
