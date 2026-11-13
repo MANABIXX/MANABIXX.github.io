@@ -18,4 +18,4 @@ export const questions: Question[] = [
   { id: "jpn-002", subject: "japanese", category: "classics", unit: "古文", tags: ["古文単語"], mode: "general", prompt: "古文の「いと」の意味は？", choices: ["少し", "とても", "すぐに", "決して"], correctIndex: 1, explanation: "「いと」は「とても・たいそう」という意味の副詞。" },
   { id: "jpn-003", subject: "japanese", category: "reading", unit: "文法・敬語", tags: ["敬語", "尊敬語"], mode: "general", prompt: "「先生がおっしゃる」の「おっしゃる」は何語？", choices: ["謙譲語", "丁寧語", "尊敬語", "美化語"], correctIndex: 2, explanation: "「おっしゃる」は「言う」の尊敬語。" },
   { id: "jpn-004", subject: "japanese", category: "reading", unit: "文法・助動詞", tags: ["助動詞"], mode: "general", prompt: "「窓が開けられる」の「られる」が受け身を表すとき、主語は？", choices: ["窓", "開ける人", "場所", "時間"], correctIndex: 0, explanation: "受け身では動作を受ける対象が主語になる。この文では窓。" }
-]
+];
