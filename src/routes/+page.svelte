@@ -5,7 +5,7 @@
     ArrowUpRight, ArrowRight, Atom, Bookmark, BookOpen, Check, ChevronDown,
     ChevronLeft, CircleHelp, Clock3, Command, Flame, GraduationCap, Layers3,
     Menu, Moon, Search, Sparkles, Sun, Target, Trophy, X, RotateCcw,
-    PanelLeftClose, LibraryBig, ChartNoAxesColumnIncreasing, Zap, Download
+    PanelLeftClose, LibraryBig, ChartNoAxesColumnIncreasing, Zap, Download, Code2
   } from 'lucide-svelte';
   import { toast } from 'svelte-sonner';
 
@@ -167,6 +167,7 @@
         <a class="rail-link" href="/library/" aria-label="教材ライブラリ"><LibraryBig size={19}/></a>
         <a class="rail-link" href="/summary/" aria-label="要点まとめ"><BookOpen size={19}/></a>
         <a class="rail-link" href="/exam/" aria-label="入試問題"><GraduationCap size={19}/></a>
+        <a class="rail-link" href="/code-lab/" aria-label="プログラミングラボ"><Code2 size={19}/></a>
       </div>
       <div class="rail-bottom">
         <button class="rail-link" onclick={toggleTheme} aria-label="テーマ切替">{#if theme === 'light'}<Moon size={19}/>{:else}<Sun size={19}/>{/if}</button>
