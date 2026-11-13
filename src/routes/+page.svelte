@@ -150,7 +150,7 @@
 </script>
 
 <svelte:head>
-  <title>Study — MANABIXX</title>
+  <title>MANABIXX — 学習アプリ</title>
   <meta name="description" content="自分のペースで学び、理解を積み重ねる学習スペース。"/>
   <meta name="theme-color" content="#090b0a"/>
   <link rel="manifest" href="/manifest.webmanifest"/>
@@ -160,7 +160,7 @@
 {#if screen === 'home'}
   <div class="study-app">
     <aside class:menu-open={mobileMenu} class="rail">
-      <a href="/" class="mark" aria-label="MANABIXX Study"><span>M</span><i></i></a>
+      <a href="/" class="mark" aria-label="MANABIXX ホーム"><span>M</span><i></i></a>
       <div class="rail-links">
         <button class="rail-link selected" aria-label="ホーム"><Layers3 size={19}/></button>
         <button class="rail-link" aria-label="問題演習" onclick={() => document.getElementById('question-bank')?.scrollIntoView({behavior:'smooth'})}><Target size={19}/></button>
@@ -177,7 +177,7 @@
     <main class="workspace">
       <header class="topline">
         <button class="mobile-toggle" onclick={() => mobileMenu = !mobileMenu} aria-label="メニュー">{#if mobileMenu}<X size={20}/>{:else}<Menu size={20}/>{/if}</button>
-        <div class="crumb"><span>MANABIXX</span><b>/</b> STUDY</div>
+        <div class="crumb"><span>MANABIXX</span><b>/</b> HOME</div>
         <div class="topline-right">
           <span class="live-dot">APP WORKSPACE</span>
           <button class="install-app" onclick={installApp} aria-label="アプリをインストール">{#if isInstalled}<Check size={15}/><span>インストール済み</span>{:else}<Download size={15}/><span>アプリ化</span>{/if}</button>
