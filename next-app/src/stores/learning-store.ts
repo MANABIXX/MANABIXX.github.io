@@ -25,5 +25,5 @@ export const useLearningStore = create<LearningState>()(persist(
     },
     reset: () => set({ logs: [], progress: {} }),
   }),
-  { name: "manabixx-learning-v1", storage: createJSONStorage(() => localStorage) }
+  { name: "manabixx-learning-v1", storage: createJSONStorage(() => localStorage), skipHydration: true }
 ));
