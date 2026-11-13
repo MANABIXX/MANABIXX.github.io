@@ -1,0 +1,29 @@
+name-template: 'Study v$RESOLVED_VERSION'
+tag-template: 'study-v$RESOLVED_VERSION'
+change-template: '- $TITLE (#$NUMBER)'
+template: |
+  ## 更新内容
+  $CHANGES
+
+  ## リリース情報
+  - 対象: MANABIXX Study
+  - 詳細な変更履歴はStudy内のリリースノートを確認してください。
+categories:
+  - title: '新機能'
+    labels:
+      - feature
+      - enhancement
+  - title: '改善'
+    labels:
+      - improvement
+      - performance
+  - title: '修正'
+    labels:
+      - bug
+      - fix
+  - title: 'その他'
+    labels:
+      - '*'
+exclude-labels:
+  - skip-changelog
+change-title-escapes: '`*_{}[]()#+-.!'

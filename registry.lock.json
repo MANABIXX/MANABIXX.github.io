@@ -1,0 +1,21 @@
+{
+  "repository": "MANABIXX/content-registry",
+  "commit": "665ab946c4dba7091e66f2c122761c6b200128a4",
+  "datasets": [
+    "question-bank",
+    "public-exam",
+    "summary-foundation",
+    "summary-assets",
+    "knowledge-base",
+    "famous-quotes",
+    "motivation-200",
+    "supplementary",
+    "supplementary-beta",
+    "mock-exams",
+    "supplementary-en",
+    "supplementary-ja",
+    "supplementary-ma",
+    "supplementary-sc",
+    "supplementary-so"
+  ]
+}
