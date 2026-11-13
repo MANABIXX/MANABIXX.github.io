@@ -20,8 +20,8 @@ export function calculateExam(exam: ExamDefinition, now: Date) {
   const duration = Math.max(1, target.getTime() - start);
   const elapsed = Math.min(duration, Math.max(0, now.getTime() - start));
   const elapsedPercent = Math.round((elapsed / duration) * 100);
-  const urgency = passed ? "passed" : remainingDays <= 7 ? "sprint" : remainingDays <= 30 ? "warning" : "normal";
-  const phase = passed ? "passed" : remainingDays <= 14 ? "sprint" : remainingDays <= 60 ? "practice" : "foundation";
+  const urgency = (passed ? "passed" : remainingDays <= 7 ? "sprint" : remainingDays <= 30 ? "warning" : "normal") as const;
+  const phase = (passed ? "passed" : remainingDays <= 14 ? "sprint" : remainingDays <= 60 ? "practice" : "foundation") as const;
   return { passed, remainingMs, remainingDays, hours, minutes, elapsedPercent, urgency, phase };
 }
 
