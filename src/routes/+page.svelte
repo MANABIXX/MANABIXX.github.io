@@ -25,7 +25,7 @@
   let correctTotal = $state(0);
   let wrongIds = $state([]);
   let bookmarks = $state([]);
-  let theme = $state('light');
+  let theme = $state('dark');
   let mobileMenu = $state(false);
   let q = $derived(pool[index]);
   let topics = $derived([...new Set(bank.filter(x => subject === 'all' || x.subject === subject).map(x => x.topic).filter(Boolean))].sort((a,b) => a.localeCompare(b,'ja')));
@@ -51,7 +51,7 @@
       correctTotal = saved.correct || 0;
       wrongIds = saved.wrong || [];
       bookmarks = saved.bookmarks || [];
-      theme = localStorage.getItem('manabixx-theme') || 'light';
+      theme = localStorage.getItem('manabixx-theme') || 'dark';
       document.documentElement.dataset.theme = theme;
     } catch (error) {
       loadError = error.message || '読み込みに失敗しました';
@@ -124,7 +124,7 @@
 <svelte:head>
   <title>Study — MANABIXX</title>
   <meta name="description" content="自分のペースで学び、理解を積み重ねる学習スペース。"/>
-  <meta name="theme-color" content="#f4f4ef"/>
+  <meta name="theme-color" content="#090b0a"/>
   <link rel="manifest" href="/manifest.webmanifest"/>
   <link rel="icon" href="/assets/study-icon.svg" type="image/svg+xml"/>
 </svelte:head>
