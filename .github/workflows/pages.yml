@@ -21,6 +21,11 @@ jobs:
       - run: npm install
       - name: Sync pinned learning content
         run: npm run sync:registry
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate learning content
+        run: bash scripts/verify-content.sh
       - name: Type and Svelte checks
         run: npm run check
       - name: Validate PWA configuration

@@ -2,6 +2,18 @@
 
 MANABIXX が開発する独立した学習サービスを独立して再構築するプロジェクトです。
 
+## 技術スタック
+- **Svelte 5 / SvelteKit** — アプリ画面とルーティング
+- **TypeScript / JavaScript** — 型付き学習ロジックと画面操作
+- **HTML5 / CSS3 / Tailwind CSS 4** — レスポンシブUIとデザイン
+- **Vite** — 開発・ビルド環境
+- **Bits UI / Lucide Svelte** — UI部品とアイコン
+- **Zod** — データ構造の検証基盤
+- **Python 3** — 問題データの品質監査
+- **Bash** — CIでの検証実行
+- **JSON / YAML / Markdown / SVG** — 教材データ、CI設定、ドキュメント、図版
+- **Service Worker / Web App Manifest** — PWA・オフライン利用
+
 ## 開発方針
 - 旧Studyとは独立した設計・UI・データ構造で開発する
 - 旧Studyは新Studyの完成・動作確認まで維持する
