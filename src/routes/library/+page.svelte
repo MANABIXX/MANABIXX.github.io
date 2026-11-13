@@ -9,7 +9,7 @@
   function toggleTheme(){theme=theme==='dark'?'light':'dark';document.documentElement.dataset.theme=theme;localStorage.setItem('manabixx-theme',theme);}
   function toggleSave(id){saved=saved.includes(id)?saved.filter(x=>x!==id):[...saved,id];localStorage.setItem('manabixx-library-saved',JSON.stringify(saved));}
 </script>
-<svelte:head><title>教材ライブラリ — MANABIXX Study</title><meta name="description" content="理科・社会の単元、重要語句、公式、実験、典型問題を横断して学べる教材ライブラリ。"/><meta name="theme-color" content="#090b0a"/></svelte:head>
+<svelte:head><title>教材ライブラリ — MANABIXX</title><meta name="description" content="理科・社会の単元、重要語句、公式、実験、典型問題を横断して学べる教材ライブラリ。"/><meta name="theme-color" content="#090b0a"/></svelte:head>
 <div class="study-app">
   <aside class="rail">
     <a href="/" class="mark" aria-label="MANABIXX Study"><span>M</span><i></i></a>
