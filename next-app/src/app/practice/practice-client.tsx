@@ -21,18 +21,28 @@ export default function PracticeClient() {
   const record = useLearningStore((s) => s.record);
   // Keep the review ranking fixed for this session so answering cannot reorder the question under the learner.
   const sessionProgress = useRef(progress).current;
+  const [reviewNow, setReviewNow] = useState<number | null>(null);
+  useEffect(() => { setReviewNow(Date.now()); }, []);
   const [unit, setUnit] = useState("all");
   const [sessionAnswered, setSessionAnswered] = useState<Record<string, boolean>>({});
   const pool = useMemo(() => {
-    const filtered = questions.filter((q) => reviewOnly
-      ? progress[q.id]?.mastery === "weak" || sessionAnswered[q.id] === true
-      : !subject || q.subject === subject);
+    const filtered = questions.filter((q) => {
+      if (!reviewOnly) return !subject || q.subject === subject;
+      const item = progress[q.id];
+      const due = reviewNow !== null && item !== undefined && item.nextReviewAt <= reviewNow;
+      return item?.mastery === "weak" || due || sessionAnswered[q.id] === true;
+    });
     const byUnit = unit === "all" ? filtered : filtered.filter((q) => q.unit === unit);
-    return reviewOnly ? byUnit : rankForReview(byUnit, sessionProgress);
-  }, [subject, reviewOnly, progress, unit, sessionAnswered, sessionProgress]);
+    return rankForReview(byUnit, sessionProgress, reviewNow ?? 0);
+  }, [subject, reviewOnly, progress, unit, sessionAnswered, sessionProgress, reviewNow]);
   const availableUnits = useMemo(() => [...new Set(questions
-    .filter((q) => reviewOnly ? progress[q.id]?.mastery === "weak" || sessionAnswered[q.id] === true : !subject || q.subject === subject)
-    .map((q) => q.unit))], [subject, reviewOnly, progress, sessionAnswered]);
+    .filter((q) => {
+      if (!reviewOnly) return !subject || q.subject === subject;
+      const item = progress[q.id];
+      const due = reviewNow !== null && item !== undefined && item.nextReviewAt <= reviewNow;
+      return item?.mastery === "weak" || due || sessionAnswered[q.id] === true;
+    })
+    .map((q) => q.unit))], [subject, reviewOnly, progress, sessionAnswered, reviewNow]);
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [startedAt, setStartedAt] = useState(() => Date.now());
@@ -64,6 +74,8 @@ export default function PracticeClient() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [answer, next, selected]);
+
+  if (reviewOnly && reviewNow === null) return <main className="shell flex min-h-screen items-center justify-center text-sm text-zinc-400">復習データを確認しています…</main>;
 
   if (finished || !question) return (
     <main className="shell flex min-h-screen items-center justify-center py-10">
