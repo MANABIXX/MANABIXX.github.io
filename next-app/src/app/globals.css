@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+:root { color-scheme: light; --ink: #17211d; --muted: #718078; --line: #e6ece8; --green: #147d55; --mint: #e9f7ef; }
+* { box-sizing: border-box; }
+html { min-height: 100%; background: #f7f9f7; }
+body { margin: 0; color: var(--ink); font-family: Arial, "Noto Sans JP", sans-serif; }
+button { cursor: pointer; }
+.shell { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+.panel { background: white; border: 1px solid var(--line); border-radius: 22px; box-shadow: 0 8px 30px rgba(26,54,39,.045); }
+.subject-card { transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
+.subject-card:hover { transform: translateY(-3px); border-color: #b7d9c6; box-shadow: 0 12px 30px rgba(26,54,39,.08); }
+.choice { width: 100%; min-height: 66px; text-align: left; padding: 16px 18px; border: 1px solid #e1e9e4; border-radius: 16px; background: #fff; color: #24332b; font-weight: 600; transition: .15s ease; }
+.choice:hover:not(:disabled) { border-color: #68b68b; background: #f5fbf7; }
+.choice.correct { border-color: #15945f; background: #e9f8ef; color: #11653f; }
+.choice.wrong { border-color: #e07c76; background: #fff0ef; color: #a63832; }
