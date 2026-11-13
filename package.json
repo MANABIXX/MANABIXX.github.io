@@ -9,8 +9,9 @@
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
     "sync:registry": "node scripts/sync-registry.mjs",
+    "update:registry-lock": "node scripts/update-registry-lock.mjs",
     "validate:pwa": "node scripts/validate-pwa.mjs",
-    "verify": "npm run sync:registry && npm run check && npm run validate:pwa && npm run build"
+    "verify": "npm run update:registry-lock && npm run sync:registry && npm run check && npm run validate:pwa && npm run build"
   },
   "dependencies": {
     "bits-ui": "^1.0.0",

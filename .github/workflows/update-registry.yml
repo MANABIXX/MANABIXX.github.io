@@ -1,0 +1,43 @@
+name: Propose content registry updates
+on:
+  schedule:
+    - cron: '17 3 * * 1'
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+concurrency:
+  group: content-registry-update
+  cancel-in-progress: true
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - name: Check for a newer registry version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run update:registry-lock
+      - name: Sync content datasets
+        run: npm run sync:registry
+      - name: Open update pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: automation/content-registry-sync
+          delete-branch: true
+          commit-message: 'chore: sync learning content registry'
+          title: 'chore: update learning content registry'
+          body: |
+            The weekly automation found a newer MANABIXX content-registry revision.
+
+            - Updates the pinned registry commit
+            - Synchronizes all configured learning datasets
+            - Runs the regular Study CI checks before merge
+          labels: content,data,automated
