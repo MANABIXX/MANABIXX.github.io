@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://knotspace.github.io/study/sitemap.xml
+Sitemap: https://manabixx.github.io/sitemap.xml
