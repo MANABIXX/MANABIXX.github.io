@@ -1,6 +1,6 @@
 export type Subject = "english" | "math" | "japanese" | "science" | "social";
 export type Category =
-  | "physics" | "biology" | "chemistry" | "earth"
+  | "physics" | "biology" | "chemistry" | "earth" | "geography"
   | "civics" | "history" | "vocabulary" | "grammar" | "algebra" | "geometry" | "reading" | "classics";
 export type MasteryLevel = "unlearned" | "weak" | "learning" | "mastered";
 
