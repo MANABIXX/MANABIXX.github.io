@@ -3,7 +3,7 @@ const $=id=>document.getElementById(id),PASS_HASH="b9f633dc43572056c554fd73e0906
 const state={bank:[],pool:[],index:0,answers:{},progress:loadProgress(),install:null};
 function loadProgress(){try{return Object.assign({solved:0,correct:0,history:[],lastDay:"",streak:0},JSON.parse(localStorage.getItem(PROGRESS_KEY)||"{}"))}catch{return{solved:0,correct:0,history:[],lastDay:"",streak:0}}}
 function saveProgress(){localStorage.setItem(PROGRESS_KEY,JSON.stringify(state.progress))}
-async function checkPass(value){const hash=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(value.toLowerCase()));return [...new Uint8Array(hash)].map(x=>x.toString(16).padStart(2,"0")).join("")===PASS_HASH}
+async function checkPass(value){const normalized=value.trim().toLowerCase();if(!normalized)return false;if(!globalThis.crypto?.subtle)return normalized==="haru";const hash=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(normalized));return [...new Uint8Array(hash)].map(x=>x.toString(16).padStart(2,"0")).join("")===PASS_HASH}
 function today(){return new Date().toLocaleDateString("sv-SE")}
 function subjectName(s){return ({science:"理科",social:"社会",japanese:"国語",math:"数学",english:"英語"})[s]||s}
 function showInstallGuide(){ $("installGuideModal").hidden=false }
@@ -30,7 +30,8 @@ $("unlockForm").addEventListener("submit",e=>{e.preventDefault();attemptUnlock()
 $("lockButton").addEventListener("click",lock);$("mobileLock").addEventListener("click",lock);$("menuToggle").addEventListener("click",()=>{$("sidebar").classList.toggle("menu-open");const nav=$("sidebar").querySelector(".nav");nav.hidden=!nav.hidden});$("sidebar").querySelectorAll(".nav-item").forEach(a=>a.addEventListener("click",()=>{$("sidebar").querySelector(".nav").hidden=false;$("sidebar").classList.remove("menu-open")}));
 $("closeInstallGuide").addEventListener("click",closeInstallGuide);$("laterInstallGuide").addEventListener("click",closeInstallGuide);$("installGuideBackdrop").addEventListener("click",closeInstallGuide);
 
-$("closeModal").addEventListener("click",closePopup);$("laterModal").addEventListener("click",closePopup);$("opinionModal").querySelector("[data-close-modal]").addEventListener("click",closePopup);\ndocument.addEventListener("keydown",e=>{if(e.key==="Escape"){if(!$("opinionModal").hidden)closePopup();if(!$("installGuideModal").hidden)closeInstallGuide()}});
+$("closeModal").addEventListener("click",closePopup);$("laterModal").addEventListener("click",closePopup);$("opinionModal").querySelector("[data-close-modal]").addEventListener("click",closePopup);
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){if(!$("opinionModal").hidden)closePopup();if(!$("installGuideModal").hidden)closeInstallGuide()}});
 if(localStorage.getItem(AUTH_KEY)==="1")unlock();
 function renderStats(){const p=state.progress;$("solved").innerHTML=p.solved+'<small> 問</small>';$("accuracy").textContent=p.solved?Math.round(p.correct/p.solved*100)+"%":"—";$("streak").innerHTML=p.streak+'<small> 日</small>';$("history").replaceChildren();p.history.slice(0,10).forEach(x=>{const row=document.createElement("div");row.className="history-row";const a=document.createElement("span"),b=document.createElement("span");a.textContent=x.date+" · "+x.subject+" · "+x.topic;b.textContent=x.ok?"正解":"不正解";row.append(a,b);$("history").append(row)});if(!p.history.length)$("history").textContent="まだ学習記録がありません。"}
 const shuffle=a=>{const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b};
