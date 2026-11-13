@@ -1,7 +1,7 @@
-export type Subject = "science" | "social" | "english";
+export type Subject = "english" | "math" | "japanese" | "science" | "social";
 export type Category =
   | "physics" | "biology" | "chemistry" | "earth"
-  | "civics" | "history" | "vocabulary" | "grammar";
+  | "civics" | "history" | "vocabulary" | "grammar" | "algebra" | "geometry" | "reading" | "classics";
 export type MasteryLevel = "unlearned" | "weak" | "learning" | "mastered";
 
 export interface Question {
