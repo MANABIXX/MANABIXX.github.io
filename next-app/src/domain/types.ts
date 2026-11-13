@@ -11,9 +11,9 @@ export interface Question {
   unit: string;
   tags: string[];
   mode: "vocabulary" | "grammar" | "general";
-  prompt: string;
+  question: string;
   choices: [string, string, string, string];
-  correctIndex: 0 | 1 | 2 | 3;
+  answerIndex: 0 | 1 | 2 | 3;
   explanation: string;
   audioText?: string;
   imageUrl?: string;
@@ -36,4 +36,5 @@ export interface QuestionProgress {
   nextReviewAt: number;
   correctCount: number;
   incorrectCount: number;
+  lastAnsweredAt: number;
 }
