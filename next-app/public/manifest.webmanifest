@@ -1,0 +1,9 @@
+{
+  "name": "MANABIXX",
+  "short_name": "MANABIXX",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f9f7",
+  "theme_color": "#147d55",
+  "lang": "ja"
+}
