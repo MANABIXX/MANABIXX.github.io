@@ -1,15 +1,15 @@
 # MANABIXX Next.js learning app
 
-This app lives in `next-app/` so the existing GitHub Pages/SvelteKit site and its legacy pages remain intact.
-
 ## Local development
 ```bash
-cd next-app
 npm install
 npm run dev
 ```
 
 ## Vercel
-Import the existing repository and set **Root Directory** to `next-app`. Framework preset: Next.js. Vercel will build this app independently; the existing GitHub Pages site remains available at its current URL.
+Import this repository and set **Root Directory** to `next-app`.
 
-The MVP uses localStorage only. No account or environment variables are required. Learning records are stored per browser/device.
+## Exam date maintenance
+Edit `src/constants/examDates.ts`. Dates are Japan local calendar dates in `YYYY-MM-DD` format. The current 2027 dates are provisional examples and must be replaced with official school / prefectural board schedules once published. The progress-bar start date can be adjusted independently.
+
+The daily question target is 30 answers. Change the target in `src/constants/examDates.ts` (each exam's `dailyTarget`) and keep the display target in `src/components/ExamCountdownBanner.tsx` in sync.
