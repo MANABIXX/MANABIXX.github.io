@@ -19,7 +19,7 @@ const learner: Learner = {
 };
 
 const message: string =
-  \`\u{1F4DA} ${learner.name} は今日 ${learner.completed} 問に取り組みました\`;
+  \`\u{1F4DA} \${learner.name} は今日 \${learner.completed} 問に取り組みました\`;
 
 console.log(message);`,
   },
