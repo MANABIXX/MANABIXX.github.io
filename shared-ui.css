@@ -110,3 +110,57 @@ html:has(#sessionScreen:not([hidden])),body:has(#sessionScreen:not([hidden])){ba
 #quizView .explanation-box,#examQuiz .quiz-explanation,#sessionScreen .explanation{
  background:#151b18!important;color:#dce7df!important;border-color:#35443a!important;
 }
+
+
+/* Dark, readable mode cards and native form controls. */
+.home-feature-links .exam-entry,
+.home-feature-links .s-entry {
+  min-width: 0;
+  min-height: 82px;
+  margin: 0;
+  padding: 15px 16px;
+  border: 1px solid #2a3038 !important;
+  border-radius: 14px;
+  background: #111419 !important;
+  color: #edf0f3 !important;
+  box-shadow: none !important;
+}
+.home-feature-links .exam-entry:hover,
+.home-feature-links .s-entry:hover {
+  border-color: #527260 !important;
+  background: #151c18 !important;
+}
+.home-feature-links .exam-entry b,
+.home-feature-links .s-entry b {
+  color: #edf0f3 !important;
+}
+.home-feature-links .exam-entry small,
+.home-feature-links .s-entry small {
+  color: #aeb9b1 !important;
+}
+.home-feature-links .exam-entry > strong,
+.home-feature-links .s-entry > strong {
+  color: #8be0b4 !important;
+}
+.home-feature-links .exam-entry-icon,
+.home-feature-links .s-entry-mark {
+  background: #1b2921 !important;
+  color: #a8e5bf !important;
+  border: 1px solid #3a5141 !important;
+}
+select, select option {
+  color-scheme: dark;
+  background-color: #111419;
+  color: #edf0f3;
+}
+select:focus-visible {
+  outline: 2px solid #70d5a3 !important;
+  outline-offset: 3px;
+}
+@media (max-width: 600px) {
+  .home-feature-links .exam-entry,
+  .home-feature-links .s-entry {
+    min-height: 74px;
+    padding: 13px 14px;
+  }
+}
