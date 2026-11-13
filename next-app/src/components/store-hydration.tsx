@@ -8,7 +8,7 @@ export function StoreHydration({ children }: Readonly<{ children: React.ReactNod
 
   useEffect(() => {
     let active = true;
-    useLearningStore.persist.rehydrate()
+    Promise.resolve(useLearningStore.persist.rehydrate())
       .catch(() => undefined)
       .finally(() => {
         if (active) setReady(true);
