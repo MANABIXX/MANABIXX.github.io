@@ -21,8 +21,13 @@ export default function PracticeClient() {
     const filtered = questions.filter((q) => reviewOnly
       ? progress[q.id]?.mastery === "weak" || (progress[q.id]?.nextReviewAt ?? Infinity) <= Date.now()
       : !subject || q.subject === subject);
-    return rankForReview(filtered, progress);
-  }, [subject, reviewOnly, progress]);
+    const byUnit = unit === "all" ? filtered : filtered.filter((q) => q.unit === unit);
+    return rankForReview(byUnit, progress);
+  }, [subject, reviewOnly, progress, unit]);
+  const availableUnits = useMemo(() => [...new Set(questions
+    .filter((q) => reviewOnly ? progress[q.id]?.mastery === "weak" || (progress[q.id]?.nextReviewAt ?? Infinity) <= Date.now() : !subject || q.subject === subject)
+    .map((q) => q.unit))], [subject, reviewOnly, progress]);
+  const [unit, setUnit] = useState("all");
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [startedAt, setStartedAt] = useState(() => Date.now());
@@ -66,7 +71,7 @@ export default function PracticeClient() {
   return (
     <main className="shell min-h-screen py-5 md:py-8">
       <header className="flex items-center justify-between"><Link href="/" className="font-black">← MANABIXX</Link><span className="text-sm font-bold text-slate-500">{subjectNames[question.subject]} / {question.unit}</span></header>
-      <div className="mx-auto mt-8 max-w-3xl">
+      <div className="mx-auto mt-8 max-w-3xl">\n        <label className="mb-3 flex flex-col gap-2 text-xs font-bold text-slate-500">分野・単元を選択<select value={unit} onChange={(e) => { setUnit(e.target.value); setIndex(0); setSelected(null); setFinished(false); setStartedAt(Date.now()); }} className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800"><option value="all">すべての単元</option>{availableUnits.map((name) => <option key={name} value={name}>{name}</option>)}</select></label>
         <div className="mb-3 flex justify-between text-xs font-bold text-slate-400"><span>QUESTION {index + 1} / {pool.length}</span><span>{Math.round((index / pool.length) * 100)}%</span></div>
         <div className="h-2 overflow-hidden rounded-full bg-slate-200"><div className="h-full rounded-full bg-emerald-600 transition-all" style={{ width: `${(index / pool.length) * 100}%` }} /></div>
         <AnimatePresence mode="wait">
