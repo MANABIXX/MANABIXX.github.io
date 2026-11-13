@@ -28,6 +28,8 @@ jobs:
         run: bash scripts/verify-content.sh
       - name: Check Svelte and TypeScript
         run: npm run check
+      - name: TypeScript type check
+        run: npm run check:types
       - name: Validate PWA configuration
         run: npm run validate:pwa
       - name: Build preview
