@@ -1,0 +1,52 @@
+(()=>{"use strict";
+const $=id=>document.getElementById(id),PASS_HASH="b9f633dc43572056c554fd73e0906140b698fab76315cdc90e5319255f0008b1",AUTH_KEY="shitadumi-private-session-v2",PROGRESS_KEY="shitadumi-progress-v2",POP_KEY="shitadumi-opinion-popup-date";
+const state={bank:[],pool:[],index:0,answers:{},progress:loadProgress(),install:null};
+function loadProgress(){try{return Object.assign({solved:0,correct:0,history:[],lastDay:"",streak:0},JSON.parse(localStorage.getItem(PROGRESS_KEY)||"{}"))}catch{return{solved:0,correct:0,history:[],lastDay:"",streak:0}}}
+function saveProgress(){localStorage.setItem(PROGRESS_KEY,JSON.stringify(state.progress))}
+async function checkPass(value){const hash=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(value.toLowerCase()));return [...new Uint8Array(hash)].map(x=>x.toString(16).padStart(2,"0")).join("")===PASS_HASH}
+function today(){return new Date().toLocaleDateString("sv-SE")}
+function subjectName(s){return ({science:"理科",social:"社会",japanese:"国語",math:"数学",english:"英語"})[s]||s}
+function showInstallGuide(){ $("installGuideModal").hidden=false }
+function maybeInstallGuide(){if(localStorage.getItem("shitadumi-install-guide-seen"))return;if($("opinionModal").hidden)setTimeout(()=>{if($("opinionModal").hidden&&!localStorage.getItem("shitadumi-install-guide-seen"))showInstallGuide()},500)}
+function closeInstallGuide(){ $("installGuideModal").hidden=true;localStorage.setItem("shitadumi-install-guide-seen","1") }
+function maybePopup(){/* 意見フォームの保存方式を再設計するため、ポップアップ表示を一時停止 */}
+function closePopup(){ $("opinionModal").hidden=true;localStorage.setItem(POP_KEY,today());maybeInstallGuide()}
+function unlock(){localStorage.setItem(AUTH_KEY,"1");$("lockScreen").hidden=true;$("app").hidden=false;renderStats();maybePopup();setTimeout(maybeInstallGuide,1800)}
+function lock(){localStorage.removeItem(AUTH_KEY);$("app").hidden=true;$("lockScreen").hidden=false;$("password").value="";$("error").textContent=""}
+async function attemptUnlock(){
+ const button=$("unlockButton"),input=$("password"),error=$("error");
+ if(button.disabled)return;
+ const value=input.value.trim();
+ if(!value){error.textContent="パスコードを入力してください。";input.focus();return;}
+ button.disabled=true;button.textContent="確認しています…";error.textContent="";
+ try{
+  if(await checkPass(value)){unlock();}
+  else{error.textContent="パスコードが一致しません。入力内容を確認してください。";input.focus();input.select();}
+ }catch(err){error.textContent="認証処理に失敗しました。Safariで開いて再度お試しください。";}
+ finally{button.disabled=false;button.innerHTML='ワークスペースに入る <span>→</span>';}
+}
+$("unlockButton").addEventListener("click",attemptUnlock);
+$("unlockForm").addEventListener("submit",e=>{e.preventDefault();attemptUnlock();});
+$("lockButton").addEventListener("click",lock);$("mobileLock").addEventListener("click",lock);$("menuToggle").addEventListener("click",()=>{$("sidebar").classList.toggle("menu-open");const nav=$("sidebar").querySelector(".nav");nav.hidden=!nav.hidden});$("sidebar").querySelectorAll(".nav-item").forEach(a=>a.addEventListener("click",()=>{$("sidebar").querySelector(".nav").hidden=false;$("sidebar").classList.remove("menu-open")}));
+$("closeInstallGuide").addEventListener("click",closeInstallGuide);$("laterInstallGuide").addEventListener("click",closeInstallGuide);$("installGuideBackdrop").addEventListener("click",closeInstallGuide);
+
+$("closeModal").addEventListener("click",closePopup);$("laterModal").addEventListener("click",closePopup);$("opinionModal").querySelector("[data-close-modal]").addEventListener("click",closePopup);\ndocument.addEventListener("keydown",e=>{if(e.key==="Escape"){if(!$("opinionModal").hidden)closePopup();if(!$("installGuideModal").hidden)closeInstallGuide()}});
+if(localStorage.getItem(AUTH_KEY)==="1")unlock();
+function renderStats(){const p=state.progress;$("solved").innerHTML=p.solved+'<small> 問</small>';$("accuracy").textContent=p.solved?Math.round(p.correct/p.solved*100)+"%":"—";$("streak").innerHTML=p.streak+'<small> 日</small>';$("history").replaceChildren();p.history.slice(0,10).forEach(x=>{const row=document.createElement("div");row.className="history-row";const a=document.createElement("span"),b=document.createElement("span");a.textContent=x.date+" · "+x.subject+" · "+x.topic;b.textContent=x.ok?"正解":"不正解";row.append(a,b);$("history").append(row)});if(!p.history.length)$("history").textContent="まだ学習記録がありません。"}
+const shuffle=a=>{const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b};
+function candidates(){const s=$("subject").value,l=$("level").value;return state.bank.filter(q=>q.level===l&&(s==="all"||q.subject===s))}
+function updateAvailable(){$("available").textContent=candidates().length+"問から出題できます。"}
+$("subject").addEventListener("change",updateAvailable);$("level").addEventListener("change",updateAvailable);
+async function init(){try{const r=await fetch("../questions.json");if(!r.ok)throw Error();const d=await r.json();state.bank=d.questions||[];updateAvailable()}catch{$("available").textContent="問題データを読み込めません。再読み込みしてください。"}}
+function start(){const n=$("amount").value;state.pool=shuffle(candidates());if(n!=="all")state.pool=state.pool.slice(0,Number(n));if(!state.pool.length){$("available").textContent="この条件の問題はまだありません。";return}state.index=0;state.answers={};$("quiz").hidden=false;renderQuestion();$("quiz").scrollIntoView({behavior:"smooth"})}
+function renderQuestion(){const q=state.pool[state.index];$("qMeta").textContent=subjectName(q.subject)+" · "+q.topic+" · "+q.level;$("counter").textContent=(state.index+1)+" / "+state.pool.length;$("bar").style.width=(state.index/state.pool.length*100)+"%";$("prompt").textContent=q.prompt;$("options").replaceChildren();$("explain").hidden=true;$("next").disabled=true;$("next").textContent=state.index===state.pool.length-1?"結果を見る →":"次の問題 →";q.options.forEach((label,i)=>{const b=document.createElement("button");b.type="button";b.className="option";const mark=document.createElement("b"),t=document.createElement("span");mark.textContent=["A","B","C","D","E"][i]||String(i+1);t.textContent=label;b.append(mark,t);b.addEventListener("click",()=>answer(i));$("options").append(b)})}
+function answer(i){const q=state.pool[state.index];if(Object.hasOwn(state.answers,q.id))return;state.answers[q.id]=i;const ok=i===q.correct;[...$("options").children].forEach((b,n)=>{b.disabled=true;if(n===q.correct)b.classList.add("correct");else if(n===i)b.classList.add("wrong")});$("explain").textContent=(ok?"正解！ ":"不正解。 ")+q.explanation;$("explain").hidden=false;const p=state.progress;p.solved++;if(ok)p.correct++;const day=today();if(p.lastDay!==day){const y=new Date();y.setDate(y.getDate()-1);p.streak=p.lastDay===y.toLocaleDateString("sv-SE")?p.streak+1:1;p.lastDay=day}p.history.unshift({date:day,subject:subjectName(q.subject),topic:q.topic,ok});p.history=p.history.slice(0,200);saveProgress();renderStats();$("next").disabled=false}
+function next(){if($("next").disabled)return;if(state.index===state.pool.length-1){$("quiz").hidden=true;const score=state.pool.filter(q=>state.answers[q.id]===q.correct).length;$("available").textContent="今回の結果："+score+" / "+state.pool.length+"問正解。";return}state.index++;renderQuestion()}
+$("start").addEventListener("click",start);$("next").addEventListener("click",next);$("quit").addEventListener("click",()=>$("quiz").hidden=true);
+$("today").textContent=new Intl.DateTimeFormat("ja-JP",{dateStyle:"medium"}).format(new Date());
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();state.install=e});$("installBtn").addEventListener("click",async()=>{if(state.install){state.install.prompt();await state.install.userChoice;state.install=null}else showInstallGuide()});
+function updateNetworkState(){const el=$("networkState");if(!el)return;const online=navigator.onLine;el.textContent=online?"オンライン":"オフライン：保存済み問題を利用できます";el.classList.toggle("offline",!online)}
+window.addEventListener("online",updateNetworkState);window.addEventListener("offline",updateNetworkState);updateNetworkState();
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").then(reg=>{if(navigator.onLine)reg.update().catch(()=>{})}).catch(()=>{const el=$("networkState");if(el)el.textContent="オフライン保存の準備ができていません"}));
+init();
+})();
