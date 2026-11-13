@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-10",
+  "updatedAt": "2026-11-13",
   "questions": [
     {
       "id": "sci-001",
@@ -20185,6 +20185,108 @@
       "correct": 1,
       "explanation": "主語が三人称単数の現在形なので、一般動詞playにsをつけてplays。",
       "sourceNote": "下積みモード基礎確認問題",
+      "sourceRef": ""
+    },
+    {
+      "id": "shita-eng-004",
+      "subject": "english",
+      "topic": "関係代名詞",
+      "level": "標準",
+      "prompt": "空欄に入る語として最も適切なものは？ This is the book (　　　) I bought yesterday.",
+      "options": [
+        "who",
+        "which",
+        "where",
+        "when"
+      ],
+      "correct": 1,
+      "explanation": "先行詞が物（the book）なので、目的格の関係代名詞 which または that を使う。選択肢では which。",
+      "sourceNote": "下積みモード追加問題",
+      "sourceRef": ""
+    },
+    {
+      "id": "shita-eng-005",
+      "subject": "english",
+      "topic": "間接疑問文",
+      "level": "標準",
+      "prompt": "間接疑問文として正しい英文はどれ？",
+      "options": [
+        "I don't know where does he live.",
+        "I don't know where he lives.",
+        "I don't know where lives he.",
+        "I don't know where he live."
+      ],
+      "correct": 1,
+      "explanation": "間接疑問文では疑問詞の後ろを〈主語＋動詞〉の語順にする。主語が he なので lives。",
+      "sourceNote": "下積みモード追加問題",
+      "sourceRef": ""
+    },
+    {
+      "id": "shita-math-004",
+      "subject": "math",
+      "topic": "二次方程式",
+      "level": "標準",
+      "prompt": "二次方程式 x²−5x＋6＝0 の解はどれ？",
+      "options": [
+        "x＝1, 6",
+        "x＝2, 3",
+        "x＝−2, −3",
+        "x＝−1, −6"
+      ],
+      "correct": 1,
+      "explanation": "x²−5x＋6＝(x−2)(x−3)。積が0になるので x＝2, 3。",
+      "sourceNote": "下積みモード追加問題",
+      "sourceRef": ""
+    },
+    {
+      "id": "shita-math-005",
+      "subject": "math",
+      "topic": "相似",
+      "level": "標準",
+      "prompt": "相似比が2：3の2つの図形の面積比は？",
+      "options": [
+        "2：3",
+        "4：9",
+        "8：27",
+        "3：2"
+      ],
+      "correct": 1,
+      "explanation": "面積比は相似比の2乗。2²：3²＝4：9。",
+      "sourceNote": "下積みモード追加問題",
+      "sourceRef": ""
+    },
+    {
+      "id": "shita-jpn-004",
+      "subject": "japanese",
+      "topic": "古文単語",
+      "level": "基礎",
+      "prompt": "古文の「いと」が表す意味として最も適切なものは？",
+      "options": [
+        "少し",
+        "とても",
+        "すぐに",
+        "決して"
+      ],
+      "correct": 1,
+      "explanation": "「いと」は「とても・たいそう」という意味の副詞。現代語と異なる古語の意味を押さえよう。",
+      "sourceNote": "下積みモード追加問題",
+      "sourceRef": ""
+    },
+    {
+      "id": "shita-jpn-005",
+      "subject": "japanese",
+      "topic": "敬語",
+      "level": "標準",
+      "prompt": "「先生がおっしゃる」の「おっしゃる」は何語？",
+      "options": [
+        "謙譲語",
+        "丁寧語",
+        "尊敬語",
+        "美化語"
+      ],
+      "correct": 2,
+      "explanation": "「おっしゃる」は「言う」の尊敬語。動作をする先生を高める表現。",
+      "sourceNote": "下積みモード追加問題",
       "sourceRef": ""
     }
   ]
