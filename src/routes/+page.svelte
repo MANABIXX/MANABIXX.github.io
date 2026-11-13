@@ -75,9 +75,9 @@
       <button class="side-link" onclick={()=>begin('wrong')}><RotateCcw size={17}/>苦手問題<span class="side-count">{wrongIds.length}</span></button>
       <button class="side-link" onclick={()=>begin('bookmarks')}><Bookmark size={17}/>保存した問題<span class="side-count">{bookmarks.length}</span></button>
       <div class="side-label side-label-gap">LEARNING</div>
-      <a class="side-link" href="/legacy/summary.html"><Layers3 size={17}/>要点まとめ</a>
-      <a class="side-link" href="/legacy/public-exam.html"><GraduationCap size={17}/>公立入試問題</a>
-      <a class="side-link" href="/legacy/motivation.html"><Sparkles size={17}/>学習のヒント</a>
+      <a class="side-link" href="/summary/"><Layers3 size={17}/>要点まとめ</a>
+      <a class="side-link" href="/exam/"><GraduationCap size={17}/>公立入試問題</a>
+      <a class="side-link" href="/motivation/"><Sparkles size={17}/>学習のヒント</a>
       <div class="sidebar-bottom"><div class="mini-profile"><div class="avatar">S</div><div><b>My Study</b><small>自分のペースで進もう</small></div><button aria-label="設定"><Settings2 size={16}/></button></div><small class="version">MANABIXX STUDY · BETA</small></div>
     </aside>
     <main class="main-area">
@@ -130,7 +130,7 @@
             </aside>
           </section>
         {/if}
-        <section class="resource-row"><a href="/legacy/summary.html"><span class="resource-icon"><Layers3 size={19}/></span><span><b>要点まとめ</b><small>教科ごとの重要事項を確認</small></span><ArrowRight size={17}/></a><a href="/legacy/public-exam.html"><span class="resource-icon peach"><GraduationCap size={19}/></span><span><b>公立入試問題</b><small>実戦形式の問題に挑戦</small></span><ArrowRight size={17}/></a><a href="/legacy/release-notes.html"><span class="resource-icon mint"><Sparkles size={19}/></span><span><b>更新履歴</b><small>Studyの新しい機能をチェック</small></span><ArrowRight size={17}/></a></section>
+        <section class="resource-row"><a href="/summary/"><span class="resource-icon"><Layers3 size={19}/></span><span><b>要点まとめ</b><small>教科ごとの重要事項を確認</small></span><ArrowRight size={17}/></a><a href="/exam/"><span class="resource-icon peach"><GraduationCap size={19}/></span><span><b>公立入試問題</b><small>実戦形式の問題に挑戦</small></span><ArrowRight size={17}/></a><a href="/releases/"><span class="resource-icon mint"><Sparkles size={19}/></span><span><b>更新履歴</b><small>Studyの新しい機能をチェック</small></span><ArrowRight size={17}/></a></section>
         <footer><a class="footer-brand" href="/">study<span>.</span></a><span>Made for steady progress. <b>MANABIXX</b></span></footer>
       </div>
     </main>

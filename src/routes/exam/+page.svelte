@@ -1,0 +1,2 @@
+<script>import QuestionPractice from '$lib/QuestionPractice.svelte';</script>
+<QuestionPractice title="公立高校入試問題" subtitle="理科・社会の入試形式問題に挑戦。出典情報と解説も確認できます。" endpoint="/data/public-exam.json" kind="exam"/>

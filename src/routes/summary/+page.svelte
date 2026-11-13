@@ -1,0 +1,2 @@
+<script>import QuestionPractice from '$lib/QuestionPractice.svelte';</script>
+<QuestionPractice title="要点まとめ・基礎確認" subtitle="重要事項を確認しながら、基礎問題で理解度をチェック。" endpoint="/data/summary-foundation.json" kind="summary"/>
