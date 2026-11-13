@@ -9,4 +9,13 @@ export const questions: Question[] = [
   { id: "soc-002", subject: "social", category: "history", unit: "近現代史", tags: ["日本史", "明治維新"], mode: "general", prompt: "明治政府が1871年に藩を廃止して府・県を置いた改革は？", choices: ["地租改正", "廃藩置県", "版籍奉還", "文明開化"], correctIndex: 1, explanation: "廃藩置県によって中央政府が地方を直接治める中央集権体制を整えました。" },
   { id: "eng-001", subject: "english", category: "vocabulary", unit: "高校入試重要英単語", tags: ["動詞", "重要語"], mode: "vocabulary", prompt: "「〜を解決する」に最も近い英単語は？", choices: ["solve", "borrow", "invite", "arrive"], correctIndex: 0, explanation: "solve は「問題などを解決する」。solve a problem（問題を解決する）の形で覚えよう。", audioText: "solve" },
   { id: "eng-002", subject: "english", category: "grammar", unit: "現在完了", tags: ["現在完了", "経験"], mode: "grammar", prompt: "「私は3回京都を訪れたことがあります。」空欄に入る語句は？ I (　　　) Kyoto three times.", choices: ["visit", "visited", "have visited", "will visit"], correctIndex: 2, explanation: "経験を表す現在完了は have/has + 過去分詞。three times が経験の回数を示しています。" }
-];
+
+  { id: "math-001", subject: "math", category: "algebra", unit: "二次方程式", tags: ["因数分解"], mode: "general", prompt: "二次方程式 x²−5x＋6＝0 の解はどれ？", choices: ["x＝1, 6", "x＝2, 3", "x＝−2, −3", "x＝−1, −6"], correctIndex: 1, explanation: "x²−5x＋6＝(x−2)(x−3)。よって x＝2, 3。" },
+  { id: "math-002", subject: "math", category: "geometry", unit: "相似", tags: ["相似比", "面積比"], mode: "general", prompt: "相似比が2：3の図形の面積比は？", choices: ["2：3", "4：9", "8：27", "3：2"], correctIndex: 1, explanation: "面積比は相似比の2乗。2²：3²＝4：9。" },
+  { id: "math-003", subject: "math", category: "algebra", unit: "関数", tags: ["一次関数"], mode: "general", prompt: "一次関数 y＝−3x＋4 の変化の割合は？", choices: ["4", "3", "−3", "−4"], correctIndex: 2, explanation: "一次関数 y＝ax＋b の変化の割合は x の係数 a。したがって−3。" },
+  { id: "math-004", subject: "math", category: "geometry", unit: "円周角", tags: ["円", "角度"], mode: "general", prompt: "同じ弧に対する円周角が35°のとき、中心角は？", choices: ["17.5°", "35°", "70°", "145°"], correctIndex: 2, explanation: "同じ弧に対する中心角は円周角の2倍。35°×2＝70°。" },
+  { id: "jpn-001", subject: "japanese", category: "reading", unit: "文法・品詞", tags: ["品詞", "形容詞"], mode: "general", prompt: "「美しい花が咲く」の「美しい」の品詞は？", choices: ["形容詞", "形容動詞", "副詞", "連体詞"], correctIndex: 0, explanation: "「美しい」は活用し、言い切りが「い」で終わる形容詞。" },
+  { id: "jpn-002", subject: "japanese", category: "classics", unit: "古文", tags: ["古文単語"], mode: "general", prompt: "古文の「いと」の意味は？", choices: ["少し", "とても", "すぐに", "決して"], correctIndex: 1, explanation: "「いと」は「とても・たいそう」という意味の副詞。" },
+  { id: "jpn-003", subject: "japanese", category: "reading", unit: "文法・敬語", tags: ["敬語", "尊敬語"], mode: "general", prompt: "「先生がおっしゃる」の「おっしゃる」は何語？", choices: ["謙譲語", "丁寧語", "尊敬語", "美化語"], correctIndex: 2, explanation: "「おっしゃる」は「言う」の尊敬語。" },
+  { id: "jpn-004", subject: "japanese", category: "reading", unit: "文法・助動詞", tags: ["助動詞"], mode: "general", prompt: "「窓が開けられる」の「られる」が受け身を表すとき、主語は？", choices: ["窓", "開ける人", "場所", "時間"], correctIndex: 0, explanation: "受け身では動作を受ける対象が主語になる。この文では窓。" }
+]
