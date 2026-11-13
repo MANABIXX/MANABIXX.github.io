@@ -145,3 +145,6 @@ body.dark .quick-icon,body.dark .library-symbol,body.dark .question-tags span{ba
 body.dark .answer-choice:hover:not(:disabled),body.dark .choice:hover{background:#2c3930!important;border-color:#799681!important}
 body.dark .answer-choice.is-correct,body.dark .choice.correct{background:#293d30!important;color:#d4e6d7!important;border-color:#799681!important}
 body.dark .answer-choice.is-wrong,body.dark .choice.incorrect{background:#402e30!important;color:#f0d7d8!important;border-color:#a8797c!important}
+
+/* MANABIXX shared identity */
+.brand-mark.brand-symbol{display:grid;place-items:center;background:linear-gradient(145deg,#63e5ef,#398cff)!important}.brand-symbol svg{width:22px;height:22px;fill:none;stroke:#06131f;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
