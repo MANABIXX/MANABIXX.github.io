@@ -11,7 +11,8 @@
     "sync:registry": "node scripts/sync-registry.mjs",
     "update:registry-lock": "node scripts/update-registry-lock.mjs",
     "validate:pwa": "node scripts/validate-pwa.mjs",
-    "verify": "npm run update:registry-lock && npm run sync:registry && npm run check && npm run validate:pwa && npm run build"
+    "verify": "npm run update:registry-lock && npm run sync:registry && npm run check && npm run check:types && npm run validate:pwa && npm run build",
+    "check:types": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
     "bits-ui": "^1.0.0",
