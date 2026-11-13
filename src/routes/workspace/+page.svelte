@@ -1,6 +1,6 @@
 <script>
   import { onMount, onDestroy } from 'svelte';
-  import { ArrowLeft, Check, Clock3, FileText, ListTodo, Play, Pause, RotateCcw, Plus, Sparkles, BookOpen, ChevronLeft, ChevronRight, Trash2, Target } from 'lucide-svelte';
+  import { ArrowLeft, ArrowRight, Check, Clock3, FileText, ListTodo, Play, Pause, RotateCcw, Plus, Sparkles, BookOpen, ChevronLeft, ChevronRight, Trash2, Target } from 'lucide-svelte';
 
   const today = () => new Date().toLocaleDateString('sv-SE');
   let active = $state('overview');
@@ -151,7 +151,7 @@
           <article class="panel"><div class="panel-title"><div><span class="eyebrow">PLAN</span><h3>今日やること</h3></div><button class="text-button" onclick={() => active='tasks'}>計画を編集 <ChevronRight size={15}/></button></div>
             {#if todayTasks.length}<div class="task-list">{#each todayTasks.slice(0,5) as task}<div class="task-row"><button class:checked={task.done} class="check" onclick={() => toggleTask(task.id)} aria-label="完了切り替え">{#if task.done}<Check size={14}/>{/if}</button><span class:finished={task.done}>{task.title}</span><small>{task.subject}</small></div>{/each}</div>{:else}<p class="empty">今日の計画はまだ空。小さなタスクをひとつ追加しよう。</p>{/if}
           </article>
-          <article class="panel focus-panel"><span class="eyebrow">FOCUS</span><h3>まずは25分、集中。</h3><div class="mini-time">{timeLabel}</div><p>スマホを置いて、目の前の一つに取り組もう。</p><button class="primary" onclick={() => active='focus'}>タイマーを開く <ArrowRightIcon/></button></article>
+          <article class="panel focus-panel"><span class="eyebrow">FOCUS</span><h3>まずは25分、集中。</h3><div class="mini-time">{timeLabel}</div><p>スマホを置いて、目の前の一つに取り組もう。</p><button class="primary" onclick={() => active='focus'}>タイマーを開く <ArrowRight size={15}/></button></article>
         </div>
         <div class="quick-grid">
           <button onclick={() => active='tasks'}><ListTodo size={19}/><b>学習計画を作る</b><span>今日やることを整理</span></button>
@@ -184,9 +184,6 @@
   </main>
 </div>
 
-<script context="module">
-  function ArrowRightIcon() { return null; }
-</script>
 
 <style>
   :global(body){margin:0;background:#090b0a;color:#edf1e9;font-family:'DM Sans','Noto Sans JP',sans-serif}
