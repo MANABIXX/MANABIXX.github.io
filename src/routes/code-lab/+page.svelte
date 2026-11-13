@@ -9,6 +9,7 @@
   let runtimeReady = $state(false);
   let runtimeMessage = $state('実行時に必要な環境を読み込みます。');
   let pyodide: any = null;
+  const dynamicImport = new Function('url', 'return import(url)') as (url: string) => Promise<any>;
   let disposed = false;
 
   onDestroy(() => { disposed = true; });
@@ -22,7 +23,7 @@
   }
 
   async function runTypeScript() {
-    const ts = await import(/* @vite-ignore */ 'https://esm.sh/typescript@5.7.3');
+    const ts = await dynamicImport('https://esm.sh/typescript@5.7.3');
     const result = ts.transpileModule(source, {
       compilerOptions: {
         target: ts.ScriptTarget.ES2022,
@@ -48,7 +49,7 @@
   async function runPython() {
     if (!pyodide) {
       runtimeMessage = 'Python実行環境を読み込み中…（初回は少し時間がかかります）';
-      const module = await import(/* @vite-ignore */ 'https://cdn.jsdelivr.net/pyodide/v0.27.2/full/pyodide.mjs');
+      const module = await dynamicImport('https://cdn.jsdelivr.net/pyodide/v0.27.2/full/pyodide.mjs');
       pyodide = await module.loadPyodide();
     }
     const logs: string[] = [];
@@ -113,7 +114,7 @@
         <button class="reset" onclick={resetCode}>サンプルに戻す ↺</button>
       </div>
       <label class="sr-only" for="code-editor">コードエディター</label>
-      <textarea id="code-editor" bind:value={source} spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" aria-label="コードエディター"></textarea>
+      <textarea id="code-editor" bind:value={source} spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="コードエディター"></textarea>
       <div class="editor-actions">
         <span class="runtime-note">{runtimeMessage}</span>
         <button class="run-button" onclick={runCode} disabled={running}>{running ? '実行中…' : '▶　コードを実行'}</button>
