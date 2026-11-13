@@ -1,6 +1,6 @@
 {
   "repository": "MANABIXX/content-registry",
-  "commit": "0df8e0e7c4d942ef66513243ebd7133da3ac61cd",
+  "commit": "d3397dced2ed0047ddefb3f8223d8ea983a8849e",
   "datasets": [
     "question-bank",
     "public-exam",
@@ -11,6 +11,11 @@
     "motivation-200",
     "supplementary",
     "supplementary-beta",
-    "mock-exams"
+    "mock-exams",
+    "supplementary-en",
+    "supplementary-ja",
+    "supplementary-ma",
+    "supplementary-sc",
+    "supplementary-so"
   ]
 }
