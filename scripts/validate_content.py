@@ -2,6 +2,7 @@
 """Validate every published Study question bank before deployment."""
 import json
 import sys
+import unicodedata
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -21,6 +22,12 @@ BANKS = (
 )
 
 
+def normalize_text(value):
+    """Normalize text for stable duplicate-question detection."""
+    normalized = unicodedata.normalize("NFKC", value).casefold()
+    return " ".join(normalized.split())
+
+
 def validate_bank(filename):
     payload = json.loads((DATA / filename).read_text(encoding="utf-8"))
     if not isinstance(payload, dict):
@@ -37,6 +44,7 @@ def validate_bank(filename):
 
     expected_subject = payload.get("subject")
     seen = set()
+    seen_questions = set()
     for index, item in enumerate(records, 1):
         if not isinstance(item, dict):
             raise ValueError(f"{filename}: record {index} is not an object")
@@ -74,6 +82,14 @@ def validate_bank(filename):
             raise ValueError(f"{filename}: {identifier} has an empty/invalid option")
         if len({option.strip() for option in options}) != 4:
             raise ValueError(f"{filename}: {identifier} has duplicate options")
+
+        signature = (
+            normalize_text(prompt),
+            tuple(sorted(normalize_text(option) for option in options)),
+        )
+        if signature in seen_questions:
+            raise ValueError(f"{filename}: {identifier} duplicates question content")
+        seen_questions.add(signature)
 
         correct = item["correct"]
         if type(correct) is not int or not 0 <= correct < 4:
