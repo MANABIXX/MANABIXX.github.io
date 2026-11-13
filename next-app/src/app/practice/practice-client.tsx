@@ -43,7 +43,7 @@ export default function PracticeClient() {
     record({ questionId: question.id, selectedIndex: choice, isCorrect, responseTimeMs: Math.max(0, Date.now() - startedAt), answeredAt: Date.now() });
     if (reviewOnly) setSessionAnswered((current) => ({ ...current, [question.id]: true }));
     setSelected(choice);
-  }, [question, selected, record, startedAt]);
+  }, [question, selected, record, startedAt, reviewOnly]);
 
   const next = useCallback(() => {
     if (selected === null) return;
