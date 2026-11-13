@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
@@ -19,6 +19,8 @@ export default function PracticeClient() {
   const reviewOnly = params.get("review") === "1";
   const progress = useLearningStore((s) => s.progress);
   const record = useLearningStore((s) => s.record);
+  // Keep the review ranking fixed for this session so answering cannot reorder the question under the learner.
+  const sessionProgress = useRef(progress).current;
   const [unit, setUnit] = useState("all");
   const [sessionAnswered, setSessionAnswered] = useState<Record<string, boolean>>({});
   const pool = useMemo(() => {
@@ -26,8 +28,8 @@ export default function PracticeClient() {
       ? progress[q.id]?.mastery === "weak" || sessionAnswered[q.id] === true
       : !subject || q.subject === subject);
     const byUnit = unit === "all" ? filtered : filtered.filter((q) => q.unit === unit);
-    return reviewOnly ? byUnit : rankForReview(byUnit, progress);
-  }, [subject, reviewOnly, progress, unit, sessionAnswered]);
+    return reviewOnly ? byUnit : rankForReview(byUnit, sessionProgress);
+  }, [subject, reviewOnly, progress, unit, sessionAnswered, sessionProgress]);
   const availableUnits = useMemo(() => [...new Set(questions
     .filter((q) => reviewOnly ? progress[q.id]?.mastery === "weak" || sessionAnswered[q.id] === true : !subject || q.subject === subject)
     .map((q) => q.unit))], [subject, reviewOnly, progress, sessionAnswered]);
