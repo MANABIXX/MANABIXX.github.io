@@ -1,7 +1,7 @@
 {
-  "name": "Study by MANABIXX",
-  "short_name": "Study",
-  "description": "毎日の学習を、シンプルに。",
+  "name": "MANABIXX",
+  "short_name": "MANABIXX",
+  "description": "学習計画から問題演習まで、毎日の学びを支えるWebアプリ。",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
