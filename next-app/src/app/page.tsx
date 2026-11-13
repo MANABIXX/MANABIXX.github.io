@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useLearningStore } from "@/stores/learning-store";
 import ExamCountdownBanner from "@/components/ExamCountdownBanner";
+import { StudyDashboard } from "@/components/StudyDashboard";
 
 const subjects = [
   { id: "english", name: "英語", sub: "英単語・英文法", icon: "A", color: "bg-pink-950/40" },
@@ -38,6 +39,7 @@ export default function Home() {
         </div>
       </section>
       <section className="mt-8"><ExamCountdownBanner /></section>
+      <section className="mt-5"><StudyDashboard /></section>
       <section className="mt-12">
         <div className="mb-5 flex items-end justify-between"><div><p className="text-xs font-bold tracking-widest text-zinc-500">CHOOSE A SUBJECT</p><h2 className="mt-1 text-2xl font-black">5教科演習</h2></div><span className="text-xs text-zinc-500">サンプル問題収録</span></div>
         <div className="grid gap-4 md:grid-cols-3">
