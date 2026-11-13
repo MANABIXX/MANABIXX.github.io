@@ -1,161 +1,294 @@
 <script>
   import { onMount } from 'svelte';
   import {
-    ArrowRight, Atom, Award, Bookmark, BookOpen, Brain, CalendarDays,
-    Check, ChevronDown, ChevronLeft, ChevronRight, CircleHelp, Clock3,
-    Flame, GraduationCap, Home, Layers3, Menu, Moon, RotateCcw, Search,
-    Settings2, Sparkles, Sun, Target, Trophy, X, Zap
+    ArrowUpRight, ArrowRight, Atom, Bookmark, BookOpen, Check, ChevronDown,
+    ChevronLeft, CircleHelp, Clock3, Command, Flame, GraduationCap, Layers3,
+    Menu, Moon, Search, Sparkles, Sun, Target, Trophy, X, RotateCcw,
+    PanelLeftClose, LibraryBig, ChartNoAxesColumnIncreasing, Zap
   } from 'lucide-svelte';
   import { toast } from 'svelte-sonner';
 
-  let bank = [], loading = true, loadError = '';
-  let subject = 'all', topic = 'all', level = 'all', amount = '10';
-  let pool = [], index = 0, selected = null, score = 0, screen = 'home';
-  let answered = 0, correctTotal = 0, wrongIds = [], bookmarks = [], theme = 'light';
-  let mobileMenu = false, searchText = '';
-  $: filtered = bank.filter(q => (subject === 'all' || q.subject === subject) && (topic === 'all' || q.topic === topic) && (level === 'all' || (q.level || '基礎') === level));
-  $: topics = [...new Set(bank.filter(q => subject === 'all' || q.subject === subject).map(q => q.topic).filter(Boolean))].sort((a,b) => a.localeCompare(b,'ja'));
-  $: scienceCount = bank.filter(q => q.subject === 'science').length;
-  $: socialCount = bank.filter(q => q.subject === 'social').length;
-  $: q = pool[index];
-  $: accuracy = answered ? Math.round(correctTotal / answered * 100) : 0;
-  $: visibleTopics = topics.filter(t => t.toLowerCase().includes(searchText.toLowerCase()));
+  let bank = $state([]);
+  let loading = $state(true);
+  let loadError = $state('');
+  let screen = $state('home');
+  let subject = $state('all');
+  let topic = $state('all');
+  let level = $state('all');
+  let amount = $state('10');
+  let query = $state('');
+  let pool = $state([]);
+  let index = $state(0);
+  let selected = $state(null);
+  let score = $state(0);
+  let answered = $state(0);
+  let correctTotal = $state(0);
+  let wrongIds = $state([]);
+  let bookmarks = $state([]);
+  let theme = $state('light');
+  let mobileMenu = $state(false);
+  let q = $derived(pool[index]);
+  let topics = $derived([...new Set(bank.filter(x => subject === 'all' || x.subject === subject).map(x => x.topic).filter(Boolean))].sort((a,b) => a.localeCompare(b,'ja')));
+  let filtered = $derived(bank.filter(x =>
+    (subject === 'all' || x.subject === subject) &&
+    (topic === 'all' || x.topic === topic) &&
+    (level === 'all' || (x.level || '基礎') === level) &&
+    (!query || (x.prompt || '').toLowerCase().includes(query.toLowerCase()) || (x.topic || '').toLowerCase().includes(query.toLowerCase()))
+  ));
+  let scienceCount = $derived(bank.filter(x => x.subject === 'science').length);
+  let socialCount = $derived(bank.filter(x => x.subject === 'social').length);
+  let accuracy = $derived(answered ? Math.round(correctTotal / answered * 100) : 0);
+  let completion = $derived(bank.length ? Math.min(100, Math.round(answered / bank.length * 100)) : 0);
+
   onMount(async () => {
     try {
       const response = await fetch('/data/questions.json');
       if (!response.ok) throw new Error('問題データを読み込めませんでした');
       const payload = await response.json();
       bank = Array.isArray(payload) ? payload : (payload.questions || []);
-      const saved = JSON.parse(localStorage.getItem('manabixx-study-v2') || localStorage.getItem('manabixx-study-v1') || '{}');
-      answered = saved.answered || 0; correctTotal = saved.correct || 0;
-      wrongIds = saved.wrong || []; bookmarks = saved.bookmarks || [];
+      const saved = JSON.parse(localStorage.getItem('manabixx-study-v3') || '{}');
+      answered = saved.answered || 0;
+      correctTotal = saved.correct || 0;
+      wrongIds = saved.wrong || [];
+      bookmarks = saved.bookmarks || [];
       theme = localStorage.getItem('manabixx-theme') || 'light';
       document.documentElement.dataset.theme = theme;
-    } catch (e) { loadError = e.message || '読み込みに失敗しました'; }
-    finally { loading = false; }
+    } catch (error) {
+      loadError = error.message || '読み込みに失敗しました';
+    } finally {
+      loading = false;
+    }
   });
-  function persist() { localStorage.setItem('manabixx-study-v2', JSON.stringify({answered,correct:correctTotal,wrong:wrongIds,bookmarks})); }
-  function begin(mode='normal') {
+
+  function persist() {
+    localStorage.setItem('manabixx-study-v3', JSON.stringify({ answered, correct: correctTotal, wrong: wrongIds, bookmarks }));
+  }
+  function begin(mode = 'normal') {
     let list = [...filtered];
-    if(mode==='wrong') list=list.filter(x=>wrongIds.includes(x.id));
-    if(mode==='bookmarks') list=list.filter(x=>bookmarks.includes(x.id));
-    for(let i=list.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[list[i],list[j]]=[list[j],list[i]];}
-    if(amount!=='all'&&mode==='normal') list=list.slice(0,Number(amount));
-    if(!list.length){toast.error('この条件に合う問題がありません');return;}
-    pool=list;index=0;selected=null;score=0;screen='quiz';window.scrollTo({top:0,behavior:'smooth'});
+    if (mode === 'wrong') list = list.filter(x => wrongIds.includes(x.id));
+    if (mode === 'bookmarks') list = list.filter(x => bookmarks.includes(x.id));
+    for (let i = list.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [list[i], list[j]] = [list[j], list[i]];
+    }
+    if (amount !== 'all' && mode === 'normal') list = list.slice(0, Number(amount));
+    if (!list.length) { toast.error('この条件に合う問題がありません'); return; }
+    pool = list;
+    index = 0;
+    selected = null;
+    score = 0;
+    screen = 'quiz';
+    mobileMenu = false;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   function choose(i) {
-    if(selected!==null)return;
-    selected=i;const item=pool[index];const ok=i===item.correct;answered++;
-    if(ok){score++;correctTotal++;wrongIds=wrongIds.filter(id=>id!==item.id);}
-    else if(!wrongIds.includes(item.id))wrongIds=[...wrongIds,item.id];
+    if (selected !== null) return;
+    selected = i;
+    const item = pool[index];
+    const ok = i === item.correct;
+    answered += 1;
+    if (ok) {
+      score += 1;
+      correctTotal += 1;
+      wrongIds = wrongIds.filter(id => id !== item.id);
+    } else if (!wrongIds.includes(item.id)) {
+      wrongIds = [...wrongIds, item.id];
+    }
     persist();
   }
-  function next(){if(index===pool.length-1){screen='result';return;}index++;selected=null;}
-  function toggleBookmark(){const id=pool[index].id;bookmarks=bookmarks.includes(id)?bookmarks.filter(x=>x!==id):[...bookmarks,id];persist();toast.success(bookmarks.includes(id)?'復習リストに保存しました':'保存を解除しました');}
-  function toggleTheme(){theme=theme==='light'?'dark':'light';document.documentElement.dataset.theme=theme;localStorage.setItem('manabixx-theme',theme);}
-  function resetFilters(){subject='all';topic='all';level='all';amount='10';}
+  function next() {
+    if (index === pool.length - 1) { screen = 'result'; return; }
+    index += 1;
+    selected = null;
+  }
+  function toggleBookmark() {
+    const id = q.id;
+    bookmarks = bookmarks.includes(id) ? bookmarks.filter(x => x !== id) : [...bookmarks, id];
+    persist();
+    toast.success(bookmarks.includes(id) ? '復習リストに保存しました' : '保存を解除しました');
+  }
+  function toggleTheme() {
+    theme = theme === 'light' ? 'dark' : 'light';
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem('manabixx-theme', theme);
+  }
+  function resetFilters() {
+    subject = 'all'; topic = 'all'; level = 'all'; amount = '10'; query = '';
+  }
+  function backHome() {
+    screen = 'home';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 </script>
 
 <svelte:head>
   <title>Study — MANABIXX</title>
-  <meta name="description" content="理科・社会を中心に、基礎から着実に身につける学習スペース。"/>
-  <meta name="theme-color" content="#f7f8fc"/>
+  <meta name="description" content="自分のペースで学び、理解を積み重ねる学習スペース。"/>
+  <meta name="theme-color" content="#f4f4ef"/>
   <link rel="manifest" href="/manifest.webmanifest"/>
   <link rel="icon" href="/assets/study-icon.svg" type="image/svg+xml"/>
 </svelte:head>
 
-<div class="app-shell">
-  {#if screen === 'home'}
-    <aside class:open={mobileMenu} class="sidebar">
-      <a class="brand" href="/"><span class="brand-mark"><GraduationCap size={21}/></span><span>study<span class="brand-dot">.</span><small>by MANABIXX</small></span></a>
-      <div class="side-label">WORKSPACE</div>
-      <button class="side-link active"><Home size={17}/>ホーム</button>
-      <button class="side-link" onclick={()=>document.getElementById('practice')?.scrollIntoView({behavior:'smooth'})}><BookOpen size={17}/>問題演習</button>
-      <button class="side-link" onclick={()=>begin('wrong')}><RotateCcw size={17}/>苦手問題<span class="side-count">{wrongIds.length}</span></button>
-      <button class="side-link" onclick={()=>begin('bookmarks')}><Bookmark size={17}/>保存した問題<span class="side-count">{bookmarks.length}</span></button>
-      <div class="side-label side-label-gap">LEARNING</div>
-      <a class="side-link" href="/summary/"><Layers3 size={17}/>要点まとめ</a>
-      <a class="side-link" href="/exam/"><GraduationCap size={17}/>公立入試問題</a>
-      <a class="side-link" href="/motivation/"><Sparkles size={17}/>学習のヒント</a>
-      <div class="sidebar-bottom"><div class="mini-profile"><div class="avatar">S</div><div><b>My Study</b><small>自分のペースで進もう</small></div><button aria-label="設定"><Settings2 size={16}/></button></div><small class="version">MANABIXX STUDY · BETA</small></div>
+{#if screen === 'home'}
+  <div class="study-app">
+    <aside class:menu-open={mobileMenu} class="rail">
+      <a href="/" class="mark" aria-label="MANABIXX Study"><span>M</span><i></i></a>
+      <div class="rail-links">
+        <button class="rail-link selected" aria-label="ホーム"><Layers3 size={19}/></button>
+        <button class="rail-link" aria-label="問題演習" onclick={() => document.getElementById('question-bank')?.scrollIntoView({behavior:'smooth'})}><Target size={19}/></button>
+        <a class="rail-link" href="/library/" aria-label="教材ライブラリ"><LibraryBig size={19}/></a>
+        <a class="rail-link" href="/summary/" aria-label="要点まとめ"><BookOpen size={19}/></a>
+        <a class="rail-link" href="/exam/" aria-label="入試問題"><GraduationCap size={19}/></a>
+      </div>
+      <div class="rail-bottom">
+        <button class="rail-link" onclick={toggleTheme} aria-label="テーマ切替">{#if theme === 'light'}<Moon size={19}/>{:else}<Sun size={19}/>{/if}</button>
+        <div class="rail-avatar">S</div>
+      </div>
     </aside>
-    <main class="main-area">
-      <header class="topbar">
-        <button class="mobile-menu" aria-label="メニュー" onclick={()=>mobileMenu=!mobileMenu}><Menu size={20}/></button>
-        <div class="breadcrumb">Workspace <ChevronRight size={14}/> <b>ホーム</b></div>
-        <div class="top-actions"><span class="today"><CalendarDays size={15}/>今日も一歩ずつ</span><button class="icon-button" onclick={toggleTheme} aria-label="テーマ切替">{#if theme==='light'}<Moon size={18}/>{:else}<Sun size={18}/>{/if}</button></div>
+
+    <main class="workspace">
+      <header class="topline">
+        <button class="mobile-toggle" onclick={() => mobileMenu = !mobileMenu} aria-label="メニュー">{#if mobileMenu}<X size={20}/>{:else}<Menu size={20}/>{/if}</button>
+        <div class="crumb"><span>MANABIXX</span><b>/</b> STUDY</div>
+        <div class="topline-right">
+          <span class="live-dot">LEARNING SPACE</span>
+          <button class="theme-toggle" onclick={toggleTheme} aria-label="テーマ切替">{#if theme === 'light'}<Moon size={17}/>{:else}<Sun size={17}/>{/if}</button>
+        </div>
       </header>
-      <div class="content">
-        <section class="welcome">
-          <div class="welcome-copy"><div class="overline"><Sparkles size={13}/> YOUR LEARNING SPACE</div><h1>今日も、ひとつずつ。<br/><span>わかるを増やそう。</span></h1><p>焦らず、比べず、自分のペースで。今日の学習をここから始めよう。</p><button class="hero-cta" onclick={()=>document.getElementById('practice')?.scrollIntoView({behavior:'smooth'})}>学習を始める <ArrowRight size={16}/></button></div>
-          <div class="welcome-visual" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="hero-book"><BookOpen size={54}/><span class="book-spark">✦</span></div><div class="float-chip chip-a"><Check size={13}/> ONE STEP</div><div class="float-chip chip-b"><Zap size={14}/> KEEP GOING</div></div>
+
+      <div class="page-wrap">
+        <section class="intro">
+          <div class="intro-copy">
+            <div class="eyebrow"><span class="eyebrow-line"></span> YOUR PERSONAL LEARNING SPACE</div>
+            <h1>学びを、<br/><em>積み上げる。</em></h1>
+            <p>今日の一問が、明日の自信になる。<br/>自分のペースで、ひとつずつ。</p>
+            <button class="intro-cta" onclick={() => document.getElementById('question-bank')?.scrollIntoView({behavior:'smooth'})}>学習をはじめる <ArrowUpRight size={17}/></button>
+          </div>
+          <div class="intro-art" aria-hidden="true">
+            <div class="art-ring ring-a"></div><div class="art-ring ring-b"></div>
+            <div class="art-center"><span>MX</span><small>KEEP<br/>LEARNING</small></div>
+            <div class="art-tag tag-one"><Zap size={13}/> SMALL STEPS</div>
+            <div class="art-tag tag-two"><span></span> PROGRESS IS PROGRESS</div>
+            <div class="art-cross cross-one">✳</div><div class="art-cross cross-two">✳</div>
+          </div>
+          <div class="intro-index"><span>01</span><i></i><span>04</span></div>
         </section>
-        <div class="section-title"><div><span class="kicker">YOUR OVERVIEW</span><h2>学習ダッシュボード</h2></div><span class="subtle-date">MY LEARNING</span></div>
-        <section class="metric-grid">
-          <article class="metric-card"><div class="metric-top"><span class="metric-icon purple"><BookOpen size={18}/></span><span class="metric-label">収録問題</span></div><div class="metric-value">{bank.length.toLocaleString('ja-JP')}<small>問</small></div><div class="metric-foot">理科・社会を中心に収録</div></article>
-          <article class="metric-card"><div class="metric-top"><span class="metric-icon orange"><Flame size={18}/></span><span class="metric-label">累計回答</span></div><div class="metric-value">{answered.toLocaleString('ja-JP')}<small>問</small></div><div class="metric-foot">積み重ねた学習の記録</div></article>
-          <article class="metric-card"><div class="metric-top"><span class="metric-icon green"><Target size={18}/></span><span class="metric-label">正答率</span></div><div class="metric-value">{accuracy}<small>%</small></div><div class="metric-foot">これまでの回答から計算</div></article>
-          <article class="metric-card"><div class="metric-top"><span class="metric-icon blue"><Bookmark size={18}/></span><span class="metric-label">復習リスト</span></div><div class="metric-value">{wrongIds.length+bookmarks.length}<small>件</small></div><div class="metric-foot">苦手・保存した問題</div></article>
+
+        <section class="stats-row">
+          <div class="stats-lead"><span class="eyebrow">YOUR ACTIVITY</span><h2>学習の記録</h2></div>
+          <div class="stat"><span>ANSWERED</span><strong>{answered.toLocaleString('ja-JP')}<small>問</small></strong><i>累計回答数</i></div>
+          <div class="stat"><span>ACCURACY</span><strong>{accuracy}<small>%</small></strong><i>累計正答率</i></div>
+          <div class="stat"><span>REVIEW</span><strong>{wrongIds.length + bookmarks.length}<small>件</small></strong><i>復習リスト</i></div>
+          <div class="stat-progress">
+            <div class="progress-head"><span>QUESTION BANK</span><b>{bank.length.toLocaleString('ja-JP')}問</b></div>
+            <div class="progress-track"><i style="width:{completion}%"></i></div>
+            <small>学習記録の蓄積率 {completion}%</small>
+          </div>
         </section>
-        <div class="section-title practice-title" id="practice"><div><span class="kicker">PRACTICE LIBRARY</span><h2>問題演習</h2><p>今日取り組む内容を選ぼう。</p></div><span class="question-total">{bank.length.toLocaleString('ja-JP')} questions</span></div>
-        {#if loading}
-          <div class="loading-card"><div class="loader"></div><p>問題データを読み込んでいます…</p></div>
-        {:else if loadError}
-          <div class="loading-card error-card"><CircleHelp size={24}/><p>{loadError}</p></div>
-        {:else}
-          <section class="practice-layout">
-            <div class="practice-main">
-              <div class="filter-card">
-                <div class="filter-heading"><div><h3><Settings2 size={17}/> 演習をカスタマイズ</h3><p>教科や分野、問題数を自由に設定。</p></div><button class="reset-button" onclick={resetFilters}>リセット</button></div>
-                <div class="field-label">教科を選択</div>
-                <div class="subject-grid">
-                  <button class:subject-selected={subject==='all'} class="subject-option" onclick={()=>{subject='all';topic='all';}}><span class="subject-symbol all-symbol"><Layers3 size={19}/></span><span><b>理科・社会</b><small>{(scienceCount+socialCount).toLocaleString('ja-JP')}問</small></span>{#if subject==='all'}<Check size={17} class="selected-check"/>{/if}</button>
-                  <button class:subject-selected={subject==='science'} class="subject-option" onclick={()=>{subject='science';topic='all';}}><span class="subject-symbol science-symbol"><Atom size={19}/></span><span><b>理科</b><small>{scienceCount.toLocaleString('ja-JP')}問</small></span>{#if subject==='science'}<Check size={17} class="selected-check"/>{/if}</button>
-                  <button class:subject-selected={subject==='social'} class="subject-option" onclick={()=>{subject='social';topic='all';}}><span class="subject-symbol social-symbol"><GraduationCap size={19}/></span><span><b>社会</b><small>{socialCount.toLocaleString('ja-JP')}問</small></span>{#if subject==='social'}<Check size={17} class="selected-check"/>{/if}</button>
+
+        <section class="section-block" id="question-bank">
+          <div class="section-heading">
+            <div><span class="eyebrow">01 / PRACTICE</span><h2>今日のトレーニング</h2><p>教科と分野を選んで、今の自分に必要な問題に取り組もう。</p></div>
+            <span class="section-count">PICK YOUR FOCUS <ArrowUpRight size={15}/></span>
+          </div>
+          {#if loading}
+            <div class="state-panel"><div class="spinner"></div><span>問題データを読み込んでいます</span></div>
+          {:else if loadError}
+            <div class="state-panel error-state"><CircleHelp size={22}/><span>{loadError}</span></div>
+          {:else}
+            <div class="training-layout">
+              <div class="training-main">
+                <div class="subject-picks">
+                  <button class:active={subject === 'all'} class="subject-pick all-pick" onclick={() => {subject='all';topic='all';}}>
+                    <div class="pick-top"><span>ALL SUBJECTS</span><ArrowUpRight size={16}/></div><div class="pick-name">理科 <i>+</i> 社会</div><div class="pick-foot">{(scienceCount + socialCount).toLocaleString('ja-JP')} QUESTIONS</div><div class="pick-index">01</div>
+                  </button>
+                  <button class:active={subject === 'science'} class="subject-pick science-pick" onclick={() => {subject='science';topic='all';}}>
+                    <div class="pick-top"><span>SCIENCE</span><Atom size={18}/></div><div class="pick-name">理科</div><div class="pick-foot">{scienceCount.toLocaleString('ja-JP')} QUESTIONS</div><div class="pick-index">02</div>
+                  </button>
+                  <button class:active={subject === 'social'} class="subject-pick social-pick" onclick={() => {subject='social';topic='all';}}>
+                    <div class="pick-top"><span>SOCIAL STUDIES</span><GraduationCap size={18}/></div><div class="pick-name">社会</div><div class="pick-foot">{socialCount.toLocaleString('ja-JP')} QUESTIONS</div><div class="pick-index">03</div>
+                  </button>
                 </div>
-                <div class="field-grid">
-                  <label><span class="field-label">分野</span><div class="select-wrap"><select bind:value={topic}><option value="all">すべての分野</option>{#each topics as t}<option value={t}>{t}</option>{/each}</select><ChevronDown size={15}/></div></label>
-                  <label><span class="field-label">難易度</span><div class="select-wrap"><select bind:value={level}><option value="all">すべて</option><option value="基礎">基礎</option><option value="標準">標準</option><option value="応用">応用</option></select><ChevronDown size={15}/></div></label>
+                <div class="filter-panel">
+                  <div class="filter-top"><div><span class="eyebrow">MAKE IT YOURS</span><h3>演習をカスタマイズ</h3></div><button class="clear-filter" onclick={resetFilters}>リセット <RotateCcw size={13}/></button></div>
+                  <label class="search-box"><Search size={17}/><input bind:value={query} placeholder="問題文・単元から検索"/><kbd>⌕</kbd></label>
+                  <div class="filter-controls">
+                    <label><span>分野</span><div class="select-shell"><select bind:value={topic}><option value="all">すべての分野</option>{#each topics as t}<option value={t}>{t}</option>{/each}</select><ChevronDown size={15}/></div></label>
+                    <label><span>レベル</span><div class="select-shell"><select bind:value={level}><option value="all">すべて</option><option value="基礎">基礎</option><option value="標準">標準</option><option value="応用">応用</option></select><ChevronDown size={15}/></div></label>
+                    <label><span>問題数</span><div class="select-shell"><select bind:value={amount}><option value="10">10問</option><option value="20">20問</option><option value="30">30問</option><option value="50">50問</option><option value="all">全問</option></select><ChevronDown size={15}/></div></label>
+                  </div>
+                  <div class="filter-bottom"><div><strong>{filtered.length.toLocaleString('ja-JP')}</strong><span>問が見つかりました</span></div><button class="launch-button" onclick={() => begin()}>演習をスタート <ArrowUpRight size={17}/></button></div>
                 </div>
-                <div class="field-label count-label">問題数</div>
-                <div class="count-options">{#each ['10','20','30','50','all'] as n}<button class:count-active={amount===n} onclick={()=>amount=n}>{n==='all'?'全問':n+'問'}</button>{/each}</div>
-                <div class="filter-footer"><span><b>{filtered.length.toLocaleString('ja-JP')}</b> 問が見つかりました</span><button class="start-button" onclick={()=>begin()}>この内容で始める <ArrowRight size={16}/></button></div>
               </div>
+              <aside class="training-side">
+                <div class="review-tile">
+                  <div class="tile-top"><span>REVIEW MODE</span><RotateCcw size={17}/></div>
+                  <div class="tile-number">{wrongIds.length.toString().padStart(2,'0')}</div>
+                  <h3>苦手を、得意に。</h3><p>間違えた問題だけを集めて、もう一度チャレンジ。</p>
+                  <button onclick={() => begin('wrong')}>間違えた問題を解く <ArrowRight size={15}/></button>
+                </div>
+                <div class="saved-tile">
+                  <div class="tile-top"><span>BOOKMARKS</span><Bookmark size={16}/></div>
+                  <div class="saved-row"><strong>{bookmarks.length.toString().padStart(2,'0')}</strong><span>保存した問題</span></div>
+                  <button onclick={() => begin('bookmarks')}>保存リストを開く <ArrowUpRight size={15}/></button>
+                </div>
+              </aside>
             </div>
-            <aside class="practice-aside">
-              <div class="review-card"><div class="review-card-icon"><RotateCcw size={19}/></div><div class="review-head"><b>苦手を克服する</b><span>{wrongIds.length}問</span></div><p>間違えた問題だけを集中的に解き直そう。</p><button onclick={()=>begin('wrong')}>復習を始める <ArrowRight size={15}/></button></div>
-              <div class="review-card bookmark-card"><div class="review-card-icon"><Bookmark size={19}/></div><div class="review-head"><b>あとで見直す</b><span>{bookmarks.length}問</span></div><p>気になった問題や覚えておきたい問題。</p><button onclick={()=>begin('bookmarks')}>保存リストを見る <ArrowRight size={15}/></button></div>
-              <div class="aside-note"><Sparkles size={17}/><div><b>小さな積み重ねを大切に。</b><p>1日10問でも、続ければ大きな力になる。</p></div></div>
-            </aside>
-          </section>
-        {/if}
-        <section class="resource-row"><a href="/summary/"><span class="resource-icon"><Layers3 size={19}/></span><span><b>要点まとめ</b><small>重要事項と基礎問題</small></span><ArrowRight size={17}/></a><a href="/exam/"><span class="resource-icon peach"><GraduationCap size={19}/></span><span><b>公立入試問題</b><small>実戦形式の演習</small></span><ArrowRight size={17}/></a><a href="/mock-exam/"><span class="resource-icon mint"><Target size={19}/></span><span><b>模試・予想問題</b><small>実力をチェック</small></span><ArrowRight size={17}/></a><a href="/library/"><span class="resource-icon"><BookOpen size={19}/></span><span><b>学習ライブラリ</b><small>単元・知識を検索</small></span><ArrowRight size={17}/></a><a href="/motivation/"><span class="resource-icon peach"><Sparkles size={19}/></span><span><b>学習のヒント</b><small>前向きな一歩を</small></span><ArrowRight size={17}/></a><a href="/releases/"><span class="resource-icon mint"><CalendarDays size={19}/></span><span><b>更新履歴</b><small>新機能のお知らせ</small></span><ArrowRight size={17}/></a></section>
-        <footer><a class="footer-brand" href="/">study<span>.</span></a><span>Made for steady progress. <b>MANABIXX</b></span></footer>
+          {/if}
+        </section>
+
+        <section class="section-block resources-block">
+          <div class="section-heading compact-heading"><div><span class="eyebrow">02 / EXPLORE</span><h2>教材を探す</h2></div><a href="/library/">すべての教材を見る <ArrowUpRight size={15}/></a></div>
+          <div class="resource-grid">
+            <a href="/summary/" class="resource-card resource-summary"><span class="resource-no">A / 01</span><div class="resource-icon"><BookOpen size={23}/></div><h3>要点まとめ</h3><p>重要事項を整理して、知識をつなげる。</p><span class="resource-link">EXPLORE <ArrowUpRight size={15}/></span></a>
+            <a href="/exam/" class="resource-card resource-exam"><span class="resource-no">B / 02</span><div class="resource-icon"><GraduationCap size={23}/></div><h3>公立入試問題</h3><p>実際の入試形式で、実戦力を磨く。</p><span class="resource-link">PRACTICE <ArrowUpRight size={15}/></span></a>
+            <a href="/mock-exam/" class="resource-card resource-mock"><span class="resource-no">C / 03</span><div class="resource-icon"><ChartNoAxesColumnIncreasing size={23}/></div><h3>模試・予想問題</h3><p>今の実力を確かめ、次の課題を見つける。</p><span class="resource-link">CHALLENGE <ArrowUpRight size={15}/></span></a>
+            <a href="/library/" class="resource-card resource-library"><span class="resource-no">D / 04</span><div class="resource-icon"><LibraryBig size={23}/></div><h3>学習ライブラリ</h3><p>単元・用語・資料をまとめて検索。</p><span class="resource-link">DISCOVER <ArrowUpRight size={15}/></span></a>
+          </div>
+        </section>
+
+        <footer class="site-footer"><a href="/" class="footer-logo">MANABIXX<span>.</span></a><span>MAKE PROGRESS, YOUR WAY.</span><a href="/releases/">更新履歴 <ArrowUpRight size={13}/></a></footer>
       </div>
     </main>
-    <nav class="mobile-bottom"><button class="active"><Home size={19}/><span>ホーム</span></button><button onclick={()=>document.getElementById('practice')?.scrollIntoView({behavior:'smooth'})}><BookOpen size={19}/><span>演習</span></button><button onclick={()=>begin('wrong')}><RotateCcw size={19}/><span>復習</span></button><button onclick={toggleTheme}>{#if theme==='light'}<Moon size={19}/>{:else}<Sun size={19}/>{/if}<span>テーマ</span></button></nav>
-  {:else if screen==='quiz'}
-    <main class="solve-screen">
-      <header class="solve-header"><button class="back-button" onclick={()=>screen='home'}><ChevronLeft size={19}/> <span>演習を終了</span></button><div class="solve-brand">study<span>.</span></div><div class="solve-count">{index+1}<small> / {pool.length}</small></div></header>
-      <div class="solve-progress"><i style="width:{(index+1)/pool.length*100}%"></i></div>
-      <section class="solve-content"><div class="solve-meta"><span>{q.subject==='science'?'理科':'社会'}</span><span>{q.topic}</span><span>{q.level||'基礎'}</span></div><div class="solve-kicker">QUESTION <b>{String(index+1).padStart(2,'0')}</b></div><h1>{q.prompt}</h1><div class="solve-answers">{#each q.options as option,i}<button class:answer-correct={selected!==null&&i===q.correct} class:answer-wrong={selected===i&&selected!==q.correct} class:answer-dim={selected!==null&&i!==selected&&i!==q.correct} disabled={selected!==null} onclick={()=>choose(i)}><span class="answer-letter">{['A','B','C','D'][i]}</span><span>{option}</span>{#if selected!==null&&i===q.correct}<Check size={18}/>{/if}</button>{/each}</div>
-        {#if selected!==null}<div class:explain-good={selected===q.correct} class:explain-bad={selected!==q.correct} class="solve-explanation"><b>{selected===q.correct?'正解！':'もう一度確認しよう'}</b><p>{q.explanation}</p>{#if q.sourceNote}<small>{q.sourceNote}</small>{/if}</div>{/if}
-        <div class="solve-actions"><button class="save-question" onclick={toggleBookmark}><Bookmark size={17}/>{bookmarks.includes(q.id)?'保存済み':'問題を保存'}</button><button class="next-question" disabled={selected===null} onclick={next}>{index===pool.length-1?'結果を見る':'次の問題へ'} <ArrowRight size={17}/></button></div>
+    <nav class="mobile-nav"><a class="on" href="/"><Layers3 size={18}/><span>ホーム</span></a><button onclick={() => document.getElementById('question-bank')?.scrollIntoView({behavior:'smooth'})}><Target size={18}/><span>演習</span></button><a href="/library/"><LibraryBig size={18}/><span>教材</span></a><button onclick={toggleTheme}>{#if theme === 'light'}<Moon size={18}/>{:else}<Sun size={18}/>{/if}<span>表示</span></button></nav>
+  </div>
+{:else if screen === 'quiz'}
+  <main class="focus-screen">
+    <header class="focus-header"><button class="exit-focus" onclick={backHome}><ChevronLeft size={18}/> 終了</button><a href="/" class="focus-brand">MANABIXX<span>.</span> <small>STUDY MODE</small></a><div class="focus-number">{String(index + 1).padStart(2,'0')} <i>/ {String(pool.length).padStart(2,'0')}</i></div></header>
+    <div class="focus-progress"><i style="width:{(index + 1) / pool.length * 100}%"></i></div>
+    {#if q}
+      <section class="focus-content">
+        <div class="focus-meta"><span>{q.subject === 'science' ? 'SCIENCE / 理科' : 'SOCIAL / 社会'}</span><span>{q.topic}</span><span>{q.level || '基礎'}</span></div>
+        <div class="focus-label">QUESTION <b>{String(index + 1).padStart(2,'0')}</b></div>
+        <h1>{q.prompt}</h1>
+        <div class="focus-answers">{#each q.options as option, i}<button class:chosen-correct={selected !== null && i === q.correct} class:chosen-wrong={selected === i && selected !== q.correct} class:answer-muted={selected !== null && i !== selected && i !== q.correct} disabled={selected !== null} onclick={() => choose(i)}><span>{String(i + 1).padStart(2,'0')}</span><b>{option}</b>{#if selected !== null && i === q.correct}<Check size={19}/>{/if}</button>{/each}</div>
+        {#if selected !== null}<div class:good={selected === q.correct} class:bad={selected !== q.correct} class="answer-explain"><div class="explain-heading">{selected === q.correct ? '正解。いい調子。' : 'ここを確認しよう。'}</div><p>{q.explanation}</p>{#if q.sourceNote}<small>{q.sourceNote}</small>{/if}</div>{/if}
+        <div class="focus-actions"><button class="bookmark-action" onclick={toggleBookmark}><Bookmark size={16}/>{bookmarks.includes(q.id) ? '保存済み' : 'あとで復習'}</button><button class="next-action" disabled={selected === null} onclick={next}>{index === pool.length - 1 ? '結果を見る' : '次の問題へ'} <ArrowRight size={17}/></button></div>
       </section>
-      <div class="solve-bottom-note"><span>自分のペースで大丈夫。</span><span>MANABIXX STUDY</span></div>
-    </main>
-  {:else}
-    <main class="result-screen"><div class="result-confetti"><Trophy size={36}/></div><span class="kicker">SESSION COMPLETE</span><h1>おつかれさま！</h1><p>今日の積み重ねを、次の一歩につなげよう。</p><section class="result-summary"><div class="result-score">{score}<small> / {pool.length}</small></div><span>正解数</span><div class="result-bar"><i style="width:{score/pool.length*100}%"></i></div><b>正答率 {Math.round(score/pool.length*100)}%</b></section><div class="result-actions"><button class="next-question" onclick={()=>begin()}>もう一度演習する <ArrowRight size={17}/></button><button class="save-question" onclick={()=>screen='home'}>ホームに戻る</button></div></main>
-  {/if}
-</div>
+    {/if}
+    <footer class="focus-footer"><span>ONE QUESTION AT A TIME.</span><span>MANABIXX / STUDY</span></footer>
+  </main>
+{:else}
+  <main class="finish-screen"><div class="finish-symbol"><Trophy size={31}/></div><span class="eyebrow">SESSION COMPLETE</span><h1>よく取り組んだ。</h1><p>今日の積み重ねを、次の一歩につなげよう。</p><div class="finish-score"><strong>{score}<small> / {pool.length}</small></strong><span>正解数</span><div class="finish-track"><i style="width:{pool.length ? score / pool.length * 100 : 0}%"></i></div><b>正答率 {pool.length ? Math.round(score / pool.length * 100) : 0}%</b></div><button class="next-action" onclick={() => {screen='home';begin();}}>もう一度演習する <ArrowRight size={17}/></button><button class="finish-back" onclick={backHome}>ホームに戻る</button></main>
+{/if}
 
 <style>
-:global(body){background:var(--canvas)}
-.app-shell{min-height:100vh}.sidebar{position:fixed;inset:0 auto 0 0;width:244px;background:var(--surface);border-right:1px solid var(--line);padding:28px 18px;display:flex;flex-direction:column;z-index:20}.brand{display:flex;align-items:center;gap:11px;padding:0 10px;margin-bottom:48px;font-size:20px;font-weight:800;letter-spacing:-.8px}.brand-mark{height:38px;width:38px;border-radius:12px;background:var(--brand);color:white;display:grid;place-items:center}.brand-dot,.footer-brand span,.solve-brand span{color:var(--brand)}.brand small{display:block;font-size:9px;letter-spacing:1.2px;color:var(--muted);font-weight:700;margin-top:1px}.side-label{font-size:9px;font-weight:800;letter-spacing:1.5px;color:#a2a5b5;padding:0 12px 12px}.side-label-gap{margin-top:34px}.side-link{height:44px;padding:0 12px;border:0;background:none;display:flex;align-items:center;gap:12px;color:var(--muted);font-size:12px;font-weight:600;border-radius:10px;margin:2px 0;text-align:left}.side-link:hover,.side-link.active{background:var(--brand-soft);color:var(--brand)}.side-count{margin-left:auto;background:var(--surface-2);padding:3px 7px;border-radius:20px;font-size:10px}.sidebar-bottom{margin-top:auto}.mini-profile{border-top:1px solid var(--line);padding:18px 5px 15px;display:flex;align-items:center;gap:10px}.avatar{height:34px;width:34px;border-radius:11px;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;font-weight:800}.mini-profile b,.mini-profile small{display:block}.mini-profile b{font-size:11px}.mini-profile small{font-size:9px;color:var(--muted);margin-top:3px}.mini-profile button{margin-left:auto;border:0;background:none;color:var(--muted)}.version{font-size:8px;letter-spacing:1px;color:#a2a5b5;padding-left:7px}.main-area{margin-left:244px;min-height:100vh}.topbar{height:72px;background:var(--surface);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 46px;position:sticky;top:0;z-index:10}.breadcrumb,.top-actions,.today{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:11px}.breadcrumb b{color:var(--ink)}.top-actions{gap:19px}.today{gap:7px}.icon-button,.mobile-menu{height:36px;width:36px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--muted);display:grid;place-items:center}.mobile-menu{display:none}.content{max-width:1240px;margin:auto;padding:35px 46px 20px}.welcome{min-height:260px;border-radius:22px;background:linear-gradient(110deg,#eeedff 0%,#f2f0ff 54%,#e7e7ff 100%);position:relative;overflow:hidden;padding:38px 45px;display:flex;align-items:center;justify-content:space-between;color:#252443}.overline{display:flex;align-items:center;gap:7px;color:#766bdc;font-size:9px;letter-spacing:1.6px;font-weight:800}.welcome h1{font-size:31px;letter-spacing:-1.2px;line-height:1.55;margin:12px 0 7px}.welcome h1 span{color:#7165dc}.welcome p{font-size:11px;color:#77758e;margin:0 0 21px}.hero-cta{display:flex;align-items:center;gap:14px;border:0;border-radius:10px;background:#6658e8;color:white;padding:12px 17px;font-size:11px;font-weight:700;box-shadow:0 7px 16px #6658e83b}.welcome-visual{height:210px;width:280px;position:relative;display:grid;place-items:center;margin-right:22px}.orbit{position:absolute;border:1px solid #c8c4f5;border-radius:50%;width:220px;height:150px;transform:rotate(-27deg)}.orbit-two{width:180px;height:210px;transform:rotate(38deg)}.hero-book{height:112px;width:112px;border-radius:30px;background:#fff;color:#766be7;display:grid;place-items:center;box-shadow:0 17px 45px #5547b329;position:relative;transform:rotate(-8deg)}.book-spark{position:absolute;right:-8px;top:-13px;font-size:30px;color:#f0a75c}.float-chip{position:absolute;display:flex;align-items:center;gap:6px;background:white;color:#77729f;padding:8px 11px;border-radius:9px;font-size:8px;font-weight:800;letter-spacing:.7px;box-shadow:0 6px 18px #3b347b14}.chip-a{top:30px;left:0}.chip-b{bottom:27px;right:-8px}.section-title{display:flex;justify-content:space-between;align-items:end;margin:34px 0 15px}.kicker{font-size:9px;letter-spacing:1.5px;font-weight:800;color:var(--brand)}.section-title h2{font-size:18px;margin:5px 0 0;letter-spacing:-.4px}.subtle-date,.question-total{font-size:9px;letter-spacing:1px;color:var(--muted)}.metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.metric-card{padding:17px 18px 15px;background:var(--surface);border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow)}.metric-top{display:flex;align-items:center;gap:9px}.metric-icon{height:31px;width:31px;display:grid;place-items:center;border-radius:10px}.purple{background:#efedff;color:#7669e6}.orange{background:#fff2e7;color:#e39a52}.green{background:#e7f7f0;color:#37a47f}.blue{background:#eaf2ff;color:#6595df}.metric-label{font-size:10px;color:var(--muted);font-weight:600}.metric-value{font-size:26px;font-weight:800;letter-spacing:-1px;margin:12px 0 3px}.metric-value small{font-size:11px;color:var(--muted);margin-left:4px}.metric-foot{font-size:9px;color:var(--muted)}.practice-title{margin-top:38px}.practice-title p{font-size:10px;color:var(--muted);margin:5px 0 0}.practice-layout{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(235px,.85fr);gap:15px}.filter-card,.review-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}.filter-card{padding:22px}.filter-heading{display:flex;align-items:start;justify-content:space-between;margin-bottom:20px}.filter-heading h3{font-size:13px;display:flex;align-items:center;gap:8px;margin:0}.filter-heading h3 :global(svg){color:var(--brand)}.filter-heading p{font-size:10px;color:var(--muted);margin:6px 0 0}.reset-button{border:0;background:none;color:var(--muted);font-size:10px}.field-label{display:block;font-size:10px;color:var(--muted);font-weight:700;margin-bottom:9px}.subject-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.subject-option{position:relative;min-width:0;display:flex;align-items:center;gap:9px;text-align:left;padding:10px;border:1px solid var(--line);border-radius:11px;background:var(--surface);color:var(--ink)}.subject-option.subject-selected{border-color:var(--brand);background:var(--brand-soft)}.subject-symbol{height:31px;width:31px;border-radius:9px;display:grid;place-items:center;flex:none}.all-symbol{background:#eeedff;color:#7569e8}.science-symbol{background:#e7f6ef;color:#399b79}.social-symbol{background:#fff1e7;color:#d99254}.subject-option b,.subject-option small{display:block;white-space:nowrap}.subject-option b{font-size:10px}.subject-option small{font-size:8px;color:var(--muted);margin-top:3px}.selected-check{margin-left:auto;color:var(--brand);flex:none}.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:19px}.select-wrap{position:relative}.select-wrap select{appearance:none;width:100%;height:39px;border:1px solid var(--line);border-radius:9px;padding:0 32px 0 11px;background:var(--surface-2);color:var(--ink);font-size:10px;outline:none}.select-wrap :global(svg){position:absolute;right:11px;top:12px;color:var(--muted);pointer-events:none}.count-label{margin-top:19px}.count-options{display:flex;gap:7px}.count-options button{height:34px;min-width:51px;padding:0 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--muted);font-size:10px}.count-options button.count-active{background:var(--brand-soft);border-color:var(--brand);color:var(--brand);font-weight:800}.filter-footer{border-top:1px solid var(--line);margin-top:20px;padding-top:16px;display:flex;align-items:center;justify-content:space-between}.filter-footer>span{font-size:9px;color:var(--muted)}.filter-footer>span b{color:var(--ink);font-size:13px}.start-button,.next-question{height:40px;border:0;border-radius:9px;background:var(--brand);color:white;display:flex;align-items:center;justify-content:center;gap:10px;padding:0 15px;font-size:10px;font-weight:700}.practice-aside{display:flex;flex-direction:column;gap:10px}.review-card{padding:16px}.review-card-icon{height:33px;width:33px;display:grid;place-items:center;border-radius:10px;background:var(--brand-soft);color:var(--brand);margin-bottom:11px}.review-head{display:flex;justify-content:space-between;align-items:center}.review-head b{font-size:11px}.review-head span{font-size:9px;color:var(--brand);background:var(--brand-soft);border-radius:20px;padding:4px 7px}.review-card p{font-size:9px;line-height:1.7;color:var(--muted);margin:6px 0 11px}.review-card>button{border:0;background:none;color:var(--brand);font-size:9px;font-weight:700;padding:0;display:flex;align-items:center;gap:7px}.bookmark-card .review-card-icon{background:#fff2e7;color:#d99558}.bookmark-card .review-head span{background:#fff2e7;color:#d99558}.aside-note{display:flex;align-items:start;gap:10px;background:var(--brand-soft);padding:13px;border-radius:12px;color:var(--brand)}.aside-note b{font-size:9px}.aside-note p{font-size:8px;color:var(--muted);margin:4px 0 0;line-height:1.6}.resource-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:11px;margin-top:23px}.resource-row>a{display:flex;align-items:center;gap:10px;padding:13px;background:var(--surface);border:1px solid var(--line);border-radius:12px}.resource-icon{height:32px;width:32px;border-radius:9px;background:#eeedff;color:#7669e6;display:grid;place-items:center;flex:none}.resource-icon.peach{background:#fff1e7;color:#d99558}.resource-icon.mint{background:#e7f7f0;color:#399b79}.resource-row b,.resource-row small{display:block}.resource-row b{font-size:10px}.resource-row small{font-size:8px;color:var(--muted);margin-top:4px}.resource-row>a>svg{margin-left:auto;color:var(--muted)}footer{display:flex;align-items:center;justify-content:space-between;padding:24px 2px 8px;color:var(--muted);font-size:9px}.footer-brand{font-size:16px;font-weight:800;color:var(--ink)}footer b{color:var(--ink);margin-left:6px}.loading-card{min-height:190px;border:1px dashed var(--line);border-radius:15px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);font-size:11px;gap:12px}.error-card{color:#c55}.loader{width:25px;height:25px;border:2px solid var(--line);border-top-color:var(--brand);border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.mobile-bottom{display:none}
-/* Focused solving mode */
-.solve-screen{min-height:100vh;max-width:960px;margin:auto;padding:0 35px;display:flex;flex-direction:column}.solve-header{height:72px;display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;border-bottom:1px solid var(--line)}.back-button{display:flex;align-items:center;gap:5px;justify-self:start;border:0;background:none;color:var(--muted);font-size:11px}.solve-brand{font-weight:800;font-size:17px;justify-self:center}.solve-count{justify-self:end;font-weight:800;font-size:14px}.solve-count small{font-size:10px;color:var(--muted);font-weight:500}.solve-progress{height:4px;background:var(--line);border-radius:5px;overflow:hidden}.solve-progress i{height:100%;display:block;background:var(--brand);transition:width .25s}.solve-content{width:100%;max-width:680px;margin:55px auto 40px}.solve-meta{display:flex;gap:7px;margin-bottom:31px}.solve-meta span{font-size:9px;color:var(--muted);padding:6px 10px;border:1px solid var(--line);border-radius:30px}.solve-kicker{font-size:10px;letter-spacing:1.5px;color:var(--muted)}.solve-kicker b{color:var(--brand);margin-left:6px}.solve-content h1{font-size:25px;line-height:1.8;letter-spacing:-.4px;margin:17px 0 29px}.solve-answers{display:grid;gap:11px}.solve-answers button{width:100%;min-height:60px;display:flex;align-items:center;gap:15px;text-align:left;border:1px solid var(--line);border-radius:13px;padding:12px 16px;background:var(--surface);color:var(--ink);font-size:13px;transition:border .15s,background .15s}.solve-answers button:hover:not(:disabled){border-color:var(--brand);background:var(--brand-soft)}.answer-letter{height:31px;width:31px;display:grid;place-items:center;border-radius:9px;background:var(--surface-2);color:var(--muted);font-size:10px;font-weight:800;flex:none}.solve-answers button :global(svg){margin-left:auto;color:#239a75}.solve-answers button.answer-correct{border-color:#46b18e;background:#eaf8f2;color:#206c53}.solve-answers button.answer-wrong{border-color:#e07d84;background:#fff0f1;color:#a13e48}.solve-answers button.answer-dim{opacity:.48}.solve-explanation{margin-top:20px;padding:18px;border-radius:12px;background:var(--surface-2);font-size:12px;line-height:1.8}.solve-explanation b{font-size:13px}.solve-explanation p{margin:7px 0 0}.solve-explanation small{display:block;color:var(--muted);margin-top:8px}.explain-good b{color:#239a75}.explain-bad b{color:#d05b66}.solve-actions{display:flex;justify-content:space-between;align-items:center;margin-top:25px}.save-question{height:40px;padding:0 14px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--muted);display:flex;align-items:center;gap:7px;font-size:10px}.next-question:disabled{opacity:.4;cursor:not-allowed}.solve-bottom-note{margin-top:auto;padding:20px 0;display:flex;justify-content:space-between;color:var(--muted);font-size:8px;letter-spacing:.7px}.result-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:25px}.result-confetti{height:75px;width:75px;border-radius:24px;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;margin-bottom:20px}.result-screen h1{font-size:31px;margin:10px 0}.result-screen>p{font-size:11px;color:var(--muted)}.result-summary{width:min(100%,400px);margin:25px 0;padding:28px;background:var(--surface);border:1px solid var(--line);border-radius:17px;display:flex;flex-direction:column;align-items:center;gap:8px}.result-score{font-size:48px;font-weight:800;color:var(--brand)}.result-score small{font-size:15px;color:var(--muted)}.result-summary>span,.result-summary>b{font-size:10px;color:var(--muted)}.result-bar{width:100%;height:6px;background:var(--line);border-radius:5px;overflow:hidden;margin:12px 0}.result-bar i{height:100%;display:block;background:var(--brand)}.result-actions{display:flex;gap:9px}
-@media(max-width:1100px){.sidebar{width:215px}.main-area{margin-left:215px}.content{padding-left:28px;padding-right:28px}.topbar{padding:0 28px}.metric-grid{grid-template-columns:repeat(2,1fr)}.welcome-visual{margin-right:0}.practice-layout{grid-template-columns:minmax(0,1.5fr) minmax(215px,.8fr)}}
-@media(max-width:760px){.sidebar{transform:translateX(-100%);transition:transform .2s;width:260px;box-shadow:var(--shadow)}.sidebar.open{transform:translateX(0)}.main-area{margin-left:0;padding-bottom:72px}.topbar{height:60px;padding:0 17px}.mobile-menu{display:grid}.breadcrumb{margin-right:auto;margin-left:10px}.today{display:none}.top-actions{gap:8px}.content{padding:20px 16px}.welcome{min-height:230px;padding:25px 22px}.welcome h1{font-size:25px}.welcome p{font-size:9px;max-width:240px;line-height:1.8}.welcome-visual{width:125px;margin-right:-30px;transform:scale(.8)}.hero-book{height:90px;width:90px}.orbit{width:160px;height:120px}.orbit-two{width:130px;height:155px}.float-chip{font-size:7px;padding:7px}.chip-a{left:-12px}.chip-b{right:-15px}.section-title{margin-top:27px}.metric-grid{gap:8px}.metric-card{padding:13px}.metric-value{font-size:23px}.metric-foot{font-size:8px}.practice-layout{grid-template-columns:1fr}.practice-aside{display:grid;grid-template-columns:1fr 1fr}.aside-note{grid-column:span 2}.filter-card{padding:17px}.resource-row{grid-template-columns:1fr;gap:7px;margin-top:16px}.resource-row>a{padding:11px}.resource-row small{font-size:9px}.subtle-date{display:none}.mobile-bottom{position:fixed;z-index:15;bottom:0;left:0;right:0;height:66px;background:var(--surface);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding-bottom:env(safe-area-inset-bottom)}.mobile-bottom button{width:25%;border:0;background:none;color:var(--muted);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:8px}.mobile-bottom button.active{color:var(--brand)}footer{padding-bottom:12px}.solve-screen{padding:0 17px}.solve-header{height:60px}.solve-content{margin:35px auto}.solve-content h1{font-size:20px;line-height:1.75;margin:14px 0 23px}.solve-answers button{min-height:56px;font-size:12px}.solve-bottom-note{padding-bottom:18px}.solve-count{font-size:12px}}
-@media(max-width:420px){.welcome-visual{display:none}.welcome{min-height:215px}.subject-grid{gap:5px}.subject-option{padding:8px 6px;gap:6px}.subject-symbol{height:27px;width:27px}.subject-option b{font-size:9px}.subject-option small{font-size:7px}.selected-check{width:13px}.count-options{gap:5px}.count-options button{min-width:0;flex:1;padding:0 5px}.filter-footer{align-items:flex-start;gap:10px}.start-button{font-size:9px;padding:0 10px}.practice-aside{grid-template-columns:1fr}.aside-note{grid-column:auto}.solve-content{margin-top:28px}.solve-meta{margin-bottom:23px}}
+  :global(body){margin:0;background:#f4f4ef;color:#191b18;font-family:'DM Sans','Noto Sans JP',sans-serif}
+  :global(:root[data-theme='dark']) .study-app{--paper:#151713;--paper-2:#1e211c;--ink:#f1f2e9;--muted:#a2a797;--line:#34382f;--acid:#d5ff4f;--acid-ink:#1c2110;--tile:#20231e;--soft:#292d25}
+  .study-app{--paper:#f4f4ef;--paper-2:#eaece4;--ink:#191b18;--muted:#777d70;--line:#dfe2d8;--acid:#c9f344;--acid-ink:#222b10;--tile:#fff;--soft:#edf0e7;min-height:100vh;background:var(--paper);color:var(--ink);transition:background .2s,color .2s}
+  .rail{position:fixed;inset:0 auto 0 0;width:76px;background:#191c17;color:#f4f5ed;display:flex;align-items:center;flex-direction:column;padding:22px 0 18px;z-index:30}
+  .mark{width:39px;height:39px;border:1px solid #59604e;border-radius:12px;display:grid;place-items:center;position:relative;color:#d6ff55;font-size:18px;font-weight:900;letter-spacing:-2px}.mark i{position:absolute;width:5px;height:5px;border-radius:50%;background:#d6ff55;right:7px;top:7px}
+  .rail-links{display:flex;flex-direction:column;gap:12px;margin-top:66px}.rail-link{width:42px;height:42px;border:0;border-radius:12px;background:transparent;color:#8e9583;display:grid;place-items:center;transition:.18s}.rail-link:hover,.rail-link.selected{background:#d4fb4d;color:#202519}.rail-bottom{margin-top:auto;display:flex;flex-direction:column;align-items:center;gap:17px}.rail-avatar{width:32px;height:32px;border-radius:50%;background:#343a2d;color:#d8ff58;display:grid;place-items:center;font-size:11px;font-weight:800}
+  .workspace{margin-left:76px;min-height:100vh}.topline{height:64px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(22px,5vw,76px);background:var(--paper)}.crumb{font-size:10px;font-weight:800;letter-spacing:1.5px}.crumb span{color:var(--muted)}.crumb b{color:#b3b8aa;margin:0 10px}.topline-right{display:flex;align-items:center;gap:20px}.live-dot{font-size:8px;letter-spacing:1.7px;font-weight:800;color:var(--muted)}.live-dot:before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:#a9d735;margin:0 8px 1px 0}.theme-toggle{width:34px;height:34px;border:1px solid var(--line);border-radius:50%;background:transparent;color:var(--ink);display:grid;place-items:center}.mobile-toggle{display:none}
+  .page-wrap{max-width:1440px;margin:auto;padding:0 clamp(22px,5vw,76px) 26px}.intro{min-height:370px;background:#20251d;color:#f4f5ed;margin-top:26px;border-radius:5px;position:relative;overflow:hidden;padding:53px 6.5%;display:flex;align-items:center;justify-content:space-between}.intro-copy{position:relative;z-index:2}.eyebrow{font-size:9px;letter-spacing:2px;font-weight:800;color:#8d9a7a;display:block}.eyebrow-line{display:inline-block;width:24px;height:2px;background:#d4fa4e;vertical-align:middle;margin-right:9px}.intro h1{font-size:clamp(44px,5.2vw,72px);line-height:1.16;letter-spacing:-3.5px;margin:24px 0 17px;font-weight:700}.intro h1 em{font-style:normal;color:#d3fb4c}.intro p{font-size:12px;line-height:2;color:#aeb5a4;margin:0 0 25px}.intro-cta{height:45px;padding:0 18px;background:#d2fa4b;border:0;color:#222719;border-radius:3px;display:flex;align-items:center;gap:30px;font-size:11px;font-weight:800}.intro-art{position:absolute;right:8%;top:50%;transform:translateY(-50%);width:370px;height:310px;display:grid;place-items:center}.art-ring{position:absolute;width:280px;height:280px;border:1px solid #535d47;border-radius:50%}.ring-b{width:210px;height:210px;border-style:dashed;border-color:#69745a;animation:rotate 38s linear infinite}.art-center{width:154px;height:154px;border-radius:50%;background:#d3fa4c;color:#20251d;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(-9deg);box-shadow:0 0 0 16px #d3fa4c13,0 0 0 42px #d3fa4c09}.art-center span{font-size:52px;font-weight:900;letter-spacing:-5px}.art-center small{font-size:7px;letter-spacing:2px;font-weight:900;text-align:center;line-height:1.5}.art-tag{position:absolute;background:#30382a;color:#e1e8d7;padding:10px 13px;border:1px solid #4b5740;font-size:8px;font-weight:800;letter-spacing:1px;display:flex;align-items:center;gap:7px}.tag-one{top:36px;left:6px}.tag-one :global(svg){color:#d3fa4c}.tag-two{right:-6px;bottom:35px}.tag-two span{width:6px;height:6px;background:#d3fa4c;border-radius:50%}.art-cross{position:absolute;color:#d3fa4c;font-size:24px}.cross-one{right:38px;top:25px}.cross-two{left:35px;bottom:24px;font-size:15px}.intro-index{position:absolute;bottom:25px;right:31px;display:flex;align-items:center;gap:10px;font-size:9px;color:#8d9583}.intro-index span:first-child{color:#d3fa4c}.intro-index i{width:40px;height:1px;background:#59624e}
+  .stats-row{display:grid;grid-template-columns:1.15fr repeat(3,.8fr) 1.4fr;align-items:center;border-bottom:1px solid var(--line);padding:29px 0 30px;gap:20px}.stats-lead h2{font-size:17px;margin:6px 0 0;letter-spacing:-.5px}.stats-lead .eyebrow{color:var(--muted)}.stat{border-left:1px solid var(--line);padding-left:20px}.stat>span,.progress-head span{display:block;font-size:8px;letter-spacing:1.5px;color:var(--muted);font-weight:800}.stat strong{display:block;font-size:27px;letter-spacing:-1.5px;margin:5px 0 0}.stat strong small{font-size:11px;margin-left:4px;color:var(--muted)}.stat>i{font-style:normal;font-size:9px;color:var(--muted)}.stat-progress{border-left:1px solid var(--line);padding-left:20px}.progress-head{display:flex;justify-content:space-between;align-items:center}.progress-head b{font-size:10px}.progress-track{height:5px;background:var(--line);margin:13px 0 8px;border-radius:5px;overflow:hidden}.progress-track i{display:block;height:100%;background:#a9d735}.stat-progress>small{font-size:8px;color:var(--muted)}
+  .section-block{padding-top:52px}.section-heading{display:flex;align-items:end;justify-content:space-between;margin-bottom:22px}.section-heading .eyebrow{color:#879079}.section-heading h2{font-size:25px;letter-spacing:-1px;margin:7px 0 5px}.section-heading p{font-size:11px;color:var(--muted);margin:0}.section-count{display:flex;align-items:center;gap:9px;font-size:8px;letter-spacing:1.4px;font-weight:800;color:var(--muted);padding-bottom:5px}.training-layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:15px}.training-main{min-width:0}.subject-picks{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.subject-pick{height:150px;position:relative;overflow:hidden;border:1px solid var(--line);border-radius:4px;text-align:left;padding:16px 17px;background:var(--tile);color:var(--ink);transition:transform .18s,border-color .18s}.subject-pick:hover{transform:translateY(-3px)}.subject-pick.active{border:1.5px solid #9cbd36;box-shadow:inset 0 0 0 1px #9cbd36}.pick-top{display:flex;justify-content:space-between;align-items:center;font-size:8px;letter-spacing:1.3px;font-weight:800;color:var(--muted)}.pick-top :global(svg){color:#8c9a77}.pick-name{font-size:26px;font-weight:800;letter-spacing:-1px;margin-top:18px}.pick-name i{font-style:normal;color:#a9d735;margin:0 3px}.pick-foot{font-size:8px;letter-spacing:1px;color:var(--muted);margin-top:6px}.pick-index{position:absolute;right:10px;bottom:-18px;font-size:75px;font-weight:900;letter-spacing:-8px;color:var(--soft);line-height:1}.science-pick{background:#eaf0e3;color:#20271b}.social-pick{background:#e8ece9;color:#20271b}.science-pick .pick-top,.social-pick .pick-top,.science-pick .pick-foot,.social-pick .pick-foot{color:#66715e}.science-pick .pick-index,.social-pick .pick-index{color:#dce5d4}.filter-panel{margin-top:12px;padding:22px;background:var(--tile);border:1px solid var(--line);border-radius:4px}.filter-top{display:flex;justify-content:space-between;align-items:start}.filter-top .eyebrow{color:var(--muted)}.filter-top h3{font-size:15px;margin:5px 0 0}.clear-filter{display:flex;align-items:center;gap:6px;border:0;background:none;color:var(--muted);font-size:9px}.search-box{height:43px;margin-top:19px;border:1px solid var(--line);display:flex;align-items:center;gap:10px;padding:0 12px;color:var(--muted)}.search-box input{min-width:0;flex:1;border:0;outline:0;background:transparent;color:var(--ink);font-size:11px}.search-box kbd{font-size:11px;color:var(--muted);border:1px solid var(--line);padding:2px 6px}.filter-controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:16px}.filter-controls label>span{display:block;font-size:9px;color:var(--muted);font-weight:700;margin-bottom:7px}.select-shell{position:relative}.select-shell select{appearance:none;width:100%;height:39px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:2px;padding:0 31px 0 10px;font-size:10px}.select-shell :global(svg){position:absolute;right:10px;top:12px;color:var(--muted);pointer-events:none}.filter-bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);margin-top:18px;padding-top:16px}.filter-bottom>div{display:flex;align-items:baseline;gap:7px}.filter-bottom strong{font-size:19px}.filter-bottom span{font-size:9px;color:var(--muted)}.launch-button{height:42px;background:#cffa4d;border:0;color:#1e2516;padding:0 17px;display:flex;align-items:center;gap:24px;font-size:10px;font-weight:900;border-radius:2px}.training-side{display:flex;flex-direction:column;gap:12px}.review-tile{background:#20251d;color:#f1f3e9;padding:19px 18px;min-height:210px;display:flex;flex-direction:column}.tile-top{display:flex;justify-content:space-between;align-items:center;font-size:8px;letter-spacing:1.5px;font-weight:800;color:#9ba58e}.tile-top :global(svg){color:#d1f94d}.tile-number{font-size:48px;line-height:1;font-weight:800;letter-spacing:-3px;color:#d3fa4c;margin-top:23px}.review-tile h3{font-size:15px;margin:7px 0 5px}.review-tile p{font-size:9px;line-height:1.7;color:#aab29e;margin:0 0 16px}.review-tile button{margin-top:auto;display:flex;justify-content:space-between;align-items:center;border:0;border-top:1px solid #424a39;padding:12px 0 0;background:none;color:#d3fa4c;font-size:9px;font-weight:800}.saved-tile{border:1px solid var(--line);background:var(--tile);padding:17px 18px}.saved-tile .tile-top{color:var(--muted)}.saved-tile .tile-top :global(svg){color:#8f9d78}.saved-row{display:flex;align-items:baseline;gap:10px;margin:13px 0}.saved-row strong{font-size:30px;letter-spacing:-1px}.saved-row span{font-size:9px;color:var(--muted)}.saved-tile button{display:flex;align-items:center;justify-content:space-between;width:100%;border:0;border-top:1px solid var(--line);padding:11px 0 0;background:none;color:var(--ink);font-size:9px;font-weight:800}
+  .resources-block{padding-top:57px}.compact-heading{align-items:center}.compact-heading h2{margin-bottom:0}.compact-heading>a{display:flex;align-items:center;gap:8px;font-size:9px;font-weight:800;color:var(--muted)}.resource-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}.resource-card{min-height:190px;padding:17px;background:var(--tile);border:1px solid var(--line);position:relative;display:flex;flex-direction:column;transition:transform .18s,border-color .18s}.resource-card:hover{transform:translateY(-4px);border-color:#a9c64b}.resource-no{font-size:8px;letter-spacing:1.4px;color:var(--muted);font-weight:800}.resource-icon{margin-top:18px;width:39px;height:39px;background:var(--soft);display:grid;place-items:center;color:var(--ink)}.resource-card h3{font-size:14px;margin:12px 0 5px}.resource-card p{font-size:9px;line-height:1.7;color:var(--muted);margin:0}.resource-link{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:15px;font-size:8px;letter-spacing:1.3px;font-weight:900;color:#83935e}.resource-exam{background:#e8ece5;color:#20251d}.resource-exam .resource-icon{background:#d8e0d0}.resource-mock{background:#eff0e7;color:#20251d}.resource-mock .resource-icon{background:#e0e5d2}.resource-library .resource-icon{background:#f0f1e8}.site-footer{margin-top:62px;border-top:1px solid var(--line);padding:20px 0;display:flex;align-items:center;justify-content:space-between;font-size:8px;letter-spacing:1.2px;color:var(--muted)}.footer-logo{font-size:13px;font-weight:900;letter-spacing:-.4px;color:var(--ink)}.footer-logo span,.focus-brand span{color:#9fc735}.site-footer>a:last-child{display:flex;align-items:center;gap:5px;color:var(--ink);font-weight:800}
+  .state-panel{min-height:170px;border:1px dashed var(--line);display:flex;align-items:center;justify-content:center;gap:12px;color:var(--muted);font-size:11px}.error-state{color:#c55}.spinner{width:22px;height:22px;border:2px solid var(--line);border-top-color:#a9d735;border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}@keyframes rotate{to{transform:rotate(360deg)}}
+  .mobile-nav{display:none}
+  .focus-screen{--focus:#171a15;--focus-muted:#a4ac9a;min-height:100vh;background:#171a15;color:#f2f4e9;display:flex;flex-direction:column;padding:0 24px}.focus-header{height:72px;max-width:1100px;width:100%;margin:auto;display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;border-bottom:1px solid #343a2e}.exit-focus{justify-self:start;display:flex;align-items:center;gap:5px;background:none;border:0;color:#a4ac9a;font-size:10px}.focus-brand{justify-self:center;font-size:13px;font-weight:900;letter-spacing:.5px}.focus-brand small{display:block;font-size:7px;letter-spacing:2px;color:#8c9580;text-align:center;margin-top:3px}.focus-number{justify-self:end;font-size:14px;font-weight:800;color:#d4fa4c}.focus-number i{font-style:normal;color:#7d8773;font-size:10px}.focus-progress{height:3px;max-width:1100px;width:100%;margin:0 auto;background:#33392e}.focus-progress i{display:block;height:100%;background:#d4fa4c;transition:width .2s}.focus-content{width:100%;max-width:690px;margin:64px auto 40px}.focus-meta{display:flex;gap:7px}.focus-meta span{font-size:8px;letter-spacing:.6px;color:#a5ad9a;border:1px solid #41483a;padding:6px 9px}.focus-label{font-size:9px;letter-spacing:2px;color:#88927e;margin-top:38px}.focus-label b{color:#d4fa4c;margin-left:7px}.focus-content h1{font-size:clamp(21px,3vw,29px);line-height:1.8;letter-spacing:-.5px;margin:17px 0 27px;font-weight:650}.focus-answers{display:grid;gap:9px}.focus-answers button{min-height:61px;border:1px solid #3c4336;background:#20241d;color:#f0f2e9;display:flex;align-items:center;gap:17px;text-align:left;padding:12px 17px;transition:.15s}.focus-answers button:hover:not(:disabled){border-color:#d4fa4c}.focus-answers button>span{font-size:9px;color:#9ca68f;letter-spacing:1px}.focus-answers button>b{font-size:12px;font-weight:500}.focus-answers button :global(svg){margin-left:auto;color:#d4fa4c}.focus-answers button.chosen-correct{background:#27331b;border-color:#b4dc42}.focus-answers button.chosen-wrong{background:#332321;border-color:#bd7770}.focus-answers button.answer-muted{opacity:.4}.answer-explain{margin-top:18px;padding:17px 19px;border-left:3px solid #d4fa4c;background:#22271e}.answer-explain.bad{border-left-color:#cf8177}.explain-heading{font-size:12px;font-weight:800;color:#d4fa4c}.answer-explain.bad .explain-heading{color:#e99a8e}.answer-explain p{font-size:11px;line-height:1.9;color:#c4cbbb;margin:7px 0 0}.answer-explain small{display:block;color:#929d85;font-size:9px;margin-top:8px}.focus-actions{display:flex;justify-content:space-between;align-items:center;margin-top:22px}.bookmark-action{height:41px;padding:0 13px;background:transparent;border:1px solid #424a3a;color:#c0c8b5;display:flex;align-items:center;gap:8px;font-size:9px}.next-action{height:43px;padding:0 18px;background:#d4fa4c;border:0;color:#202619;display:flex;align-items:center;justify-content:center;gap:24px;font-size:10px;font-weight:900}.next-action:disabled{opacity:.35;cursor:not-allowed}.focus-footer{max-width:1100px;width:100%;margin:auto auto 0;padding:19px 0;color:#78826f;display:flex;justify-content:space-between;font-size:7px;letter-spacing:1.5px}
+  .finish-screen{min-height:100vh;background:#171a15;color:#f2f4e9;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:25px;text-align:center}.finish-symbol{width:67px;height:67px;border:1px solid #53613d;color:#d4fa4c;display:grid;place-items:center;margin-bottom:23px}.finish-screen .eyebrow{color:#9aa58a}.finish-screen h1{font-size:34px;letter-spacing:-1.5px;margin:12px 0 5px}.finish-screen>p{font-size:11px;color:#a4ac9a}.finish-score{width:min(100%,390px);padding:26px 28px;margin:24px 0;background:#22271e;border:1px solid #394331;display:flex;flex-direction:column;align-items:center;gap:9px}.finish-score>strong{font-size:49px;letter-spacing:-3px;color:#d4fa4c}.finish-score>strong small{font-size:15px;color:#a4ac9a}.finish-score>span,.finish-score>b{font-size:9px;color:#a4ac9a}.finish-track{height:4px;width:100%;background:#3c4434;margin:12px 0}.finish-track i{display:block;height:100%;background:#d4fa4c}.finish-back{margin-top:15px;background:none;border:0;color:#a4ac9a;font-size:10px}
+  @media(max-width:1050px){.intro-art{right:2%;transform:translateY(-50%) scale(.82)}.stats-row{grid-template-columns:1fr repeat(3,.8fr)}.stat-progress{grid-column:1/-1;border-left:0;padding:12px 0 0}.training-layout{grid-template-columns:minmax(0,1fr) 230px}.resource-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:760px){.rail{transform:translateX(-100%);transition:transform .2s;width:70px}.rail.menu-open{transform:translateX(0)}.workspace{margin-left:0;padding-bottom:75px}.topline{height:56px;padding:0 17px;justify-content:start;gap:12px}.mobile-toggle{display:grid;place-items:center;width:32px;height:32px;border:0;background:transparent;color:var(--ink)}.crumb{font-size:9px}.topline-right{margin-left:auto}.live-dot{display:none}.page-wrap{padding:0 16px 20px}.intro{margin-top:14px;min-height:340px;padding:36px 25px;align-items:flex-start}.intro h1{font-size:48px;letter-spacing:-2.5px;margin-top:28px}.intro p{font-size:10px}.intro-art{width:190px;height:190px;right:-14px;top:auto;bottom:-29px;transform:scale(.68);transform-origin:bottom right;opacity:.8}.intro-index{right:16px;bottom:16px}.stats-row{grid-template-columns:repeat(3,1fr);gap:13px;padding:22px 0}.stats-lead{grid-column:1/-1}.stats-lead h2{font-size:15px}.stat{padding-left:10px}.stat strong{font-size:23px}.stat>span{font-size:7px}.stat>i{font-size:8px}.stat-progress{grid-column:1/-1;padding-top:3px}.section-block{padding-top:38px}.section-heading{align-items:start;gap:12px}.section-heading h2{font-size:21px}.section-heading p{font-size:9px;line-height:1.7;max-width:280px}.section-count{display:none}.training-layout{grid-template-columns:1fr}.subject-picks{gap:6px}.subject-pick{height:125px;padding:11px 9px}.pick-top{font-size:6px;letter-spacing:.8px}.pick-top :global(svg){width:14px}.pick-name{font-size:19px;margin-top:19px}.pick-foot{font-size:6px;letter-spacing:.5px}.pick-index{font-size:60px;right:5px}.filter-panel{padding:16px}.filter-top h3{font-size:13px}.filter-controls{gap:6px}.filter-controls label>span{font-size:8px}.select-shell select{font-size:9px;padding-left:7px}.filter-bottom{gap:8px}.filter-bottom strong{font-size:17px}.filter-bottom span{font-size:8px}.launch-button{font-size:9px;gap:9px;padding:0 11px}.training-side{display:grid;grid-template-columns:1fr 1fr}.review-tile{min-height:185px;padding:15px}.review-tile h3{font-size:13px}.review-tile p{font-size:8px}.tile-number{font-size:39px}.saved-tile{padding:15px}.saved-row strong{font-size:26px}.resources-block{padding-top:43px}.compact-heading>a{font-size:8px;white-space:nowrap}.resource-grid{grid-template-columns:repeat(2,1fr);gap:7px}.resource-card{min-height:175px;padding:13px}.resource-card h3{font-size:12px}.resource-card p{font-size:8px}.resource-icon{width:34px;height:34px;margin-top:16px}.resource-link{font-size:7px}.site-footer{margin-top:42px;font-size:7px}.footer-logo{font-size:11px}.mobile-nav{position:fixed;z-index:20;bottom:0;left:0;right:0;height:65px;background:#191c17;display:flex;align-items:center;justify-content:space-around;padding-bottom:env(safe-area-inset-bottom)}.mobile-nav a,.mobile-nav button{width:25%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;border:0;background:none;color:#8f9884;font-size:8px}.mobile-nav .on{color:#d4fa4c}.focus-screen{padding:0 16px}.focus-header{height:60px}.focus-content{margin:36px auto}.focus-content h1{font-size:21px}.focus-answers button{min-height:56px}.focus-footer{font-size:6px}.finish-screen h1{font-size:29px}}
+  @media(max-width:390px){.intro h1{font-size:43px}.intro-art{right:-37px;opacity:.65}.subject-pick{padding:10px 7px}.pick-name{font-size:17px}.pick-foot{font-size:5.5px}.filter-controls{grid-template-columns:1fr 1fr}.filter-controls label:last-child{grid-column:1/-1}.training-side{grid-template-columns:1fr}.review-tile{min-height:170px}}
 </style>
