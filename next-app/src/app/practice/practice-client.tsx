@@ -20,16 +20,17 @@ export default function PracticeClient() {
   const progress = useLearningStore((s) => s.progress);
   const record = useLearningStore((s) => s.record);
   const [unit, setUnit] = useState("all");
+  const [sessionAnswered, setSessionAnswered] = useState<Record<string, boolean>>({});
   const pool = useMemo(() => {
     const filtered = questions.filter((q) => reviewOnly
-      ? progress[q.id]?.mastery === "weak"
+      ? progress[q.id]?.mastery === "weak" || sessionAnswered[q.id] === true
       : !subject || q.subject === subject);
     const byUnit = unit === "all" ? filtered : filtered.filter((q) => q.unit === unit);
     return rankForReview(byUnit, progress);
-  }, [subject, reviewOnly, progress, unit]);
+  }, [subject, reviewOnly, progress, unit, sessionAnswered]);
   const availableUnits = useMemo(() => [...new Set(questions
-    .filter((q) => reviewOnly ? progress[q.id]?.mastery === "weak" : !subject || q.subject === subject)
-    .map((q) => q.unit))], [subject, reviewOnly, progress]);
+    .filter((q) => reviewOnly ? progress[q.id]?.mastery === "weak" || sessionAnswered[q.id] === true : !subject || q.subject === subject)
+    .map((q) => q.unit))], [subject, reviewOnly, progress, sessionAnswered]);
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [startedAt, setStartedAt] = useState(() => Date.now());
@@ -40,6 +41,7 @@ export default function PracticeClient() {
     if (!question || selected !== null || choice < 0 || choice > 3) return;
     const isCorrect = choice === question.correctIndex;
     record({ questionId: question.id, selectedIndex: choice, isCorrect, responseTimeMs: Math.max(0, Date.now() - startedAt), answeredAt: Date.now() });
+    if (reviewOnly) setSessionAnswered((current) => ({ ...current, [question.id]: true }));
     setSelected(choice);
   }, [question, selected, record, startedAt]);
 
