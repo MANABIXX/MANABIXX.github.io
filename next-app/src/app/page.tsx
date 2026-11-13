@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useLearningStore } from "@/stores/learning-store";
+import ExamCountdownBanner from "@/components/ExamCountdownBanner";
 
 const subjects = [
   { id: "science", name: "理科", sub: "運動・生命・化学・地球", icon: "⚗️", color: "bg-emerald-50" },
@@ -34,6 +35,7 @@ export default function Home() {
           <div><p className="text-xs text-slate-500">苦手問題</p><p className="mt-1 text-2xl font-black text-rose-500">{weak}</p></div>
         </div>
       </section>
+      <section className="mt-8"><ExamCountdownBanner /></section>
       <section className="mt-12">
         <div className="mb-5 flex items-end justify-between"><div><p className="text-xs font-bold tracking-widest text-slate-400">CHOOSE A SUBJECT</p><h2 className="mt-1 text-2xl font-black">教科を選ぶ</h2></div><span className="text-xs text-slate-400">全8問・MVP収録</span></div>
         <div className="grid gap-4 md:grid-cols-3">
