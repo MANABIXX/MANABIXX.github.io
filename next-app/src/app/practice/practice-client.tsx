@@ -26,7 +26,7 @@ export default function PracticeClient() {
       ? progress[q.id]?.mastery === "weak" || sessionAnswered[q.id] === true
       : !subject || q.subject === subject);
     const byUnit = unit === "all" ? filtered : filtered.filter((q) => q.unit === unit);
-    return rankForReview(byUnit, progress);
+    return reviewOnly ? byUnit : rankForReview(byUnit, progress);
   }, [subject, reviewOnly, progress, unit, sessionAnswered]);
   const availableUnits = useMemo(() => [...new Set(questions
     .filter((q) => reviewOnly ? progress[q.id]?.mastery === "weak" || sessionAnswered[q.id] === true : !subject || q.subject === subject)
