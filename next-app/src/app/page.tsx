@@ -23,7 +23,7 @@ export default function Home() {
     <main className="shell py-6 md:py-10">
       <header className="flex items-center justify-between">
         <Link href="/" className="text-xl font-black tracking-tight text-white">MANABIXX<span className="text-pink-500">.</span></Link>
-        <span className="rounded-full border border-emerald-100 bg-white px-4 py-2 text-xs font-bold text-pink-400">SHITADUMI / STUDY</span>
+        <span className="rounded-full border border-zinc-800 bg-zinc-950 px-4 py-2 text-xs font-bold text-pink-300">SHITADUMI / STUDY</span>
       </header>
       <section className="mt-10 grid gap-8 md:grid-cols-[1.25fr_.75fr] md:items-end">
         <div>
@@ -34,7 +34,7 @@ export default function Home() {
         <div className="panel grid grid-cols-3 gap-3 p-5">
           <div><p className="text-xs text-zinc-400">解答数</p><p className="mt-1 text-2xl font-black">{logs.length}</p></div>
           <div><p className="text-xs text-zinc-400">正答率</p><p className="mt-1 text-2xl font-black">{accuracy}%</p></div>
-          <div><p className="text-xs text-zinc-400">苦手問題</p><p className="mt-1 text-2xl font-black text-rose-500">{weak}</p></div>
+          <div><p className="text-xs text-zinc-400">苦手問題</p><p className="mt-1 text-2xl font-black text-rose-400">{weak}</p></div>
         </div>
       </section>
       <section className="mt-8"><ExamCountdownBanner /></section>
@@ -54,7 +54,7 @@ export default function Home() {
       </section>
       <section className="mt-8 grid gap-4 md:grid-cols-2">
         <Link href="/practice?review=1" className="panel flex items-center justify-between p-5"><div><p className="text-xs font-bold tracking-widest text-rose-500">REVIEW</p><p className="mt-1 font-bold">苦手・復習問題に挑戦</p></div><span className="text-2xl">↗</span></Link>
-        <div className="panel p-5"><p className="text-xs font-bold tracking-widest text-zinc-500">HOW IT WORKS</p><p className="mt-1 text-sm leading-6 text-slate-600">正解・解答時間に応じて復習タイミングを調整。ログイン不要で学習記録はこの端末に保存されます。</p></div>
+        <div className="panel p-5"><p className="text-xs font-bold tracking-widest text-zinc-500">HOW IT WORKS</p><p className="mt-1 text-sm leading-6 text-zinc-400">正解・解答時間に応じて復習タイミングを調整。ログイン不要で学習記録はこの端末に保存されます。</p></div>
       </section>
       <footer className="py-10 text-center text-xs text-zinc-500">MANABIXX · BUILD YOUR KNOWLEDGE</footer>
     </main>
