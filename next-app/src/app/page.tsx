@@ -52,7 +52,8 @@ export default function Home() {
           ))}
         </div>
       </section>
-      <section className="mt-8 grid gap-4 md:grid-cols-2">
+      <section className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <Link href="/practice" className="panel flex items-center justify-between p-5"><div><p className="text-xs font-bold tracking-widest text-pink-400">ALL SUBJECTS</p><p className="mt-1 font-bold">5教科まとめて演習</p></div><span className="text-2xl text-pink-400">→</span></Link>
         <Link href="/practice?review=1" className="panel flex items-center justify-between p-5"><div><p className="text-xs font-bold tracking-widest text-rose-500">REVIEW</p><p className="mt-1 font-bold">間違えた問題だけ復習</p></div><span className="text-2xl">↗</span></Link>
         <div className="panel p-5"><p className="text-xs font-bold tracking-widest text-zinc-500">HOW IT WORKS</p><p className="mt-1 text-sm leading-6 text-zinc-400">間違い・解答時間・正答回数に応じて復習タイミングを調整。認証はタブ内で維持され、学習記録はこの端末に保存されます。</p></div>
       </section>
