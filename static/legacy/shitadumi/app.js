@@ -3,7 +3,7 @@ const $=id=>document.getElementById(id),PASS_HASH="b9f633dc43572056c554fd73e0906
 const state={bank:[],pool:[],index:0,answers:{},progress:loadProgress(),install:null};
 function loadProgress(){try{return Object.assign({solved:0,correct:0,history:[],wrongIds:[],lastDay:"",streak:0},JSON.parse(localStorage.getItem(PROGRESS_KEY)||"{}"))}catch{return{solved:0,correct:0,history:[],wrongIds:[],lastDay:"",streak:0}}}
 function saveProgress(){localStorage.setItem(PROGRESS_KEY,JSON.stringify(state.progress))}
-async function checkPass(value){const normalized=value.trim().toLowerCase();if(!normalized)return false;if(!globalThis.crypto?.subtle)return normalized==="haru";const hash=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(normalized));return [...new Uint8Array(hash)].map(x=>x.toString(16).padStart(2,"0")).join("")===PASS_HASH}
+async function checkPass(value){const normalized=String(value??"").trim().toLowerCase();return normalized==="haru"}
 function today(){return new Date().toLocaleDateString("sv-SE")}
 function subjectName(s){return ({science:"理科",social:"社会",japanese:"国語",math:"数学",english:"英語"})[s]||s}
 function showInstallGuide(){ $("installGuideModal").hidden=false }
@@ -20,7 +20,7 @@ async function attemptUnlock(){
  if(!value){error.textContent="パスコードを入力してください。";input.focus();return;}
  button.disabled=true;button.textContent="確認しています…";error.textContent="";
  try{
-  if(await checkPass(value)){unlock();}
+  if(value.toLowerCase()==="haru" || await checkPass(value)){unlock();}
   else{error.textContent="パスコードが一致しません。入力内容を確認してください。";input.focus();input.select();}
  }catch(err){error.textContent="認証処理に失敗しました。Safariで開いて再度お試しください。";}
  finally{button.disabled=false;button.innerHTML='ワークスペースに入る <span>→</span>';}
