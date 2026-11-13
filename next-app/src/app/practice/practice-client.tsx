@@ -79,7 +79,7 @@ export default function PracticeClient() {
       <div className="mx-auto mt-8 max-w-3xl">
         <label className="mb-3 flex flex-col gap-2 text-xs font-bold text-zinc-400">分野・単元を選択<select value={unit} onChange={(e) => { setUnit(e.target.value); setIndex(0); setSelected(null); setFinished(false); setStartedAt(Date.now()); }} className="w-full rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3 text-sm font-semibold text-zinc-100"><option value="all">すべての単元</option>{availableUnits.map((name) => <option key={name} value={name}>{name}</option>)}</select></label>
         <div className="mb-3 flex justify-between text-xs font-bold text-zinc-500"><span>QUESTION {index + 1} / {pool.length}</span><span>{Math.round((index / pool.length) * 100)}%</span></div>
-        <div className="h-2 overflow-hidden rounded-full bg-slate-200"><div className="h-full rounded-full bg-emerald-600 transition-all" style={{ width: `${(index / pool.length) * 100}%` }} /></div>
+        <div className="h-2 overflow-hidden rounded-full bg-zinc-800"><div className="h-full rounded-full bg-pink-500 transition-all" style={{ width: `${(index / pool.length) * 100}%` }} /></div>
         <AnimatePresence mode="wait">
           <motion.section key={question.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="panel mt-6 p-5 md:p-9">
             <div className="flex items-center gap-2"><span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-300">{question.category}</span><span className="text-xs text-zinc-500">{question.mode === "vocabulary" ? "SPEED VOCAB" : "STANDARD"}</span></div>
@@ -87,7 +87,7 @@ export default function PracticeClient() {
             <div className="mt-7 grid gap-3">
               {question.choices.map((choice, i) => {
                 const state = selected === null ? "" : i === question.correctIndex ? "correct" : i === selected ? "wrong" : "";
-                return <button key={choice} disabled={selected !== null} onClick={() => answer(i)} className={`choice ${state}`}><span className="mr-4 inline-flex size-8 items-center justify-center rounded-lg bg-slate-100 text-sm font-black">{i + 1}</span>{choice}{selected !== null && i === question.correctIndex ? <span className="float-right">✓</span> : null}</button>;
+                return <button key={choice} disabled={selected !== null} onClick={() => answer(i)} className={`choice ${state}`}><span className="mr-4 inline-flex size-8 items-center justify-center rounded-lg bg-zinc-800 text-sm font-black">{i + 1}</span>{choice}{selected !== null && i === question.correctIndex ? <span className="float-right">✓</span> : null}</button>;
               })}
             </div>
             {selected !== null && <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="mt-6 rounded-2xl bg-zinc-950 p-5">
