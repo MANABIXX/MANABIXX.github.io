@@ -53,8 +53,8 @@ export default function Home() {
         </div>
       </section>
       <section className="mt-8 grid gap-4 md:grid-cols-2">
-        <Link href="/practice?review=1" className="panel flex items-center justify-between p-5"><div><p className="text-xs font-bold tracking-widest text-rose-500">REVIEW</p><p className="mt-1 font-bold">苦手・復習問題に挑戦</p></div><span className="text-2xl">↗</span></Link>
-        <div className="panel p-5"><p className="text-xs font-bold tracking-widest text-zinc-500">HOW IT WORKS</p><p className="mt-1 text-sm leading-6 text-zinc-400">正解・解答時間に応じて復習タイミングを調整。ログイン不要で学習記録はこの端末に保存されます。</p></div>
+        <Link href="/practice?review=1" className="panel flex items-center justify-between p-5"><div><p className="text-xs font-bold tracking-widest text-rose-500">REVIEW</p><p className="mt-1 font-bold">間違えた問題だけ復習</p></div><span className="text-2xl">↗</span></Link>
+        <div className="panel p-5"><p className="text-xs font-bold tracking-widest text-zinc-500">HOW IT WORKS</p><p className="mt-1 text-sm leading-6 text-zinc-400">間違い・解答時間・正答回数に応じて復習タイミングを調整。認証はタブ内で維持され、学習記録はこの端末に保存されます。</p></div>
       </section>
       <footer className="py-10 text-center text-xs text-zinc-500">MANABIXX · BUILD YOUR KNOWLEDGE</footer>
     </main>
