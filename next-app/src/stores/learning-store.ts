@@ -44,6 +44,22 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
+function normalizeLogs(value: unknown): AnswerLog[] {
+  if (!Array.isArray(value)) return [];
+  return value.filter((item): item is AnswerLog => {
+    if (!isRecord(item)) return false;
+    return typeof item.questionId === "string" &&
+      typeof item.selectedIndex === "number" &&
+      Number.isInteger(item.selectedIndex) &&
+      item.selectedIndex >= 0 && item.selectedIndex <= 3 &&
+      typeof item.isCorrect === "boolean" &&
+      typeof item.responseTimeMs === "number" &&
+      Number.isFinite(item.responseTimeMs) && item.responseTimeMs >= 0 &&
+      typeof item.answeredAt === "number" &&
+      Number.isFinite(item.answeredAt) && item.answeredAt >= 0;
+  }).slice(-2000);
+}
+
 export const useLearningStore = create<LearningState>()(
   persist(
     (set, get) => ({
@@ -66,9 +82,7 @@ export const useLearningStore = create<LearningState>()(
       skipHydration: true,
       migrate: (persistedState) => {
         if (!isRecord(persistedState)) return { logs: [], progress: {} };
-        const logs = Array.isArray(persistedState.logs)
-          ? persistedState.logs as AnswerLog[]
-          : [];
+        const logs = normalizeLogs(persistedState.logs);
         const rawProgress = isRecord(persistedState.progress)
           ? persistedState.progress as Record<string, QuestionProgress>
           : {};
@@ -79,9 +93,7 @@ export const useLearningStore = create<LearningState>()(
       },
       merge: (persistedState, currentState) => {
         if (!isRecord(persistedState)) return currentState;
-        const logs = Array.isArray(persistedState.logs)
-          ? persistedState.logs as AnswerLog[]
-          : currentState.logs;
+        const logs = normalizeLogs(persistedState.logs);
         const rawProgress = isRecord(persistedState.progress)
           ? persistedState.progress as Record<string, QuestionProgress>
           : currentState.progress;
