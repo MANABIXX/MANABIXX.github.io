@@ -1,7 +1,7 @@
 const DATA_VERSION = '__DATA_VERSION__';
 const APP_VERSION = '__APP_VERSION__';
 const CACHE_PREFIX = 'manabixx-offline-';
-const CACHE_NAME = CACHE_PREFIX + APP_VERSION;
+const CACHE_NAME = CACHE_PREFIX + APP_VERSION + '-' + DATA_VERSION;
 const DATA_MANIFEST = '/offline-data-manifest.json';
 const APP_MANIFEST = '/offline-app-manifest.json';
 const APP_SHELL = ['/', '/index.html', '/404.html', '/manifest.webmanifest', DATA_MANIFEST, APP_MANIFEST];
