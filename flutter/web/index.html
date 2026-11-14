@@ -8,7 +8,8 @@
   <meta name="theme-color" content="#121214">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="manifest" href="/manifest.webmanifest">\n  <link rel="icon" type="image/svg+xml" href="/assets/study-icon.svg">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="/assets/study-icon.svg">
   <link rel="apple-touch-icon" href="/assets/study-icon.svg">
   <meta name="color-scheme" content="dark">
   <meta name="description" content="自分のペースで学び、理解を積み重ねる学習スペース。">
@@ -90,34 +91,23 @@
         alert(ios ? "Safariの共有ボタン →「ホーム画面に追加」を選択してください。" : "ブラウザのメニューから「アプリをインストール」または「ホーム画面に追加」を選択してください。");
       });
       close.addEventListener("click", () => { banner.hidden = true; try { localStorage.setItem("manabixx-pwa-dismissed", "1"); } catch (_) {} });
+      window.manabixxOfflineReady = Promise.resolve();
       if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("/flutter-sw.js", { updateViaCache: "none" }).then(async (registration) => {
-          // Every app launch checks the worker script; its embedded dataset hash
-          // changes whenever any source JSON changes.
+        window.manabixxOfflineReady = navigator.serviceWorker.register("/flutter-sw.js", { updateViaCache: "none" }).then(async (registration) => {
+          // Check the versioned worker on every launch. A changed dataset produces
+          // a new worker which downloads the complete app and data cache before activation.
           await registration.update();
-          // Store the last successful check in IndexedDB, not transient memory.
-          const db = await new Promise((resolve, reject) => {
-            const request = indexedDB.open("manabixx-offline-sync", 1);
-            request.onupgradeneeded = () => request.result.createObjectStore("meta");
-            request.onsuccess = () => resolve(request.result);
-            request.onerror = () => reject(request.error);
-          });
-          await new Promise((resolve, reject) => {
-            const tx = db.transaction("meta", "readwrite");
-            tx.objectStore("meta").put(Date.now(), "last-check");
-            tx.oncomplete = resolve;
-            tx.onerror = () => reject(tx.error);
-          });
-          db.close();
-          // Periodic Background Sync is optional and browser-dependent.
           if ("periodicSync" in registration) {
             try {
               await registration.periodicSync.register("manabixx-weekly-data-sync", {
                 minInterval: 7 * 24 * 60 * 60 * 1000
               });
-            } catch (_) {}
+            } catch (_) {
+              // Periodic Background Sync is permission- and browser-dependent.
+            }
           }
-        }).catch(() => {});
+          return navigator.serviceWorker.ready;
+        }).catch(() => null);
       }
     })();
   </script>
@@ -134,6 +124,12 @@
     _flutter.loader.load({
       config: flutterConfig,
       onEntrypointLoaded: async (engineInitializer) => {
+        // On first launch, wait for the service worker to finish caching all
+        // app assets and question datasets before exposing the study UI.
+        await Promise.race([
+          window.manabixxOfflineReady || Promise.resolve(),
+          new Promise((resolve) => window.setTimeout(resolve, 120000)),
+        ]);
         const appRunner = await engineInitializer.initializeEngine(flutterConfig);
         await appRunner.runApp();
         const splash = document.getElementById('app-loading');
