@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'dart:math';
@@ -268,7 +269,7 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
       _selected = choice;
       if (correct) _score++;
     });
-    if (correct) await HapticFeedback.mediumImpact();
+    if (correct) unawaited(HapticFeedback.mediumImpact());
     _saveAnswer(question, choice);
     await Future<void>.delayed(const Duration(milliseconds: 120));
     if (mounted && _started && !_finished && _selected == choice) {
