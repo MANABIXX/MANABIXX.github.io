@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:material_ui/material_ui.dart';
 import 'package:http/http.dart' as http;
+import 'package:manabixx_web/foundation_practice.dart';
 
 class KnowledgeRecord {
   const KnowledgeRecord({
@@ -113,6 +114,17 @@ class _KnowledgeLibraryPageState extends State<KnowledgeLibraryPage> {
   String _subjectName(String value) => const {'science':'理科','social':'社会','japanese':'国語','math':'数学','english':'英語','civics':'公民','history':'歴史','geography':'地理'}[value] ?? value;
   String _fieldName(String value) => const {'civics':'公民','history':'歴史','geography':'地理','physics':'物理','chemistry':'化学','biology':'生物','earth science':'地学','earth':'地学'}[value.toLowerCase()] ?? value;
   String _gradeName(int value) => value == 0 ? '学年共通' : '中学$value年';
+  String _summaryTopic(String field) => const {
+    'physics': '物理',
+    'chemistry': '化学',
+    'biology': '生物',
+    'earth': '地学',
+    'earth science': '地学',
+    'geography': '地理',
+    'history': 'history',
+    'civics': 'civics',
+  }[field.toLowerCase()] ?? field;
+
 
   @override
   Widget build(BuildContext context) {
@@ -201,6 +213,24 @@ class _KnowledgeLibraryPageState extends State<KnowledgeLibraryPage> {
                                 childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                                 children: [
                                   if (item.explanation.isNotEmpty) _section('概要', item.explanation),
+                                  const SizedBox(height: 12),
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: FilledButton.icon(
+                                      onPressed: () => Navigator.of(context).push(
+                                        MaterialPageRoute<void>(
+                                          builder: (_) => FoundationPracticePage(
+                                            dataPath: '/data/summary-foundation.json',
+                                            title: '${item.title} 一問一答',
+                                            initialSubject: item.subject,
+                                            initialTopic: _summaryTopic(item.field),
+                                          ),
+                                        ),
+                                      ),
+                                      icon: const Icon(Icons.quiz_outlined),
+                                      label: const Text('この分野の一問一答へ'),
+                                    ),
+                                  ),
                                   if (item.targets.isNotEmpty) _section('学習目標', item.targets.join('・')),
                                   if (item.keyTerms.isNotEmpty) _termSection(item.keyTerms),
                                   if (item.formulas.isNotEmpty) _formulaSection(item.formulas),
