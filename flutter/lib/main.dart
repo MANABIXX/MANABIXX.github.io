@@ -88,12 +88,10 @@ class ManabiXXApp extends StatelessWidget {
         ),
       ),
       routes: {
-        '/library': (_) => const KnowledgeLibraryPage(),
-        '/library/': (_) => const KnowledgeLibraryPage(),
         '/practice/foundation': (_) => const FoundationPracticePage(includeAllSubjects: true),
-        '/practice/kosen': (_) => const _PasswordGatePage(password: 'kosen', title: '製作者専用モード', child: KosenPracticePage(title: '製作者専用モード')) ,
-        '/practice/kosen/math-section-1': (_) => const _PasswordGatePage(password: 'kosen', title: '数学・大問1集中演習', child: KosenPracticePage(dataPath: '/data/kosen-math-section-1.json', title: '数学・大問1集中演習', initialSubject: 'math')),
-        '/practice/foundation-training': (_) => const _PasswordGatePage(password: 'haru', title: '下積みモード', child: FoundationPracticePage(dataPath: '/data/foundation-training.json', title: '下積みモード', includeAllSubjects: true)),
+        '/practice/kosen': (_) => const _PasswordGatePage(password: 'kosen', title: '製作者専用モード', child: _PrivateModeShell(mode: _PrivateMode.kosen)),
+        '/practice/kosen/math-section-1': (_) => const _PasswordGatePage(password: 'kosen', title: '数学・大問1集中演習', child: _PrivateModeShell(mode: _PrivateMode.kosen, initialTab: 1, mathSectionOne: true)),
+        '/practice/foundation-training': (_) => const _PasswordGatePage(password: 'haru', title: '下積みモード', child: _PrivateModeShell(mode: _PrivateMode.foundationTraining)),
         '/records': (_) => const _ProgressPage(),
         '/foundation': (_) => const FoundationPracticePage(includeAllSubjects: true),
         '/foundation/': (_) => const FoundationPracticePage(),
@@ -101,14 +99,16 @@ class ManabiXXApp extends StatelessWidget {
           dataPath: '/data/public-exam.json', title: '公立高校入試問題'),
         '/exam/': (_) => const FoundationPracticePage(
           dataPath: '/data/public-exam.json', title: '公立高校入試問題'),
-        '/summary': (_) => const KnowledgeLibraryPage(title: '要点まとめ'),
-        '/summary/': (_) => const KnowledgeLibraryPage(title: '要点まとめ'),
+        '/summary': (_) => const KnowledgeLibraryPage(title: '要点まとめ', initialSubject: 'science'),
+        '/summary/': (_) => const KnowledgeLibraryPage(title: '要点まとめ', initialSubject: 'science'),
+        '/summary/science': (_) => const KnowledgeLibraryPage(title: '理科の要点まとめ', initialSubject: 'science'),
+        '/summary/social': (_) => const KnowledgeLibraryPage(title: '社会の要点まとめ', initialSubject: 'social'),
         '/mock-exam': (_) => const FoundationPracticePage(
           dataPath: '/data/mock-exams.json', title: '模試・予想問題', includeAllSubjects: true),
         '/mock-exam/': (_) => const FoundationPracticePage(
           dataPath: '/data/mock-exams.json', title: '模試・予想問題', includeAllSubjects: true),
-        '/kosen': (_) => const _PasswordGatePage(password: 'kosen', title: '製作者専用モード', child: KosenPracticePage(title: '製作者専用モード')),
-        '/kosen/': (_) => const _PasswordGatePage(password: 'kosen', title: '製作者専用モード', child: KosenPracticePage(title: '製作者専用モード')),
+        '/kosen': (_) => const _PasswordGatePage(password: 'kosen', title: '製作者専用モード', child: _PrivateModeShell(mode: _PrivateMode.kosen)),
+        '/kosen/': (_) => const _PasswordGatePage(password: 'kosen', title: '製作者専用モード', child: _PrivateModeShell(mode: _PrivateMode.kosen)),
       },
       onUnknownRoute: (_) => MaterialPageRoute<void>(
         builder: (_) => const _AppHomePage(),
@@ -370,6 +370,160 @@ class _PasswordGatePageState extends State<_PasswordGatePage> {
       : const Scaffold(body: Center(child: CircularProgressIndicator()));
 }
 
+enum _PrivateMode { kosen, foundationTraining }
+
+class _PrivateModeShell extends StatefulWidget {
+  const _PrivateModeShell({
+    required this.mode,
+    this.initialTab = 0,
+    this.mathSectionOne = false,
+  });
+
+  final _PrivateMode mode;
+  final int initialTab;
+  final bool mathSectionOne;
+
+  @override
+  State<_PrivateModeShell> createState() => _PrivateModeShellState();
+}
+
+class _PrivateModeShellState extends State<_PrivateModeShell> {
+  late int _tab = widget.initialTab;
+
+  bool get _isKosen => widget.mode == _PrivateMode.kosen;
+  String get _title => _isKosen ? '製作者専用モード' : '下積みモード';
+
+  @override
+  Widget build(BuildContext context) {
+    final practice = _isKosen
+        ? KosenPracticePage(
+            dataPath: widget.mathSectionOne
+                ? '/data/kosen-math-section-1.json'
+                : '/data/kosen-questions.json',
+            title: widget.mathSectionOne ? '数学・大問1集中演習' : '5教科演習',
+            initialSubject: widget.mathSectionOne ? 'math' : 'all',
+          )
+        : const FoundationPracticePage(
+            dataPath: '/data/foundation-training.json',
+            additionalDataPaths: ['/data/public-exam.json'],
+            title: '本番レベル演習',
+            includeAllSubjects: true,
+          );
+
+    return Scaffold(
+      backgroundColor: _bg,
+      body: SafeArea(
+        child: IndexedStack(
+          index: _tab,
+          children: [
+            _PrivateModeHome(
+              title: _title,
+              isKosen: _isKosen,
+              onPractice: () => setState(() => _tab = 1),
+              onMainHome: () => Navigator.of(context).maybePop(),
+              onMathSectionOne: () {
+                if (_isKosen) {
+                  Navigator.of(context).pushNamed('/practice/kosen/math-section-1');
+                }
+              },
+            ),
+            practice,
+            const _ProgressPage(),
+          ],
+        ),
+      ),
+      bottomNavigationBar: NavigationBar(
+        height: 62,
+        backgroundColor: const Color(0xFF19191D),
+        indicatorColor: const Color(0xFF3A281B),
+        selectedIndex: _tab,
+        onDestinationSelected: (value) => setState(() => _tab = value),
+        destinations: const [
+          NavigationDestination(icon: Icon(Icons.home_rounded), label: '専用ホーム'),
+          NavigationDestination(icon: Icon(Icons.bolt_rounded), label: '演習'),
+          NavigationDestination(icon: Icon(Icons.bar_chart_rounded), label: '記録'),
+        ],
+      ),
+    );
+  }
+}
+
+class _PrivateModeHome extends StatelessWidget {
+  const _PrivateModeHome({
+    required this.title,
+    required this.isKosen,
+    required this.onPractice,
+    required this.onMainHome,
+    required this.onMathSectionOne,
+  });
+
+  final String title;
+  final bool isKosen;
+  final VoidCallback onPractice;
+  final VoidCallback onMainHome;
+  final VoidCallback onMathSectionOne;
+
+  @override
+  Widget build(BuildContext context) => ListView(
+    padding: const EdgeInsets.fromLTRB(22, 26, 22, 28),
+    children: [
+      Row(children: [
+        const Text('MANABIXX', style: TextStyle(fontSize: 12, letterSpacing: 1.5, fontWeight: FontWeight.w900, color: _orange)),
+        const Spacer(),
+        TextButton(onPressed: onMainHome, child: const Text('本体へ戻る')),
+      ]),
+      const SizedBox(height: 30),
+      Text(title, style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w900)),
+      const SizedBox(height: 8),
+      Text(
+        isKosen
+            ? '5教科を基礎から応用まで。数学は大問1を重点的に鍛える。'
+            : '基礎を反復し、間違えた問題を復習。共通問題DBの入試演習にも挑戦。',
+        style: const TextStyle(color: Color(0xFFB8B8BE), height: 1.7),
+      ),
+      const SizedBox(height: 24),
+      Container(
+        padding: const EdgeInsets.all(18),
+        decoration: BoxDecoration(color: _surface, borderRadius: BorderRadius.circular(18), border: Border.all(color: _line)),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          const Text('今日の学習', style: TextStyle(color: Color(0xFFB8B8BE), fontSize: 12)),
+          const SizedBox(height: 8),
+          Text(isKosen ? '実戦力を積み上げる' : '苦手をひとつずつ減らす',
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w900)),
+          const SizedBox(height: 14),
+          SizedBox(width: double.infinity, child: FilledButton.icon(
+            onPressed: onPractice,
+            icon: const Icon(Icons.play_arrow_rounded),
+            label: const Text('演習を始める'),
+          )),
+          if (isKosen) ...[
+            const SizedBox(height: 8),
+            SizedBox(width: double.infinity, child: OutlinedButton.icon(
+              onPressed: onMathSectionOne,
+              icon: const Icon(Icons.calculate_outlined),
+              label: const Text('数学・大問1集中演習'),
+            )),
+          ],
+        ]),
+      ),
+      const SizedBox(height: 18),
+      Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(color: const Color(0xFF202B34), borderRadius: BorderRadius.circular(16), border: Border.all(color: const Color(0xFF405363))),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(isKosen ? '高専モードをホーム画面に追加' : '下積みモードをホーム画面に追加',
+            style: const TextStyle(fontWeight: FontWeight.w900, color: Color(0xFF9ED4FF))),
+          const SizedBox(height: 6),
+          Text(isKosen
+              ? 'Safariの共有メニューから「ホーム画面に追加」を選ぶと、高専モード専用アイコンから直接起動できます。'
+              : 'Safariの共有メニューから「ホーム画面に追加」を選ぶと、下積みモード専用アイコンから直接起動できます。',
+              style: const TextStyle(height: 1.65)),
+        ]),
+      ),
+    ],
+  );
+}
+
 class _StudyMenu extends StatelessWidget {
   const _StudyMenu({required this.onSelect});
   final ValueChanged<String> onSelect;
@@ -388,14 +542,12 @@ class _StudyMenu extends StatelessWidget {
       _MenuTile(icon: Icons.school_outlined, title: '公立高校入試問題',
         subtitle: '入試形式で実戦演習', onTap: () => onSelect('/exam')),
       _MenuTile(icon: Icons.menu_book_outlined, title: '要点まとめ',
-        subtitle: '重要事項を確認', onTap: () => onSelect('/summary')),
+        subtitle: '理科・社会を分野別に確認', onTap: () => onSelect('/summary')),
       _MenuTile(icon: Icons.assessment_outlined, title: '模試・予想問題',
         subtitle: '5教科の総合演習', onTap: () => onSelect('/mock-exam')),
       _MenuTile(icon: Icons.lock_outline_rounded, title: '製作者専用モード', subtitle: '認証制・5教科の実戦演習', onTap: () => onSelect('/practice/kosen')),
       _MenuTile(icon: Icons.calculate_outlined, title: '数学・大問1集中演習', subtitle: '計算・小問集合を重点反復', onTap: () => onSelect('/practice/kosen/math-section-1')),
       _MenuTile(icon: Icons.repeat_rounded, title: '下積みモード', subtitle: '5教科の基礎反復と苦手問題の復習', onTap: () => onSelect('/practice/foundation-training')),
-      _MenuTile(icon: Icons.auto_stories_outlined, title: '教材ライブラリ',
-        subtitle: '分野別の教材を探す', onTap: () => onSelect('/library')),
     ],
   );
 }
