@@ -8,7 +8,17 @@
   <meta name="theme-color" content="#121214">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link id="app-manifest" rel="manifest" href="/flutter/manifest.webmanifest">
+  <script>
+    (() => {
+      const path = location.pathname;
+      const href = path.includes("/practice/kosen")
+        ? "/flutter/manifest-kosen.webmanifest"
+        : path.includes("/practice/foundation-training")
+          ? "/flutter/manifest-foundation.webmanifest"
+          : "/flutter/manifest.webmanifest";
+      document.write('<link id="app-manifest" rel="manifest" href="' + href + '">');
+    })();
+  </script>
   <link rel="apple-touch-icon" href="../assets/study-icon.svg">
   <meta name="color-scheme" content="dark">
   <meta name="description" content="自分のペースで学び、理解を積み重ねる学習スペース。">
