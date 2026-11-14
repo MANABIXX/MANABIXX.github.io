@@ -8,13 +8,17 @@ const sources = JSON.parse(await fs.readFile(sourcePath, 'utf8'));
 const years = sources.years;
 const sourceFor = (subject, year = years[years.length - 1]) =>
   sources.sources.find((item) => item.subject === subject && item.year === year);
-const make = (id, subject, topic, level, prompt, options, correct, explanation, year) => ({
-  id, subject, topic, level, prompt, options, correct, explanation,
-  sourceLabel: '過去問形式参考・オリジナル',
-  sourceNote: `${year}年度の${({math:'数学',english:'英語',science:'理科',social:'社会',japanese:'国語'})[subject]}資料を参照。設問・選択肢は学習用に新規作成。`,
-  sourceYear: year,
-  sourceFile: sourceFor(subject, year)?.localPath ?? ''
-});
+const make = (id, subject, topic, level, prompt, options, correct, explanation, year) => {
+  const source = sourceFor(subject, year);
+  const hints = source?.topicHints ?? [];
+  return {
+    id, subject, topic, level, prompt, options, correct, explanation,
+    sourceLabel: '過去問資料参照・オリジナル',
+    sourceNote: `${year}年度の${({math:'数学',english:'英語',science:'理科',social:'社会',japanese:'国語'})[subject]}PDFを取り込み、${hints.length ? '抽出した分野語句：' + hints.slice(0, 4).join('・') : '出題形式'}を参考に設問・選択肢を新規作成。`,
+    sourceYear: year,
+    sourceFile: source?.localPath ?? ''
+  };
+};
 const questions = [];
 // 数学・大問1を意識した計算、小問集合。各年度に数値を変えた類題を作る。
 for (const [i, year] of years.entries()) {
