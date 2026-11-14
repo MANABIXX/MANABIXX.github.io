@@ -137,7 +137,10 @@ class _AppHomePageState extends State<_AppHomePage> {
         child: IndexedStack(
           index: _tab,
           children: [
-            _HomeDashboard(onStart: _openStudy),
+            _HomeDashboard(
+              onStart: _openStudy,
+              onNavigate: (route) => Navigator.of(context).pushNamed(route),
+            ),
             _StudyMenu(onSelect: (route) => Navigator.of(context).pushNamed(route)),
             const _ProgressPage(),
           ],
@@ -169,14 +172,16 @@ class _AppHomePageState extends State<_AppHomePage> {
 }
 
 class _HomeDashboard extends StatefulWidget {
-  const _HomeDashboard({required this.onStart});
+  const _HomeDashboard({required this.onStart, required this.onNavigate});
   final VoidCallback onStart;
+  final ValueChanged<String> onNavigate;
   @override
   State<_HomeDashboard> createState() => _HomeDashboardState();
 }
 
 class _HomeDashboardState extends State<_HomeDashboard> {
   int _todayAnswered = 0;
+  int _streakDays = 0;
   bool _progressLoaded = false;
 
   @override
@@ -190,6 +195,8 @@ class _HomeDashboardState extends State<_HomeDashboard> {
       final prefs = await SharedPreferences.getInstance();
       final today = DateTime.now();
       var answered = 0;
+      final activeDays = <String>{};
+      String dayKey(DateTime date) => '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
       final historyKeys = prefs.getKeys().where((key) =>
           key.startsWith('manabixx.learning.') && key.endsWith('.history'));
       for (final key in historyKeys) {
@@ -200,13 +207,22 @@ class _HomeDashboardState extends State<_HomeDashboard> {
           final value = item['completedAt'];
           if (value is! String) return false;
           final date = DateTime.tryParse(value)?.toLocal();
-          return date != null && date.year == today.year &&
-              date.month == today.month && date.day == today.day;
+          if (date == null) return false;
+          activeDays.add(dayKey(date));
+          return date.year == today.year && date.month == today.month && date.day == today.day;
         }).fold<int>(0, (sum, item) => sum + (item['total'] as int? ?? 0));
+      }
+      var cursor = DateTime(today.year, today.month, today.day);
+      if (!activeDays.contains(dayKey(cursor))) cursor = cursor.subtract(const Duration(days: 1));
+      var streak = 0;
+      while (activeDays.contains(dayKey(cursor))) {
+        streak++;
+        cursor = cursor.subtract(const Duration(days: 1));
       }
       if (!mounted) return;
       setState(() {
         _todayAnswered = answered;
+        _streakDays = streak;
         _progressLoaded = true;
       });
     } catch (_) {
@@ -264,9 +280,21 @@ class _HomeDashboardState extends State<_HomeDashboard> {
               const SizedBox(height: 8),
               const Text('今日の回答数 · 目安 20問',
                 style: TextStyle(color: Color(0xFF77777F), fontSize: 11)),
+              const SizedBox(height: 12),
+              Row(children: [
+                const Icon(Icons.local_fire_department_rounded, color: _orange, size: 18),
+                const SizedBox(width: 6),
+                Text('${_progressLoaded ? _streakDays : '—'}日連続学習', style: const TextStyle(fontWeight: FontWeight.w800)),
+              ]),
             ],
           ),
         ),
+        const SizedBox(height: 18),
+        Wrap(spacing: 8, runSpacing: 8, children: [
+          OutlinedButton.icon(onPressed: () => widget.onNavigate('/exam'), icon: const Icon(Icons.assignment_outlined), label: const Text('入試演習')),
+          OutlinedButton.icon(onPressed: () => widget.onNavigate('/summary'), icon: const Icon(Icons.menu_book_outlined), label: const Text('要点まとめ')),
+          OutlinedButton.icon(onPressed: () => widget.onNavigate('/records'), icon: const Icon(Icons.bar_chart_rounded), label: const Text('学習記録')),
+        ]),
         const Spacer(),
         SizedBox(
           width: double.infinity,
