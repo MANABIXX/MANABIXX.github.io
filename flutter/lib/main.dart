@@ -95,7 +95,7 @@ class ManabiXXApp extends StatelessWidget {
         '/practice/kosen/study': (_) => const _PasswordGatePage(password: 'kosen', title: '高専モード', child: KosenPracticePage(title: '高専モード', additionalDataPaths: ['/data/questions.json'])),
         '/practice/kosen/math-section-1': (_) => const _PasswordGatePage(password: 'kosen', title: '高専モード', child: KosenPracticePage(dataPath: '/data/kosen-math-section-1.json', title: '数学・大問1集中演習', initialSubject: 'math')),
         '/practice/foundation-training': (_) => const _PasswordGatePage(password: 'haru', title: '下積みモード', child: _ModeHomePage(mode: 'foundation')),
-        '/practice/foundation-training/study': (_) => const _PasswordGatePage(password: 'haru', title: '下積みモード', child: FoundationPracticePage(dataPath: '/data/foundation-training.json', title: '下積みモード', includeAllSubjects: true, additionalDataPaths: ['/data/public-exam.json'])),
+        '/practice/foundation-training/study': (_) => const _PasswordGatePage(password: 'haru', title: '下積みモード', child: FoundationPracticePage(dataPath: '/data/foundation-training.json', title: '下積みモード', includeAllSubjects: true, additionalDataPaths: ['/data/questions.json', '/data/public-exam.json'])),
         '/records': (_) => const _ProgressPage(),
         '/to-you': (_) => const ToYouPage(),
         '/foundation': (_) => const FoundationPracticePage(includeAllSubjects: true),
