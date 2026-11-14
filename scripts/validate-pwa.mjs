@@ -28,7 +28,7 @@ for (const entry of manifests) {
       throw new Error(entry.file + ' icons need src, sizes and type.');
     }
     const iconUrl = new URL(icon.src, new URL(entry.file.split('/').pop(), entry.publicBase));
-    const iconPath = path.join(root, 'static', iconUrl.pathname.replace(/^\\//, ''));
+    const iconPath = path.join(root, 'static', iconUrl.pathname.slice(1));
     await fs.access(iconPath);
   }
   if (manifest.display !== 'standalone' && manifest.display !== 'fullscreen') {
