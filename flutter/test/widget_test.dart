@@ -144,7 +144,8 @@ void main() {
     await tester.sendKeyEvent(LogicalKeyboardKey.arrowRight);
     await tester.sendKeyEvent(LogicalKeyboardKey.enter);
     await tester.pump();
-    await tester.pump(const Duration(milliseconds: 450));
+    expect(find.text('正解！'), findsOneWidget);
+    await tester.sendKeyEvent(LogicalKeyboardKey.enter);
     await tester.pumpAndSettle();
     expect(find.text('演習完了'), findsOneWidget);
     expect(find.text('1 / 1'), findsOneWidget);
