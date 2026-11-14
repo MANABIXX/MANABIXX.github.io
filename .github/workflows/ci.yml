@@ -23,6 +23,9 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y poppler-utils
       - name: Sync pinned learning content
         run: npm run sync:registry
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - name: Generate Kosen practice questions
         run: npm run generate:kosen
       - name: Validate registry-derived Kosen questions
@@ -31,9 +34,6 @@ jobs:
         run: npm run generate:foundation-training
       - name: Prepare complete offline dataset and versioned worker
         run: npm run prepare:flutter-offline
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
       - name: Validate learning content
         run: bash scripts/verify-content.sh
       - name: Check Svelte and TypeScript
