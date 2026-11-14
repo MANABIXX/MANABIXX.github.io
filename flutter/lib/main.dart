@@ -90,8 +90,11 @@ class ManabiXXApp extends StatelessWidget {
       routes: {
         '/practice/foundation': (_) => const FoundationPracticePage(includeAllSubjects: true),
         '/practice/kosen': (_) => const _PasswordGatePage(password: 'kosen', title: '製作者専用モード', child: _PrivateModeShell(mode: _PrivateMode.kosen)),
+        '/practice/kosen/': (_) => const _PasswordGatePage(password: 'kosen', title: '製作者専用モード', child: _PrivateModeShell(mode: _PrivateMode.kosen)),
         '/practice/kosen/math-section-1': (_) => const _PasswordGatePage(password: 'kosen', title: '数学・大問1集中演習', child: _PrivateModeShell(mode: _PrivateMode.kosen, initialTab: 1, mathSectionOne: true)),
+        '/practice/kosen/math-section-1/': (_) => const _PasswordGatePage(password: 'kosen', title: '数学・大問1集中演習', child: _PrivateModeShell(mode: _PrivateMode.kosen, initialTab: 1, mathSectionOne: true)),
         '/practice/foundation-training': (_) => const _PasswordGatePage(password: 'haru', title: '下積みモード', child: _PrivateModeShell(mode: _PrivateMode.foundationTraining)),
+        '/practice/foundation-training/': (_) => const _PasswordGatePage(password: 'haru', title: '下積みモード', child: _PrivateModeShell(mode: _PrivateMode.foundationTraining)),
         '/records': (_) => const _ProgressPage(),
         '/foundation': (_) => const FoundationPracticePage(includeAllSubjects: true),
         '/foundation/': (_) => const FoundationPracticePage(),
@@ -102,7 +105,9 @@ class ManabiXXApp extends StatelessWidget {
         '/summary': (_) => const KnowledgeLibraryPage(title: '要点まとめ', initialSubject: 'science'),
         '/summary/': (_) => const KnowledgeLibraryPage(title: '要点まとめ', initialSubject: 'science'),
         '/summary/science': (_) => const KnowledgeLibraryPage(title: '理科の要点まとめ', initialSubject: 'science'),
+        '/summary/science/': (_) => const KnowledgeLibraryPage(title: '理科の要点まとめ', initialSubject: 'science'),
         '/summary/social': (_) => const KnowledgeLibraryPage(title: '社会の要点まとめ', initialSubject: 'social'),
+        '/summary/social/': (_) => const KnowledgeLibraryPage(title: '社会の要点まとめ', initialSubject: 'social'),
         '/mock-exam': (_) => const FoundationPracticePage(
           dataPath: '/data/mock-exams.json', title: '模試・予想問題', includeAllSubjects: true),
         '/mock-exam/': (_) => const FoundationPracticePage(
