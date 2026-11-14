@@ -30,6 +30,9 @@ jobs:
         with:
           channel: stable
           cache: true
+      - name: Prepare bundled Japanese fonts
+        working-directory: .
+        run: npm run fetch:flutter-fonts
       - name: Resolve dependencies
         run: flutter pub get
       - name: Analyze Dart sources
@@ -37,4 +40,4 @@ jobs:
       - name: Run widget tests
         run: flutter test
       - name: Build GitHub Pages-compatible web output
-        run: flutter build web --release --base-href /flutter/
+        run: flutter build web --release --wasm --base-href "${FLUTTER_BASE_HREF:-/flutter/}"
