@@ -453,7 +453,7 @@ class _PrivateModeShellState extends State<_PrivateModeShell> {
               title: _title,
               isKosen: _isKosen,
               onPractice: () => setState(() => _tab = 1),
-              onMainHome: () => Navigator.of(context).maybePop(),
+              onMainHome: () => Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false),
             ),
             practice,
             const _ProgressPage(),
