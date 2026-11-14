@@ -35,8 +35,11 @@ void main() {
     expect(find.text('MANABIXX'), findsOneWidget);
     expect(find.textContaining('今日の一歩を、'), findsOneWidget);
     expect(find.text('高専モード'), findsNothing);
-    expect(find.text('制作者専用モード'), findsOneWidget);
+    expect(find.text('高専モード'), findsNothing);
     expect(find.text('2027年度・高校入試情報'), findsOneWidget);
+    await tester.drag(find.byType(ListView).first, const Offset(0, -1200));
+    await tester.pumpAndSettle();
+    expect(find.text('制作者専用モード'), findsOneWidget);
     expect(find.text('基礎網羅問題を始める'), findsOneWidget);
     expect(find.text('ホーム'), findsOneWidget);
     expect(find.text('学習'), findsOneWidget);
@@ -406,7 +409,7 @@ void main() {
     await prepareViewport(tester);
     await tester.pumpWidget(const ManabiXXApp());
     await tapVisible(tester, find.text('学習'));
-    await tester.tap(find.text('製作者専用モード'));
+    await tester.tap(find.text('制作者専用モード'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 100));
     expect(find.text('認証する'), findsOneWidget);
