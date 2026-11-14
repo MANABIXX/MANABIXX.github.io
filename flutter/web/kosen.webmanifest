@@ -12,7 +12,7 @@
   "lang": "ja",
   "icons": [
     {
-      "src": "../assets/study-icon.svg",
+      "src": "../assets/kosen-icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
