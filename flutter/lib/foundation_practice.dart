@@ -59,12 +59,14 @@ class FoundationPracticePage extends StatefulWidget {
     this.dataPath = '/data/questions.json',
     this.title = '基礎網羅問題',
     this.includeAllSubjects = false,
+    this.additionalDataPaths = const [],
   });
 
   final Future<List<FoundationQuestion>> Function()? loadQuestions;
   final String dataPath;
   final String title;
   final bool includeAllSubjects;
+  final List<String> additionalDataPaths;
 
   @override
   State<FoundationPracticePage> createState() => _FoundationPracticePageState();
@@ -167,9 +169,22 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
       throw Exception('問題データを読み込めませんでした（HTTP ${response.statusCode}）。');
     }
     final payload = jsonDecode(response.body) as Map<String, dynamic>;
-    final raw = payload['questions'] as List<dynamic>;
-    return raw
-        .map((item) => FoundationQuestion.fromJson(item as Map<String, dynamic>))
+    final raw = <dynamic>[...(payload['questions'] as List<dynamic>)];
+    for (final path in widget.additionalDataPaths) {
+      final extraUri = Uri.base.resolve(path.startsWith('/') ? path : '/$path');
+      final extraResponse = await http.get(extraUri);
+      if (extraResponse.statusCode != 200) {
+        throw Exception('追加問題データを読み込めませんでした（HTTP ${extraResponse.statusCode}）。');
+      }
+      final extraPayload = jsonDecode(extraResponse.body) as Map<String, dynamic>;
+      raw.addAll(extraPayload['questions'] as List<dynamic>);
+    }
+    final byId = <String, FoundationQuestion>{};
+    for (final item in raw) {
+      final question = FoundationQuestion.fromJson(item as Map<String, dynamic>);
+      byId.putIfAbsent(question.id, () => question);
+    }
+    return byId.values
         .where((item) => widget.includeAllSubjects ||
             item.subject == 'science' || item.subject == 'social')
         .toList(growable: false);
@@ -248,13 +263,12 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
   Future<void> _answer(int choice) async {
     if (_selected != null) return;
     final question = _current;
-    HapticFeedback.lightImpact();
     setState(() {
       _selected = choice;
       if (choice == question.correct) _score++;
     });
     _saveAnswer(question, choice);
-    await Future<void>.delayed(const Duration(milliseconds: 420));
+    await Future<void>.delayed(const Duration(milliseconds: 120));
     if (mounted && _started && !_finished && _selected == choice) {
       _next();
     }
