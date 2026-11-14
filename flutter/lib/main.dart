@@ -26,14 +26,8 @@ class ManabiXXApp extends StatelessWidget {
         brightness: Brightness.dark,
         // Prefer the browser/OS Japanese sans-serif fonts. This avoids remote
         // CJK fallback downloads and lets each platform use its native JP glyphs.
-        fontFamily: 'sans-serif',
-        fontFamilyFallback: const [
-          'Hiragino Sans',
-          'Hiragino Kaku Gothic ProN',
-          'Yu Gothic',
-          'Meiryo',
-          'sans-serif',
-        ],
+        fontFamily: 'NotoSansJP',
+        fontFamilyFallback: const ['sans-serif'],
         scaffoldBackgroundColor: _bg,
         colorScheme: const ColorScheme.dark(
           primary: _orange,
@@ -98,9 +92,9 @@ class ManabiXXApp extends StatelessWidget {
         '/library': (_) => const KnowledgeLibraryPage(),
         '/library/': (_) => const KnowledgeLibraryPage(),
         '/practice/foundation': (_) => const FoundationPracticePage(includeAllSubjects: true),
-        '/practice/kosen': (_) => const KosenPracticePage(),
-        '/practice/kosen/math-section-1': (_) => const KosenPracticePage(dataPath: '/data/kosen-math-section-1.json', title: '数学・大問1集中演習', initialSubject: 'math'),
-        '/practice/foundation-training': (_) => const FoundationPracticePage(dataPath: 'data/mock-exams.json', title: '下積みモード', includeAllSubjects: true),
+        '/practice/kosen': (_) => const _PasswordGatePage(password: 'kosen', title: '製作者専用モード', child: KosenPracticePage(title: '製作者専用モード')) ,
+        '/practice/kosen/math-section-1': (_) => const _PasswordGatePage(password: 'kosen', title: '数学・大問1集中演習', child: KosenPracticePage(dataPath: '/data/kosen-math-section-1.json', title: '数学・大問1集中演習', initialSubject: 'math')),
+        '/practice/foundation-training': (_) => const _PasswordGatePage(password: 'haru', title: '下積みモード', child: FoundationPracticePage(dataPath: '/data/mock-exams.json', title: '下積みモード', includeAllSubjects: true)),
         '/records': (_) => const _ProgressPage(),
         '/foundation': (_) => const FoundationPracticePage(includeAllSubjects: true),
         '/foundation/': (_) => const FoundationPracticePage(),
@@ -108,16 +102,14 @@ class ManabiXXApp extends StatelessWidget {
           dataPath: 'data/public-exam.json', title: '公立高校入試問題'),
         '/exam/': (_) => const FoundationPracticePage(
           dataPath: 'data/public-exam.json', title: '公立高校入試問題'),
-        '/summary': (_) => const FoundationPracticePage(
-          dataPath: 'data/summary-foundation.json', title: '要点まとめ・基礎確認'),
-        '/summary/': (_) => const FoundationPracticePage(
-          dataPath: 'data/summary-foundation.json', title: '要点まとめ・基礎確認'),
+        '/summary': (_) => const KnowledgeLibraryPage(title: '要点まとめ'),
+        '/summary/': (_) => const KnowledgeLibraryPage(title: '要点まとめ'),
         '/mock-exam': (_) => const FoundationPracticePage(
           dataPath: 'data/mock-exams.json', title: '模試・予想問題', includeAllSubjects: true),
         '/mock-exam/': (_) => const FoundationPracticePage(
           dataPath: 'data/mock-exams.json', title: '模試・予想問題', includeAllSubjects: true),
-        '/kosen': (_) => const KosenPracticePage(),
-        '/kosen/': (_) => const KosenPracticePage(),
+        '/kosen': (_) => const _PasswordGatePage(password: 'kosen', title: '製作者専用モード', child: KosenPracticePage(title: '製作者専用モード')),
+        '/kosen/': (_) => const _PasswordGatePage(password: 'kosen', title: '製作者専用モード', child: KosenPracticePage(title: '製作者専用モード')),
       },
       onUnknownRoute: (_) => MaterialPageRoute<void>(
         builder: (_) => const _AppHomePage(),
@@ -291,6 +283,94 @@ class _HomeDashboardState extends State<_HomeDashboard> {
   );
 }
 
+class _PasswordGatePage extends StatefulWidget {
+  const _PasswordGatePage({required this.password, required this.title, required this.child});
+  final String password;
+  final String title;
+  final Widget child;
+  @override
+  State<_PasswordGatePage> createState() => _PasswordGatePageState();
+}
+
+class _PasswordGatePageState extends State<_PasswordGatePage> {
+  bool _authorized = false;
+  bool _prompted = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_prompted) return;
+    _prompted = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) => _requestPassword());
+  }
+
+  Future<void> _requestPassword() async {
+    final controller = TextEditingController();
+    var error = '';
+    final accepted = await showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) => StatefulBuilder(
+        builder: (context, setDialogState) => AlertDialog(
+          title: Text(widget.title),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('このモードを開くにはパスワードが必要です。'),
+              const SizedBox(height: 14),
+              TextField(
+                controller: controller,
+                autofocus: true,
+                obscureText: true,
+                onSubmitted: (value) {
+                  if (value == widget.password) {
+                    Navigator.of(dialogContext).pop(true);
+                  } else {
+                    setDialogState(() => error = 'パスワードが違います。もう一度入力してください。');
+                    controller.clear();
+                  }
+                },
+                decoration: const InputDecoration(labelText: 'パスワード'),
+              ),
+              if (error.isNotEmpty) Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Text(error, style: const TextStyle(color: Colors.redAccent)),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(onPressed: () => Navigator.of(dialogContext).pop(false), child: const Text('戻る')),
+            FilledButton(
+              onPressed: () {
+                if (controller.text == widget.password) {
+                  Navigator.of(dialogContext).pop(true);
+                } else {
+                  setDialogState(() => error = 'パスワードが違います。もう一度入力してください。');
+                  controller.clear();
+                }
+              },
+              child: const Text('認証する'),
+            ),
+          ],
+        ),
+      ),
+    );
+    controller.dispose();
+    if (!mounted) return;
+    if (accepted == true) {
+      setState(() => _authorized = true);
+    } else {
+      Navigator.of(context).maybePop();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) => _authorized
+      ? widget.child
+      : const Scaffold(body: Center(child: CircularProgressIndicator()));
+}
+
 class _StudyMenu extends StatelessWidget {
   const _StudyMenu({required this.onSelect});
   final ValueChanged<String> onSelect;
@@ -312,7 +392,7 @@ class _StudyMenu extends StatelessWidget {
         subtitle: '重要事項を確認', onTap: () => onSelect('/summary')),
       _MenuTile(icon: Icons.assessment_outlined, title: '模試・予想問題',
         subtitle: '5教科の総合演習', onTap: () => onSelect('/mock-exam')),
-      _MenuTile(icon: Icons.school_outlined, title: '専用演習', subtitle: '教科別の集中演習', onTap: () => onSelect('/practice/kosen')),
+      _MenuTile(icon: Icons.lock_outline_rounded, title: '製作者専用モード', subtitle: '認証制・5教科の実戦演習', onTap: () => onSelect('/practice/kosen')),
       _MenuTile(icon: Icons.calculate_outlined, title: '数学・大問1集中演習', subtitle: '計算・小問集合を重点反復', onTap: () => onSelect('/practice/kosen/math-section-1')),
       _MenuTile(icon: Icons.repeat_rounded, title: '下積みモード', subtitle: '5教科の基礎反復と苦手問題の復習', onTap: () => onSelect('/practice/foundation-training')),
       _MenuTile(icon: Icons.auto_stories_outlined, title: '教材ライブラリ',
