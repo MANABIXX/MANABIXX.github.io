@@ -51,7 +51,8 @@ self.addEventListener('activate', (event) => {
       .filter((key) => (
         (key.startsWith(CACHE_PREFIX) && key !== CACHE_NAME) ||
         key.startsWith('manabixx-flutter-') ||
-        key.startsWith('manabixx-study-') ||\n        key.startsWith('study-shell-')
+        key.startsWith('manabixx-study-') ||
+        key.startsWith('study-shell-')
       ))
       .map((key) => caches.delete(key)));
     await self.clients.claim();
