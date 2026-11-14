@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:material_ui/material_ui.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FoundationQuestion {
   const FoundationQuestion({
@@ -81,11 +82,64 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
   int _index = 0;
   int? _selected;
   int _score = 0;
+  int _completedSessions = 0;
+  int _totalAnswered = 0;
+  int _totalCorrect = 0;
+  List<String> _wrongQuestionIds = [];
+  List<Map<String, dynamic>> _history = [];
+
+  String get _storageKey => 'manabixx.learning.${widget.dataPath.replaceAll('/', '_')}';
+
+  Future<void> _loadProgress() async {
+    final prefs = await SharedPreferences.getInstance();
+    final raw = prefs.getString('$_storageKey.history');
+    final wrong = prefs.getStringList('$_storageKey.wrong') ?? [];
+    final decoded = raw == null ? <dynamic>[] : jsonDecode(raw) as List<dynamic>;
+    final history = decoded.whereType<Map<String, dynamic>>().toList();
+    if (!mounted) return;
+    setState(() {
+      _history = history;
+      _wrongQuestionIds = wrong;
+      _completedSessions = history.length;
+      _totalAnswered = history.fold<int>(0, (sum, item) => sum + (item['total'] as int? ?? 0));
+      _totalCorrect = history.fold<int>(0, (sum, item) => sum + (item['score'] as int? ?? 0));
+    });
+  }
+
+  Future<void> _saveAnswer(FoundationQuestion question, int choice) async {
+    final prefs = await SharedPreferences.getInstance();
+    if (choice == question.correct) {
+      _wrongQuestionIds.remove(question.id);
+    } else if (!_wrongQuestionIds.contains(question.id)) {
+      _wrongQuestionIds.add(question.id);
+    }
+    await prefs.setStringList('$_storageKey.wrong', _wrongQuestionIds);
+    if (mounted) setState(() {});
+  }
+
+  Future<void> _saveSession() async {
+    final prefs = await SharedPreferences.getInstance();
+    _history.insert(0, {
+      'completedAt': DateTime.now().toIso8601String(),
+      'title': widget.title,
+      'total': _session.length,
+      'score': _score,
+    });
+    if (_history.length > 100) _history = _history.take(100).toList();
+    await prefs.setString('$_storageKey.history', jsonEncode(_history));
+    if (!mounted) return;
+    setState(() {
+      _completedSessions = _history.length;
+      _totalAnswered += _session.length;
+      _totalCorrect += _score;
+    });
+  }
 
   @override
   void initState() {
     super.initState();
     _load();
+    _loadProgress();
   }
 
   Future<List<FoundationQuestion>> _fetchQuestions() async {
@@ -160,17 +214,20 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
       _selected = choice;
       if (choice == _current.correct) _score++;
     });
+    _saveAnswer(_current, choice);
   }
 
   void _next() {
+    final completes = _index + 1 == _session.length;
     setState(() {
-      if (_index + 1 == _session.length) {
+      if (completes) {
         _finished = true;
       } else {
         _index++;
         _selected = null;
       }
     });
+    if (completes) _saveSession();
   }
 
   void _back() {
@@ -266,6 +323,10 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
                   const SizedBox(height: 6),
                   Text('${_questions.length}問',
                       style: Theme.of(context).textTheme.headlineMedium),
+                  const SizedBox(height: 10),
+                  Text('学習記録：$_completedSessions回 · $_totalAnswered問回答 · 正解 $_totalCorrect問'),
+                  Text('復習待ち：${_wrongQuestionIds.length}問',
+                      style: Theme.of(context).textTheme.bodySmall),
                   const SizedBox(height: 20),
                   DropdownButtonFormField<String>(
                     initialValue: _subject,
