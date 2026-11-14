@@ -19,6 +19,8 @@ jobs:
         with:
           node-version: 22
       - run: npm install
+      - name: Install PDF text extraction tools
+        run: sudo apt-get update && sudo apt-get install -y poppler-utils
       - name: Sync pinned learning content
         run: npm run sync:registry
       - uses: actions/setup-python@v5
