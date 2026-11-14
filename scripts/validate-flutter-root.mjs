@@ -30,11 +30,12 @@ if (!app.version || !Array.isArray(app.files) || app.files.length === 0) {
 if (worker.includes('__DATA_VERSION__') || worker.includes('__APP_VERSION__')) {
   throw new Error('Service worker has unresolved version placeholders.');
 }
+if (!index.includes('legacyPath.startsWith("/flutter/")')) throw new Error('Legacy /flutter/ URLs are not redirected to the root routes.');
 if (!index.includes('navigator.serviceWorker.register("/flutter-sw.js"')) {
   throw new Error('Root service worker registration is missing.');
 }
 if (/<(?:script|link)[^>]+(?:src|href)=["']\/flutter\//i.test(index)) throw new Error('Root app entry point still references /flutter/ assets.');
-for (const route of ['/practice/kosen', '/practice/foundation-training', '/records', '/summary']) {
+for (const route of ['/practice/kosen', '/practice/kosen/study', '/practice/kosen/math-section-1', '/practice/foundation-training', '/practice/foundation-training/study', '/records', '/summary', '/to-you']) {
   if (!routes.includes(`'${route}'`)) throw new Error(`Flutter route is missing: ${route}`);
 }
 
