@@ -4,6 +4,8 @@ class ReleaseNotesPage extends StatelessWidget {
   const ReleaseNotesPage({super.key});
 
   static const _items = <_ReleaseEntry>[
+    _ReleaseEntry(date: '2026-11-15', category: 'CLEANUP', title: '不要なプログラミング学習ページを撤去',
+      body: '学習対象に含めないコードラボの公開ルート・メニュー・実行サンプルを撤去しました。問題データ監査などの内部開発ツールは維持し、通常の教科学習機能には変更ありません。'),
     _ReleaseEntry(date: '2026-11-15', category: 'BUILD / ANDROID', title: 'Android APKの生成物チェックを修正',
       body: 'Gradleビルド後にFlutterが生成するAPKを正しい出力先で確認するように変更。見つからない場合は生成先候補をログに表示し、サイズ・チェックサム検証や公開処理へ進まないようにしました。'),
     _ReleaseEntry(date: '2026-11-15', category: 'BUILD / ANDROID', title: 'Android APKの後処理を修正',
