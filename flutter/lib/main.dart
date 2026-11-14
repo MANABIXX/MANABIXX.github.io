@@ -255,7 +255,7 @@ class _HomeDashboardState extends State<_HomeDashboard> {
           ),
         ),
         const Spacer(),
-        SizedBox(
+        const SizedBox(
           width: double.infinity,
           height: 68,
           child: FilledButton.icon(
