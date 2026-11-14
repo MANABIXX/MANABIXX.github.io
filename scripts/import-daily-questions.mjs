@@ -12,9 +12,10 @@ const destinations = {
 const subjects = ['japanese', 'math', 'english', 'science', 'social'];
 const valid = (q, file) => {
   if (!q || typeof q !== 'object' || typeof q.id !== 'string' ||
-      !subjects.includes(q.subject) || typeof q.prompt !== 'string' ||
+      !subjects.includes(q.subject) || typeof q.topic !== 'string' || !q.topic.trim() ||
+      typeof q.level !== 'string' || !q.level.trim() || typeof q.prompt !== 'string' || !q.prompt.trim() ||
       !Array.isArray(q.options) || q.options.length !== 4 ||
-      q.options.some((item) => typeof item !== 'string' || !item.trim()) ||
+      q.options.some((item) => typeof item !== 'string' || !item.trim()) || new Set(q.options).size !== 4 ||
       !Number.isInteger(q.correct) || q.correct < 0 || q.correct > 3 ||
       typeof q.explanation !== 'string' || !q.explanation.trim()) {
     throw new Error('Invalid four-choice question in ' + file + ': ' + (q?.id ?? 'unknown'));
@@ -42,10 +43,14 @@ for (const filename of entries) {
   }
   const counts = Object.fromEntries(subjects.map((subject) => [subject, 0]));
   const batchIds = new Set();
+  const batchPrompts = new Set();
   for (const question of batch.questions) {
     valid(question, filename);
     if (batchIds.has(question.id)) throw new Error('Duplicate question ID in ' + filename + ': ' + question.id);
     batchIds.add(question.id);
+    const promptKey = question.subject + '|' + question.prompt.trim();
+    if (batchPrompts.has(promptKey)) throw new Error('Duplicate question prompt in ' + filename + ': ' + question.prompt);
+    batchPrompts.add(promptKey);
     counts[question.subject]++;
     if (!question.id.startsWith('daily-' + batch.date + '-')) {
       throw new Error('Question ID must begin with daily-' + batch.date + '-: ' + question.id);
