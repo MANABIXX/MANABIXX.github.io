@@ -1,6 +1,6 @@
 # Flutter Web migration inventory
 
-Last inspected: 2026-11-14 (JST)  
+Last inspected: 2026-11-15 (JST)  
 Repository: `MANABIXX/MANABIXX.github.io`  
 Production branch: `main`  
 Production URL: https://manabixx.github.io/ (Flutter Web at Pages root)
@@ -27,7 +27,7 @@ Correction (2026-11-14): `main` の `.github/workflows/pages.yml` は `flutter/b
 | Shitadumi mode | `shitadumi/` static app, articles, mock exams, opinion, PWA and release notes | Not started |
 | PWA / offline | Flutter service worker, root resource manifest, mode-specific manifests | Flutter runtime and nine explicitly approved route datasets are precached; weekly Periodic Background Sync is browser-dependent |
 | Next.js prototype | `next-app/` | Inventory only; not assumed to be production |
-| Code lab | `src/routes/code-lab/`, `src/lib/code-lab.ts` | Audit purpose and origin before deciding whether to retain |
+| Code lab | Former `src/routes/code-lab/`, `src/lib/code-lab.ts` | Removed 2026-11-15: route, legacy menu entry and sample module removed; no Flutter route or sitemap entry exists |
 
 ## Data and state compatibility requirements
 
