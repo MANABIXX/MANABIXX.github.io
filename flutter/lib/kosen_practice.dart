@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:http/http.dart' as http;
 
 class KosenQuestion {
@@ -243,7 +243,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
                   Text('教科を選ぶ', style: Theme.of(context).textTheme.titleLarge),
                   const SizedBox(height: 12),
                   DropdownButtonFormField<String>(
-                    value: _subject,
+                    initialValue: _subject,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: '出題範囲',
