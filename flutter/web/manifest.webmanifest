@@ -1,0 +1,20 @@
+{
+  "name": "MANABIXX",
+  "short_name": "MANABIXX",
+  "description": "自分のペースで学び、理解を積み重ねる学習スペース。",
+  "start_url": "/flutter/",
+  "scope": "/flutter/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#121214",
+  "theme_color": "#121214",
+  "lang": "ja",
+  "icons": [
+    {
+      "src": "../assets/study-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
