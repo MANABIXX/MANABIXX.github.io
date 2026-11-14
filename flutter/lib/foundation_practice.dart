@@ -81,6 +81,7 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
   bool _started = false;
   bool _finished = false;
   int _index = 0;
+  int _keyboardIndex = 0;
   int? _selected;
   int _score = 0;
   int _completedSessions = 0;
@@ -218,6 +219,7 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
     setState(() {
       _session = nextSession.take(count).toList(growable: false);
       _index = 0;
+      _keyboardIndex = 0;
       _selected = null;
       _score = 0;
       _started = true;
@@ -299,7 +301,21 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
           icon: const Icon(Icons.arrow_back),
         ),
       ),
-      body: SafeArea(
+      body: Focus(
+        autofocus: true,
+        onKeyEvent: (node, event) {
+          if (event is! KeyDownEvent || !_started || _finished || _selected != null) return KeyEventResult.ignored;
+          final key = event.logicalKey;
+          if (key == LogicalKeyboardKey.arrowLeft || key == LogicalKeyboardKey.arrowUp) { setState(() => _keyboardIndex = (_keyboardIndex + 3) % 4); return KeyEventResult.handled; }
+          if (key == LogicalKeyboardKey.arrowRight || key == LogicalKeyboardKey.arrowDown) { setState(() => _keyboardIndex = (_keyboardIndex + 1) % 4); return KeyEventResult.handled; }
+          if (key == LogicalKeyboardKey.digit1 || key == LogicalKeyboardKey.numpad1 || key == LogicalKeyboardKey.digit2 || key == LogicalKeyboardKey.numpad2 || key == LogicalKeyboardKey.digit3 || key == LogicalKeyboardKey.numpad3 || key == LogicalKeyboardKey.digit4 || key == LogicalKeyboardKey.numpad4) {
+            final digit = key.keyId >= LogicalKeyboardKey.numpad1.keyId ? key.keyId - LogicalKeyboardKey.numpad1.keyId + 1 : key.keyId - LogicalKeyboardKey.digit1.keyId + 1;
+            setState(() => _keyboardIndex = digit - 1); return KeyEventResult.handled;
+          }
+          if (key == LogicalKeyboardKey.enter || key == LogicalKeyboardKey.numpadEnter) { _answer(_keyboardIndex); return KeyEventResult.handled; }
+          return KeyEventResult.ignored;
+        },
+        child: SafeArea(
         child: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 430),
@@ -316,6 +332,7 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
                               : _buildQuestion(),
             ),
           ),
+        ),
         ),
       ),
     );
@@ -349,7 +366,7 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
                   )),
           const SizedBox(height: 8),
           Text(widget.title == '基礎網羅問題'
-              ? '理科・社会の基礎問題から、今取り組む範囲を選びます。'
+              ? '5教科の基礎問題から、今取り組む範囲を選びます。'
               : widget.includeAllSubjects
                   ? '5教科の問題を組み合わせて、実戦形式で演習します。'
                   : '理科・社会の入試形式問題に挑戦します。出典情報も確認できます。'),
@@ -558,7 +575,7 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
                   backgroundColor: bg,
                   foregroundColor: const Color(0xFFF4F4F5),
                   disabledForegroundColor: const Color(0xFFF4F4F5),
-                  side: BorderSide(color: border, width: 1),
+                  side: BorderSide(color: !answered && i == _keyboardIndex ? const Color(0xFFFF7900) : border, width: !answered && i == _keyboardIndex ? 2 : 1),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
