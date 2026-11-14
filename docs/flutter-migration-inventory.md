@@ -19,8 +19,8 @@ Correction (2026-11-14): `main` の `.github/workflows/pages.yml` は `flutter/b
 | Additional dedicated practice | Existing isolated practice route and `static/data/kosen-questions.json` | Flutter `/kosen` implemented; kept off the public dashboard |
 | Library | `src/routes/library/`; `static/data/knowledge-base.json` | Flutter `/library` implemented with 262 existing records, search, subject/grade/field filters and expandable details; saved-item parity pending |
 | Mock exam | `src/routes/mock-exam/`; `static/data/mock-exams.json` | Flutter `/mock-exam` implemented with 100 records and five-subject selection; full mock flow/parity pending |
-| Motivation | `src/routes/motivation/`; legacy `motivation.html` | Not started |
-| Release notes | `src/routes/releases/`; legacy `release-notes.html` | Not started |
+| Motivation | `src/routes/motivation/`; legacy `motivation.html`; Flutter `/to-you` message screen | `/to-you` is implemented as a message page; full legacy motivation archive and content parity are not started |
+| Release notes | `src/routes/releases/`; legacy `release-notes.html`; Flutter `/releases` and `/release-notes` | Flutter release-note screen is implemented; full historical entry parity and archive migration remain pending |
 | Summary / notes | `src/routes/summary/`; legacy `summary.html`; `static/data/summary-foundation.json` | Flutter `/summary` implemented with 450 records; visual note/library parity pending |
 | Workspace | `src/routes/workspace/` | Not started |
 | Private content | legacy `private.html`, `n-exclusive.html`, `s-exclusive.html`; matching JSON | Not started; audit access boundary first |
@@ -51,7 +51,7 @@ Correction (2026-11-14): `main` の `.github/workflows/pages.yml` は `flutter/b
 - Stage 1: isolated Flutter app scaffold and CI validation workflow.
 - Stage 2: Flutter question-practice foundation, public exam, summary/foundation confirmation, five-subject mock practice, knowledge library, and a separate unlinked additional-practice route. Existing JSON data is loaded directly; practice selection, four-choice answering, explanations, results, library search and filters are implemented.
 - Four public datasets audited: 1,180 foundation questions, 323 public-exam questions, 450 summary questions, and 100 mock questions. No duplicate IDs or malformed four-choice records were found in the inspected datasets.
-- Still not migrated or not yet parity-verified: motivation, release-note UI parity, workspace, private-content access boundary, Shitadumi app, full home/dashboard, full learning-history migration, and full browser/mobile/accessibility parity.
+- Still not migrated or not yet parity-verified: full motivation archive, release-note history parity, workspace, private-content access boundary, Shitadumi app, full home/dashboard, full learning-history migration, and full browser/mobile/accessibility parity.
 - Production deployment: Flutter Web root deployment is active on `main`; the latest observed Pages workflow for the migration branch succeeded, but the open PR #19 is not mergeable and its result is not evidence of full feature parity.
 
 
