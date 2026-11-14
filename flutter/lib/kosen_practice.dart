@@ -169,7 +169,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('高専専用モード'),
+        title: const Text('専用演習'),
         leading: IconButton(
           tooltip: 'MANABIXXホームへ戻る',
           onPressed: () => Navigator.of(context).maybePop(),
