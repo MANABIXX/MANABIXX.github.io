@@ -88,7 +88,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
   int? _selected;
   int _score = 0;
   List<String> _wrongQuestionIds = [];
-  String get _historyKey => widget.dataPath == '/data/kosen-questions.json' ? 'manabixx.mode.kosen.history' : 'manabixx.mode.kosen.history.${widget.dataPath.hashCode}';
+  String get _historyKey => widget.dataPath == '/data/kosen-questions.json' ? 'manabixx.mode.kosen.history' : 'manabixx.mode.kosen.history.${widget.dataPath.replaceAll('/', '_')}';
   String get _wrongKey => '$_historyKey.wrong';
 
   @override
