@@ -249,13 +249,13 @@ class _HomeDashboardState extends State<_HomeDashboard> {
                   minHeight: 6,
                   backgroundColor: const Color(0xFF3A3A40), color: _orange)),
               const SizedBox(height: 8),
-              Text('今日の回答数 · 目安 20問',
+              const Text('今日の回答数 · 目安 20問',
                 style: const TextStyle(color: Color(0xFF77777F), fontSize: 11)),
             ],
           ),
         ),
         const Spacer(),
-        const SizedBox(
+        SizedBox(
           width: double.infinity,
           height: 68,
           child: FilledButton.icon(
