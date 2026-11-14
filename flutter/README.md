@@ -1,6 +1,6 @@
 # MANABIXX Flutter Web migration workspace
 
-This directory contains an isolated Flutter Web implementation. It is not the production Pages entry point; the existing SvelteKit site remains live until route, data, progress, PWA, and browser parity checks pass.
+This directory contains the Flutter Web application currently published at the GitHub Pages root by `.github/workflows/pages.yml`. The root deployment is active, but full parity with every legacy route, stored progress item, private-content boundary, and PWA behavior has not yet been established.
 
 ## Implemented migration slices
 
@@ -27,7 +27,7 @@ flutter build web --release --base-href /
 
 ## Migration rules
 
-- Keep the production site and Pages workflow unchanged until route and feature parity is verified.
+- Keep legacy source and recovery assets until route, data, progress, access-boundary, and PWA parity is verified; do not describe the Flutter root deployment as a beta preview.
 - Port every existing public route and preserve deep links, question IDs, progress storage, settings, and PWA behavior.
 - Do not replace real data with fixtures or present placeholder actions as working features.
 - Do not introduce programming-language lessons into Study; Dart is implementation technology only.
