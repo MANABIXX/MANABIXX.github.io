@@ -82,16 +82,18 @@
       const close = document.getElementById("pwa-install-close");
       const ua = navigator.userAgent || "";
       const ios = /iPhone|iPad|iPod/.test(ua);
+      const android = /Android/.test(ua);
       const standalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
       let installPrompt = null;
-      const show = () => { if (!standalone && !localStorage.getItem("manabixx-pwa-dismissed")) banner.hidden = false; };
+      const show = () => { try { if (!standalone && !localStorage.getItem("manabixx-pwa-dismissed")) banner.hidden = false; } catch (_) { if (!standalone) banner.hidden = false; } };
       if (ios && !standalone) { copy.textContent = "Safariの共有ボタンから「ホーム画面に追加」を選べます。"; action.textContent = "追加手順"; show(); }
-      window.addEventListener("beforeinstallprompt", (event) => { event.preventDefault(); installPrompt = event; action.textContent = "インストール"; show(); });
+      if (android && !standalone) { copy.textContent = "ブラウザのメニューからホーム画面への追加やアプリのインストールができます。"; show(); }
+      window.addEventListener("beforeinstallprompt", (event) => { event.preventDefault(); installPrompt = event; action.textContent = "インストール"; if (android) show(); });
       action.addEventListener("click", async () => {
         if (installPrompt) { installPrompt.prompt(); await installPrompt.userChoice; installPrompt = null; banner.hidden = true; return; }
         alert(ios ? "Safariの共有ボタン →「ホーム画面に追加」を選択してください。" : "ブラウザのメニューから「アプリをインストール」または「ホーム画面に追加」を選択してください。");
       });
-      close.addEventListener("click", () => { banner.hidden = true; localStorage.setItem("manabixx-pwa-dismissed", "1"); });
+      close.addEventListener("click", () => { banner.hidden = true; try { localStorage.setItem("manabixx-pwa-dismissed", "1"); } catch (_) {} });
       if ("serviceWorker" in navigator) navigator.serviceWorker.register("flutter-sw.js").catch(() => {});
     })();
   </script>
