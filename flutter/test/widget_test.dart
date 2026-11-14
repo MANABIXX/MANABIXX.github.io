@@ -4,6 +4,7 @@ import 'package:manabixx_web/foundation_practice.dart';
 import 'package:manabixx_web/kosen_practice.dart';
 import 'package:manabixx_web/knowledge_library.dart';
 import 'package:manabixx_web/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> prepareViewport(WidgetTester tester) async {
   tester.view.physicalSize = const Size(800, 1400);
@@ -19,6 +20,10 @@ Future<void> tapVisible(WidgetTester tester, Finder finder) async {
 }
 
 void main() {
+  setUp(() {
+    SharedPreferences.setMockInitialValues({});
+  });
+
   testWidgets('renders the Flutter migration preview and foundation entry point', (tester) async {
     await prepareViewport(tester);
     await tester.pumpWidget(const ManabiXXApp());
