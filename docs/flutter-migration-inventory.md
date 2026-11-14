@@ -16,7 +16,7 @@ The production Pages workflow currently builds the SvelteKit application from th
 | Home / Study dashboard | SvelteKit `src/routes/+page.svelte`; legacy `index.html` | Not started |
 | Question practice | `src/lib/QuestionPractice.svelte`; `static/data/questions.json` | Not started |
 | Public high-school exam practice | `src/routes/exam/`; legacy `public-exam.html`; `static/data/public-exam.json` | Not started |
-| Kosen-specific mode | `src/routes/kosen/`; `static/data/kosen-questions.json` | Not started |
+| Kosen-specific mode | `src/routes/kosen/`; `static/data/kosen-questions.json` | First Flutter route implemented; needs live-data/browser and persistence parity checks |
 | Library | `src/routes/library/` | Not started |
 | Mock exam | `src/routes/mock-exam/`; `static/data/mock-exams.json` | Not started |
 | Motivation | `src/routes/motivation/`; legacy `motivation.html` | Not started |
@@ -49,5 +49,6 @@ The production Pages workflow currently builds the SvelteKit application from th
 ## Current stage
 
 - Stage 1: isolated Flutter app scaffold and CI validation workflow.
-- Not yet migrated: all existing production routes and features.
+- Stage 2 (first slice): Kosen practice route, existing JSON fetch, subject selection, four-choice answering, explanations, and session results.
+- Not yet migrated: all other production routes and features; Kosen progress persistence and full browser/deep-link parity remain pending.
 - Production deployment: unchanged.
