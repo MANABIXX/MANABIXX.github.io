@@ -158,7 +158,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
       _selected = choice;
       if (correct) _score++;
     });
-    if (correct) HapticFeedback.mediumImpact();
+    if (correct) await HapticFeedback.mediumImpact();
     await Future<void>.delayed(const Duration(milliseconds: 120));
     if (mounted && _started && !_finished && _selected == choice) _next();
   }
