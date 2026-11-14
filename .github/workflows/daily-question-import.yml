@@ -30,6 +30,8 @@ jobs:
         run: npm run generate:kosen && npm run generate:foundation-training
       - name: Validate and import reviewed daily batches
         run: npm run import:daily-questions
+      - name: Validate merged Kosen question database
+        run: npm run validate:kosen
       - name: Commit updated question databases
         run: |
           git config user.name "github-actions[bot]"
