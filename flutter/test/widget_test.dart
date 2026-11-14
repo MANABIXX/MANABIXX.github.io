@@ -35,12 +35,11 @@ void main() {
     expect(find.text('MANABIXX'), findsOneWidget);
     expect(find.textContaining('今日の一歩を、'), findsOneWidget);
     expect(find.text('高専モード'), findsNothing);
-    expect(find.text('高専モード'), findsNothing);
     expect(find.text('2027年度・高校入試情報'), findsOneWidget);
+    expect(find.text('基礎網羅問題を始める'), findsOneWidget);
     await tester.drag(find.byType(ListView).first, const Offset(0, -1200));
     await tester.pumpAndSettle();
     expect(find.text('制作者専用モード'), findsOneWidget);
-    expect(find.text('基礎網羅問題を始める'), findsOneWidget);
     expect(find.text('ホーム'), findsOneWidget);
     expect(find.text('学習'), findsOneWidget);
     expect(find.text('記録'), findsOneWidget);
@@ -417,8 +416,8 @@ void main() {
     await tester.tap(find.text('認証する'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 100));
-    expect(find.text('今日の一問が、合格に近づく。'), findsOneWidget);
-    expect(find.text('数学・大問1集中演習'), findsNWidgets(2));
+    expect(find.text('今日の一問を、次の目標につなげる。'), findsOneWidget);
+    expect(find.text('数学・大問1集中演習'), findsOneWidget);
     expect(find.text('学習ヒートマップ'), findsOneWidget);
   });
 }
