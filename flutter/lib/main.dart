@@ -406,7 +406,7 @@ class _ModeHomePageState extends State<_ModeHomePage> {
           Card(child: Padding(
             padding: const EdgeInsets.all(18),
             child: Row(children: [
-              const Icon(Icons.local_fire_department_rounded, color: _orange, size: 34),
+              Icon(Icons.local_fire_department_rounded, color: _orange, size: 34 + (_streak.clamp(0, 7) * 2).toDouble()),
               const SizedBox(width: 12),
               Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 const Text('連続学習日数', style: TextStyle(color: Colors.white70, fontSize: 12)),
@@ -493,6 +493,14 @@ class _PasswordGatePageState extends State<_PasswordGatePage> {
   }
 
   Future<void> _requestPassword() async {
+    final prefs = await SharedPreferences.getInstance();
+    final authKey = 'manabixx.mode.auth.${widget.password}';
+    final lastAuth = prefs.getString(authKey);
+    final authenticatedAt = lastAuth == null ? null : DateTime.tryParse(lastAuth);
+    if (authenticatedAt != null && DateTime.now().difference(authenticatedAt) < const Duration(hours: 12)) {
+      if (mounted) setState(() => _authorized = true);
+      return;
+    }
     final controller = TextEditingController();
     var error = '';
     final accepted = await showDialog<bool>(
@@ -547,6 +555,7 @@ class _PasswordGatePageState extends State<_PasswordGatePage> {
     controller.dispose();
     if (!mounted) return;
     if (accepted == true) {
+      await prefs.setString(authKey, DateTime.now().toIso8601String());
       setState(() => _authorized = true);
     } else {
       Navigator.of(context).maybePop();
