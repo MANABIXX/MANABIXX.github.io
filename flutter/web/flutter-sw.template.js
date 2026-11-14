@@ -30,8 +30,14 @@ async function syncAllData(cache) {
   if (!manifest.version || !Array.isArray(manifest.files) || manifest.files.length === 0) {
     throw new Error('Offline data manifest is empty or invalid.');
   }
-  await cache.put(DATA_MANIFEST, response.clone());
+  const previousResponse = await cache.match(DATA_MANIFEST);
+  const previous = previousResponse ? await previousResponse.json() : null;
   await fetchListInto(cache, manifest.files);
+  if (previous && Array.isArray(previous.files)) {
+    const current = new Set(manifest.files);
+    await Promise.all(previous.files.filter((url) => !current.has(url)).map((url) => cache.delete(url)));
+  }
+  await cache.put(DATA_MANIFEST, response.clone());
 }
 
 async function precacheApp(cache) {
@@ -41,8 +47,8 @@ async function precacheApp(cache) {
   if (!manifest.version || !Array.isArray(manifest.files) || manifest.files.length === 0) {
     throw new Error('Offline app manifest is empty or invalid.');
   }
-  await cache.put(APP_MANIFEST, response.clone());
   await fetchListInto(cache, manifest.files);
+  await cache.put(APP_MANIFEST, response.clone());
 }
 
 self.addEventListener('install', (event) => {
