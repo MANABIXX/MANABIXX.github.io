@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#121214">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link id="app-manifest" rel="manifest" href="manifest.webmanifest">
+  <link id="app-manifest" rel="manifest" href="/flutter/manifest.webmanifest">
   <link rel="apple-touch-icon" href="../assets/study-icon.svg">
   <meta name="color-scheme" content="dark">
   <meta name="description" content="自分のペースで学び、理解を積み重ねる学習スペース。">
@@ -85,10 +85,10 @@
       const manifest = document.getElementById("app-manifest");
       const modePath = location.pathname;
       if (modePath.includes("/practice/kosen")) {
-        manifest.href = "manifest-kosen.webmanifest";
+        manifest.href = "/flutter/manifest-kosen.webmanifest";
         document.title = "MANABIXX 高専モード";
       } else if (modePath.includes("/practice/foundation-training")) {
-        manifest.href = "manifest-foundation.webmanifest";
+        manifest.href = "/flutter/manifest-foundation.webmanifest";
         document.title = "MANABIXX 下積みモード";
       }
 
@@ -102,7 +102,7 @@
         alert(ios ? "Safariの共有ボタン →「ホーム画面に追加」を選択してください。" : "ブラウザのメニューから「アプリをインストール」または「ホーム画面に追加」を選択してください。");
       });
       close.addEventListener("click", () => { banner.hidden = true; try { localStorage.setItem("manabixx-pwa-dismissed", "1"); } catch (_) {} });
-      if ("serviceWorker" in navigator) navigator.serviceWorker.register("flutter-sw.js").catch(() => {});
+      if ("serviceWorker" in navigator) navigator.serviceWorker.register("/flutter/flutter-sw.js").catch(() => {});
 
       // Notifications are delivered while this PWA page remains open.
       const reminder = document.createElement("button");
