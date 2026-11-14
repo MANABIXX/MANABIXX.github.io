@@ -4,6 +4,8 @@ class ReleaseNotesPage extends StatelessWidget {
   const ReleaseNotesPage({super.key});
 
   static const _items = <_ReleaseEntry>[
+    _ReleaseEntry(date: '2026-11-14', category: 'FLUTTER WEB', title: 'Flutter WebをGitHub Pagesのルートへ切り替え',
+      body: '公開フロントエンドの配信先をFlutter Webのルートへ変更。404フォールバックで対応済みの深いURLを維持し、Flutterが利用するアプリ資産と7つの問題データセットをバージョン付きで事前キャッシュします。週次バックグラウンド同期は対応ブラウザーのみで、その他の環境では次回起動時に更新を確認します。動機づけ・ワークスペース・下積みモード・学習履歴の完全移行など、未移植の機能は引き続き開発中です。'),
     _ReleaseEntry(date: '2026-11-14', category: 'HOME / PORTAL', title: 'ホームを学習ポータルへ拡張',
       body: '教科別クイック演習、今日の学習量、学習メニュー、2027年度の高校入試情報、独立モードへの入口を整理。シンプルな黒基調を保ちながら、必要な情報へホームから移動できるようにしました。'),
     _ReleaseEntry(date: '2026-11-14', category: 'PRIVATE WORKSPACE', title: '専用モードの表示を整理',
