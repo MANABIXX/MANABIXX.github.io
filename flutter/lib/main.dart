@@ -88,12 +88,10 @@ class ManabiXXApp extends StatelessWidget {
         ),
       ),
       routes: {
-        '/library': (_) => const KnowledgeLibraryPage(),
-        '/library/': (_) => const KnowledgeLibraryPage(),
         '/practice/foundation': (_) => const FoundationPracticePage(includeAllSubjects: true),
         '/practice/kosen': (_) => const _PasswordGatePage(password: 'kosen', title: '製作者専用モード', child: KosenPracticePage(title: '製作者専用モード')) ,
         '/practice/kosen/math-section-1': (_) => const _PasswordGatePage(password: 'kosen', title: '数学・大問1集中演習', child: KosenPracticePage(dataPath: '/data/kosen-math-section-1.json', title: '数学・大問1集中演習', initialSubject: 'math')),
-        '/practice/foundation-training': (_) => const _PasswordGatePage(password: 'haru', title: '下積みモード', child: FoundationPracticePage(dataPath: '/data/foundation-training.json', title: '下積みモード', includeAllSubjects: true)),
+        '/practice/foundation-training': (_) => const _PasswordGatePage(password: 'haru', title: '下積みモード', child: FoundationPracticePage(dataPath: '/data/foundation-training.json', title: '下積みモード', includeAllSubjects: true, additionalDataPaths: ['/data/public-exam.json'])),
         '/records': (_) => const _ProgressPage(),
         '/foundation': (_) => const FoundationPracticePage(includeAllSubjects: true),
         '/foundation/': (_) => const FoundationPracticePage(),
@@ -101,8 +99,12 @@ class ManabiXXApp extends StatelessWidget {
           dataPath: '/data/public-exam.json', title: '公立高校入試問題'),
         '/exam/': (_) => const FoundationPracticePage(
           dataPath: '/data/public-exam.json', title: '公立高校入試問題'),
-        '/summary': (_) => const KnowledgeLibraryPage(title: '要点まとめ'),
-        '/summary/': (_) => const KnowledgeLibraryPage(title: '要点まとめ'),
+        '/summary': (_) => const KnowledgeLibraryPage(title: '要点まとめ', initialSubject: 'science'),
+        '/summary/': (_) => const KnowledgeLibraryPage(title: '要点まとめ', initialSubject: 'science'),
+        '/summary/science': (_) => const KnowledgeLibraryPage(title: '理科の要点まとめ', initialSubject: 'science'),
+        '/summary/science/': (_) => const KnowledgeLibraryPage(title: '理科の要点まとめ', initialSubject: 'science'),
+        '/summary/social': (_) => const KnowledgeLibraryPage(title: '社会の要点まとめ', initialSubject: 'social'),
+        '/summary/social/': (_) => const KnowledgeLibraryPage(title: '社会の要点まとめ', initialSubject: 'social'),
         '/mock-exam': (_) => const FoundationPracticePage(
           dataPath: '/data/mock-exams.json', title: '模試・予想問題', includeAllSubjects: true),
         '/mock-exam/': (_) => const FoundationPracticePage(
@@ -378,7 +380,7 @@ class _StudyMenu extends StatelessWidget {
   Widget build(BuildContext context) => ListView(
     padding: const EdgeInsets.fromLTRB(20, 26, 20, 24),
     children: [
-      const Text('LEARN', style: TextStyle(
+      const Text('学習', style: TextStyle(
         color: _orange, letterSpacing: 2, fontSize: 11, fontWeight: FontWeight.w900)),
       const SizedBox(height: 8),
       const Text('学習メニュー', style: TextStyle(fontSize: 26, fontWeight: FontWeight.w900)),
@@ -388,14 +390,12 @@ class _StudyMenu extends StatelessWidget {
       _MenuTile(icon: Icons.school_outlined, title: '公立高校入試問題',
         subtitle: '入試形式で実戦演習', onTap: () => onSelect('/exam')),
       _MenuTile(icon: Icons.menu_book_outlined, title: '要点まとめ',
-        subtitle: '重要事項を確認', onTap: () => onSelect('/summary')),
+        subtitle: '理科・社会を分野別に確認', onTap: () => onSelect('/summary')),
       _MenuTile(icon: Icons.assessment_outlined, title: '模試・予想問題',
         subtitle: '5教科の総合演習', onTap: () => onSelect('/mock-exam')),
       _MenuTile(icon: Icons.lock_outline_rounded, title: '製作者専用モード', subtitle: '認証制・5教科の実戦演習', onTap: () => onSelect('/practice/kosen')),
       _MenuTile(icon: Icons.calculate_outlined, title: '数学・大問1集中演習', subtitle: '計算・小問集合を重点反復', onTap: () => onSelect('/practice/kosen/math-section-1')),
       _MenuTile(icon: Icons.repeat_rounded, title: '下積みモード', subtitle: '5教科の基礎反復と苦手問題の復習', onTap: () => onSelect('/practice/foundation-training')),
-      _MenuTile(icon: Icons.auto_stories_outlined, title: '教材ライブラリ',
-        subtitle: '分野別の教材を探す', onTap: () => onSelect('/library')),
     ],
   );
 }
