@@ -87,9 +87,13 @@
       if (modePath.includes("/practice/kosen")) {
         manifest.href = "/flutter/manifest-kosen.webmanifest";
         document.title = "MANABIXX 高専モード";
+        const label = banner.querySelector("strong");
+        if (label) label.textContent = "高専モードをホーム画面に追加";
       } else if (modePath.includes("/practice/foundation-training")) {
         manifest.href = "/flutter/manifest-foundation.webmanifest";
         document.title = "MANABIXX 下積みモード";
+        const label = banner.querySelector("strong");
+        if (label) label.textContent = "下積みモードをホーム画面に追加";
       }
 
       let installPrompt = null;
