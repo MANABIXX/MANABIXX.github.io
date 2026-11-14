@@ -228,6 +228,12 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
 
   FoundationQuestion get _current => _session[_index];
 
+  String get _weakTopicSummary {
+    final entries = _weakTopics.entries.toList()
+      ..sort((a, b) => b.value.compareTo(a.value));
+    return entries.take(3).map((entry) => '${entry.key} ${entry.value}問').join(' / ');
+  }
+
   Map<String, int> get _weakTopics {
     final counts = <String, int>{};
     for (final question in _questions) {
