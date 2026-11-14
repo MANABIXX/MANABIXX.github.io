@@ -121,7 +121,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.textContaining('正解は'), findsOneWidget);
     await tapVisible(tester, find.text('結果を見る'));
-    await tester.tap(find.text('教科選択へ戻る'));
+    await tester.tap(find.text('条件を変更する'));
     await tester.pumpAndSettle();
     expect(find.text('復習待ち：1問'), findsOneWidget);
     expect(find.textContaining('理科 · 電流'), findsOneWidget);
