@@ -1,4 +1,4 @@
-name: Build and Release MANABIXX Android APK
+name: Build and Release MANABIXX Android APK (verified)
 
 on:
   workflow_dispatch:
