@@ -49,6 +49,9 @@ jobs:
           sed -i 's/android:label="[^"]*"/android:label="MANABIXX"/' "$MANIFEST"
           grep -q 'android:label="MANABIXX"' "$MANIFEST"
 
+      - name: Prepare bundled Japanese fonts
+        run: node scripts/fetch-flutter-fonts.mjs
+
       - name: Resolve dependencies
         working-directory: flutter
         run: flutter pub get
