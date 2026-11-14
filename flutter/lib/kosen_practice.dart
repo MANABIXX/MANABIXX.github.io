@@ -91,12 +91,21 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
         .toList(growable: false);
   }
 
+  void _retry() {
+    setState(() {
+      _loading = true;
+      _error = null;
+    });
+    _load();
+  }
+
   Future<void> _load() async {
     try {
       final loaded = await (widget.loadQuestions ?? _fetchQuestions)();
       if (!mounted) return;
       setState(() {
         _questions = loaded;
+        _error = null;
         _loading = false;
       });
     } catch (error) {
@@ -197,7 +206,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
             const SizedBox(height: 12),
             Text(_error!, textAlign: TextAlign.center),
             const SizedBox(height: 16),
-            OutlinedButton(onPressed: _load, child: const Text('再読み込み')),
+            OutlinedButton(onPressed: _retry, child: const Text('再読み込み')),
           ],
         ),
       );
