@@ -107,7 +107,7 @@ jobs:
           APK_SHA256: ${{ steps.apk.outputs.sha256 }}
         run: |
           if gh release view "$TAG" >/dev/null 2>&1; then
-            gh release upload "$TAG" "$APK" --clobber
+            gh release upload "$TAG" "$APK#MANABIXX-Android.apk" --clobber
             gh release edit "$TAG" --title "MANABIXX v$VERSION" --notes "MANABIXX Android APK release.
 
           Install: download MANABIXX-Android.apk and open it on an Android device.
