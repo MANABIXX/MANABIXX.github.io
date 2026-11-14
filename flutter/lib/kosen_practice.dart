@@ -160,7 +160,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
     });
   }
 
-  Future<void> _answer(int choice) async {
+  void _answer(int choice) {
     if (_selected != null) return;
     final correct = choice == _current.correct;
     setState(() {
@@ -168,8 +168,6 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
       if (correct) _score++;
     });
     if (correct) unawaited(HapticFeedback.mediumImpact());
-    await Future<void>.delayed(const Duration(milliseconds: 120));
-    if (mounted && _started && !_finished && _selected == choice) _next();
   }
 
   Future<void> _saveSession() async {
@@ -419,7 +417,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
               const SizedBox(height: 8),
               Text(question.explanation),
               const SizedBox(height: 8),
-              const Text('Enterキーで次へ進めます。', style: TextStyle(color: Color(0xFF99999A), fontSize: 12)),
+              const Text('解説を確認したら、画面下の「次の問題へ」を押してください。', style: TextStyle(color: Color(0xFF99999A), fontSize: 12)),
             ]),
           ),
         ),
