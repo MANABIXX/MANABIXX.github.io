@@ -1,8 +1,10 @@
 const DATA_VERSION = '__DATA_VERSION__';
+const APP_VERSION = '__APP_VERSION__';
 const CACHE_PREFIX = 'manabixx-offline-';
-const CACHE_NAME = CACHE_PREFIX + DATA_VERSION;
+const CACHE_NAME = CACHE_PREFIX + APP_VERSION;
 const DATA_MANIFEST = '/offline-data-manifest.json';
-const APP_SHELL = ['/', '/index.html', '/404.html', '/manifest.webmanifest', DATA_MANIFEST, '/assets/study-icon.svg'];
+const APP_MANIFEST = '/offline-app-manifest.json';
+const APP_SHELL = ['/', '/index.html', '/404.html', '/manifest.webmanifest', DATA_MANIFEST, APP_MANIFEST];
 
 async function fetchInto(cache, url) {
   const response = await fetch(url, { cache: 'no-store' });
@@ -21,10 +23,22 @@ async function syncAllData(cache) {
   await Promise.all(manifest.files.map((url) => fetchInto(cache, url)));
 }
 
+async function precacheApp(cache) {
+  const response = await fetch(APP_MANIFEST, { cache: 'no-store' });
+  if (!response.ok) throw new Error('App manifest unavailable: ' + response.status);
+  const manifest = await response.json();
+  if (!Array.isArray(manifest.files) || manifest.files.length === 0) {
+    throw new Error('App manifest contains no files.');
+  }
+  await cache.put(APP_MANIFEST, response.clone());
+  await Promise.all(manifest.files.map((url) => fetchInto(cache, url)));
+}
+
 self.addEventListener('install', (event) => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE_NAME);
     await Promise.all(APP_SHELL.map((url) => fetchInto(cache, url)));
+    await precacheApp(cache);
     await syncAllData(cache);
     await self.skipWaiting();
   })());
