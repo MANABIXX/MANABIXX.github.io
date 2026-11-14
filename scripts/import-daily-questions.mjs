@@ -36,15 +36,16 @@ const dataRoot = path.join(root, 'static', 'data');
 const changed = [];
 for (const filename of entries) {
   const batch = JSON.parse(await fs.readFile(path.join(inbox, filename), 'utf8'));
-  if (batch.date !== filename.slice(0, 10) || !Array.isArray(batch.questions)) {
-    throw new Error('Daily batch date/questions mismatch: ' + filename);
-  }
-  if (!['foundation', 'publicExam', 'kosen'].includes(batch.category)) {
-    throw new Error('Unknown daily question category in ' + filename);
+  const filenameMatch = filename.match(/^(\\d{4}-\\d{2}-\\d{2})-(foundation|publicExam|kosen)\\.json$/);
+  if (!filenameMatch || batch.date !== filenameMatch[1] || batch.category !== filenameMatch[2] || !Array.isArray(batch.questions)) {
+    throw new Error('Daily batch filename/date/category mismatch: ' + filename);
   }
   const counts = Object.fromEntries(subjects.map((subject) => [subject, 0]));
+  const batchIds = new Set();
   for (const question of batch.questions) {
     valid(question, filename);
+    if (batchIds.has(question.id)) throw new Error('Duplicate question ID in ' + filename + ': ' + question.id);
+    batchIds.add(question.id);
     counts[question.subject]++;
     if (!question.id.startsWith('daily-' + batch.date + '-')) {
       throw new Error('Question ID must begin with daily-' + batch.date + '-: ' + question.id);
