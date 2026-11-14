@@ -49,6 +49,6 @@ The production Pages workflow currently builds the SvelteKit application from th
 ## Current stage
 
 - Stage 1: isolated Flutter app scaffold and CI validation workflow.
-- Stage 2 (first slice): Kosen practice route, existing JSON fetch, subject selection, four-choice answering, explanations, and session results.
+- Stage 2 (first slice): Kosen practice route, existing JSON fetch, subject selection, four-choice answering, explanations, session results, path-based URLs, and a GitHub Pages 404 deep-link restoration page.
 - Not yet migrated: all other production routes and features; Kosen progress persistence and full browser/deep-link parity remain pending.
 - Production deployment: unchanged.
