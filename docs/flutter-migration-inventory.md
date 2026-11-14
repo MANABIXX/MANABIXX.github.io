@@ -3,7 +3,7 @@
 Last inspected: 2026-11-14 (JST)  
 Repository: `MANABIXX/MANABIXX.github.io`  
 Production branch: `main`  
-Production URL: https://manabixx.github.io/\nFlutter beta preview (after merge and Pages deployment): https://manabixx.github.io/flutter/
+Production URL: https://manabixx.github.io/ (Flutter Web at Pages root)
 
 ## Safety boundary
 
@@ -25,7 +25,7 @@ Correction (2026-11-14): `main` の `.github/workflows/pages.yml` は `flutter/b
 | Workspace | `src/routes/workspace/` | Not started |
 | Private content | legacy `private.html`, `n-exclusive.html`, `s-exclusive.html`; matching JSON | Not started; audit access boundary first |
 | Shitadumi mode | `shitadumi/` static app, articles, mock exams, opinion, PWA and release notes | Not started |
-| PWA / offline | `src/service-worker.js`, manifests, legacy service workers | Not started |
+| PWA / offline | Flutter service worker, root resource manifest, mode-specific manifests | Flutter runtime and seven route datasets are precached; weekly Periodic Background Sync is browser-dependent |
 | Next.js prototype | `next-app/` | Inventory only; not assumed to be production |
 | Code lab | `src/routes/code-lab/`, `src/lib/code-lab.ts` | Audit purpose and origin before deciding whether to retain |
 
@@ -51,5 +51,5 @@ Correction (2026-11-14): `main` の `.github/workflows/pages.yml` は `flutter/b
 - Stage 1: isolated Flutter app scaffold and CI validation workflow.
 - Stage 2: Flutter question-practice foundation, public exam, summary/foundation confirmation, five-subject mock practice, knowledge library, and a separate unlinked additional-practice route. Existing JSON data is loaded directly; practice selection, four-choice answering, explanations, results, library search and filters are implemented.
 - Four public datasets audited: 1,180 foundation questions, 323 public-exam questions, 450 summary questions, and 100 mock questions. No duplicate IDs or malformed four-choice records were found in the inspected datasets.
-- Still not migrated: motivation, release-note UI, workspace, private-content access boundary, Shitadumi app, full home/dashboard, full learning-history migration, PWA/offline behavior, and full browser/mobile/accessibility parity.
-- Production deployment: Flutter Web root deployment is active on `main`; latest observed Pages workflow succeeded. Full feature parity is not yet established.
+- Still not migrated or not yet parity-verified: motivation, release-note UI parity, workspace, private-content access boundary, Shitadumi app, full home/dashboard, full learning-history migration, and full browser/mobile/accessibility parity.
+- Production deployment: Flutter Web root deployment is active on `main`; the latest observed Pages workflow for the migration branch succeeded, but the open PR #19 is not mergeable and its result is not evidence of full feature parity.
