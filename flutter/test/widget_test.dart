@@ -2,6 +2,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:manabixx_web/foundation_practice.dart';
 import 'package:manabixx_web/kosen_practice.dart';
+import 'package:manabixx_web/knowledge_library.dart';
 import 'package:manabixx_web/main.dart';
 
 Future<void> tapVisible(WidgetTester tester, Finder finder) async {
@@ -117,6 +118,31 @@ void main() {
     expect(find.text('国語'), findsOneWidget);
     await tapVisible(tester, find.text('国語').last);
     expect(find.text('1問'), findsOneWidget);
+  });
+
+  testWidgets('searches and opens knowledge library records', (tester) async {
+    const record = KnowledgeRecord(
+      id: 'science-density-001',
+      subject: 'science',
+      grade: 1,
+      field: '化学',
+      title: '密度',
+      status: 'authored',
+      explanation: '密度は物質1cm³あたりの質量。',
+      formulas: ['密度＝質量÷体積'],
+      keyTerms: ['質量', '体積'],
+    );
+    await tester.pumpWidget(MaterialApp(
+      home: KnowledgeLibraryPage(loadRecords: () async => [record]),
+    ));
+    await tester.pumpAndSettle();
+    expect(find.text('密度'), findsOneWidget);
+    await tester.tap(find.text('密度'));
+    await tester.pumpAndSettle();
+    expect(find.text('密度＝質量÷体積'), findsOneWidget);
+    await tester.enterText(find.byType(TextField), '地理');
+    await tester.pumpAndSettle();
+    expect(find.text('条件に一致する教材がありません。'), findsOneWidget);
   });
 
   testWidgets('loads isolated practice data and completes a session', (tester) async {
