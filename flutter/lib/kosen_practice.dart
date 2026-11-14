@@ -90,6 +90,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
   List<String> _wrongQuestionIds = [];
   String get _historyKey => widget.dataPath == '/data/kosen-questions.json' ? 'manabixx.mode.kosen.history' : 'manabixx.mode.kosen.history.${widget.dataPath.replaceAll('/', '_')}';
   String get _wrongKey => '$_historyKey.wrong';
+  String get _customKey => '$_historyKey.custom';
 
   @override
   void initState() {
@@ -147,6 +148,15 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
       final payload = jsonDecode(response.body) as Map<String, dynamic>;
       final raw = payload['questions'] as List<dynamic>;
       for (final item in raw) {
+        final question = KosenQuestion.fromJson(item as Map<String, dynamic>);
+        if (ids.add(question.id)) combined.add(question);
+      }
+    }
+    final prefs = await SharedPreferences.getInstance();
+    final customRaw = prefs.getString(_customKey);
+    if (customRaw != null) {
+      final customItems = jsonDecode(customRaw) as List<dynamic>;
+      for (final item in customItems) {
         final question = KosenQuestion.fromJson(item as Map<String, dynamic>);
         if (ids.add(question.id)) combined.add(question);
       }
@@ -541,4 +551,106 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
           ],
         ),
       );
+}
+
+
+class KosenQuestionImportPage extends StatefulWidget {
+  const KosenQuestionImportPage({super.key, required this.storageKey});
+  final String storageKey;
+
+  @override
+  State<KosenQuestionImportPage> createState() => _KosenQuestionImportPageState();
+}
+
+class _KosenQuestionImportPageState extends State<KosenQuestionImportPage> {
+  final _controller = TextEditingController();
+  bool _saving = false;
+  String? _message;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Future<void> _save() async {
+    setState(() { _saving = true; _message = null; });
+    try {
+      final decoded = jsonDecode(_controller.text);
+      final raw = decoded is List ? decoded : (decoded as Map<String, dynamic>)['questions'] as List<dynamic>;
+      final incoming = raw.map((item) {
+        final question = KosenQuestion.fromJson(item as Map<String, dynamic>);
+        if (!question.id.startsWith('custom-')) {
+          throw const FormatException('問題IDは custom- で始めてください。');
+        }
+        return question;
+      }).toList();
+      if (incoming.isEmpty) throw const FormatException('問題が1問もありません。');
+      final prefs = await SharedPreferences.getInstance();
+      final existing = (jsonDecode(prefs.getString(widget.storageKey) ?? '[]') as List<dynamic>)
+          .whereType<Map<String, dynamic>>().toList();
+      final byId = <String, Map<String, dynamic>>{
+        for (final item in existing) item['id'] as String: item,
+      };
+      for (final question in incoming) {
+        byId[question.id] = {
+          'id': question.id,
+          'subject': question.subject,
+          'topic': question.topic,
+          'level': question.level,
+          'prompt': question.prompt,
+          'options': question.options,
+          'correct': question.correct,
+          'explanation': question.explanation,
+          'sourceLabel': question.sourceLabel,
+          'sourceNote': question.sourceNote,
+        };
+      }
+      await prefs.setString(widget.storageKey, jsonEncode(byId.values.toList()));
+      if (!mounted) return;
+      setState(() { _saving = false; _message = '${incoming.length}問を端末に保存しました。'; });
+    } catch (error) {
+      if (!mounted) return;
+      setState(() { _saving = false; _message = '取り込みに失敗しました：$error'; });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(title: const Text('問題データを取り込む')),
+    body: ListView(
+      padding: const EdgeInsets.all(18),
+      children: [
+        const Text('4択問題のJSONを貼り付けて、製作者専用モードの端末内データに追加できます。', style: TextStyle(height: 1.6)),
+        const SizedBox(height: 10),
+        const Text('必須項目：id（custom-で開始）／subject／topic／level／prompt／options（4件）／correct（0〜3）／explanation', style: TextStyle(color: Colors.white60, fontSize: 12, height: 1.5)),
+        const SizedBox(height: 12),
+        TextField(
+          controller: _controller,
+          minLines: 12,
+          maxLines: 24,
+          autocorrect: false,
+          enableSuggestions: false,
+          decoration: const InputDecoration(
+            labelText: '問題JSON',
+            hintText: '[{"id":"custom-math-001","subject":"math","topic":"計算","level":"基礎","prompt":"...","options":["A","B","C","D"],"correct":0,"explanation":"..."}]',
+            alignLabelWithHint: true,
+          ),
+        ),
+        const SizedBox(height: 14),
+        SizedBox(
+          width: double.infinity,
+          child: FilledButton.icon(
+            onPressed: _saving ? null : _save,
+            icon: const Icon(Icons.file_download_outlined),
+            label: Text(_saving ? '保存中…' : '端末に取り込む'),
+          ),
+        ),
+        if (_message != null) ...[
+          const SizedBox(height: 12),
+          Text(_message!, style: const TextStyle(color: Color(0xFFFFB15C))),
+        ],
+      ],
+    ),
+  );
 }
