@@ -19,12 +19,16 @@ const questions = [];
 // 数学・大問1を意識した計算、小問集合。各年度に数値を変えた類題を作る。
 for (const [i, year] of years.entries()) {
   const n = [3, 4, 5][i];
+  const signed = -(n+4) + n*3 - (n+1);
+  const signedOptions = [signed, signed+2, signed-2, signed+4].map(String);
+  const functionValue = -2*n + (n+5);
+  const functionOptions = [functionValue-2,functionValue-1,functionValue+1,functionValue+2].map(String);
   questions.push(
-    make(`reg-math-${year}-01`,'math','大問1・正負の数','高専入試基礎',`−${n+4}＋${n*3}−${n+1} の値はどれか。`,['−2','0','2','4'],1,'負の数を含む加減は、符号を保って左から順に計算する。',year),
+    make(`reg-math-${year}-01`,'math','大問1・正負の数','高専入試基礎',`−${n+4}＋${n*3}−${n+1} の値はどれか。`,signedOptions,0,'負の数を含む加減は、符号を保って左から順に計算する。',year),
     make(`reg-math-${year}-02`,'math','大問1・平方根','高専入試基礎',`√${(n* n)*2} を a√2 と表すとき、a はいくつか。`,[String(n-1),String(n),String(n+1),String(n*2)],1,`${n}²×2 の平方根なので ${n}√2。`,year),
     make(`reg-math-${year}-03`,'math','大問1・一次方程式','高専入試基礎',`${n+1}x−${n}＝${(n+1)*3-n} のとき、x はいくつか。`,['2','3','4','5'],1,'移項して定数項をまとめ、xの係数で割る。',year),
-    make(`reg-math-${year}-04`,'math','大問1・因数分解','高専入試標準',`x²＋${n+3}x＋${(n+1)*(n+2)} を因数分解したものはどれか。`,[`(x+${n})(x+${n+3})`,`(x+${n+1})(x+${n+2})`,`(x-${n+1})(x-${n+2})`,`(x+${n+2})²`],1,'積が定数項、和がxの係数になる2数を探す。',year),
-    make(`reg-math-${year}-05`,'math','大問1・関数','高専入試標準',`y＝−2x＋${n+5} で x＝${n} のとき、y はいくつか。`,[String(3),String(4),String(5),String(6)],2,'xの値を代入すると y＝−2×x＋定数。',year)
+    make(`reg-math-${year}-04`,'math','大問1・因数分解','高専入試標準',`x²＋${2*n+3}x＋${(n+1)*(n+2)} を因数分解したものはどれか。`,[`(x+${n})(x+${n+3})`,`(x+${n+1})(x+${n+2})`,`(x-${n+1})(x-${n+2})`,`(x+${n+2})²`],1,'積が定数項、和がxの係数になる2数を探す。',year),
+    make(`reg-math-${year}-05`,'math','大問1・関数','高専入試標準',`y＝−2x＋${n+5} で x＝${n} のとき、y はいくつか。`,functionOptions,functionOptions.indexOf(String(functionValue)),'xの値を代入すると y＝−2×x＋定数。',year)
   );
 }
 // 英語：文法・語法・会話・読解の4択。
