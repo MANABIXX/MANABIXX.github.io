@@ -28,15 +28,20 @@ for (const file of paths) {
   hash.update(await fs.readFile(file));
   urls.push('/data/' + relative);
 }
-const version = hash.digest('hex').slice(0, 20);
+const dataVersion = hash.digest('hex').slice(0, 20);
+const appVersion = (process.env.GITHUB_SHA || dataVersion).slice(0, 20);
+
 await fs.writeFile(
   path.join(webRoot, 'offline-data-manifest.json'),
-  JSON.stringify({ version, files: urls }, null, 2) + '\n'
+  JSON.stringify({ version: dataVersion, files: urls }, null, 2) + '\n'
 );
 
 const template = await fs.readFile(path.join(webRoot, 'flutter-sw.template.js'), 'utf8');
-await fs.writeFile(
-  path.join(webRoot, 'flutter-sw.js'),
-  template.replaceAll('__DATA_VERSION__', version)
-);
-console.log(`Prepared ${urls.length} offline datasets (version ${version}).`);
+const worker = template
+  .replaceAll('__DATA_VERSION__', dataVersion)
+  .replaceAll('__APP_VERSION__', appVersion);
+if (worker.includes('__DATA_VERSION__') || worker.includes('__APP_VERSION__')) {
+  throw new Error('Service worker template contains unresolved version placeholders.');
+}
+await fs.writeFile(path.join(webRoot, 'flutter-sw.js'), worker);
+console.log(`Prepared ${urls.length} offline datasets (data ${dataVersion}, app ${appVersion}).`);
