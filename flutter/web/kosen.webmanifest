@@ -1,10 +1,10 @@
 {
-  "id": "/flutter/practice/kosen",
+  "id": "./practice/kosen",
   "name": "MANABIXX 高専モード",
   "short_name": "高専モード",
   "description": "5教科の高専入試対策と数学大問1演習。",
-  "start_url": "/flutter/practice/kosen",
-  "scope": "/flutter/",
+  "start_url": "./practice/kosen",
+  "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
   "background_color": "#121214",
