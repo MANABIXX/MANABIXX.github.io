@@ -47,10 +47,13 @@ void main() {
     await prepareViewport(tester);
     await tester.pumpWidget(const ManabiXXApp());
     await tapVisible(tester, find.text('学習'));
-    await tapVisible(tester, find.text('製作者専用モード'));
+    await tester.ensureVisible(find.text('製作者専用モード'));
     await tester.pumpAndSettle();
+    await tester.tap(find.text('製作者専用モード'));
+    await tester.pump(const Duration(milliseconds: 300));
     await tester.enterText(find.byType(TextField).last, 'kosen');
     await tester.tap(find.text('認証する'));
+    await tester.pump(const Duration(milliseconds: 350));
     await tester.pumpAndSettle();
     expect(find.text('専用ホーム'), findsOneWidget);
     expect(find.text('ホーム画面に追加'), findsOneWidget);
@@ -304,7 +307,7 @@ void main() {
     ));
     await tester.pumpAndSettle();
     expect(find.text('要点まとめ'), findsOneWidget);
-    expect(find.textContaining('歴史'), findsOneWidget);
+    expect(find.text('歴史'), findsOneWidget);
     await tester.tap(find.text('明治維新'));
     await tester.pumpAndSettle();
     expect(find.text('重要語句'), findsOneWidget);
