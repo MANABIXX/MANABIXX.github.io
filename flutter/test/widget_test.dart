@@ -40,6 +40,7 @@ void main() {
     await tapVisible(tester, find.text('学習'));
     expect(find.text('学習メニュー'), findsOneWidget);
     expect(find.text('基礎網羅問題'), findsOneWidget);
+    expect(find.text('教材ライブラリ'), findsNothing);
   });
 
   testWidgets('aggregates today answers across local practice datasets', (tester) async {
@@ -235,10 +236,10 @@ void main() {
     expect(find.text(question.prompt), findsOneWidget);
     await tester.tap(find.text('4'));
     await tester.pump();
-    await tester.pump(const Duration(milliseconds: 200));
+    await tester.pump(const Duration(milliseconds: 60));
     expect(find.text('正解！'), findsOneWidget);
     expect(find.text(question.explanation), findsOneWidget);
-    await tester.pump(const Duration(milliseconds: 250));
+    await tester.pump(const Duration(milliseconds: 100));
     await tester.pumpAndSettle();
 
     expect(find.text('演習完了'), findsOneWidget);
