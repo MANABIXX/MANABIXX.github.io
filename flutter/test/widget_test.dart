@@ -37,7 +37,7 @@ void main() {
     expect(find.text('高専モード'), findsNothing);
     expect(find.text('制作者専用モード'), findsOneWidget);
     expect(find.text('2027年度・高校入試情報'), findsOneWidget);
-    expect(find.text('学習スタート'), findsOneWidget);
+    expect(find.text('基礎網羅問題を始める'), findsOneWidget);
     expect(find.text('ホーム'), findsOneWidget);
     expect(find.text('学習'), findsOneWidget);
     expect(find.text('記録'), findsOneWidget);
