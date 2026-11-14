@@ -1,0 +1,21 @@
+{
+  "id": "/flutter/practice/kosen",
+  "name": "MANABIXX 高専対策",
+  "short_name": "高専対策",
+  "description": "5教科の高専入試対策。",
+  "start_url": "/flutter/practice/kosen",
+  "scope": "/flutter/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#121214",
+  "theme_color": "#121214",
+  "lang": "ja",
+  "icons": [
+    {
+      "src": "../assets/study-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
