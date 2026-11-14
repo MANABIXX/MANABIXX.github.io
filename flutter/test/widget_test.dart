@@ -66,8 +66,12 @@ void main() {
     await prepareViewport(tester);
     await tester.pumpWidget(const ManabiXXApp());
     await tapVisible(tester, find.text('学習'));
-    await tapVisible(tester, find.text('製作者専用モード'));
-    await tester.pumpAndSettle();
+    final privateMode = find.text('製作者専用モード');
+    await tester.ensureVisible(privateMode);
+    await tester.pump();
+    await tester.tap(privateMode);
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.text('このモードを開くにはパスワードが必要です。'), findsOneWidget);
     await tester.enterText(find.byType(TextField).last, 'kosen');
