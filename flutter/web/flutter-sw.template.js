@@ -51,7 +51,7 @@ self.addEventListener('activate', (event) => {
       .filter((key) => (
         (key.startsWith(CACHE_PREFIX) && key !== CACHE_NAME) ||
         key.startsWith('manabixx-flutter-') ||
-        key.startsWith('manabixx-study-')
+        key.startsWith('manabixx-study-') ||\n        key.startsWith('study-shell-')
       ))
       .map((key) => caches.delete(key)));
     await self.clients.claim();
@@ -74,18 +74,19 @@ self.addEventListener('fetch', (event) => {
         }
         return response;
       } catch (_) {
-        return (await caches.match(request)) || (await caches.match('/index.html')) || (await caches.match('/'));
+        const cache = await caches.open(CACHE_NAME);
+        return (await cache.match(request)) || (await cache.match('/index.html')) || (await cache.match('/'));
       }
     })());
     return;
   }
 
   event.respondWith((async () => {
-    const cached = await caches.match(request);
+    const cache = await caches.open(CACHE_NAME);
+    const cached = await cache.match(request);
     if (cached) return cached;
     const response = await fetch(request);
     if (response.ok && response.type === 'basic') {
-      const cache = await caches.open(CACHE_NAME);
       await cache.put(request, response.clone());
     }
     return response;
