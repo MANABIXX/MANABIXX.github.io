@@ -87,8 +87,12 @@ jobs:
           cd android
           ./gradlew --no-daemon -I disable-lint.init.gradle :app:assembleRelease
           cd ..
-          mkdir -p build/app/outputs/flutter-apk
-          cp android/app/build/outputs/apk/release/app-release.apk build/app/outputs/flutter-apk/app-release.apk
+          APK="build/app/outputs/flutter-apk/app-release.apk"
+          if [ ! -s "$APK" ]; then
+            echo "Flutter Gradle plugin did not produce the expected APK: $APK"
+            find android/app/build/outputs/apk build/app/outputs/flutter-apk -type f -name '*.apk' -print 2>/dev/null || true
+            exit 1
+          fi
 
       - name: Verify APK and calculate checksum
         id: apk
