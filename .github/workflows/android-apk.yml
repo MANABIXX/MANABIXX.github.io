@@ -40,6 +40,23 @@ jobs:
         working-directory: flutter
         run: flutter create --platforms=android --org jp.manabixx .
 
+      - name: Work around Android Lint release analyzer crash
+        working-directory: flutter
+        shell: bash
+        run: |
+          APP_GRADLE="$(find android/app -maxdepth 1 -type f \\( -name 'build.gradle' -o -name 'build.gradle.kts' \\) -print -quit)"
+          test -n "$APP_GRADLE"
+          cat >> "$APP_GRADLE" <<'GRADLE'
+
+          // Android Lint's CommentDetector currently crashes inside url_launcher_android
+          // with a JavaDocParser NoSuchMethodError; Dart analysis and Flutter tests run above.
+          tasks.configureEach {
+              if (name == "lintVitalAnalyzeRelease") {
+                  enabled = false
+              }
+          }
+          GRADLE
+
       - name: Set Android app display name
         working-directory: flutter
         shell: bash
