@@ -223,14 +223,14 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
           ),
           const SizedBox(height: 12),
           Text(
-            '高専専用モード',
+            '専用演習',
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                   fontWeight: FontWeight.w800,
                 ),
           ),
           const SizedBox(height: 8),
           Text(
-            '数学・理科・英語のオリジナル問題を、教科ごとに演習できます。',
+            '教科ごとのオリジナル問題に、集中して取り組めます。',
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           const SizedBox(height: 28),
