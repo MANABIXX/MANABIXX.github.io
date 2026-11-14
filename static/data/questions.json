@@ -1,6 +1,6 @@
 {
-  "version": 2,
-  "updatedAt": "2026-11-10",
+  "version": 3,
+  "updatedAt": "2026-11-14",
   "questions": [
     {
       "id": "sci-001",
@@ -20186,6 +20186,486 @@
       "explanation": "主語が三人称単数の現在形なので、一般動詞playにsをつけてplays。",
       "sourceNote": "下積みモード基礎確認問題",
       "sourceRef": ""
+    },
+    {
+      "id": "five-japanese-01",
+      "subject": "japanese",
+      "topic": "漢字",
+      "level": "基礎",
+      "prompt": "「責任」の読み方として正しいものはどれか。",
+      "options": [
+        "せきにん",
+        "せきじん",
+        "せっにん",
+        "せきねん"
+      ],
+      "correct": 0,
+      "explanation": "「責任」は「せきにん」と読む。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
+    },
+    {
+      "id": "five-japanese-02",
+      "subject": "japanese",
+      "topic": "語句",
+      "level": "基礎",
+      "prompt": "「簡潔」の意味として最も適切なものはどれか。",
+      "options": [
+        "内容が複雑であること",
+        "短く要点がまとまっていること",
+        "感情を強く表すこと",
+        "順序が決まっていないこと"
+      ],
+      "correct": 1,
+      "explanation": "簡潔は、余分なものがなく短くまとまっていること。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
+    },
+    {
+      "id": "five-japanese-03",
+      "subject": "japanese",
+      "topic": "文法",
+      "level": "基礎",
+      "prompt": "「静かな町」の「静かな」の品詞はどれか。",
+      "options": [
+        "動詞",
+        "形容詞",
+        "形容動詞",
+        "副詞"
+      ],
+      "correct": 2,
+      "explanation": "「静かだ」と活用する語なので形容動詞。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
+    },
+    {
+      "id": "five-japanese-04",
+      "subject": "japanese",
+      "topic": "文法",
+      "level": "基礎",
+      "prompt": "「雨が降ったので、試合は中止になった。」の接続関係はどれか。",
+      "options": [
+        "順接",
+        "逆接",
+        "並立",
+        "添加"
+      ],
+      "correct": 0,
+      "explanation": "前の事柄が後の事柄の原因・理由になっている順接。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
+    },
+    {
+      "id": "five-japanese-05",
+      "subject": "japanese",
+      "topic": "敬語",
+      "level": "基礎",
+      "prompt": "「先生がおっしゃる」の敬語の種類はどれか。",
+      "options": [
+        "謙譲語",
+        "尊敬語",
+        "丁寧語",
+        "美化語"
+      ],
+      "correct": 1,
+      "explanation": "相手である先生の動作を高める尊敬語。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
+    },
+    {
+      "id": "five-japanese-06",
+      "subject": "japanese",
+      "topic": "読解",
+      "level": "基礎",
+      "prompt": "説明文で筆者の主張を探すとき、特に注目するとよい表現はどれか。",
+      "options": [
+        "たとえば",
+        "しかし",
+        "つまり・したがって",
+        "ところで"
+      ],
+      "correct": 2,
+      "explanation": "「つまり」「したがって」などは要点や結論を示すことが多い。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
+    },
+    {
+      "id": "five-japanese-07",
+      "subject": "japanese",
+      "topic": "古文",
+      "level": "基礎",
+      "prompt": "「いと」の意味として最も適切なものはどれか。",
+      "options": [
+        "少し",
+        "とても",
+        "いつも",
+        "すぐに"
+      ],
+      "correct": 1,
+      "explanation": "古語の「いと」は「とても・たいそう」の意味。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
+    },
+    {
+      "id": "five-japanese-08",
+      "subject": "japanese",
+      "topic": "漢字",
+      "level": "基礎",
+      "prompt": "「キョウリョクして作業する」のカタカナ部分を漢字にするとどれか。",
+      "options": [
+        "協力",
+        "強力",
+        "競力",
+        "共力"
+      ],
+      "correct": 0,
+      "explanation": "力を合わせる意味の「協力」。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
+    },
+    {
+      "id": "five-japanese-09",
+      "subject": "japanese",
+      "topic": "文法",
+      "level": "基礎",
+      "prompt": "「本を読む」の「読む」の活用の種類はどれか。",
+      "options": [
+        "五段活用",
+        "上一段活用",
+        "下一段活用",
+        "カ行変格活用"
+      ],
+      "correct": 0,
+      "explanation": "「読ま・読み・読む・読む・読め・読もう」と活用する五段活用。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
+    },
+    {
+      "id": "five-japanese-10",
+      "subject": "japanese",
+      "topic": "作文",
+      "level": "基礎",
+      "prompt": "意見文の構成として最も適切なものはどれか。",
+      "options": [
+        "結論だけを書く",
+        "理由を示さず感想を並べる",
+        "主張・理由や具体例・まとめの順に組み立てる",
+        "反対意見を必ず否定する"
+      ],
+      "correct": 2,
+      "explanation": "主張を明確にし、理由や具体例で支え、最後にまとめる。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
+    },
+    {
+      "id": "five-math-01",
+      "subject": "math",
+      "topic": "計算",
+      "level": "基礎",
+      "prompt": "3(2x−1)−2(x+4) を簡単にするとどれか。",
+      "options": [
+        "4x−11",
+        "4x+5",
+        "8x−11",
+        "8x+5"
+      ],
+      "correct": 0,
+      "explanation": "6x−3−2x−8＝4x−11。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
+    },
+    {
+      "id": "five-math-02",
+      "subject": "math",
+      "topic": "方程式",
+      "level": "基礎",
+      "prompt": "5x−7＝2x＋8 の解はどれか。",
+      "options": [
+        "x＝3",
+        "x＝5",
+        "x＝−5",
+        "x＝−3"
+      ],
+      "correct": 1,
+      "explanation": "3x＝15よりx＝5。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
+    },
+    {
+      "id": "five-math-03",
+      "subject": "math",
+      "topic": "比例",
+      "level": "基礎",
+      "prompt": "yはxに比例し、x＝4のときy＝−12である。比例定数はどれか。",
+      "options": [
+        "−48",
+        "−3",
+        "3",
+        "48"
+      ],
+      "correct": 1,
+      "explanation": "y＝axに代入して−12＝4a、a＝−3。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
+    },
+    {
+      "id": "five-math-04",
+      "subject": "math",
+      "topic": "一次関数",
+      "level": "基礎",
+      "prompt": "直線 y＝2x−5 の傾きはどれか。",
+      "options": [
+        "−5",
+        "−2",
+        "2",
+        "5"
+      ],
+      "correct": 2,
+      "explanation": "y＝ax＋bのaが傾きなので2。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
+    },
+    {
+      "id": "five-math-05",
+      "subject": "math",
+      "topic": "図形",
+      "level": "基礎",
+      "prompt": "三角形の内角のうち2つが48°、67°である。残りの角は何度か。",
+      "options": [
+        "55°",
+        "65°",
+        "75°",
+        "85°"
+      ],
+      "correct": 1,
+      "explanation": "180−48−67＝65°。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
+    },
+    {
+      "id": "five-math-06",
+      "subject": "math",
+      "topic": "確率",
+      "level": "基礎",
+      "prompt": "赤玉3個、白玉2個から1個を無作為に取り出す。白玉を引く確率はどれか。",
+      "options": [
+        "1/5",
+        "2/5",
+        "3/5",
+        "1/2"
+      ],
+      "correct": 1,
+      "explanation": "全5個のうち白玉は2個なので2/5。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
+    },
+    {
+      "id": "five-math-07",
+      "subject": "math",
+      "topic": "平方根",
+      "level": "基礎",
+      "prompt": "√72 を簡単にするとどれか。",
+      "options": [
+        "2√18",
+        "3√8",
+        "6√2",
+        "8√2"
+      ],
+      "correct": 2,
+      "explanation": "√72＝√(36×2)＝6√2。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
+    },
+    {
+      "id": "five-math-08",
+      "subject": "math",
+      "topic": "二次方程式",
+      "level": "基礎",
+      "prompt": "x²−5x＋6＝0 の解の組はどれか。",
+      "options": [
+        "1,6",
+        "−2,−3",
+        "2,3",
+        "−2,3"
+      ],
+      "correct": 2,
+      "explanation": "(x−2)(x−3)＝0よりx＝2,3。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
+    },
+    {
+      "id": "five-math-09",
+      "subject": "math",
+      "topic": "相似",
+      "level": "基礎",
+      "prompt": "相似な2つの三角形の対応する辺の比が2：3である。小さい三角形の面積が20cm²のとき、大きい三角形の面積は何cm²か。",
+      "options": [
+        "30",
+        "40",
+        "45",
+        "60"
+      ],
+      "correct": 2,
+      "explanation": "面積比は4：9。20×9/4＝45。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
+    },
+    {
+      "id": "five-math-10",
+      "subject": "math",
+      "topic": "資料",
+      "level": "基礎",
+      "prompt": "5人の得点が60,70,70,80,90点である。中央値は何点か。",
+      "options": [
+        "60",
+        "70",
+        "75",
+        "80"
+      ],
+      "correct": 1,
+      "explanation": "小さい順に並べた中央の3番目は70点。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
+    },
+    {
+      "id": "five-english-01",
+      "subject": "english",
+      "topic": "語彙",
+      "level": "基礎",
+      "prompt": "次の空欄に入る語として最も適切なものはどれか。 I have lived here (　) 2022.",
+      "options": [
+        "for",
+        "since",
+        "during",
+        "from"
+      ],
+      "correct": 1,
+      "explanation": "2022のような開始時点にはsinceを使う。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
+    },
+    {
+      "id": "five-english-02",
+      "subject": "english",
+      "topic": "文法",
+      "level": "基礎",
+      "prompt": "「彼女は昨日、図書館へ行きました。」の英文はどれか。",
+      "options": [
+        "She goes to the library yesterday.",
+        "She went to the library yesterday.",
+        "She has go to the library yesterday.",
+        "She going to the library yesterday."
+      ],
+      "correct": 1,
+      "explanation": "yesterdayがあるので過去形went。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
+    },
+    {
+      "id": "five-english-03",
+      "subject": "english",
+      "topic": "文法",
+      "level": "基礎",
+      "prompt": "次の空欄に入る語はどれか。 This is the book (　) I bought yesterday.",
+      "options": [
+        "who",
+        "where",
+        "which",
+        "when"
+      ],
+      "correct": 2,
+      "explanation": "先行詞が物なので関係代名詞which。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
+    },
+    {
+      "id": "five-english-04",
+      "subject": "english",
+      "topic": "文法",
+      "level": "基礎",
+      "prompt": "「私は彼に窓を開けてもらいました。」に最も近い英文はどれか。",
+      "options": [
+        "I had him open the window.",
+        "I made the window opened him.",
+        "I had open him the window.",
+        "I him had to open the window."
+      ],
+      "correct": 0,
+      "explanation": "have＋人＋動詞の原形で「人に～してもらう」。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
+    },
+    {
+      "id": "five-english-05",
+      "subject": "english",
+      "topic": "語彙",
+      "level": "基礎",
+      "prompt": "「環境」を表す英単語はどれか。",
+      "options": [
+        "environment",
+        "appointment",
+        "equipment",
+        "government"
+      ],
+      "correct": 0,
+      "explanation": "environmentは環境。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
+    },
+    {
+      "id": "five-english-06",
+      "subject": "english",
+      "topic": "会話",
+      "level": "基礎",
+      "prompt": "A: Would you like some tea? B: (　)",
+      "options": [
+        "Yes, please.",
+        "I like tea yesterday.",
+        "No, I wouldn't like.",
+        "You are welcome."
+      ],
+      "correct": 0,
+      "explanation": "勧めに対する自然な返答はYes, please.。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
+    },
+    {
+      "id": "five-english-07",
+      "subject": "english",
+      "topic": "文法",
+      "level": "基礎",
+      "prompt": "次の空欄に入る語はどれか。 If it (　) tomorrow, we will stay home.",
+      "options": [
+        "rain",
+        "rains",
+        "will rain",
+        "rained"
+      ],
+      "correct": 1,
+      "explanation": "if節で未来のことを表す場合、現在形rainsを使う。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
+    },
+    {
+      "id": "five-english-08",
+      "subject": "english",
+      "topic": "読解",
+      "level": "基礎",
+      "prompt": "英文の要旨をつかむために最も適切な読み方はどれか。",
+      "options": [
+        "知らない単語だけを数える",
+        "各段落の中心文と繰り返される話題を確認する",
+        "最後の一文だけ読む",
+        "すべての単語を辞書で調べてから読む"
+      ],
+      "correct": 1,
+      "explanation": "段落の中心文や繰り返される話題から全体の要旨を捉える。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
+    },
+    {
+      "id": "five-english-09",
+      "subject": "english",
+      "topic": "文法",
+      "level": "基礎",
+      "prompt": "「この問題はあの問題より難しい。」の英文はどれか。",
+      "options": [
+        "This question is difficult than that one.",
+        "This question is more difficult than that one.",
+        "This question is most difficult than that one.",
+        "This question is as difficult that one."
+      ],
+      "correct": 1,
+      "explanation": "長い形容詞の比較級はmore＋形容詞＋than。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
+    },
+    {
+      "id": "five-english-10",
+      "subject": "english",
+      "topic": "語彙",
+      "level": "基礎",
+      "prompt": "「成功する」に最も近い意味の動詞はどれか。",
+      "options": [
+        "succeed",
+        "invite",
+        "prepare",
+        "borrow"
+      ],
+      "correct": 0,
+      "explanation": "succeedは成功する。",
+      "sourceNote": "5教科基礎演習用に整理したオリジナル問題。"
     }
   ]
 }
