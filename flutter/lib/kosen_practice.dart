@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/services.dart';
@@ -166,7 +167,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
       _selected = choice;
       if (correct) _score++;
     });
-    if (correct) await HapticFeedback.mediumImpact();
+    if (correct) unawaited(HapticFeedback.mediumImpact());
     await Future<void>.delayed(const Duration(milliseconds: 120));
     if (mounted && _started && !_finished && _selected == choice) _next();
   }
