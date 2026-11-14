@@ -94,6 +94,7 @@ void main() {
     // Answer feedback is intentionally brief; the session auto-advances.
     expect(find.text('演習完了'), findsOneWidget);
     expect(find.text('1 / 1'), findsOneWidget);
+    expect(find.text('次の10問へ（目安3分）'), findsOneWidget);
   });
 
   testWidgets('supports arrow and Enter keyboard controls in foundation practice', (tester) async {
@@ -297,4 +298,24 @@ void main() {
     expect(find.text('年号と改革を対応させる'), findsOneWidget);
   });
 
+
+  testWidgets('Kosen mode exposes all five subjects from the shared question bank', (tester) async {
+    final questions = <KosenQuestion>[
+      const KosenQuestion(id: 'k-m', subject: 'math', topic: '計算', level: '基礎', prompt: '数学', options: ['1','2','3','4'], correct: 0, explanation: ''),
+      const KosenQuestion(id: 'k-e', subject: 'english', topic: '文法', level: '基礎', prompt: '英語', options: ['a','b','c','d'], correct: 0, explanation: ''),
+      const KosenQuestion(id: 'k-s', subject: 'science', topic: '物理', level: '基礎', prompt: '理科', options: ['a','b','c','d'], correct: 0, explanation: ''),
+      const KosenQuestion(id: 'k-h', subject: 'social', topic: '歴史', level: '基礎', prompt: '社会', options: ['a','b','c','d'], correct: 0, explanation: ''),
+      const KosenQuestion(id: 'k-j', subject: 'japanese', topic: '読解', level: '基礎', prompt: '国語', options: ['a','b','c','d'], correct: 0, explanation: ''),
+    ];
+    await prepareViewport(tester);
+    await tester.pumpWidget(MaterialApp(
+      home: KosenPracticePage(loadQuestions: () async => questions),
+    ));
+    await tester.pumpAndSettle();
+    expect(find.text('数学 1問'), findsOneWidget);
+    expect(find.text('英語 1問'), findsOneWidget);
+    expect(find.text('理科 1問'), findsOneWidget);
+    expect(find.text('社会 1問'), findsOneWidget);
+    expect(find.text('国語 1問'), findsOneWidget);
+  });
 }
