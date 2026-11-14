@@ -32,6 +32,8 @@ jobs:
         run: npm run validate:kosen
       - name: Generate foundation-training questions
         run: npm run generate:foundation-training
+      - name: Import reviewed daily question batches
+        run: npm run import:daily-questions
       - name: Prepare complete offline dataset and versioned worker
         run: npm run prepare:flutter-offline
       - name: Validate learning content
