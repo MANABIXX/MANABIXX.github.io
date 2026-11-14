@@ -114,7 +114,7 @@ jobs:
         working-directory: flutter
         shell: bash
         run: |
-          VERSION="$(sed -n 's/^version:[[:space:]]*\\([^+[:space:]]*\\).*/\\1/p' pubspec.yaml)"
+          VERSION="$(awk '/^version:[[:space:]]*/ { split($2, parts, "+"); print parts[1]; exit }' pubspec.yaml)"
           if [ -z "$VERSION" ]; then echo "Could not read version from pubspec.yaml"; exit 1; fi
           echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"

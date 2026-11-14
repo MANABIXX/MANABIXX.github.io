@@ -6,6 +6,8 @@ class ReleaseNotesPage extends StatelessWidget {
   static const _items = <_ReleaseEntry>[
     _ReleaseEntry(date: '2026-11-15', category: 'BUILD / ANDROID', title: 'Android APKの生成物チェックを修正',
       body: 'Gradleビルド後にFlutterが生成するAPKを正しい出力先で確認するように変更。見つからない場合は生成先候補をログに表示し、サイズ・チェックサム検証や公開処理へ進まないようにしました。'),
+    _ReleaseEntry(date: '2026-11-15', category: 'BUILD / ANDROID', title: 'Android APKの後処理を修正',
+      body: 'Gradle Pluginが生成するAPKを正しい出力先で検証し、pubspec.yamlのバージョンを安定して読み取るように変更しました。'),
     _ReleaseEntry(date: '2026-11-15', category: 'PRIVACY', title: '入試情報の表示を学校名のない共通ガイドへ変更',
       body: '公開UI・演習データの表示名から個別の学校名を除き、入試情報マップを一般的な確認手順へ変更。学習履歴との互換性を保つため既存問題IDは維持しています。'),
     _ReleaseEntry(date: '2026-11-15', category: 'PRIVACY / BUILD', title: 'Flutter公開データを許可リストで制限',
