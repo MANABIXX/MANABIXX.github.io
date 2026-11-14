@@ -48,9 +48,10 @@ class KnowledgeRecord {
 }
 
 class KnowledgeLibraryPage extends StatefulWidget {
-  const KnowledgeLibraryPage({super.key, this.loadRecords, this.title = '教材ライブラリ'});
+  const KnowledgeLibraryPage({super.key, this.loadRecords, this.title = '要点まとめ', this.initialSubject = 'science'});
   final Future<List<KnowledgeRecord>> Function()? loadRecords;
   final String title;
+  final String initialSubject;
 
   @override
   State<KnowledgeLibraryPage> createState() => _KnowledgeLibraryPageState();
@@ -61,7 +62,7 @@ class _KnowledgeLibraryPageState extends State<KnowledgeLibraryPage> {
   bool _loading = true;
   String? _error;
   String _query = '';
-  String _subject = 'all';
+  late String _subject = widget.initialSubject;
   String _grade = 'all';
   String _field = 'all';
 
@@ -97,13 +98,13 @@ class _KnowledgeLibraryPageState extends State<KnowledgeLibraryPage> {
   }
 
   List<String> get _fields => _records
-      .where((r) => _subject == 'all' || r.subject == _subject)
+      .where((r) => (r.subject == 'science' || r.subject == 'social') && r.subject == _subject)
       .map((r) => r.field).where((f) => f.isNotEmpty).toSet().toList()..sort();
 
   List<KnowledgeRecord> get _shown => _records.where((r) {
     final text = [r.title, r.field, r.explanation, ...r.keyTerms, ...r.targets]
         .join(' ').toLowerCase();
-    return (_subject == 'all' || r.subject == _subject) &&
+    return (r.subject == 'science' || r.subject == 'social') && r.subject == _subject &&
         (_grade == 'all' || r.grade.toString() == _grade) &&
         (_field == 'all' || r.field == _field) &&
         (_query.isEmpty || text.contains(_query.toLowerCase()));
@@ -128,9 +129,9 @@ class _KnowledgeLibraryPageState extends State<KnowledgeLibraryPage> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      Text('知識を、使える力に。', style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800)),
+                      Text(_subject == 'science' ? '理科の重要ポイント' : '社会の重要ポイント', style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800)),
                       const SizedBox(height: 4),
-                      Text('${_records.length}件の単元・教材から探せます。', style: Theme.of(context).textTheme.bodySmall),
+                      Text('${_shown.length}件の単元を分野別に確認できます。', style: Theme.of(context).textTheme.bodySmall),
                       const SizedBox(height: 12),
                       TextField(
                         decoration: const InputDecoration(prefixIcon: Icon(Icons.search), hintText: '単元名・用語・内容から検索', border: OutlineInputBorder()),
@@ -141,7 +142,6 @@ class _KnowledgeLibraryPageState extends State<KnowledgeLibraryPage> {
                         SizedBox(width: 145, child: DropdownButtonFormField<String>(
                           initialValue: _subject, decoration: const InputDecoration(labelText: '教科'),
                           items: const [
-                            DropdownMenuItem(value: 'all', child: Text('すべて')),
                             DropdownMenuItem(value: 'science', child: Text('理科')),
                             DropdownMenuItem(value: 'social', child: Text('社会')),
                           ],
@@ -181,7 +181,7 @@ class _KnowledgeLibraryPageState extends State<KnowledgeLibraryPage> {
                               margin: const EdgeInsets.only(bottom: 8),
                               child: ExpansionTile(
                                 leading: Icon(item.subject == 'science' ? Icons.science_outlined : Icons.public),
-                                title: Text(item.title, style: const TextStyle(fontWeight: FontWeight.w700)),
+                                title: Text(item.title, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
                                 subtitle: Text('${_subjectName(item.subject)} · ${_gradeName(item.grade)} · ${_fieldName(item.field)} · ${authored ? '解説付き教材' : '単元索引'}'),
                                 childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                                 children: [
@@ -209,7 +209,7 @@ class _KnowledgeLibraryPageState extends State<KnowledgeLibraryPage> {
     decoration: BoxDecoration(
       color: const Color(0xFF29292F),
       borderRadius: BorderRadius.circular(14),
-      border: Border.all(color: const Color(0xFF414149)),
+      border: Border.all(color: const Color(0xFF55515A)),
     ),
     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(title, style: const TextStyle(fontWeight: FontWeight.w900, color: Color(0xFFFFB15C))),
