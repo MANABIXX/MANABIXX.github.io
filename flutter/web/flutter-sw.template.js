@@ -48,7 +48,11 @@ self.addEventListener('activate', (event) => {
   event.waitUntil((async () => {
     const keys = await caches.keys();
     await Promise.all(keys
-      .filter((key) => key.startsWith(CACHE_PREFIX) && key !== CACHE_NAME)
+      .filter((key) => (
+        (key.startsWith(CACHE_PREFIX) && key !== CACHE_NAME) ||
+        key.startsWith('manabixx-flutter-') ||
+        key.startsWith('manabixx-study-')
+      ))
       .map((key) => caches.delete(key)));
     await self.clients.claim();
   })());
