@@ -58,14 +58,26 @@
   </script>
   <script>
     (() => {
-      const path = location.pathname;
-      const mode = path.includes('/practice/kosen') ? 'kosen' : path.includes('/practice/foundation-training') ? 'training' : 'main';
-      const manifest = document.querySelector('link[rel="manifest"]');
-      if (manifest && mode !== 'main') manifest.href = mode + '.webmanifest';
-      const appleIcon = document.querySelector('link[rel="apple-touch-icon"]');
-      if (appleIcon && mode === 'kosen') appleIcon.href = '../assets/kosen-icon.svg';
-      if (appleIcon && mode === 'training') appleIcon.href = '../assets/training-icon.svg';
-      document.title = mode === 'kosen' ? '高専対策 | MANABIXX' : mode === 'training' ? '下積みモード | MANABIXX' : 'MANABIXX';
+      const updateModeAssets = () => {
+        const path = location.pathname;
+        const mode = path.includes('/practice/kosen') ? 'kosen' : path.includes('/practice/foundation-training') ? 'training' : 'main';
+        const manifest = document.querySelector('link[rel="manifest"]');
+        if (manifest) manifest.href = mode === 'main' ? 'manifest.webmanifest' : mode + '.webmanifest';
+        const appleIcon = document.querySelector('link[rel="apple-touch-icon"]');
+        if (appleIcon) appleIcon.href = mode === 'kosen' ? '../assets/kosen-icon.svg' : mode === 'training' ? '../assets/training-icon.svg' : '../assets/study-icon.svg';
+        document.title = mode === 'kosen' ? '高専対策 | MANABIXX' : mode === 'training' ? '下積みモード | MANABIXX' : 'MANABIXX';
+        window.dispatchEvent(new Event('manabixx-mode-change'));
+      };
+      updateModeAssets();
+      for (const method of ['pushState', 'replaceState']) {
+        const original = history[method];
+        history[method] = function (...args) {
+          const result = original.apply(this, args);
+          updateModeAssets();
+          return result;
+        };
+      }
+      window.addEventListener('popstate', updateModeAssets);
     })();
   </script>
 </head>
@@ -89,19 +101,32 @@
       const copy = document.getElementById("pwa-install-copy");
       const close = document.getElementById("pwa-install-close");
       const ua = navigator.userAgent || "";
-      const path = location.pathname;
-      const modeName = path.includes("/practice/kosen") ? "高専対策" : path.includes("/practice/foundation-training") ? "下積みモード" : "MANABIXX";
-      const modeSpecific = modeName !== "MANABIXX";
-      const pwaDismissKey = "manabixx-pwa-dismissed-" + modeName;
-      const bannerTitle = banner.querySelector("strong");
-      if (bannerTitle) bannerTitle.textContent = modeName + "をホーム画面に追加";
       const ios = /iPhone|iPad|iPod/.test(ua);
       const android = /Android/.test(ua);
       const standalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
       let installPrompt = null;
+      let modeName = "MANABIXX";
+      let pwaDismissKey = "manabixx-pwa-dismissed-MANABIXX";
       const show = () => { try { if (!standalone && !localStorage.getItem(pwaDismissKey)) banner.hidden = false; } catch (_) { if (!standalone) banner.hidden = false; } };
-      if (ios && !standalone) { copy.textContent = modeSpecific ? modeName + "専用のホーム画面アイコンを追加できます。Safariの共有ボタンから「ホーム画面に追加」を選択。" : "Safariの共有ボタンから「ホーム画面に追加」を選べます。"; action.textContent = "追加手順"; show(); }
-      if (android && !standalone) { copy.textContent = modeSpecific ? modeName + "専用アプリとしてホーム画面に追加できます。" : "ブラウザのメニューからホーム画面への追加やアプリのインストールができます。"; show(); }
+      const refreshModeBanner = () => {
+        const path = location.pathname;
+        modeName = path.includes("/practice/kosen") ? "高専対策" : path.includes("/practice/foundation-training") ? "下積みモード" : "MANABIXX";
+        pwaDismissKey = "manabixx-pwa-dismissed-" + modeName;
+        const modeSpecific = modeName !== "MANABIXX";
+        const bannerTitle = banner.querySelector("strong");
+        if (bannerTitle) bannerTitle.textContent = modeName + "をホーム画面に追加";
+        if (ios && !standalone) {
+          copy.textContent = modeSpecific ? modeName + "専用のホーム画面アイコンを追加できます。Safariの共有ボタンから「ホーム画面に追加」を選択。" : "Safariの共有ボタンから「ホーム画面に追加」を選べます。";
+          action.textContent = "追加手順";
+          show();
+        }
+        if (android && !standalone) {
+          copy.textContent = modeSpecific ? modeName + "専用アプリとしてホーム画面に追加できます。" : "ブラウザのメニューからホーム画面への追加やアプリのインストールができます。";
+          show();
+        }
+      };
+      refreshModeBanner();
+      window.addEventListener("manabixx-mode-change", refreshModeBanner);
       window.addEventListener("beforeinstallprompt", (event) => { event.preventDefault(); installPrompt = event; action.textContent = "インストール"; if (android) show(); });
       action.addEventListener("click", async () => {
         if (installPrompt) { installPrompt.prompt(); await installPrompt.userChoice; installPrompt = null; banner.hidden = true; return; }
