@@ -4,6 +4,8 @@ import 'package:material_ui/material_ui.dart';
 import 'package:manabixx_web/foundation_practice.dart';
 import 'package:manabixx_web/kosen_practice.dart';
 import 'package:manabixx_web/knowledge_library.dart';
+import 'package:manabixx_web/foundation_roadmap.dart';
+import 'package:manabixx_web/to_you.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
@@ -95,6 +97,7 @@ class ManabiXXApp extends StatelessWidget {
         '/practice/foundation-training': (_) => const _PasswordGatePage(password: 'haru', title: '下積みモード', child: _ModeHomePage(mode: 'foundation')),
         '/practice/foundation-training/study': (_) => const _PasswordGatePage(password: 'haru', title: '下積みモード', child: FoundationPracticePage(dataPath: '/data/foundation-training.json', title: '下積みモード', includeAllSubjects: true, additionalDataPaths: ['/data/public-exam.json'])),
         '/records': (_) => const _ProgressPage(),
+        '/to-you': (_) => const ToYouPage(),
         '/foundation': (_) => const FoundationPracticePage(includeAllSubjects: true),
         '/foundation/': (_) => const FoundationPracticePage(),
         '/exam': (_) => const FoundationPracticePage(
@@ -439,6 +442,22 @@ class _ModeHomePageState extends State<_ModeHomePage> {
             icon: const Icon(Icons.play_arrow_rounded),
             label: const Text('学習を始める'),
           ),
+          if (!_kosen) ...[
+            const SizedBox(height: 10),
+            OutlinedButton.icon(
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute<void>(builder: (_) => const FoundationRoadmapPage()),
+              ),
+              icon: const Icon(Icons.route_outlined),
+              label: const Text('青藍泰斗・佐野松桜 合格マップ'),
+            ),
+          ],
+          const SizedBox(height: 10),
+          OutlinedButton.icon(
+            onPressed: () => Navigator.of(context).pushNamed('/to-you'),
+            icon: const Icon(Icons.mail_outline_rounded),
+            label: const Text('君へ'),
+          ),
           if (_kosen) ...[
             const SizedBox(height: 10),
             OutlinedButton.icon(
@@ -573,6 +592,8 @@ class _StudyMenu extends StatelessWidget {
         subtitle: '5教科の基礎をテンポよく', onTap: () => onSelect('/foundation')),
       _MenuTile(icon: Icons.school_outlined, title: '公立高校入試問題',
         subtitle: '入試形式で実戦演習', onTap: () => onSelect('/exam')),
+      _MenuTile(icon: Icons.mail_outline_rounded, title: '君へ',
+        subtitle: '受験の日々に寄り添うメッセージ', onTap: () => onSelect('/to-you')),
       _MenuTile(icon: Icons.menu_book_outlined, title: '要点まとめ',
         subtitle: '理科・社会を分野別に確認', onTap: () => onSelect('/summary')),
       _MenuTile(icon: Icons.assessment_outlined, title: '模試・予想問題',
