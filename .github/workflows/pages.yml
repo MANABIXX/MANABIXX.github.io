@@ -36,6 +36,8 @@ jobs:
         run: npm run validate:pwa
       - name: Build static site
         run: npm run build
+      - name: Prepare bundled Japanese fonts
+        run: npm run fetch:flutter-fonts
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.50.0'
@@ -52,7 +54,7 @@ jobs:
         run: flutter test
       - name: Build Flutter beta for /flutter/
         working-directory: flutter
-        run: flutter build web --release --wasm --base-href /flutter/
+        run: flutter build web --release --wasm --base-href "${FLUTTER_BASE_HREF:-/flutter/}"
       - name: Add Flutter beta to Pages artifact
         run: |
           mkdir -p build/flutter
