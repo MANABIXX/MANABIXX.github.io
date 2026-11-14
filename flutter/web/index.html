@@ -4,10 +4,40 @@
   <base href="$FLUTTER_BASE_HREF">
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#121214">
+  <meta name="color-scheme" content="dark">
   <meta name="description" content="自分のペースで学び、理解を積み重ねる学習スペース。">
   <title>MANABIXX</title>
+  <style>
+    :root { color-scheme: dark; background: #121214; }
+    html, body {
+      width: 100%; min-height: 100%; margin: 0; background: #121214;
+      color: #f5f5f6;
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans",
+        "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+    }
+    #app-loading {
+      position: fixed; inset: 0; z-index: 9999; display: grid;
+      place-items: center; background: #121214;
+      transition: opacity 160ms ease;
+    }
+    #app-loading.done { opacity: 0; pointer-events: none; }
+    .loading-content { display: grid; justify-items: center; gap: 18px; }
+    .brand { font: 800 18px/1.2 -apple-system, BlinkMacSystemFont, sans-serif;
+      letter-spacing: .12em; }
+    .spinner {
+      width: 25px; height: 25px; border: 3px solid #38383e;
+      border-top-color: #ff7900; border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+    .loading-label { color: #9999a1; font-size: 12px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) {
+      .spinner { animation-duration: 1.8s; }
+      #app-loading { transition: none; }
+    }
+  </style>
   <script>
     (() => {
       try {
@@ -21,6 +51,35 @@
   </script>
 </head>
 <body>
-  <script src="flutter_bootstrap.js" async></script>
+  <div id="app-loading" role="status" aria-label="MANABIXXを読み込み中">
+    <div class="loading-content">
+      <div class="brand">MANABIXX</div>
+      <div class="spinner" aria-hidden="true"></div>
+      <div class="loading-label">読み込み中…</div>
+    </div>
+  </div>
+  <script>
+    {{flutter_js}}
+    {{flutter_build_config}}
+    const flutterConfig = {
+      // GitHub Pages cannot set COOP/COEP, so use the predictable
+      // single-threaded SkWasm path where the browser supports WasmGC.
+      wasmAllowList: { blink: true, webkit: true, gecko: true },
+      forceSingleThreadedSkwasm: true,
+      suppressMultithreadingWarning: true,
+    };
+    _flutter.loader.load({
+      config: flutterConfig,
+      onEntrypointLoaded: async (engineInitializer) => {
+        const appRunner = await engineInitializer.initializeEngine(flutterConfig);
+        await appRunner.runApp();
+        const splash = document.getElementById('app-loading');
+        if (splash) {
+          splash.classList.add('done');
+          window.setTimeout(() => splash.remove(), 180);
+        }
+      },
+    });
+  </script>
 </body>
 </html>
