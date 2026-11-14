@@ -4,6 +4,8 @@ class ReleaseNotesPage extends StatelessWidget {
   const ReleaseNotesPage({super.key});
 
   static const _items = <_ReleaseEntry>[
+    _ReleaseEntry(date: '2026-11-15', category: 'BUILD / ANDROID', title: 'Android APKの生成物チェックを修正',
+      body: 'Gradleビルド後にFlutterが生成するAPKを正しい出力先で確認するように変更。見つからない場合は生成先候補をログに表示し、サイズ・チェックサム検証や公開処理へ進まないようにしました。'),
     _ReleaseEntry(date: '2026-11-14', category: 'FLUTTER WEB', title: 'Flutter WebをGitHub Pagesのルートへ切り替え',
       body: '公開フロントエンドの配信先をFlutter Webのルートへ変更。404フォールバックで対応済みの深いURLを維持し、Flutterが利用するアプリ資産と7つの問題データセットをバージョン付きで事前キャッシュします。週次バックグラウンド同期は対応ブラウザーのみで、その他の環境では次回起動時に更新を確認します。動機づけ・ワークスペース・下積みモード・学習履歴の完全移行など、未移植の機能は引き続き開発中です。'),
     _ReleaseEntry(date: '2026-11-14', category: 'HOME / PORTAL', title: 'ホームを学習ポータルへ拡張',
@@ -27,7 +29,7 @@ class ReleaseNotesPage extends StatelessWidget {
       const SizedBox(height: 8),
       const Text('MANABIXXの更新記録', style: TextStyle(fontSize: 25, fontWeight: FontWeight.w900)),
       const SizedBox(height: 6),
-      const Text('最近の変更を、新しい順に5件掲載しています。',
+      const Text('主な変更を、新しい順に掲載しています。',
         style: TextStyle(color: Colors.white60, fontSize: 12, height: 1.6)),
       const SizedBox(height: 18),
       ..._items.map((item) => Card(margin: const EdgeInsets.only(bottom: 11),
