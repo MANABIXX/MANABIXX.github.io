@@ -357,7 +357,7 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
   Widget _buildSelection() => ListView(
         children: [
           const SizedBox(height: 32),
-          Text('FOUNDATION / PRACTICE',
+          Text('基礎演習',
               style: Theme.of(context).textTheme.labelLarge?.copyWith(
                     color: Theme.of(context).colorScheme.primary,
                     letterSpacing: 2,
@@ -487,7 +487,7 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
         border: Border.all(color: const Color(0xFF333338)),
       ),
       child: Column(mainAxisSize: MainAxisSize.min, children: [
-        const Text('QUESTION', style: TextStyle(color: Color(0xFFFF8A00),
+        const Text('問題', style: TextStyle(color: Color(0xFFFF8A00),
           letterSpacing: 2, fontSize: 11, fontWeight: FontWeight.w800)),
         const SizedBox(height: 18),
         Text(question.prompt, textAlign: TextAlign.center,
