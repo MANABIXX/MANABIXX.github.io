@@ -37,4 +37,4 @@ jobs:
       - name: Run widget tests
         run: flutter test
       - name: Build GitHub Pages-compatible web output
-        run: flutter build web --release --base-href /
+        run: flutter build web --release --base-href /flutter/
