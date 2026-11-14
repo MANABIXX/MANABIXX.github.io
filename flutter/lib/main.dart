@@ -358,7 +358,7 @@ class _HomeDashboardState extends State<_HomeDashboard> {
           Text('新機能・問題追加・改善内容を公開しています。',
             style: TextStyle(color: Color(0xFF9999A1), fontSize: 10, height: 1.5)),
         ])),
-        TextButton(onPressed: () => Navigator.of(context).pushNamed('/releases'), child: const Text('直近5件を見る')),
+        TextButton(onPressed: () => Navigator.of(context).pushNamed('/releases'), child: const Text('更新履歴を見る')),
       ]))),
       const SizedBox(height: 12),
       const Center(child: Text('MANABIXX · LEARN AT YOUR OWN PACE',
