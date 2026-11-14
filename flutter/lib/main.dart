@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:material_ui/material_ui.dart';
 import 'package:manabixx_web/foundation_practice.dart';
 import 'package:manabixx_web/kosen_practice.dart';
 import 'package:manabixx_web/knowledge_library.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const _bg = Color(0xFF121214);
 const _surface = Color(0xFF222226);
@@ -158,9 +161,46 @@ class _AppHomePageState extends State<_AppHomePage> {
   }
 }
 
-class _HomeDashboard extends StatelessWidget {
+class _HomeDashboard extends StatefulWidget {
   const _HomeDashboard({required this.onStart});
   final VoidCallback onStart;
+  @override
+  State<_HomeDashboard> createState() => _HomeDashboardState();
+}
+
+class _HomeDashboardState extends State<_HomeDashboard> {
+  int _todayAnswered = 0;
+  bool _progressLoaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadTodayProgress();
+  }
+
+  Future<void> _loadTodayProgress() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final raw = prefs.getString('manabixx.learning.data_questions.json.history');
+      final history = raw == null ? <dynamic>[] : (jsonDecode(raw) as List<dynamic>);
+      final today = DateTime.now();
+      final answered = history.whereType<Map<String, dynamic>>().where((item) {
+        final value = item['completedAt'];
+        if (value is! String) return false;
+        final date = DateTime.tryParse(value)?.toLocal();
+        return date != null && date.year == today.year &&
+            date.month == today.month && date.day == today.day;
+      }).fold<int>(0, (sum, item) => sum + (item['total'] as int? ?? 0));
+      if (!mounted) return;
+      setState(() {
+        _todayAnswered = answered;
+        _progressLoaded = true;
+      });
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _progressLoaded = true);
+    }
+  }
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -189,22 +229,28 @@ class _HomeDashboard extends StatelessWidget {
           decoration: BoxDecoration(
             color: _surface, borderRadius: BorderRadius.circular(22),
             border: Border.all(color: _line)),
-          child: const Column(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('今日の学習', style: TextStyle(color: Color(0xFFB6B6BE), fontSize: 13)),
-              SizedBox(height: 14),
+              const Text('今日の学習', style: TextStyle(color: Color(0xFFB6B6BE), fontSize: 13)),
+              const SizedBox(height: 14),
               Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
-                Text('0', style: TextStyle(fontSize: 42, fontWeight: FontWeight.w900)),
-                Padding(padding: EdgeInsets.only(bottom: 8, left: 6),
+                Text(_progressLoaded ? '$_todayAnswered' : '—',
+                  style: const TextStyle(fontSize: 42, fontWeight: FontWeight.w900)),
+                const Padding(padding: EdgeInsets.only(bottom: 8, left: 6),
                   child: Text('問回答', style: TextStyle(color: Color(0xFFB6B6BE)))),
-                Spacer(),
-                Text('START', style: TextStyle(color: _orange, fontWeight: FontWeight.w800)),
+                const Spacer(),
+                const Text('TODAY', style: TextStyle(color: _orange, fontWeight: FontWeight.w800)),
               ]),
-              SizedBox(height: 12),
-              ClipRRect(borderRadius: BorderRadius.all(Radius.circular(20)),
-                child: LinearProgressIndicator(value: 0, minHeight: 6,
-                  backgroundColor: Color(0xFF3A3A40), color: _orange)),
+              const SizedBox(height: 12),
+              ClipRRect(borderRadius: const BorderRadius.all(Radius.circular(20)),
+                child: LinearProgressIndicator(
+                  value: (_todayAnswered / 20).clamp(0.0, 1.0),
+                  minHeight: 6,
+                  backgroundColor: const Color(0xFF3A3A40), color: _orange)),
+              const SizedBox(height: 8),
+              Text('今日の回答数 · 目安 20問',
+                style: const TextStyle(color: Color(0xFF77777F), fontSize: 11)),
             ],
           ),
         ),
@@ -213,7 +259,7 @@ class _HomeDashboard extends StatelessWidget {
           width: double.infinity,
           height: 68,
           child: FilledButton.icon(
-            onPressed: onStart,
+            onPressed: widget.onStart,
             icon: const Icon(Icons.play_arrow_rounded, size: 27),
             label: const Text('学習スタート', style: TextStyle(fontSize: 18)),
           ),
