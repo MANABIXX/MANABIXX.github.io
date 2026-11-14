@@ -32,6 +32,12 @@ jobs:
         run: npm run validate:kosen
       - name: Generate foundation-training questions
         run: npm run generate:foundation-training
+      - name: Import reviewed daily question batches
+        run: npm run import:daily-questions
+      - name: Validate merged Kosen question database
+        run: npm run validate:kosen
+      - name: Prepare complete offline dataset and versioned worker
+        run: npm run prepare:flutter-offline
       - name: Validate learning content
         run: bash scripts/verify-content.sh
       - name: Type and Svelte checks
@@ -58,17 +64,15 @@ jobs:
       - name: Test Flutter app
         working-directory: flutter
         run: flutter test
-      - name: Build Flutter beta for /flutter/
+      - name: Build Flutter as the Pages root app
         working-directory: flutter
-        run: flutter build web --release --wasm --base-href "${FLUTTER_BASE_HREF:-/flutter/}"
-      - name: Add Flutter beta to Pages artifact
-        run: |
-          mkdir -p build/flutter
-          cp -R flutter/build/web/. build/flutter/
+        run: flutter build web --release --wasm --base-href /
+      - name: Assemble complete offline root app
+        run: npm run assemble:flutter-root && npm run validate:flutter-root
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: build
+          path: flutter/build/web
   deploy:
     environment:
       name: github-pages

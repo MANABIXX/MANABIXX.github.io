@@ -61,6 +61,8 @@ class FoundationPracticePage extends StatefulWidget {
     this.title = '基礎網羅問題',
     this.includeAllSubjects = false,
     this.additionalDataPaths = const [],
+    this.initialSubject = 'all',
+    this.initialTopic = 'all',
   });
 
   final Future<List<FoundationQuestion>> Function()? loadQuestions;
@@ -68,6 +70,8 @@ class FoundationPracticePage extends StatefulWidget {
   final String title;
   final bool includeAllSubjects;
   final List<String> additionalDataPaths;
+  final String initialSubject;
+  final String initialTopic;
 
   @override
   State<FoundationPracticePage> createState() => _FoundationPracticePageState();
@@ -76,8 +80,8 @@ class FoundationPracticePage extends StatefulWidget {
 class _FoundationPracticePageState extends State<FoundationPracticePage> {
   List<FoundationQuestion> _questions = [];
   List<FoundationQuestion> _session = [];
-  String _subject = 'all';
-  String _topic = 'all';
+  late String _subject;
+  late String _topic;
   String _amount = '10';
   String? _error;
   bool _loading = true;
@@ -159,6 +163,8 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
   @override
   void initState() {
     super.initState();
+    _subject = widget.initialSubject;
+    _topic = widget.initialTopic;
     _load();
     _loadProgress();
   }
@@ -228,6 +234,23 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
 
   FoundationQuestion get _current => _session[_index];
 
+  String get _weakTopicSummary {
+    final entries = _weakTopics.entries.toList()
+      ..sort((a, b) => b.value.compareTo(a.value));
+    return entries.take(3).map((entry) => '${entry.key} ${entry.value}問').join(' / ');
+  }
+
+  Map<String, int> get _weakTopics {
+    final counts = <String, int>{};
+    for (final question in _questions) {
+      if (_wrongQuestionIds.contains(question.id)) {
+        final label = '${_subjectLabel(question.subject)} · ${_topicLabel(question.topic)}';
+        counts.update(label, (value) => value + 1, ifAbsent: () => 1);
+      }
+    }
+    return counts;
+  }
+
   void _start() {
     final nextSession = [..._available]..shuffle(Random());
     final count = _amount == 'all' ? nextSession.length : int.parse(_amount);
@@ -261,7 +284,7 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
 
 
 
-  Future<void> _answer(int choice) async {
+  void _answer(int choice) {
     if (_selected != null) return;
     final question = _current;
     final correct = choice == question.correct;
@@ -270,11 +293,7 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
       if (correct) _score++;
     });
     if (correct) unawaited(HapticFeedback.mediumImpact());
-    _saveAnswer(question, choice);
-    await Future<void>.delayed(const Duration(milliseconds: 120));
-    if (mounted && _started && !_finished && _selected == choice) {
-      _next();
-    }
+    unawaited(_saveAnswer(question, choice));
   }
 
   void _next() {
@@ -312,6 +331,23 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: _started && !_finished && _selected != null
+          ? SafeArea(
+              top: false,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 58,
+                  child: FilledButton.icon(
+                    onPressed: _next,
+                    icon: const Icon(Icons.arrow_forward_rounded),
+                    label: Text(_index + 1 == _session.length ? '結果を見る' : '次の問題へ'),
+                  ),
+                ),
+              ),
+            )
+          : null,
       appBar: _started && !_finished ? null : AppBar(
         title: Text(widget.title),
         leading: IconButton(
@@ -405,6 +441,17 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
                   Text('学習記録：$_completedSessions回 · $_totalAnswered問回答 · 正解 $_totalCorrect問'),
                   Text('復習待ち：${_wrongQuestionIds.length}問',
                       style: Theme.of(context).textTheme.bodySmall),
+                  if (_weakTopics.isNotEmpty) ...[
+                    const SizedBox(height: 8),
+                    Text(
+                      '苦手分野：$_weakTopicSummary',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: const Color(0xFFFFB15C),
+                      ),
+                    ),
+                  ],
                   if (!_progressStorageAvailable)
                     Text(
                       'この端末では学習記録を保存できません。演習は続けられます。',
@@ -538,7 +585,7 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
           return Padding(
             padding: const EdgeInsets.only(bottom: 9),
             child: SizedBox(
-              height: 62,
+              height: 68,
               width: double.infinity,
               child: OutlinedButton(
                 onPressed: answered ? null : () => _answer(i),
@@ -581,7 +628,7 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
               const SizedBox(height: 7),
               Text(question.explanation, style: const TextStyle(height: 1.6)),
               const SizedBox(height: 8),
-              const Text('Enterキーで次の問題へ', style: TextStyle(color: Color(0xFF99999A), fontSize: 11)),
+              const Text('解説を確認したら、画面下の「次の問題へ」を押してください。', style: TextStyle(color: Color(0xFF99999A), fontSize: 11)),
             ]),
           ),
       ],
@@ -621,7 +668,7 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
                   const SizedBox(width: 20),
                   Expanded(flex: 5, child: optionsPanel),
                 ])
-              : Column(children: [questionPanel, const SizedBox(height: 18), optionsPanel]),
+              : Column(mainAxisSize: MainAxisSize.min, children: [questionPanel, const SizedBox(height: 18), optionsPanel]),
           );
         })),
       ],

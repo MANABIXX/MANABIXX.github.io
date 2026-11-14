@@ -23,15 +23,21 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y poppler-utils
       - name: Sync pinned learning content
         run: npm run sync:registry
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - name: Generate Kosen practice questions
         run: npm run generate:kosen
       - name: Validate registry-derived Kosen questions
         run: npm run validate:kosen
       - name: Generate foundation-training questions
         run: npm run generate:foundation-training
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
+      - name: Import reviewed daily question batches
+        run: npm run import:daily-questions
+      - name: Validate merged Kosen question database
+        run: npm run validate:kosen
+      - name: Prepare complete offline dataset and versioned worker
+        run: npm run prepare:flutter-offline
       - name: Validate learning content
         run: bash scripts/verify-content.sh
       - name: Check Svelte and TypeScript
@@ -58,13 +64,15 @@ jobs:
       - name: Test Flutter app
         working-directory: flutter
         run: flutter test
-      - name: Build Flutter beta
+      - name: Build Flutter for the Pages root
         working-directory: flutter
-        run: flutter build web --release --wasm --base-href "${FLUTTER_BASE_HREF:-/flutter/}"
+        run: flutter build web --release --wasm --base-href /
+      - name: Assemble complete offline root app
+        run: npm run assemble:flutter-root && npm run validate:flutter-root
       - name: Save preview artifact
         if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
         with:
           name: study-build-preview
-          path: build/
+          path: flutter/build/web/
           retention-days: 7
