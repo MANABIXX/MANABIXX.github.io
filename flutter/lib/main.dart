@@ -350,6 +350,8 @@ class _PasswordGatePageState extends State<_PasswordGatePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text('このモードを開くにはパスワードが必要です。'),
+              const SizedBox(height: 8),
+              const Text('このパスワードは画面切替用です。公開ソース内のデータを守るサーバー認証ではありません。秘密情報は入力しないでください。', style: TextStyle(fontSize: 11, color: Color(0xFF9999A1), height: 1.5)),
               const SizedBox(height: 14),
               TextField(
                 controller: controller,
