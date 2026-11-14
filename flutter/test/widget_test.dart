@@ -59,6 +59,25 @@ void main() {
     await tester.pumpWidget(const ManabiXXApp());
     await tester.pumpAndSettle();
     expect(find.text('5'), findsOneWidget);
+    expect(find.text('2日連続学習'), findsOneWidget);
+  });
+
+  testWidgets('requires a password and opens a dedicated Kosen mode shell', (tester) async {
+    await prepareViewport(tester);
+    await tester.pumpWidget(const ManabiXXApp());
+    await tapVisible(tester, find.text('学習'));
+    await tapVisible(tester, find.text('製作者専用モード'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('このモードを開くにはパスワードが必要です。'), findsOneWidget);
+    await tester.enterText(find.byType(TextField).last, 'kosen');
+    await tester.tap(find.text('認証する'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('製作者専用モード'), findsWidgets);
+    expect(find.text('専用ホーム'), findsOneWidget);
+    expect(find.text('演習'), findsOneWidget);
+    expect(find.text('高専モード専用アプリとして追加'), findsOneWidget);
   });
 
   testWidgets('loads existing foundation questions and completes a session', (tester) async {
