@@ -101,7 +101,7 @@ class ManabiXXApp extends StatelessWidget {
         '/foundation': (_) => const FoundationPracticePage(includeAllSubjects: true),
         '/foundation/': (_) => const FoundationPracticePage(),
         '/exam': (_) => const FoundationPracticePage(
-          dataPath: '/data/public-exam.json', title: '公立高校入試問題'),
+          dataPath: '/data/public-exam.json', title: '公立高校入試問題', includeAllSubjects: true),
         '/exam/': (_) => const FoundationPracticePage(
           dataPath: '/data/public-exam.json', title: '公立高校入試問題'),
         '/summary': (_) => const KnowledgeLibraryPage(title: '要点まとめ', initialSubject: 'science'),
