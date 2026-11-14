@@ -14,6 +14,8 @@ class FoundationQuestion {
     required this.options,
     required this.correct,
     required this.explanation,
+    this.sourceLabel = '',
+    this.sourceNote = '',
   });
 
   final String id;
@@ -24,6 +26,8 @@ class FoundationQuestion {
   final List<String> options;
   final int correct;
   final String explanation;
+  final String sourceLabel;
+  final String sourceNote;
 
   factory FoundationQuestion.fromJson(Map<String, dynamic> json) {
     final options = (json['options'] as List<dynamic>).cast<String>();
@@ -40,14 +44,23 @@ class FoundationQuestion {
       options: options,
       correct: correct,
       explanation: json['explanation'] as String? ?? '',
+      sourceLabel: json['sourceLabel'] as String? ?? '',
+      sourceNote: json['sourceNote'] as String? ?? '',
     );
   }
 }
 
 class FoundationPracticePage extends StatefulWidget {
-  const FoundationPracticePage({super.key, this.loadQuestions});
+  const FoundationPracticePage({
+    super.key,
+    this.loadQuestions,
+    this.dataPath = 'data/questions.json',
+    this.title = '基礎網羅問題',
+  });
 
   final Future<List<FoundationQuestion>> Function()? loadQuestions;
+  final String dataPath;
+  final String title;
 
   @override
   State<FoundationPracticePage> createState() => _FoundationPracticePageState();
@@ -74,7 +87,7 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
   }
 
   Future<List<FoundationQuestion>> _fetchQuestions() async {
-    final uri = Uri.base.resolve('data/questions.json');
+    final uri = Uri.base.resolve(widget.dataPath);
     final response = await http.get(uri);
     if (response.statusCode != 200) {
       throw Exception('問題データを読み込めませんでした（HTTP ${response.statusCode}）。');
@@ -174,7 +187,7 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('基礎網羅問題'),
+        title: Text(widget.title),
         leading: IconButton(
           tooltip: 'Studyホームへ戻る',
           onPressed: () => Navigator.of(context).maybePop(),
@@ -225,12 +238,14 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
                     letterSpacing: 2,
                   )),
           const SizedBox(height: 12),
-          Text('基礎を、一問ずつ。',
+          Text(widget.title == '基礎網羅問題' ? '基礎を、一問ずつ。' : '入試形式で、実力を試す。',
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.w800,
                   )),
           const SizedBox(height: 8),
-          const Text('理科・社会の基礎問題から、今取り組む範囲を選びます。'),
+          Text(widget.title == '基礎網羅問題'
+              ? '理科・社会の基礎問題から、今取り組む範囲を選びます。'
+              : '理科・社会の入試形式問題に挑戦します。出典情報も確認できます。'),
           const SizedBox(height: 24),
           Card(
             child: Padding(
@@ -367,6 +382,18 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
             ),
           );
         }),
+        if (question.sourceLabel.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Text(question.sourceLabel,
+                style: Theme.of(context).textTheme.labelSmall),
+          ),
+        if (question.sourceNote.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Text(question.sourceNote,
+                style: Theme.of(context).textTheme.bodySmall),
+          ),
         if (_selected != null) ...[
           Card(
             child: Padding(
