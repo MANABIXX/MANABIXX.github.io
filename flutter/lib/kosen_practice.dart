@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 
 import 'package:material_ui/material_ui.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class KosenQuestion {
   const KosenQuestion({
@@ -52,12 +53,13 @@ class KosenQuestion {
 }
 
 class KosenPracticePage extends StatefulWidget {
-  const KosenPracticePage({super.key, this.loadQuestions, this.dataPath = '/data/kosen-questions.json', this.title = '製作者専用モード', this.initialSubject = 'all'});
+  const KosenPracticePage({super.key, this.loadQuestions, this.dataPath = '/data/kosen-questions.json', this.title = '製作者専用モード', this.initialSubject = 'all', this.additionalDataPaths = const []});
 
   final Future<List<KosenQuestion>> Function()? loadQuestions;
   final String dataPath;
   final String title;
   final String initialSubject;
+  final List<String> additionalDataPaths;
 
   @override
   State<KosenPracticePage> createState() => _KosenPracticePageState();
@@ -92,16 +94,23 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
   }
 
   Future<List<KosenQuestion>> _fetchQuestions() async {
-    final uri = Uri.base.resolve(widget.dataPath);
-    final response = await http.get(uri);
-    if (response.statusCode != 200) {
-      throw Exception('問題データを読み込めませんでした（HTTP ${response.statusCode}）。');
+    final paths = [widget.dataPath, ...widget.additionalDataPaths];
+    final combined = <KosenQuestion>[];
+    final ids = <String>{};
+    for (final path in paths) {
+      final uri = Uri.base.resolve(path);
+      final response = await http.get(uri);
+      if (response.statusCode != 200) {
+        throw Exception('問題データを読み込めませんでした（HTTP ${response.statusCode}）。');
+      }
+      final payload = jsonDecode(response.body) as Map<String, dynamic>;
+      final raw = payload['questions'] as List<dynamic>;
+      for (final item in raw) {
+        final question = KosenQuestion.fromJson(item as Map<String, dynamic>);
+        if (ids.add(question.id)) combined.add(question);
+      }
     }
-    final payload = jsonDecode(response.body) as Map<String, dynamic>;
-    final raw = payload['questions'] as List<dynamic>;
-    return raw
-        .map((item) => KosenQuestion.fromJson(item as Map<String, dynamic>))
-        .toList(growable: false);
+    return combined;
   }
 
   void _retry() {
@@ -140,7 +149,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
     final nextSession = [..._available]..shuffle(Random());
     if (nextSession.isEmpty) return;
     setState(() {
-      _session = nextSession;
+      _session = nextSession.take(10).toList(growable: false);
       _index = 0;
       _keyboardIndex = 0;
       _selected = null;
@@ -152,23 +161,38 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
 
   Future<void> _answer(int choice) async {
     if (_selected != null) return;
+    final correct = choice == _current.correct;
     setState(() {
       _selected = choice;
-      if (choice == _current.correct) _score++;
+      if (correct) _score++;
     });
+    if (correct) await HapticFeedback.mediumImpact();
     await Future<void>.delayed(const Duration(milliseconds: 120));
     if (mounted && _started && !_finished && _selected == choice) _next();
   }
 
+  Future<void> _saveSession() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final key = 'manabixx.mode.kosen.history';
+      final rows = (jsonDecode(prefs.getString(key) ?? '[]') as List<dynamic>)
+          .whereType<Map<String, dynamic>>().toList();
+      rows.insert(0, {'completedAt': DateTime.now().toIso8601String(), 'title': widget.title, 'total': _session.length, 'score': _score});
+      await prefs.setString(key, jsonEncode(rows.take(120).toList()));
+    } catch (_) {}
+  }
+
   void _next() {
+    final completes = _index + 1 == _session.length;
     setState(() {
-      if (_index + 1 == _session.length) {
+      if (completes) {
         _finished = true;
       } else {
         _index++;
         _selected = null;
       }
     });
+    if (completes) _saveSession();
   }
 
   void _backToSelection() {
@@ -441,7 +465,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
             FilledButton.icon(
               onPressed: _start,
               icon: const Icon(Icons.refresh),
-              label: const Text('もう一度解く'),
+              label: const Text('次の10問へ（目安3分）'),
             ),
             TextButton(onPressed: _backToSelection, child: const Text('教科選択へ戻る')),
           ],
