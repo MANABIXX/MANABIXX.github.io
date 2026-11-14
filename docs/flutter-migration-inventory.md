@@ -3,7 +3,7 @@
 Last inspected: 2026-11-14 (JST)  
 Repository: `MANABIXX/MANABIXX.github.io`  
 Production branch: `main`  
-Production URL: https://manabixx.github.io/
+Production URL: https://manabixx.github.io/\nFlutter beta preview (after merge and Pages deployment): https://manabixx.github.io/flutter/
 
 ## Safety boundary
 
