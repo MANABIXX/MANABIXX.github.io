@@ -263,7 +263,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
           ),
           const SizedBox(height: 8),
           Text(
-            '5教科の4択演習。基礎から応用まで段階的に取り組み、過去問資料から抽出した分野も確認できます。',
+            '偏差値65を目標に、5教科の基礎から応用まで段階的に取り組む4択演習です。',
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           const SizedBox(height: 28),
