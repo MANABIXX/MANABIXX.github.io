@@ -49,7 +49,7 @@ for (const url of app.files) await assertCachedFile(url, 'app asset');
 for (const [name, item] of [['main', manifest], ['kosen', kosenManifest], ['foundation', foundationManifest]]) {
   for (const icon of item.icons || []) await assertCachedFile(icon.src, `${name} icon`);
 }
-for (const url of ['/manifest-kosen.webmanifest', '/manifest-foundation.webmanifest', '/favicon.svg', '/kosen-icon.svg', '/foundation-icon.svg']) {
+for (const url of ['/manifest-kosen.webmanifest', '/manifest-foundation.webmanifest', '/favicon.svg', '/apple-touch-icon.svg', '/kosen-icon.svg', '/foundation-icon.svg']) {
   if (!app.files.includes(url)) throw new Error(`Offline app manifest is missing ${url}`);
 }
 
