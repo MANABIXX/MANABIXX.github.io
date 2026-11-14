@@ -268,7 +268,7 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
       _selected = choice;
       if (correct) _score++;
     });
-    if (correct) HapticFeedback.mediumImpact();
+    if (correct) await HapticFeedback.mediumImpact();
     _saveAnswer(question, choice);
     await Future<void>.delayed(const Duration(milliseconds: 120));
     if (mounted && _started && !_finished && _selected == choice) {
