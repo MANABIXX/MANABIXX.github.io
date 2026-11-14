@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { FLUTTER_PUBLIC_DATA_FILES, FLUTTER_PUBLIC_DATA_URLS } from './flutter-public-data.mjs';
 
 const root = path.join(process.cwd(), 'flutter', 'build', 'web');
 const readJson = async (name) => JSON.parse(await fs.readFile(path.join(root, name), 'utf8'));
@@ -21,8 +22,8 @@ for (const [name, item] of [['main', manifest], ['kosen', kosenManifest], ['foun
 if (manifest.start_url !== '/' || kosenManifest.start_url !== '/practice/kosen' || foundationManifest.start_url !== '/practice/foundation-training') {
   throw new Error('PWA manifest start URLs do not match the clean root routes.');
 }
-if (!offline.version || !Array.isArray(offline.files) || offline.files.length === 0) {
-  throw new Error('Offline data manifest is empty or invalid.');
+if (!offline.version || !Array.isArray(offline.files) || JSON.stringify(offline.files) !== JSON.stringify([...FLUTTER_PUBLIC_DATA_URLS])) {
+  throw new Error('Offline data manifest must contain only the approved Flutter route datasets.');
 }
 if (!app.version || !Array.isArray(app.files) || app.files.length === 0) {
   throw new Error('Offline app manifest is empty or invalid.');
@@ -45,6 +46,11 @@ async function assertCachedFile(url, label) {
   }
   await fs.access(path.join(root, url.slice(1)));
 }
+const dataDir = path.join(root, 'data');
+const dataFiles = (await fs.readdir(dataDir)).sort();
+const expectedDataFiles = [...FLUTTER_PUBLIC_DATA_FILES].sort();
+if (JSON.stringify(dataFiles) !== JSON.stringify(expectedDataFiles)) throw new Error('Published data directory differs from the approved dataset allowlist.');
+if (dataFiles.some((name) => /^(private-|s-exclusive)/i.test(name))) throw new Error('Restricted legacy datasets must not be included in the Pages artifact.');
 for (const url of offline.files) await assertCachedFile(url, 'dataset');
 for (const url of app.files) await assertCachedFile(url, 'app asset');
 for (const [name, item] of [['main', manifest], ['kosen', kosenManifest], ['foundation', foundationManifest]]) {
@@ -58,4 +64,4 @@ if (!app.files.includes('/flutter_bootstrap.js') || !app.files.includes('/index.
   throw new Error('Offline app manifest does not include the Flutter bootstrap and entry point.');
 }
 await fs.access(path.join(root, 'assets', 'study-icon.svg'));
-console.log(`Root Flutter build validated: ${offline.files.length} datasets, ${app.files.length} app assets, base href /, 404 fallback.`);
+console.log(`Root Flutter build validated: ${offline.files.length} approved datasets, no restricted JSON, ${app.files.length} app assets, base href /, 404 fallback.`);

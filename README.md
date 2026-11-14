@@ -30,7 +30,7 @@ MANABIXX が開発する独立した学習サービスを独立して再構築�
 ## Flutter版の統合実装（2026-11-14）
 
 - ルートURL（/）をFlutter Web本体としてビルドし、/practice/kosen、/practice/foundation-training、/records、/summary のクリーンURLに対応。
-- Service WorkerでFlutterアプリ資産とstatic/dataの全JSON教材を初回キャッシュ。データ・アプリのバージョン変更を検出して更新し、対応ブラウザーでは週次Periodic Background Syncを登録。
+- Service WorkerでFlutterアプリ資産と、Flutter画面が使う許可リスト9件のJSON教材だけを初回キャッシュ。`private-*`・`s-exclusive*`などの制限/旧データはPages成果物へ含めません。データ・アプリのバージョン変更を検出して更新し、対応ブラウザーでは週次Periodic Background Syncを登録。
 - 回答後は解説を表示したまま待機し、画面下の「次の問題へ」で進む操作へ変更。誤答キュー・苦手分野集計・ワンタップ復習を追加。
 - 下積みモードに青藍泰斗高校・佐野松桜高校の2027年度公開情報を反映した合格マップと、JSON駆動の「君へ」メッセージを追加。
 - 要点まとめの各単元から、理科・社会の該当分野を絞った一問一答へ移動可能。製作者専用モードではJSON貼り付けによる端末内問題の追加にも対応。

@@ -6,8 +6,10 @@ class ReleaseNotesPage extends StatelessWidget {
   static const _items = <_ReleaseEntry>[
     _ReleaseEntry(date: '2026-11-15', category: 'BUILD / ANDROID', title: 'Android APKの生成物チェックを修正',
       body: 'Gradleビルド後にFlutterが生成するAPKを正しい出力先で確認するように変更。見つからない場合は生成先候補をログに表示し、サイズ・チェックサム検証や公開処理へ進まないようにしました。'),
+    _ReleaseEntry(date: '2026-11-15', category: 'PRIVACY / BUILD', title: 'Flutter公開データを許可リストで制限',
+      body: 'Pagesへ含めるJSONを、Flutter画面が利用する9件に限定。private-*・s-exclusive*などの制限/旧データを公開成果物へコピーしないようにし、CIで許可リストと実際の公開ファイル一覧を照合します。GitHub上の公開元リポジトリに残るデータの公開状態は別途確認が必要です。'),
     _ReleaseEntry(date: '2026-11-14', category: 'FLUTTER WEB', title: 'Flutter WebをGitHub Pagesのルートへ切り替え',
-      body: '公開フロントエンドの配信先をFlutter Webのルートへ変更。404フォールバックで対応済みの深いURLを維持し、Flutterが利用するアプリ資産と7つの問題データセットをバージョン付きで事前キャッシュします。週次バックグラウンド同期は対応ブラウザーのみで、その他の環境では次回起動時に更新を確認します。動機づけ・ワークスペース・下積みモード・学習履歴の完全移行など、未移植の機能は引き続き開発中です。'),
+      body: '公開フロントエンドの配信先をFlutter Webのルートへ変更。404フォールバックで対応済みの深いURLを維持し、Flutterが利用するアプリ資産と画面が使う許可リスト9件の問題・教材データだけをバージョン付きで事前キャッシュします。制限ラベル付きの旧データはPages成果物へ含めません。週次バックグラウンド同期は対応ブラウザーのみで、その他の環境では次回起動時に更新を確認します。動機づけ・ワークスペース・下積みモード・学習履歴の完全移行など、未移植の機能は引き続き開発中です。'),
     _ReleaseEntry(date: '2026-11-14', category: 'HOME / PORTAL', title: 'ホームを学習ポータルへ拡張',
       body: '教科別クイック演習、今日の学習量、学習メニュー、2027年度の高校入試情報、独立モードへの入口を整理。シンプルな黒基調を保ちながら、必要な情報へホームから移動できるようにしました。'),
     _ReleaseEntry(date: '2026-11-14', category: 'PRIVATE WORKSPACE', title: '専用モードの表示を整理',

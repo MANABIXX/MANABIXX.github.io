@@ -25,7 +25,7 @@ Correction (2026-11-14): `main` の `.github/workflows/pages.yml` は `flutter/b
 | Workspace | `src/routes/workspace/` | Not started |
 | Private content | legacy `private.html`, `n-exclusive.html`, `s-exclusive.html`; matching JSON | Not started; audit access boundary first |
 | Shitadumi mode | `shitadumi/` static app, articles, mock exams, opinion, PWA and release notes | Not started |
-| PWA / offline | Flutter service worker, root resource manifest, mode-specific manifests | Flutter runtime and seven route datasets are precached; weekly Periodic Background Sync is browser-dependent |
+| PWA / offline | Flutter service worker, root resource manifest, mode-specific manifests | Flutter runtime and nine explicitly approved route datasets are precached; weekly Periodic Background Sync is browser-dependent |
 | Next.js prototype | `next-app/` | Inventory only; not assumed to be production |
 | Code lab | `src/routes/code-lab/`, `src/lib/code-lab.ts` | Audit purpose and origin before deciding whether to retain |
 
@@ -33,7 +33,7 @@ Correction (2026-11-14): `main` の `.github/workflows/pages.yml` は `flutter/b
 
 - Preserve question IDs and the existing JSON schemas; do not regenerate or renumber content.
 - Preserve local learning history, bookmarks, wrong-answer records, settings, and theme preferences. Determine the exact storage keys and versioning before implementing migration.
-- Keep private datasets out of public routes and static downloads unless their current exposure has been explicitly assessed.
+- The Pages artifact copies only the nine-file Flutter route allowlist; `private-*` / `s-exclusive*` legacy JSON is excluded from the deployed `data/` directory. The source files in the public `MANABIXX/content-registry` repository remain publicly downloadable from GitHub and are not protected by filename or registry metadata. The client-side mode password is not server authentication.
 - Keep the existing public URLs and verify direct navigation, reload, browser back/forward, and trailing-slash behavior.
 - Preserve the independent PWA identity, icon, manifest, offline cache scope, and update behavior.
 

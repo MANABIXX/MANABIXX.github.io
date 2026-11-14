@@ -32,3 +32,20 @@ flutter build web --release --base-href /
 - Do not replace real data with fixtures or present placeholder actions as working features.
 - Do not introduce programming-language lessons into Study; Dart is implementation technology only.
 - Use `docs/flutter-migration-inventory.md` as the complete parity checklist.
+
+
+## 公開データの範囲
+
+GitHub PagesへコピーするJSONは、Flutterの各ルートが実際に利用する次の9ファイルに限定しています。
+
+- `foundation-training.json`
+- `knowledge-base.json`
+- `kosen-math-section-1.json`
+- `kosen-questions.json`
+- `mock-exams.json`
+- `public-exam.json`
+- `questions.json`
+- `summary-foundation.json`
+- `to-you.json`
+
+`private-*`、`s-exclusive*`、その他の未使用JSONは公開成果物へコピーしません。これはPages成果物の境界であり、GitHub上の公開元リポジトリに残るファイルを非公開化するものではありません。

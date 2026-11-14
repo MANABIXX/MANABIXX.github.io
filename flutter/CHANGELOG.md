@@ -1,5 +1,9 @@
 # Flutter版 更新履歴
 
+## 2026-11-15（Flutter公開データの許可リスト化）
+
+- Flutter Webのオフライン生成・Pages組み立てを、画面が実際に利用する9つのデータセットに限定。制限ラベル付きの `private-*`・`s-exclusive*` や未使用JSONを公開成果物へコピーしないよう変更し、CIで許可リストと実際の公開ファイル一覧を照合します。
+
 ## 2026-11-15（Android APK生成物の検証）
 
 - Gradleビルド後にFlutter Gradle Pluginが生成する `build/app/outputs/flutter-apk/app-release.apk` を直接検証するように変更。存在しない中間パスからのコピーをなくし、APKが見つからない場合は生成先候補をログへ出して原因を追えるようにしました。
