@@ -402,7 +402,7 @@ class _PasswordGatePageState extends State<_PasswordGatePage> {
   @override
   Widget build(BuildContext context) => _authorized
       ? widget.child
-      : const Scaffold(body: Center(child: CircularProgressIndicator()));
+      : const Scaffold(body: Center(child: Text('認証を確認しています…')));
 }
 
 enum _PrivateMode { kosen, foundationTraining }
