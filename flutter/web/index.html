@@ -85,7 +85,10 @@
       const action = document.getElementById("pwa-install-action");
       const copy = document.getElementById("pwa-install-copy");
       const close = document.getElementById("pwa-install-close");
-      const ua = navigator.userAgent || "";\n      const path = location.pathname;\n      const modeName = path.includes("/practice/kosen") ? "高専対策" : path.includes("/practice/foundation-training") ? "下積みモード" : "MANABIXX";\n      const modeSpecific = modeName !== "MANABIXX";
+      const ua = navigator.userAgent || "";
+      const path = location.pathname;
+      const modeName = path.includes("/practice/kosen") ? "高専対策" : path.includes("/practice/foundation-training") ? "下積みモード" : "MANABIXX";
+      const modeSpecific = modeName !== "MANABIXX";
       const ios = /iPhone|iPad|iPod/.test(ua);
       const android = /Android/.test(ua);
       const standalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
