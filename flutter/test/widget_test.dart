@@ -40,6 +40,7 @@ void main() {
     await tapVisible(tester, find.text('学習'));
     expect(find.text('学習メニュー'), findsOneWidget);
     expect(find.text('基礎網羅問題'), findsOneWidget);
+    expect(find.text('教材ライブラリ'), findsNothing);
   });
 
   testWidgets('aggregates today answers across local practice datasets', (tester) async {
@@ -285,7 +286,7 @@ void main() {
     );
     await prepareViewport(tester);
     await tester.pumpWidget(MaterialApp(
-      home: KnowledgeLibraryPage(title: '要点まとめ', loadRecords: () async => [record]),
+      home: KnowledgeLibraryPage(title: '要点まとめ', initialSubject: 'social', loadRecords: () async => [record]),
     ));
     await tester.pumpAndSettle();
     expect(find.text('要点まとめ'), findsOneWidget);
