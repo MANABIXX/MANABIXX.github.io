@@ -263,7 +263,6 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
   Future<void> _answer(int choice) async {
     if (_selected != null) return;
     final question = _current;
-    HapticFeedback.lightImpact();
     setState(() {
       _selected = choice;
       if (choice == question.correct) _score++;
