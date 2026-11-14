@@ -50,11 +50,6 @@ jobs:
         run: flutter test
       - name: Build GitHub Pages root output
         run: flutter build web --release --wasm --base-href /
-      - name: Assemble root data, icon, and fallback
+      - name: Assemble complete offline root app
         working-directory: .
-        run: |
-          mkdir -p flutter/build/web/data flutter/build/web/assets
-          cp -R static/data/. flutter/build/web/data/
-          cp static/assets/study-icon.svg flutter/build/web/assets/study-icon.svg
-          cp flutter/build/web/index.html flutter/build/web/404.html
-          npm run validate:flutter-root
+        run: npm run assemble:flutter-root && npm run validate:flutter-root
