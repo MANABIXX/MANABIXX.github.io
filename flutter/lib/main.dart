@@ -377,7 +377,7 @@ class _ModeHomePageState extends State<_ModeHomePage> {
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
-    final examDays = _examDate == null ? null : _examDate!.difference(DateTime(now.year, now.month, now.day)).inDays;
+    final examDays = _examDate?.difference(DateTime(now.year, now.month, now.day)).inDays;
     return Scaffold(
       appBar: AppBar(
         title: Text(_title),
@@ -481,6 +481,7 @@ class _PasswordGatePageState extends State<_PasswordGatePage> {
 
   Future<void> _requestPassword() async {
     final prefs = await SharedPreferences.getInstance();
+    if (!mounted) return;
     final authKey = 'manabixx.mode.auth.${widget.password}';
     final lastAuth = prefs.getString(authKey);
     final authenticatedAt = lastAuth == null ? null : DateTime.tryParse(lastAuth);
