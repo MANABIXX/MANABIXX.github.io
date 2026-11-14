@@ -325,6 +325,23 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: _started && !_finished && _selected != null
+          ? SafeArea(
+              top: false,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 58,
+                  child: FilledButton.icon(
+                    onPressed: _next,
+                    icon: const Icon(Icons.arrow_forward_rounded),
+                    label: Text(_index + 1 == _session.length ? '結果を見る' : '次の問題へ'),
+                  ),
+                ),
+              ),
+            )
+          : null,
       appBar: _started && !_finished ? null : AppBar(
         title: Text(widget.title),
         leading: IconButton(
@@ -418,6 +435,17 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
                   Text('学習記録：$_completedSessions回 · $_totalAnswered問回答 · 正解 $_totalCorrect問'),
                   Text('復習待ち：${_wrongQuestionIds.length}問',
                       style: Theme.of(context).textTheme.bodySmall),
+                  if (_weakTopics.isNotEmpty) ...[
+                    const SizedBox(height: 8),
+                    Text(
+                      '苦手分野：$_weakTopicSummary',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: const Color(0xFFFFB15C),
+                      ),
+                    ),
+                  ],
                   if (!_progressStorageAvailable)
                     Text(
                       'この端末では学習記録を保存できません。演習は続けられます。',
