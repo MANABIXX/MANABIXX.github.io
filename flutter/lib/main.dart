@@ -24,8 +24,7 @@ class ManabiXXApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.dark,
-        // Prefer the browser/OS Japanese sans-serif fonts. This avoids remote
-        // CJK fallback downloads and lets each platform use its native JP glyphs.
+        // Use the locally bundled Japanese typeface to keep glyph forms consistent.
         fontFamily: 'NotoSansJP',
         fontFamilyFallback: const ['sans-serif'],
         scaffoldBackgroundColor: _bg,
@@ -107,7 +106,7 @@ class ManabiXXApp extends StatelessWidget {
         '/mock-exam': (_) => const FoundationPracticePage(
           dataPath: '/data/mock-exams.json', title: '模試・予想問題', includeAllSubjects: true),
         '/mock-exam/': (_) => const FoundationPracticePage(
-          dataPath: 'data/mock-exams.json', title: '模試・予想問題', includeAllSubjects: true),
+          dataPath: '/data/mock-exams.json', title: '模試・予想問題', includeAllSubjects: true),
         '/kosen': (_) => const _PasswordGatePage(password: 'kosen', title: '製作者専用モード', child: KosenPracticePage(title: '製作者専用モード')),
         '/kosen/': (_) => const _PasswordGatePage(password: 'kosen', title: '製作者専用モード', child: KosenPracticePage(title: '製作者専用モード')),
       },
