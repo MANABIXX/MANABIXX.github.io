@@ -22,4 +22,19 @@ if (manifest.display !== 'standalone' && manifest.display !== 'fullscreen') {
   throw new Error('Study should be installable as a standalone app.');
 }
 await fs.access(path.join(root, 'src', 'service-worker.js'));
-console.log(`PWA configuration OK: ${manifest.name} (${manifest.icons.length} icon(s), offline worker enabled)`);
+
+const flutterWeb = path.join(root, 'flutter', 'web');
+for (const [file, start, icon] of [
+  ['manifest-kosen.webmanifest', '/flutter/practice/kosen', 'kosen-icon.svg'],
+  ['manifest-foundation.webmanifest', '/flutter/practice/foundation-training', 'foundation-icon.svg'],
+]) {
+  const modeManifest = JSON.parse(await fs.readFile(path.join(flutterWeb, file), 'utf8'));
+  if (modeManifest.display !== 'standalone' || modeManifest.start_url !== start ||
+      modeManifest.scope !== '/flutter/' || !modeManifest.icons?.some((item) => item.src.endsWith(icon))) {
+    throw new Error(`Invalid independent Flutter PWA manifest: ${file}`);
+  }
+  await fs.access(path.join(flutterWeb, icon));
+}
+await fs.access(path.join(flutterWeb, 'favicon.svg'));
+
+console.log(`PWA configuration OK: ${manifest.name} plus two independent Flutter mode manifests`);
