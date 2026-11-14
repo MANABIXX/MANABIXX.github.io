@@ -37,6 +37,24 @@ class ManabiXXApp extends StatelessWidget {
               dataPath: 'data/public-exam.json',
               title: '公立高校入試問題',
             ),
+        '/summary': (_) => const FoundationPracticePage(
+              dataPath: 'data/summary-foundation.json',
+              title: '要点まとめ・基礎確認',
+            ),
+        '/summary/': (_) => const FoundationPracticePage(
+              dataPath: 'data/summary-foundation.json',
+              title: '要点まとめ・基礎確認',
+            ),
+        '/mock-exam': (_) => const FoundationPracticePage(
+              dataPath: 'data/mock-exams.json',
+              title: '模試・予想問題',
+              includeAllSubjects: true,
+            ),
+        '/mock-exam/': (_) => const FoundationPracticePage(
+              dataPath: 'data/mock-exams.json',
+              title: '模試・予想問題',
+              includeAllSubjects: true,
+            ),
         '/kosen': (_) => const KosenPracticePage(),
         '/kosen/': (_) => const KosenPracticePage(),
       },
@@ -124,6 +142,16 @@ class MigrationHomePage extends StatelessWidget {
                       onPressed: () => Navigator.of(context).pushNamed('/exam'),
                       icon: const Icon(Icons.school_outlined),
                       label: const Text('公立高校入試問題'),
+                    ),
+                    OutlinedButton.icon(
+                      onPressed: () => Navigator.of(context).pushNamed('/summary'),
+                      icon: const Icon(Icons.menu_book_outlined),
+                      label: const Text('要点まとめ'),
+                    ),
+                    OutlinedButton.icon(
+                      onPressed: () => Navigator.of(context).pushNamed('/mock-exam'),
+                      icon: const Icon(Icons.assessment_outlined),
+                      label: const Text('模試・予想問題'),
                     ),
                   ],
                 ),
