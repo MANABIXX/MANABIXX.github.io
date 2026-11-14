@@ -323,10 +323,14 @@ void main() {
     await prepareViewport(tester);
     await tester.pumpWidget(const ManabiXXApp());
     await tapVisible(tester, find.text('学習'));
-    await tapVisible(tester, find.text('製作者専用モード'));
+    await tester.tap(find.text('製作者専用モード'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
     expect(find.text('認証する'), findsOneWidget);
     await tester.enterText(find.byType(TextField), 'kosen');
-    await tapVisible(tester, find.text('認証する'));
+    await tester.tap(find.text('認証する'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
     expect(find.text('今日の一問が、合格に近づく。'), findsOneWidget);
     expect(find.text('数学・大問1集中演習'), findsOneWidget);
     expect(find.text('学習ヒートマップ'), findsOneWidget);
