@@ -1,0 +1,186 @@
+{
+  "version": 1,
+  "updatedAt": "2026-11-14",
+  "questions": [
+    {
+      "id": "k-math-001",
+      "subject": "math",
+      "topic": "一次関数",
+      "level": "基礎",
+      "prompt": "一次関数 y=3x−2 で、x=4 のときの y の値はどれか。",
+      "options": [
+        "8",
+        "10",
+        "12",
+        "14"
+      ],
+      "correct": 1,
+      "explanation": "x=4を代入すると y=3×4−2=12−2=10。"
+    },
+    {
+      "id": "k-math-002",
+      "subject": "math",
+      "topic": "平方根",
+      "level": "基礎",
+      "prompt": "√72 を a√2 の形に表したとき、a の値はどれか。",
+      "options": [
+        "4",
+        "5",
+        "6",
+        "8"
+      ],
+      "correct": 2,
+      "explanation": "72=36×2 なので、√72=√36×√2=6√2。"
+    },
+    {
+      "id": "k-math-003",
+      "subject": "math",
+      "topic": "二次方程式",
+      "level": "標準",
+      "prompt": "x²−5x+6=0 の解の組はどれか。",
+      "options": [
+        "1と6",
+        "−2と−3",
+        "2と3",
+        "−1と−6"
+      ],
+      "correct": 2,
+      "explanation": "x²−5x+6=(x−2)(x−3)。よって x=2,3。"
+    },
+    {
+      "id": "k-math-004",
+      "subject": "math",
+      "topic": "三平方の定理",
+      "level": "標準",
+      "prompt": "直角三角形の直角をはさむ2辺が6 cm、8 cmのとき、斜辺の長さはどれか。",
+      "options": [
+        "9 cm",
+        "10 cm",
+        "12 cm",
+        "14 cm"
+      ],
+      "correct": 1,
+      "explanation": "斜辺を c とすると c²=6²+8²=36+64=100。c=10 cm。"
+    },
+    {
+      "id": "k-sci-001",
+      "subject": "science",
+      "topic": "電流と電圧",
+      "level": "基礎",
+      "prompt": "抵抗 4 Ω に 2 A の電流が流れている。両端の電圧は何 V か。",
+      "options": [
+        "2 V",
+        "4 V",
+        "6 V",
+        "8 V"
+      ],
+      "correct": 3,
+      "explanation": "オームの法則 V=RI より、4×2=8 V。"
+    },
+    {
+      "id": "k-sci-002",
+      "subject": "science",
+      "topic": "化学変化",
+      "level": "基礎",
+      "prompt": "銅を空気中で十分に加熱したとき、主にできる黒色の物質はどれか。",
+      "options": [
+        "酸化銅",
+        "水酸化銅",
+        "炭酸銅",
+        "硫化銅"
+      ],
+      "correct": 0,
+      "explanation": "銅が酸素と結びつく酸化によって、黒色の酸化銅ができる。"
+    },
+    {
+      "id": "k-sci-003",
+      "subject": "science",
+      "topic": "力と運動",
+      "level": "標準",
+      "prompt": "質量 2 kg の物体にはたらく重力を 1 kg あたり 10 N とする。重力の大きさはどれか。",
+      "options": [
+        "5 N",
+        "10 N",
+        "20 N",
+        "40 N"
+      ],
+      "correct": 2,
+      "explanation": "重力の大きさは質量に比例するので、2×10=20 N。"
+    },
+    {
+      "id": "k-sci-004",
+      "subject": "science",
+      "topic": "遺伝",
+      "level": "標準",
+      "prompt": "エンドウの丸い種子をつくる遺伝子を A、しわのある種子をつくる遺伝子を a とする。Aa と aa をかけ合わせたとき、子に現れる遺伝子の組み合わせの比はどれか。",
+      "options": [
+        "AA:Aa=1:1",
+        "Aa:aa=1:1",
+        "AA:aa=1:1",
+        "Aa:aa=3:1"
+      ],
+      "correct": 1,
+      "explanation": "Aa が A と a の配偶子を同じ割合でつくり、aa は a のみをつくるため、子は Aa と aa が1:1。"
+    },
+    {
+      "id": "k-eng-001",
+      "subject": "english",
+      "topic": "文法・現在完了",
+      "level": "基礎",
+      "prompt": "次の空欄に入る最も適切な語はどれか。I (   ) this book twice.",
+      "options": [
+        "read",
+        "have read",
+        "am reading",
+        "will read"
+      ],
+      "correct": 1,
+      "explanation": "twice は経験を表す語として使える。現在までに読んだ経験なので現在完了 have read が適切。"
+    },
+    {
+      "id": "k-eng-002",
+      "subject": "english",
+      "topic": "文法・関係代名詞",
+      "level": "標準",
+      "prompt": "次の2文を1文にするとき、空欄に入る語はどれか。I have a friend (   ) lives in Canada.",
+      "options": [
+        "which",
+        "whose",
+        "who",
+        "where"
+      ],
+      "correct": 2,
+      "explanation": "先行詞 a friend は人で、後ろの節で主語の役割をするため who を使う。"
+    },
+    {
+      "id": "k-eng-003",
+      "subject": "english",
+      "topic": "語彙",
+      "level": "基礎",
+      "prompt": "「環境を守る」に最も近い英語表現はどれか。",
+      "options": [
+        "protect the environment",
+        "produce the energy",
+        "provide the service",
+        "prepare the event"
+      ],
+      "correct": 0,
+      "explanation": "protect は「守る」、environment は「環境」。"
+    },
+    {
+      "id": "k-eng-004",
+      "subject": "english",
+      "topic": "読解・接続表現",
+      "level": "標準",
+      "prompt": "空欄に入る最も適切な語はどれか。It was raining. (   ), we decided to play soccer indoors.",
+      "options": [
+        "For example",
+        "However",
+        "Therefore",
+        "Although"
+      ],
+      "correct": 2,
+      "explanation": "雨が降っていたため、屋内でサッカーをすることにした。結果・結論を表す Therefore が適切。"
+    }
+  ]
+}
