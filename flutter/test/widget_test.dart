@@ -13,6 +13,58 @@ Future<void> prepareViewport(WidgetTester tester) async {
   tester.view.physicalSize = const Size(800, 1400);
   tester.view.devicePixelRatio = 1;
   await tester.pumpAndSettle();
+
+  testWidgets('offers five subjects in Kosen mode and supports number plus Enter', (tester) async {
+    const social = KosenQuestion(
+      id: 'kosen-social-keyboard', subject: 'social', topic: '公民', level: '高専入試基礎',
+      prompt: '国会の主な役割はどれか。', options: ['法律を制定する', '裁判を行う', '行政を指揮する', '外交交渉を行う'],
+      correct: 0, explanation: '国会は唯一の立法機関。',
+    );
+    const japanese = KosenQuestion(
+      id: 'kosen-japanese-keyboard', subject: 'japanese', topic: '漢字', level: '高専入試基礎',
+      prompt: '「抽象」の読み方はどれか。', options: ['ちゅうしょう', 'ちゅうぞう', 'ちゅうそう', 'ちゅうじょう'],
+      correct: 0, explanation: '抽象は「ちゅうしょう」と読む。',
+    );
+    await prepareViewport(tester);
+    await tester.pumpWidget(MaterialApp(
+      home: KosenPracticePage(loadQuestions: () async => [social, japanese]),
+    ));
+    await tester.pumpAndSettle();
+    await tapVisible(tester, find.byType(DropdownButtonFormField<String>).first);
+    expect(find.text('国語'), findsOneWidget);
+    expect(find.text('社会'), findsOneWidget);
+    await tester.tap(find.text('社会').last);
+    await tester.pumpAndSettle();
+    await tapVisible(tester, find.text('演習を始める'));
+    expect(find.text(social.prompt), findsOneWidget);
+    await tester.sendKeyEvent(LogicalKeyboardKey.digit1);
+    await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 450));
+    await tester.pumpAndSettle();
+    expect(find.text('演習完了'), findsOneWidget);
+    expect(find.text('1 / 1'), findsOneWidget);
+  });
+
+  testWidgets('shows Japanese field names and textbook-style summary title', (tester) async {
+    const record = KnowledgeRecord(
+      id: 'social-history-001', subject: 'social', grade: 3, field: 'history',
+      title: '明治維新', status: 'authored', explanation: '近代国家への転換。',
+      keyTerms: ['廃藩置県'], formulas: ['年号と改革を対応させる'],
+    );
+    await prepareViewport(tester);
+    await tester.pumpWidget(MaterialApp(
+      home: KnowledgeLibraryPage(title: '要点まとめ', loadRecords: () async => [record]),
+    ));
+    await tester.pumpAndSettle();
+    expect(find.text('要点まとめ'), findsOneWidget);
+    expect(find.textContaining('歴史'), findsOneWidget);
+    await tester.tap(find.text('明治維新'));
+    await tester.pumpAndSettle();
+    expect(find.text('重要語句'), findsOneWidget);
+    expect(find.text('年号と改革を対応させる'), findsOneWidget);
+  });
+
 }
 
 Future<void> tapVisible(WidgetTester tester, Finder finder) async {
