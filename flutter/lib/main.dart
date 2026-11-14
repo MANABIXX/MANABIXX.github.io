@@ -2,6 +2,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:manabixx_web/foundation_practice.dart';
 import 'package:manabixx_web/kosen_practice.dart';
+import 'package:manabixx_web/knowledge_library.dart';
 
 void main() {
   usePathUrlStrategy();
@@ -27,6 +28,8 @@ class ManabiXXApp extends StatelessWidget {
         useMaterial3: true,
       ),
       routes: {
+        '/library': (_) => const KnowledgeLibraryPage(),
+        '/library/': (_) => const KnowledgeLibraryPage(),
         '/foundation': (_) => const FoundationPracticePage(),
         '/foundation/': (_) => const FoundationPracticePage(),
         '/exam': (_) => const FoundationPracticePage(
@@ -137,6 +140,11 @@ class MigrationHomePage extends StatelessWidget {
                           Navigator.of(context).pushNamed('/foundation'),
                       icon: const Icon(Icons.auto_stories_outlined),
                       label: const Text('基礎網羅問題を開く'),
+                    ),
+                    OutlinedButton.icon(
+                      onPressed: () => Navigator.of(context).pushNamed('/library'),
+                      icon: const Icon(Icons.menu_book_outlined),
+                      label: const Text('教材ライブラリ'),
                     ),
                     OutlinedButton.icon(
                       onPressed: () => Navigator.of(context).pushNamed('/exam'),
