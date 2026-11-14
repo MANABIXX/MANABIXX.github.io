@@ -28,6 +28,8 @@ jobs:
           python-version: '3.12'
       - name: Generate Kosen practice questions
         run: npm run generate:kosen
+      - name: Generate foundation-training questions
+        run: npm run generate:foundation-training
       - name: Validate learning content
         run: bash scripts/verify-content.sh
       - name: Type and Svelte checks
