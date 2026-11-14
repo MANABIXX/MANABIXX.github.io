@@ -44,7 +44,9 @@ const english = [
   ['文法・比較','This book is (　) than that one.',['interesting','more interesting','most interesting','the interesting'],1,'長い形容詞の比較級は more＋形容詞＋than。']
 ];
 for (const [i, year] of years.entries()) {
-  for (let j=0;j<english.length;j++) { const q=english[j]; questions.push(make(`reg-english-${year}-${String(j+1).padStart(2,'0')}`,'english',q[0],j===3?'高専入試標準':'高専入試基礎',q[1],q[2],q[3],q[4],year)); }
+  const start = i * 2;
+  const end = i === years.length - 1 ? english.length : start + 2;
+  for (let j=start;j<end;j++) { const q=english[j]; questions.push(make(`reg-english-${year}-${String(j+1).padStart(2,'0')}`,'english',q[0],j===3?'高専入試標準':'高専入試基礎',q[1],q[2],q[3],q[4],year)); }
 }
 // 理科：実験・計算・現象の理解を中心にする。
 const science = [
@@ -54,7 +56,11 @@ const science = [
   ['地学・地震','震源からの距離が大きくなるほど、一般に初期微動継続時間はどうなるか。',['短くなる','長くなる','常に一定','0になる'],1,'P波とS波の到着時刻の差は震源から遠いほど大きくなる。'],
   ['化学・中和','塩酸と水酸化ナトリウム水溶液が中和するとき、主にできるものの組合せはどれか。',['水と酸素','水と塩化ナトリウム','水素と酸素','二酸化炭素と水'],1,'酸とアルカリの中和で水と塩ができる。']
 ];
-for (const [i, year] of years.entries()) for (let j=0;j<science.length;j++){const q=science[j];questions.push(make(`reg-science-${year}-${String(j+1).padStart(2,'0')}`,'science',q[0],j===0||j===1?'高専入試標準':'高専入試基礎',q[1],q[2],q[3],q[4],year));}
+for (const [i, year] of years.entries()) {
+  const start = i * 2;
+  const end = i === years.length - 1 ? science.length : start + 2;
+  for (let j=start;j<end;j++){const q=science[j];questions.push(make(`reg-science-${year}-${String(j+1).padStart(2,'0')}`,'science',q[0],j===0||j===1?'高専入試標準':'高専入試基礎',q[1],q[2],q[3],q[4],year));}
+}
 // 社会：地理・歴史・公民を横断。
 const social = [
   ['地理・気候','日本海側の冬に降雪が多くなりやすい主な理由はどれか。',['季節風が日本海で水蒸気を含むため','偏西風が一年中止まるため','海流がすべて北向きのため','太平洋高気圧が強まるため'],0,'冬の季節風が日本海を渡る間に水蒸気を含み、山地で雪を降らせる。'],
@@ -63,7 +69,11 @@ const social = [
   ['公民・市場経済','需要量が増え、供給量が変わらない場合、一般に市場価格はどうなりやすいか。',['上がる','下がる','必ず0円になる','必ず変わらない'],0,'需要が供給を上回る方向に働くと価格は上昇しやすい。'],
   ['地理・貿易','ある国が他国に比べて相対的に低い費用で生産できる財に特化する考え方はどれか。',['比較優位','人口転換','三権分立','地産地消'],0,'比較優位に基づく分業は国際貿易の利益を説明する。']
 ];
-for (const [i, year] of years.entries()) for (let j=0;j<social.length;j++){const q=social[j];questions.push(make(`reg-social-${year}-${String(j+1).padStart(2,'0')}`,'social',q[0],j===2||j===3?'高専入試標準':'高専入試基礎',q[1],q[2],q[3],q[4],year));}
+for (const [i, year] of years.entries()) {
+  const start = i * 2;
+  const end = i === years.length - 1 ? social.length : start + 2;
+  for (let j=start;j<end;j++){const q=social[j];questions.push(make(`reg-social-${year}-${String(j+1).padStart(2,'0')}`,'social',q[0],j===2||j===3?'高専入試標準':'高専入試基礎',q[1],q[2],q[3],q[4],year));}
+}
 // 国語はレジストリの対象外のため、独自の基礎確認問題として収録。
 const japanese = [
   ['漢字','「抽象」の読み方として正しいものはどれか。',['ちゅうしょう','ちゅうぞう','ぬきしょう','ちゅうそう'],0,'「抽象」は「ちゅうしょう」と読む。'],
