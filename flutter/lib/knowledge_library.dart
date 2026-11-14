@@ -48,8 +48,9 @@ class KnowledgeRecord {
 }
 
 class KnowledgeLibraryPage extends StatefulWidget {
-  const KnowledgeLibraryPage({super.key, this.loadRecords});
+  const KnowledgeLibraryPage({super.key, this.loadRecords, this.title = '教材ライブラリ'});
   final Future<List<KnowledgeRecord>> Function()? loadRecords;
+  final String title;
 
   @override
   State<KnowledgeLibraryPage> createState() => _KnowledgeLibraryPageState();
@@ -108,13 +109,14 @@ class _KnowledgeLibraryPageState extends State<KnowledgeLibraryPage> {
         (_query.isEmpty || text.contains(_query.toLowerCase()));
   }).toList(growable: false);
 
-  String _subjectName(String value) => value == 'science' ? '理科' : '社会';
+  String _subjectName(String value) => const {'science':'理科','social':'社会','japanese':'国語','math':'数学','english':'英語'}[value] ?? value;
+  String _fieldName(String value) => const {'civics':'公民','history':'歴史','geography':'地理','physics':'物理','chemistry':'化学','biology':'生物','earth science':'地学'}[value.toLowerCase()] ?? value;
   String _gradeName(int value) => value == 0 ? '学年共通' : '中学$value年';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('教材ライブラリ')),
+      appBar: AppBar(title: Text(widget.title)),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : _error != null
@@ -159,7 +161,7 @@ class _KnowledgeLibraryPageState extends State<KnowledgeLibraryPage> {
                           initialValue: _fields.contains(_field) ? _field : 'all',
                           decoration: const InputDecoration(labelText: '分野'),
                           items: [const DropdownMenuItem(value: 'all', child: Text('すべての分野')),
-                            ..._fields.map((f) => DropdownMenuItem(value: f, child: Text(f)))],
+                            ..._fields.map((f) => DropdownMenuItem(value: f, child: Text(_fieldName(f))))],
                           onChanged: (v) => setState(() => _field = v ?? 'all'),
                         )),
                       ]),
@@ -180,13 +182,13 @@ class _KnowledgeLibraryPageState extends State<KnowledgeLibraryPage> {
                               child: ExpansionTile(
                                 leading: Icon(item.subject == 'science' ? Icons.science_outlined : Icons.public),
                                 title: Text(item.title, style: const TextStyle(fontWeight: FontWeight.w700)),
-                                subtitle: Text('${_subjectName(item.subject)} · ${_gradeName(item.grade)} · ${item.field} · ${authored ? '解説付き教材' : '単元索引'}'),
+                                subtitle: Text('${_subjectName(item.subject)} · ${_gradeName(item.grade)} · ${_fieldName(item.field)} · ${authored ? '解説付き教材' : '単元索引'}'),
                                 childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                                 children: [
                                   if (item.explanation.isNotEmpty) _section('概要', item.explanation),
                                   if (item.targets.isNotEmpty) _section('学習目標', item.targets.join('・')),
-                                  if (item.keyTerms.isNotEmpty) _section('重要語句', item.keyTerms.join(' ／ ')),
-                                  if (item.formulas.isNotEmpty) _section('公式・関係', item.formulas.join('\n')),
+                                  if (item.keyTerms.isNotEmpty) _termSection(item.keyTerms),
+                                  if (item.formulas.isNotEmpty) _formulaSection(item.formulas),
                                   if (item.commonErrors.isNotEmpty) _section('間違えやすいポイント', item.commonErrors.join('\n')),
                                   if (item.questionPatterns.isNotEmpty) _section('よく問われる視点', item.questionPatterns.join('\n')),
                                   if (item.explanation.isEmpty && item.keyTerms.isEmpty && item.targets.isEmpty)
@@ -200,12 +202,58 @@ class _KnowledgeLibraryPageState extends State<KnowledgeLibraryPage> {
     );
   }
 
-  Widget _section(String title, String body) => Padding(
-    padding: const EdgeInsets.only(top: 12),
+  Widget _section(String title, String body) => Container(
+    width: double.infinity,
+    margin: const EdgeInsets.only(top: 12),
+    padding: const EdgeInsets.all(14),
+    decoration: BoxDecoration(
+      color: const Color(0xFF29292F),
+      borderRadius: BorderRadius.circular(14),
+      border: Border.all(color: const Color(0xFF414149)),
+    ),
     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Align(alignment: Alignment.centerLeft, child: Text(title, style: const TextStyle(fontWeight: FontWeight.w800))),
-      const SizedBox(height: 4),
-      Align(alignment: Alignment.centerLeft, child: Text(body, style: const TextStyle(height: 1.6))),
+      Text(title, style: const TextStyle(fontWeight: FontWeight.w900, color: Color(0xFFFFB15C))),
+      const SizedBox(height: 7),
+      Text(body, style: const TextStyle(height: 1.75)),
+    ]),
+  );
+
+  Widget _termSection(List<String> terms) => Container(
+    width: double.infinity,
+    margin: const EdgeInsets.only(top: 12),
+    padding: const EdgeInsets.all(14),
+    decoration: BoxDecoration(
+      color: const Color(0xFF202B34),
+      borderRadius: BorderRadius.circular(14),
+      border: Border.all(color: const Color(0xFF405363)),
+    ),
+    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      const Text('重要語句', style: TextStyle(fontWeight: FontWeight.w900, color: Color(0xFF9ED4FF))),
+      const SizedBox(height: 10),
+      Wrap(spacing: 7, runSpacing: 7, children: terms.map((term) => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+        decoration: BoxDecoration(color: const Color(0xFF344A5A), borderRadius: BorderRadius.circular(9)),
+        child: Text(term, style: const TextStyle(fontWeight: FontWeight.w700)),
+      )).toList()),
+    ]),
+  );
+
+  Widget _formulaSection(List<String> formulas) => Container(
+    width: double.infinity,
+    margin: const EdgeInsets.only(top: 12),
+    padding: const EdgeInsets.all(16),
+    decoration: BoxDecoration(
+      color: const Color(0xFF332719),
+      borderRadius: BorderRadius.circular(14),
+      border: Border.all(color: const Color(0xFF8A5A2B), width: 1.2),
+    ),
+    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      const Text('重要公式・関係', style: TextStyle(fontWeight: FontWeight.w900, color: Color(0xFFFFBD78))),
+      const SizedBox(height: 9),
+      ...formulas.map((formula) => Padding(
+        padding: const EdgeInsets.only(bottom: 7),
+        child: Text(formula, style: const TextStyle(fontSize: 16, height: 1.55, fontWeight: FontWeight.w800)),
+      )),
     ]),
   );
 }
