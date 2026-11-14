@@ -332,7 +332,7 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 100));
     expect(find.text('今日の一問が、合格に近づく。'), findsOneWidget);
-    expect(find.text('数学・大問1集中演習'), findsOneWidget);
+    expect(find.text('数学・大問1集中演習'), findsNWidgets(2));
     expect(find.text('学習ヒートマップ'), findsOneWidget);
   });
 }
