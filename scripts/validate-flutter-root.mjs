@@ -12,8 +12,11 @@ const app = JSON.parse(await fs.readFile(path.join(root, 'offline-app-manifest.j
 if (!index.includes('<base href="/">')) throw new Error('Flutter base href must be /.');
 if (fallback !== index) throw new Error('404.html must mirror the Flutter entry point.');
 if (manifest.start_url !== '/' || manifest.scope !== '/') throw new Error('PWA manifest must be scoped to /.');
-if (!offline.version || !Array.isArray(offline.files) || offline.files.length === 0) {
-  throw new Error('Offline data manifest is empty or invalid.');
+if (!offline.version || !Array.isArray(offline.files) || offline.files.length !== flutterOfflineDatasets.length) {
+  throw new Error('Offline data manifest does not match the approved Flutter dataset list.');
+}
+for (const filename of flutterOfflineDatasets) {
+  if (!offline.files.includes('/data/' + filename)) throw new Error('Missing Flutter dataset: ' + filename);
 }
 if (!app.version || !Array.isArray(app.files) || app.files.length === 0) {
   throw new Error('Offline app manifest is empty or invalid.');
