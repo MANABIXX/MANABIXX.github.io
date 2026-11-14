@@ -74,12 +74,16 @@ const japanese = [
 ];
 for (let j=0;j<japanese.length;j++){const q=japanese[j];questions.push({id:`reg-japanese-001-${String(j+1).padStart(2,'0')}`,subject:'japanese',topic:q[0],level:'高専入試基礎',prompt:q[1],options:q[2],correct:q[3],explanation:q[4],sourceLabel:'独自作成',sourceNote:'国語は今回の過去問レジストリ対象外。基礎確認用のオリジナル問題。'});}
 const unique = new Map(questions.map((q)=>[q.id,q]));
-const result = { title:'高専入試対策・5教科オリジナル演習', generatedAt:new Date().toISOString(), registryCommit:sources.registryCommit, questionPolicy:'過去問PDFそのものの転載ではなく、出題形式を参考に新規作成した4択問題。', questions:[...unique.values()] };
-for (const q of result.questions) if(q.options.length!==4||q.correct<0||q.correct>3) throw new Error('Invalid generated question: '+q.id);
-await fs.writeFile(path.join(root,'static/data/kosen-questions.json'),JSON.stringify(result,null,2)+'\n');
+const result = { title:'高専入試対策・5教科オリジナル演習', generatedAt:new Date().toISOString(), registryCommit:sources.registryCommit, questionPolicy:'過去問PDFそのものの転載ではなく、出題形式と抽出した分野語句を参考に新規作成した4択問題。', questions:[...unique.values()] };
+const kosenPath = path.join(root, 'static/data/kosen-questions.json');
+const existingKosen = JSON.parse(await fs.readFile(kosenPath, 'utf8'));
+const mergedKosen = new Map([...(existingKosen.questions ?? []), ...result.questions].map((question) => [question.id, question]));
+const finalResult = { ...result, questions: [...mergedKosen.values()] };
+for (const q of finalResult.questions) if(q.options.length!==4||q.correct<0||q.correct>3) throw new Error('Invalid generated question: '+q.id);
+await fs.writeFile(kosenPath,JSON.stringify(finalResult,null,2)+'\n');
 const mathPath = path.join(root, 'static/data/kosen-math-section-1.json');
 const existingMath = JSON.parse(await fs.readFile(mathPath, 'utf8'));
-const mathQuestions = [...(existingMath.questions ?? []), ...result.questions.filter((question) => question.subject === 'math')];
+const mathQuestions = [...(existingMath.questions ?? []), ...finalResult.questions.filter((question) => question.subject === 'math')];
 const mathById = new Map(mathQuestions.map((question) => [question.id, question]));
 await fs.writeFile(mathPath, JSON.stringify({ title: '高専数学・大問1集中演習', registryCommit: sources.registryCommit, questions: [...mathById.values()] }, null, 2) + '\n');
-console.log('Generated '+result.questions.length+' Kosen practice questions and '+mathById.size+' math-section-1 questions.');
+console.log('Generated '+finalResult.questions.length+' Kosen practice questions and '+mathById.size+' math-section-1 questions.');
