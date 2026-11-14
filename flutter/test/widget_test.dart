@@ -85,6 +85,35 @@ void main() {
     expect(find.text(question.sourceNote), findsOneWidget);
   });
 
+  testWidgets('allows all five subjects in mock exam mode', (tester) async {
+    const question = FoundationQuestion(
+      id: 'mock-japanese-001',
+      subject: 'japanese',
+      topic: '漢字',
+      level: '標準',
+      prompt: '「責任」の読み方はどれか。',
+      options: ['せきにん', 'せきじん', 'せっにん', 'せきねん'],
+      correct: 0,
+      explanation: '「責任」は「せきにん」と読む。',
+    );
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: FoundationPracticePage(
+          dataPath: 'data/mock-exams.json',
+          title: '模試・予想問題',
+          includeAllSubjects: true,
+          loadQuestions: () async => [question],
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('模試・予想問題'), findsWidgets);
+    expect(find.text('1問'), findsOneWidget);
+    expect(find.text('国語'), findsOneWidget);
+  });
+
   testWidgets('loads isolated practice data and completes a session', (tester) async {
     const question = KosenQuestion(
       id: 'test-math-001',
