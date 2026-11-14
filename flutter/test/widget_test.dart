@@ -396,11 +396,11 @@ void main() {
     expect(prefs.getString('manabixx.mode.kosen.history.custom'), contains('custom-math-001'));
   });
 
-  testWidgets('shows both target schools in the foundation roadmap', (tester) async {
+  testWidgets('shows a school-neutral entrance roadmap', (tester) async {
     await prepareViewport(tester);
     await tester.pumpWidget(const MaterialApp(home: FoundationRoadmapPage()));
-    expect(find.text('青藍泰斗高校'), findsOneWidget);
-    expect(find.text('佐野松桜高校'), findsOneWidget);
+    expect(find.text('入試情報マップ'), findsOneWidget);
+    expect(find.text('試験方式・科目を確認'), findsOneWidget);
     expect(find.text('今週の学習ルート'), findsOneWidget);
   });
 

@@ -1,5 +1,5 @@
 export type ExamDefinition = {
-  id: "seiran" | "tochigi";
+  id: "private" | "tochigi";
   name: string;
   detail: string;
   date: string; // YYYY-MM-DD（現地時間）
@@ -10,8 +10,8 @@ export type ExamDefinition = {
 
 export const EXAMS: ExamDefinition[] = [
   {
-    id: "seiran",
-    name: "青藍泰斗高校",
+    id: "private",
+    name: "私立高校入試",
     detail: "私立入試",
     date: "2027-01-06",
     startDate: "2026-11-13",

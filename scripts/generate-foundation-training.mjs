@@ -8,7 +8,7 @@ const add = (id, subject, topic, prompt, options, correct, explanation) => quest
   id: 'sano-shoo-' + id, subject, topic, level: '合格基礎',
   prompt, options, correct, explanation,
   sourceLabel: '下積み・基礎反復',
-  sourceNote: '佐野松桜高校の合格を目標にした学習用オリジナル問題。公式問題の転載ではありません。'
+  sourceNote: '5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。'
 });
 [
   ['japanese','漢字','「責任」の読み方はどれか。',['せきにん','せきじん','せっにん','せきねん'],0,'「責任」は「せきにん」と読む。'],
@@ -41,5 +41,5 @@ for (const q of questions) {
   if (q.options.length !== 4 || q.correct < 0 || q.correct > 3) throw new Error('Invalid foundation question: ' + q.id);
 }
 await fs.writeFile(path.join(root, 'static/data/foundation-training.json'),
-  JSON.stringify({ title: '下積みモード', target: '佐野松桜高校 合格基礎', reviewPolicy: '間違えた問題を復習キューへ戻す', questions }, null, 2) + '\n');
+  JSON.stringify({ title: '下積みモード', target: '5教科の基礎反復', reviewPolicy: '間違えた問題を復習キューへ戻す', questions }, null, 2) + '\n');
 console.log('Generated ' + questions.length + ' five-subject foundation-training questions.');

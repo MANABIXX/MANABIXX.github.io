@@ -53,3 +53,10 @@ Correction (2026-11-14): `main` の `.github/workflows/pages.yml` は `flutter/b
 - Four public datasets audited: 1,180 foundation questions, 323 public-exam questions, 450 summary questions, and 100 mock questions. No duplicate IDs or malformed four-choice records were found in the inspected datasets.
 - Still not migrated or not yet parity-verified: motivation, release-note UI parity, workspace, private-content access boundary, Shitadumi app, full home/dashboard, full learning-history migration, and full browser/mobile/accessibility parity.
 - Production deployment: Flutter Web root deployment is active on `main`; the latest observed Pages workflow for the migration branch succeeded, but the open PR #19 is not mergeable and its result is not evidence of full feature parity.
+
+
+## Privacy boundary follow-up (2026-11-15)
+
+- Current public UI, README, changelog, generated foundation-training metadata, and exam display titles no longer show individual school names. The old school-specific article paths were removed from the current tree and from the legacy service-worker shell.
+- Historical Git commits still contain earlier versions of those files. No history rewrite was performed; old commit objects may remain publicly reachable. A complete historical purge would require a separately approved history rewrite and cache review.
+- The legacy mode's password check is client-side only and is not server-side access control. Do not treat the mode or noindex as private storage.

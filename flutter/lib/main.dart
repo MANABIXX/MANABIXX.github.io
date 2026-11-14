@@ -562,7 +562,7 @@ class _ModeHomePageState extends State<_ModeHomePage> {
                 MaterialPageRoute<void>(builder: (_) => const FoundationRoadmapPage()),
               ),
               icon: const Icon(Icons.route_outlined),
-              label: const Text('青藍泰斗・佐野松桜 合格マップ'),
+              label: const Text('入試情報マップ'),
             ),
             const SizedBox(height: 10),
             OutlinedButton.icon(
