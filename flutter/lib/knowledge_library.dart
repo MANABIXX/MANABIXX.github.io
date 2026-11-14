@@ -109,7 +109,7 @@ class _KnowledgeLibraryPageState extends State<KnowledgeLibraryPage> {
         (_query.isEmpty || text.contains(_query.toLowerCase()));
   }).toList(growable: false);
 
-  String _subjectName(String value) => const {'science':'理科','social':'社会','japanese':'国語','math':'数学','english':'英語'}[value] ?? value;
+  String _subjectName(String value) => const {'science':'理科','social':'社会','japanese':'国語','math':'数学','english':'英語','civics':'公民','history':'歴史','geography':'地理'}[value] ?? value;
   String _fieldName(String value) => const {'civics':'公民','history':'歴史','geography':'地理','physics':'物理','chemistry':'化学','biology':'生物','earth science':'地学'}[value.toLowerCase()] ?? value;
   String _gradeName(int value) => value == 0 ? '学年共通' : '中学$value年';
 
