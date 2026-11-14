@@ -321,6 +321,9 @@ class _ModeHomePageState extends State<_ModeHomePage> {
   String get _historyKey => _kosen
       ? 'manabixx.mode.kosen.history'
       : 'manabixx.learning._data_foundation-training.json.history';
+  String get _examDateKey => _kosen
+      ? 'manabixx.mode.kosen.exam-date'
+      : 'manabixx.mode.foundation.exam-date';
 
   @override
   void initState() {
@@ -332,7 +335,7 @@ class _ModeHomePageState extends State<_ModeHomePage> {
     final prefs = await SharedPreferences.getInstance();
     final raw = prefs.getString(_historyKey);
     final rows = raw == null ? <dynamic>[] : jsonDecode(raw) as List<dynamic>;
-    final date = prefs.getString('manabixx.exam-date');
+    final date = prefs.getString(_examDateKey);
     if (!mounted) return;
     setState(() {
       _history = rows.whereType<Map<String, dynamic>>().toList();
@@ -372,7 +375,7 @@ class _ModeHomePageState extends State<_ModeHomePage> {
     );
     if (picked == null) return;
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('manabixx.exam-date', picked.toIso8601String());
+    await prefs.setString(_examDateKey, picked.toIso8601String());
     if (mounted) setState(() => _examDate = picked);
   }
 
