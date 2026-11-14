@@ -281,6 +281,8 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
     });
   }
 
+  String _topicLabel(String value) => const {'civics':'公民','history':'歴史','geography':'地理','earth':'地学','physics':'物理','chemistry':'化学','biology':'生物'}[value.toLowerCase()] ?? value;
+
   String _subjectLabel(String value) => switch (value) {
         'science' => '理科',
         'social' => '社会',
@@ -422,7 +424,7 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
                     items: [
                       const DropdownMenuItem(value: 'all', child: Text('すべて')),
                       ..._topics.map((topic) =>
-                          DropdownMenuItem(value: topic, child: Text(topic))),
+                          DropdownMenuItem(value: topic, child: Text(_topicLabel(topic)))),
                     ],
                     onChanged: (value) =>
                         setState(() => _topic = value ?? 'all'),
@@ -586,7 +588,7 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
         Row(children: [
           _PracticePill(text: _subjectLabel(question.subject)),
           if (question.topic.isNotEmpty) ...[
-            const SizedBox(width: 8), _PracticePill(text: question.topic),
+            const SizedBox(width: 8), _PracticePill(text: _topicLabel(question.topic)),
           ],
           const Spacer(),
           Text('${_index + 1}/${_session.length}',
