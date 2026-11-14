@@ -52,7 +52,7 @@ class KosenQuestion {
 }
 
 class KosenPracticePage extends StatefulWidget {
-  const KosenPracticePage({super.key, this.loadQuestions, this.dataPath = '/data/kosen-questions.json', this.title = '専用演習', this.initialSubject = 'all'});
+  const KosenPracticePage({super.key, this.loadQuestions, this.dataPath = '/data/kosen-questions.json', this.title = widget.title, this.initialSubject = 'all'});
 
   final Future<List<KosenQuestion>> Function()? loadQuestions;
   final String dataPath;
@@ -247,7 +247,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
   Widget _buildSelection() => ListView(
         children: [
           Text(
-            'EXAM PRACTICE / INDEPENDENT MODE',
+            '入試対策 / 集中演習',
             style: Theme.of(context).textTheme.labelMedium?.copyWith(
                   color: Theme.of(context).colorScheme.primary,
                   letterSpacing: 1.4,
