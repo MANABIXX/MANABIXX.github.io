@@ -4,6 +4,12 @@ import 'package:manabixx_web/foundation_practice.dart';
 import 'package:manabixx_web/kosen_practice.dart';
 import 'package:manabixx_web/main.dart';
 
+Future<void> tapVisible(WidgetTester tester, Finder finder) async {
+  await tester.ensureVisible(finder);
+  await tester.tap(finder);
+  await tester.pumpAndSettle();
+}
+
 void main() {
   testWidgets('renders the Flutter migration preview and foundation entry point', (tester) async {
     await tester.pumpWidget(const ManabiXXApp());
@@ -35,17 +41,14 @@ void main() {
 
     expect(find.text('収録問題'), findsOneWidget);
     expect(find.text('1問'), findsOneWidget);
-    await tester.tap(find.text('演習を始める'));
-    await tester.pumpAndSettle();
+    await tapVisible(tester, find.text('演習を始める'));
 
     expect(find.text(question.prompt), findsOneWidget);
-    await tester.tap(find.text('B. ばねばかり'));
-    await tester.pumpAndSettle();
+    await tapVisible(tester, find.text('B. ばねばかり'));
 
     expect(find.text('正解！'), findsOneWidget);
     expect(find.text(question.explanation), findsOneWidget);
-    await tester.tap(find.text('結果を見る'));
-    await tester.pumpAndSettle();
+    await tapVisible(tester, find.text('結果を見る'));
 
     expect(find.text('演習完了'), findsOneWidget);
     expect(find.text('1 / 1'), findsOneWidget);
@@ -77,8 +80,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('公立高校入試問題'), findsWidgets);
-    await tester.tap(find.text('演習を始める'));
-    await tester.pumpAndSettle();
+    await tapVisible(tester, find.text('演習を始める'));
 
     expect(find.text(question.prompt), findsOneWidget);
     expect(find.text('出典照合中'), findsOneWidget);
@@ -111,11 +113,9 @@ void main() {
 
     expect(find.text('模試・予想問題'), findsWidgets);
     expect(find.text('1問'), findsOneWidget);
-    await tester.tap(find.byType(DropdownButtonFormField<String>).first);
-    await tester.pumpAndSettle();
+    await tapVisible(tester, find.byType(DropdownButtonFormField<String>).first);
     expect(find.text('国語'), findsOneWidget);
-    await tester.tap(find.text('国語'));
-    await tester.pumpAndSettle();
+    await tapVisible(tester, find.text('国語').last);
     expect(find.text('1問'), findsOneWidget);
   });
 
@@ -139,17 +139,14 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('対象問題：1問'), findsOneWidget);
-    await tester.tap(find.text('演習を始める'));
-    await tester.pumpAndSettle();
+    await tapVisible(tester, find.text('演習を始める'));
 
     expect(find.text(question.prompt), findsOneWidget);
-    await tester.tap(find.text('4'));
-    await tester.pumpAndSettle();
+    await tapVisible(tester, find.text('4'));
 
     expect(find.text('正解！'), findsOneWidget);
     expect(find.text(question.explanation), findsOneWidget);
-    await tester.tap(find.text('結果を見る'));
-    await tester.pumpAndSettle();
+    await tapVisible(tester, find.text('結果を見る'));
 
     expect(find.text('演習完了'), findsOneWidget);
     expect(find.text('1 / 1'), findsOneWidget);
