@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:manabixx_web/kosen_practice.dart';
 
 void main() {
   runApp(const ManabiXXApp());
@@ -22,6 +23,7 @@ class ManabiXXApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xFF08090C),
         useMaterial3: true,
       ),
+      routes: {'/kosen': (_) => const KosenPracticePage()},
       home: const MigrationHomePage(),
     );
   }
@@ -78,6 +80,12 @@ class MigrationHomePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 const _MigrationStatusCard(),
+                const SizedBox(height: 16),
+                FilledButton.icon(
+                  onPressed: () => Navigator.of(context).pushNamed('/kosen'),
+                  icon: const Icon(Icons.school_outlined),
+                  label: const Text('高専専用モードを開く'),
+                ),
               ],
             ),
           ),
