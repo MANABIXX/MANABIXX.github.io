@@ -25,13 +25,16 @@ class ManabiXXApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xFF08090C),
         useMaterial3: true,
       ),
-      routes: {'/kosen': (_) => const KosenPracticePage()},
+      routes: {
+        '/kosen': (_) => const KosenPracticePage(),
+        '/kosen/': (_) => const KosenPracticePage(),
+      },
       onUnknownRoute: (_) => MaterialPageRoute<void>(
-        builder: (_) => Scaffold(
+        builder: (context) => Scaffold(
           appBar: AppBar(title: const Text('ページが見つかりません')),
           body: Center(
             child: FilledButton(
-              onPressed: () => Navigator.of(_).pushNamedAndRemoveUntil('/', (route) => false),
+              onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false),
               child: const Text('ホームへ戻る'),
             ),
           ),
