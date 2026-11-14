@@ -6,7 +6,13 @@ import 'package:manabixx_web/knowledge_library.dart';
 import 'package:manabixx_web/main.dart';
 
 Future<void> tapVisible(WidgetTester tester, Finder finder) async {
-  await tester.ensureVisible(finder);
+  final scrollable = find.byType(Scrollable).first;
+  await tester.scrollUntilVisible(
+    finder,
+    240,
+    scrollable: scrollable,
+    maxScrolls: 12,
+  );
   await tester.tap(finder);
   await tester.pumpAndSettle();
 }
@@ -168,7 +174,7 @@ void main() {
     await tapVisible(tester, find.text('演習を始める'));
 
     expect(find.text(question.prompt), findsOneWidget);
-    await tapVisible(tester, find.text('4'));
+    await tapVisible(tester, find.text('C. 4'));
 
     expect(find.text('正解！'), findsOneWidget);
     expect(find.text(question.explanation), findsOneWidget);
