@@ -77,5 +77,5 @@ const mathPath = path.join(root, 'static/data/kosen-math-section-1.json');
 const existingMath = JSON.parse(await fs.readFile(mathPath, 'utf8'));
 const mathQuestions = [...(existingMath.questions ?? []), ...result.questions.filter((question) => question.subject === 'math')];
 const mathById = new Map(mathQuestions.map((question) => [question.id, question]));
-await fs.writeFile(mathPath, JSON.stringify({ title: '高専数学・大問1集中演習', registryCommit: sources.registryCommit, questions: [...mathById.values()] }, null, 2) + '\\n');
+await fs.writeFile(mathPath, JSON.stringify({ title: '高専数学・大問1集中演習', registryCommit: sources.registryCommit, questions: [...mathById.values()] }, null, 2) + '\n');
 console.log('Generated '+result.questions.length+' Kosen practice questions and '+mathById.size+' math-section-1 questions.');
