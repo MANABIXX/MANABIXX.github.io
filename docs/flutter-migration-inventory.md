@@ -3,13 +3,13 @@
 Last inspected: 2026-11-14 (JST)  
 Repository: `MANABIXX/MANABIXX.github.io`  
 Production branch: `main`  
-Production URL: https://manabixx.github.io/\nFlutter production app (after root cutover): https://manabixx.github.io/
+Production URL: https://manabixx.github.io/\nFlutter beta preview (after merge and Pages deployment): https://manabixx.github.io/flutter/
 
 ## Deployment decision and known limitations
 
-The production Pages workflow is being switched to the Flutter Web build at `/` by explicit product direction. The SvelteKit and legacy sources remain in the repository, but they are no longer the Pages deployment artifact after this cutover. This is a root-app deployment, not a claim that every former route has been ported.
+The Pages workflow is being switched to the Flutter Web build at `/` by explicit product direction. The SvelteKit and legacy sources remain in the repository, but they are no longer the Pages deployment artifact after this cutover. This is a root-app deployment, not a claim that every former route has been ported.
 
-The inventory below remains the parity checklist. Motivation, release notes, workspace, private-content boundaries, Shitadumi mode, and full history/settings migration are still not represented in Flutter; users who relied on those former routes will not find them in the new root app until they are migrated. Do not describe this cutover as full feature parity.
+Motivation, release notes, workspace, private-content boundaries, the separate Shitadumi app, and full learning-history migration remain incomplete in Flutter. Users who relied on those former routes will not find them in the root app until they are migrated. Do not describe this cutover as full feature parity.
 
 ## Existing route and feature inventory
 
@@ -41,17 +41,17 @@ The inventory below remains the parity checklist. Motivation, release notes, wor
 
 ## Deployment and cutover verification
 
-- The Pages workflow now builds Flutter with `--base-href /`, copies all `static/data/` assets into the root output, and publishes a matching `404.html` so clean-path Flutter routes survive direct navigation and reload.
-- `prepare:flutter-offline` hashes every JSON dataset and generates a versioned offline data manifest and service worker.
-- `assemble:flutter-root` copies the full data directory and app icon, generates an app-resource manifest, and injects a build version into the worker.
-- The worker pre-caches all built Flutter resources and problem datasets before activation; it retains the previous cache until the new cache is ready. On launch the app checks for worker updates, and browsers that support Periodic Background Sync can refresh data weekly.
-- Browser/OS support controls whether periodic background sync runs while the app is closed. The guaranteed fallback is an update check on the next app launch.
-- The root deployment does not by itself complete the route, private-content, accessibility, or stored-progress parity items listed above.
+- The Pages workflow builds Flutter with `--base-href /`, copies the Flutter route datasets into the root output, and publishes a matching `404.html` for direct navigation and reload on clean URLs.
+- `prepare:flutter-offline` hashes the seven JSON datasets used by Flutter routes and generates a versioned data manifest and worker. Supplementary/private JSON files not referenced by Flutter are excluded.
+- `assemble:flutter-root` copies the approved datasets and icon, generates an app-resource manifest, and injects a build version into the worker.
+- The service worker pre-caches Flutter runtime resources and approved problem datasets before activation; it keeps the previous cache until the new cache is ready. The app checks for worker updates on launch. Browsers supporting Periodic Background Sync can refresh datasets weekly.
+- Background sync while the app is closed depends on browser and OS support; the guaranteed fallback is an update check on the next launch.
+- This root deployment does not complete the remaining route, private-content, accessibility, or stored-progress parity items listed above.
 
 ## Current stage
 
 - Stage 1: isolated Flutter app scaffold and CI validation workflow.
 - Stage 2: Flutter question-practice foundation, public exam, summary/foundation confirmation, five-subject mock practice, knowledge library, and a separate unlinked additional-practice route. Existing JSON data is loaded directly; practice selection, four-choice answering, explanations, results, library search and filters are implemented.
 - Four public datasets audited: 1,180 foundation questions, 323 public-exam questions, 450 summary questions, and 100 mock questions. No duplicate IDs or malformed four-choice records were found in the inspected datasets.
-- Still not migrated: motivation, release-note UI, workspace, private-content access boundary, Shitadumi app, full learning-history migration, and full browser/mobile/accessibility parity. The new offline cache intentionally includes only the seven JSON datasets referenced by Flutter routes; unrelated private/supplementary JSON files are excluded.
-- Production deployment: Flutter Web at the Pages root after this cutover; the SvelteKit source remains in-repository but is not the deployed app.
+- Still not migrated: motivation, release-note UI, workspace, private-content access boundary, Shitadumi app, full learning-history migration, and full browser/mobile/accessibility parity. Offline caching is now implemented for the Flutter app and its seven route datasets only.
+- Production deployment: Flutter Web at the Pages root after this cutover; SvelteKit and legacy sources remain in the repository but are not the deployed app.
