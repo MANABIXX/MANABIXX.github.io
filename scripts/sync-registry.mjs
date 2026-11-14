@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { execFileSync } from 'node:child_process';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const lock = JSON.parse(await fs.readFile(path.join(root, 'registry.lock.json'), 'utf8'));
@@ -59,9 +60,14 @@ for (const [filename, year, subject] of kosenFiles) {
   if (!file.ok) throw new Error('Kosen past paper download failed: ' + registryPath + ' (' + file.status + ')');
   await fs.mkdir(path.dirname(target), { recursive: true });
   await fs.writeFile(target, Buffer.from(await file.arrayBuffer()));
+  const extracted = execFileSync('pdftotext', ['-layout', target, '-'], { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
+  const topicVocabulary = ['正負の数','平方根','因数分解','二次方程式','一次関数','確率','図形','電流','電圧','抵抗','中和','遺伝','地震','天体','気候','地形図','貿易','産業','明治','憲法','需要','供給','関係代名詞','不定詞','比較','受け身'];
+  const topicHints = topicVocabulary.filter((term) => extracted.includes(term));
   sources.push({
     year, subject, filename: targetName,
     registryPath, localPath: '/data/kosen-past-papers/' + targetName,
+    extractedCharacters: extracted.trim().length,
+    topicHints,
     registryUrl: 'https://github.com/MANABIXX/content-registry/blob/' + lock.commit + '/' +
       registryPath.split('/').map(encodeURIComponent).join('/')
   });
