@@ -93,7 +93,7 @@ class ManabiXXApp extends StatelessWidget {
         '/practice/foundation': (_) => const FoundationPracticePage(includeAllSubjects: true),
         '/practice/kosen': (_) => const _PasswordGatePage(password: 'kosen', title: '製作者専用モード', child: KosenPracticePage(title: '製作者専用モード')) ,
         '/practice/kosen/math-section-1': (_) => const _PasswordGatePage(password: 'kosen', title: '数学・大問1集中演習', child: KosenPracticePage(dataPath: '/data/kosen-math-section-1.json', title: '数学・大問1集中演習', initialSubject: 'math')),
-        '/practice/foundation-training': (_) => const _PasswordGatePage(password: 'haru', title: '下積みモード', child: FoundationPracticePage(dataPath: '/data/mock-exams.json', title: '下積みモード', includeAllSubjects: true)),
+        '/practice/foundation-training': (_) => const _PasswordGatePage(password: 'haru', title: '下積みモード', child: FoundationPracticePage(dataPath: '/data/foundation-training.json', title: '下積みモード', includeAllSubjects: true)),
         '/records': (_) => const _ProgressPage(),
         '/foundation': (_) => const FoundationPracticePage(includeAllSubjects: true),
         '/foundation/': (_) => const FoundationPracticePage(),
