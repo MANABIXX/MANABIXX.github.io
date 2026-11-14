@@ -311,7 +311,6 @@ class _ModeHomePageState extends State<_ModeHomePage> {
   List<Map<String, dynamic>> _history = [];
   DateTime? _examDate;
   bool _loaded = false;
-  bool _remindersEnabled = false;
 
   bool get _kosen => widget.mode == 'kosen';
   String get _title => _kosen ? '高専モード' : '下積みモード';
@@ -335,7 +334,6 @@ class _ModeHomePageState extends State<_ModeHomePage> {
     setState(() {
       _history = rows.whereType<Map<String, dynamic>>().toList();
       _examDate = date == null ? null : DateTime.tryParse(date);
-      _remindersEnabled = prefs.getBool('manabixx.reminders.enabled') ?? false;
       _loaded = true;
     });
   }
@@ -375,18 +373,6 @@ class _ModeHomePageState extends State<_ModeHomePage> {
     if (mounted) setState(() => _examDate = picked);
   }
 
-  Future<void> _toggleReminder() async {
-    final prefs = await SharedPreferences.getInstance();
-    final next = !_remindersEnabled;
-    await prefs.setBool('manabixx.reminders.enabled', next);
-    if (!mounted) return;
-    setState(() => _remindersEnabled = next);
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(next
-        ? '通知設定を有効にしました。ブラウザーの通知許可と、アプリを開いている状態が必要です。'
-        : '通知設定をオフにしました。',
-    ));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -400,13 +386,6 @@ class _ModeHomePageState extends State<_ModeHomePage> {
           onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false),
           icon: const Icon(Icons.home_outlined),
         ),
-        actions: [
-          IconButton(
-            tooltip: '学習リマインダー',
-            onPressed: _toggleReminder,
-            icon: Icon(_remindersEnabled ? Icons.notifications_active : Icons.notifications_none),
-          ),
-        ],
       ),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 16, 20, 28),
@@ -469,14 +448,8 @@ class _ModeHomePageState extends State<_ModeHomePage> {
             ),
           ],
           const SizedBox(height: 12),
-          OutlinedButton.icon(
-            onPressed: _toggleReminder,
-            icon: Icon(_remindersEnabled ? Icons.notifications_off_outlined : Icons.notifications_active_outlined),
-            label: Text(_remindersEnabled ? '学習通知をオフ' : '学習リマインダーを設定'),
-          ),
-          const SizedBox(height: 8),
           Text(_kosen
-            ? 'このホームは高専モード専用です。ブラウザーのメニューからホーム画面に追加すると、専用アプリとして起動できます。'
+            ? 'このホームは高専モード専用です。ブラウザーのメニューからホーム画面に追加すると、専用アプリとして起動できます。通知は画面左下から設定できます。'
             : 'このホームは下積みモード専用です。ブラウザーのメニューからホーム画面に追加すると、専用アプリとして起動できます。',
             style: const TextStyle(color: Colors.white60, fontSize: 12, height: 1.5)),
         ],
