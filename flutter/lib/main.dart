@@ -93,7 +93,7 @@ class ManabiXXApp extends StatelessWidget {
       ),
       routes: {
         '/practice/foundation': (_) => const FoundationPracticePage(includeAllSubjects: true),
-        '/practice/kosen': (_) => const _PasswordGatePage(password: 'kosen', title: '製作者専用モード', child: _ModeHomePage(mode: 'kosen')),
+        '/practice/kosen': (_) => const _PasswordGatePage(password: 'kosen', title: '制作者専用モード', child: _ModeHomePage(mode: 'kosen')),
         '/practice/kosen/study': (_) => const _PasswordGatePage(password: 'kosen', title: '制作者専用モード', child: KosenPracticePage(title: '制作者専用モード', additionalDataPaths: ['/data/questions.json'])),
         '/practice/kosen/math-section-1': (_) => const _PasswordGatePage(password: 'kosen', title: '制作者専用モード', child: KosenPracticePage(dataPath: '/data/kosen-math-section-1.json', title: '数学・大問1集中演習', initialSubject: 'math')),
         '/practice/foundation-training': (_) => const _PasswordGatePage(password: 'haru', title: '下積みモード', child: _ModeHomePage(mode: 'foundation')),
@@ -118,8 +118,8 @@ class ManabiXXApp extends StatelessWidget {
           dataPath: '/data/mock-exams.json', title: '模試・予想問題', includeAllSubjects: true),
         '/mock-exam/': (_) => const FoundationPracticePage(
           dataPath: '/data/mock-exams.json', title: '模試・予想問題', includeAllSubjects: true),
-        '/kosen': (_) => const _PasswordGatePage(password: 'kosen', title: '製作者専用モード', child: KosenPracticePage(title: '製作者専用モード')),
-        '/kosen/': (_) => const _PasswordGatePage(password: 'kosen', title: '製作者専用モード', child: KosenPracticePage(title: '製作者専用モード')),
+        '/kosen': (_) => const _PasswordGatePage(password: 'kosen', title: '制作者専用モード', child: KosenPracticePage(title: '制作者専用モード')),
+        '/kosen/': (_) => const _PasswordGatePage(password: 'kosen', title: '制作者専用モード', child: KosenPracticePage(title: '制作者専用モード')),
       },
       onUnknownRoute: (_) => MaterialPageRoute<void>(
         builder: (_) => const _AppHomePage(),
@@ -717,9 +717,9 @@ class _StudyMenu extends StatelessWidget {
         subtitle: '理科・社会を分野別に確認', onTap: () => onSelect('/summary')),
       _MenuTile(icon: Icons.assessment_outlined, title: '模試・予想問題',
         subtitle: '5教科の総合演習', onTap: () => onSelect('/mock-exam')),
-      _MenuTile(icon: Icons.lock_outline_rounded, title: '製作者専用モード', subtitle: '認証制・5教科の実戦演習', onTap: () => onSelect('/practice/kosen')),
-      _MenuTile(icon: Icons.calculate_outlined, title: '数学・大問1集中演習', subtitle: '計算・小問集合を重点反復', onTap: () => onSelect('/practice/kosen/math-section-1')),
+      _MenuTile(icon: Icons.lock_outline_rounded, title: '制作者専用モード', subtitle: '認証制・5教科の実戦演習', onTap: () => onSelect('/practice/kosen')),
       _MenuTile(icon: Icons.repeat_rounded, title: '下積みモード', subtitle: '5教科の基礎反復と苦手問題の復習', onTap: () => onSelect('/practice/foundation-training')),
+       _MenuTile(icon: Icons.history_rounded, title: '更新履歴', subtitle: '直近5回の変更内容', onTap: () => onSelect('/releases')),
     ],
   );
 }
