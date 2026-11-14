@@ -1,5 +1,7 @@
 # Study
 
+公開URL: https://manabixx.github.io/ （GitHub Pagesのルート `/` でFlutter版を配信）
+
 MANABIXX が開発する独立した学習サービスを独立して再構築するプロジェクトです。
 
 ## 技術スタック

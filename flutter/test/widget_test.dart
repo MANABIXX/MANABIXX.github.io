@@ -33,8 +33,13 @@ void main() {
     await tester.pumpWidget(const ManabiXXApp());
 
     expect(find.text('MANABIXX'), findsOneWidget);
-    expect(find.text('今日も、一歩ずつ。'), findsOneWidget);
-    expect(find.text('学習スタート'), findsOneWidget);
+    expect(find.textContaining('今日の一歩を、'), findsOneWidget);
+    expect(find.text('高専モード'), findsNothing);
+    expect(find.text('2027年度・高校入試情報'), findsOneWidget);
+    expect(find.text('基礎網羅問題を始める'), findsOneWidget);
+    await tester.drag(find.byType(ListView).first, const Offset(0, -1200));
+    await tester.pumpAndSettle();
+    expect(find.text('制作者専用モード'), findsOneWidget);
     expect(find.text('ホーム'), findsOneWidget);
     expect(find.text('学習'), findsOneWidget);
     expect(find.text('記録'), findsOneWidget);
@@ -42,6 +47,7 @@ void main() {
     expect(find.text('学習メニュー'), findsOneWidget);
     expect(find.text('基礎網羅問題'), findsOneWidget);
     expect(find.text('教材ライブラリ'), findsNothing);
+    expect(find.text('更新履歴'), findsOneWidget);
   });
 
   testWidgets('aggregates today answers across local practice datasets', (tester) async {
@@ -282,6 +288,28 @@ void main() {
     expect(find.text('1 / 1'), findsOneWidget);
   });
 
+  testWidgets('filters creator practice by subject topic', (tester) async {
+    const first = KosenQuestion(
+      id: 'topic-filter-linear', subject: 'math', topic: '一次関数', level: '基礎',
+      prompt: '一次関数の傾きはどれか。', options: ['1', '2', '3', '4'],
+      correct: 0, explanation: '傾きはxの係数。',
+    );
+    const second = KosenQuestion(
+      id: 'topic-filter-equation', subject: 'math', topic: '方程式', level: '基礎',
+      prompt: 'x＋2＝5のxはどれか。', options: ['1', '2', '3', '4'],
+      correct: 2, explanation: 'x＝3。',
+    );
+    await prepareViewport(tester);
+    await tester.pumpWidget(MaterialApp(
+      home: KosenPracticePage(loadQuestions: () async => [first, second]),
+    ));
+    await tester.pumpAndSettle();
+    expect(find.text('対象問題：2問'), findsOneWidget);
+    await tapVisible(tester, find.byType(DropdownButtonFormField<String>).last);
+    await tapVisible(tester, find.text('一次関数'));
+    expect(find.text('対象問題：1問'), findsOneWidget);
+  });
+
   testWidgets('offers five subjects in Kosen mode and supports number plus Enter', (tester) async {
     const social = KosenQuestion(
       id: 'kosen-social-keyboard', subject: 'social', topic: '公民', level: '高専入試基礎',
@@ -380,7 +408,7 @@ void main() {
     await prepareViewport(tester);
     await tester.pumpWidget(const ManabiXXApp());
     await tapVisible(tester, find.text('学習'));
-    await tester.tap(find.text('製作者専用モード'));
+    await tester.tap(find.text('制作者専用モード'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 100));
     expect(find.text('認証する'), findsOneWidget);
@@ -388,8 +416,8 @@ void main() {
     await tester.tap(find.text('認証する'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 100));
-    expect(find.text('今日の一問が、合格に近づく。'), findsOneWidget);
-    expect(find.text('数学・大問1集中演習'), findsNWidgets(2));
+    expect(find.text('今日の一問を、次の目標につなげる。'), findsOneWidget);
+    expect(find.text('数学・大問1集中演習'), findsOneWidget);
     expect(find.text('学習ヒートマップ'), findsOneWidget);
   });
 }

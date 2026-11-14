@@ -1,7 +1,7 @@
 {
-  "name": "MANABIXX 高専モード",
-  "short_name": "高専",
-  "description": "高専入試対策・5教科演習",
+  "name": "MANABIXX 制作者専用モード",
+  "short_name": "制作者",
+  "description": "制作者専用の学習・教材管理ワークスペース",
   "start_url": "/practice/kosen",
   "scope": "/",
   "display": "standalone",
