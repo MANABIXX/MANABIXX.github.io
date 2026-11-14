@@ -165,6 +165,21 @@ class _KnowledgeLibraryPageState extends State<KnowledgeLibraryPage> {
                           onChanged: (v) => setState(() => _field = v ?? 'all'),
                         )),
                       ]),
+                      const SizedBox(height: 10),
+                      const Text('分野から探す', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800, color: Color(0xFFB8B8BE))),
+                      const SizedBox(height: 7),
+                      Wrap(spacing: 7, runSpacing: 7, children: [
+                        ChoiceChip(
+                          label: const Text('すべての分野'),
+                          selected: _field == 'all',
+                          onSelected: (_) => setState(() => _field = 'all'),
+                        ),
+                        ..._fields.map((field) => ChoiceChip(
+                          label: Text(_fieldName(field)),
+                          selected: _field == field,
+                          onSelected: (_) => setState(() => _field = field),
+                        )),
+                      ]),
                       const SizedBox(height: 8),
                       Text('${_shown.length}件を表示', style: Theme.of(context).textTheme.labelMedium),
                     ]),
