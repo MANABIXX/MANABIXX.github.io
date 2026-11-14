@@ -541,7 +541,7 @@ class _PrivateModeHome extends StatelessWidget {
       Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(color: const Color(0xFF202B34), borderRadius: BorderRadius.circular(16), border: Border.all(color: const Color(0xFF405363))),
-        child: const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(isKosen ? '高専モード専用アプリとして追加' : '下積みモード専用アプリとして追加', style: const TextStyle(fontWeight: FontWeight.w900, color: Color(0xFF9ED4FF))),
           SizedBox(height: 6),
           Text(isKosen ? 'Safariの共有メニューから「ホーム画面に追加」を選ぶと、高専モード専用アイコンから直接起動できます。' : 'Safariの共有メニューから「ホーム画面に追加」を選ぶと、下積みモード専用アイコンから直接起動できます。', style: const TextStyle(height: 1.65)),
