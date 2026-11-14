@@ -13,15 +13,15 @@ The production Pages workflow currently builds the SvelteKit application from th
 
 | Existing area | Current implementation | Flutter migration status |
 | --- | --- | --- |
-| Home / Study dashboard | SvelteKit `src/routes/+page.svelte`; legacy `index.html` | Not started |
-| Question practice | `src/lib/QuestionPractice.svelte`; `static/data/questions.json` | Not started |
-| Public high-school exam practice | `src/routes/exam/`; legacy `public-exam.html`; `static/data/public-exam.json` | Not started |
-| Kosen-specific mode | `src/routes/kosen/`; `static/data/kosen-questions.json` | First Flutter route implemented; needs live-data/browser and persistence parity checks |
-| Library | `src/routes/library/` | Not started |
-| Mock exam | `src/routes/mock-exam/`; `static/data/mock-exams.json` | Not started |
+| Home / Study dashboard | SvelteKit `src/routes/+page.svelte`; legacy `index.html` | Flutter migration dashboard implemented; full dashboard parity pending |
+| Question practice | `src/lib/QuestionPractice.svelte`; `static/data/questions.json` | Flutter `/foundation` implemented with 1,180 existing records; progress persistence and full UI parity pending |
+| Public high-school exam practice | `src/routes/exam/`; legacy `public-exam.html`; `static/data/public-exam.json` | Flutter `/exam` implemented with 323 existing records and source-status display; source verification and UI parity pending |
+| Additional dedicated practice | Existing isolated practice route and `static/data/kosen-questions.json` | Flutter `/kosen` implemented; kept off the public dashboard |
+| Library | `src/routes/library/`; `static/data/knowledge-base.json` | Not started |
+| Mock exam | `src/routes/mock-exam/`; `static/data/mock-exams.json` | Flutter `/mock-exam` implemented with 100 records and five-subject selection; full mock flow/parity pending |
 | Motivation | `src/routes/motivation/`; legacy `motivation.html` | Not started |
 | Release notes | `src/routes/releases/`; legacy `release-notes.html` | Not started |
-| Summary / notes | `src/routes/summary/`; legacy `summary.html`; summary JSON data | Not started |
+| Summary / notes | `src/routes/summary/`; legacy `summary.html`; `static/data/summary-foundation.json` | Flutter `/summary` implemented with 450 records; visual note/library parity pending |
 | Workspace | `src/routes/workspace/` | Not started |
 | Private content | legacy `private.html`, `n-exclusive.html`, `s-exclusive.html`; matching JSON | Not started; audit access boundary first |
 | Shitadumi mode | `shitadumi/` static app, articles, mock exams, opinion, PWA and release notes | Not started |
@@ -49,6 +49,7 @@ The production Pages workflow currently builds the SvelteKit application from th
 ## Current stage
 
 - Stage 1: isolated Flutter app scaffold and CI validation workflow.
-- Stage 2 (first slice): Kosen practice route, existing JSON fetch, subject selection, four-choice answering, explanations, session results, path-based URLs, and a GitHub Pages 404 deep-link restoration page.
-- Not yet migrated: all other production routes and features; Kosen progress persistence and full browser/deep-link parity remain pending.
+- Stage 2: Flutter question-practice foundation, public exam, summary/foundation confirmation, five-subject mock practice, and a separate unlinked additional-practice route. Existing JSON data is loaded directly; practice selection, four-choice answering, explanations, and results are implemented.
+- Four public datasets audited: 1,180 foundation questions, 323 public-exam questions, 450 summary questions, and 100 mock questions. No duplicate IDs or malformed four-choice records were found in the inspected datasets.
+- Still not migrated: knowledge library, motivation, release-note UI, workspace, private-content access boundary, Shitadumi app, full home/dashboard, learning-history persistence, PWA/offline behavior, and full browser/mobile/accessibility parity.
 - Production deployment: unchanged.
