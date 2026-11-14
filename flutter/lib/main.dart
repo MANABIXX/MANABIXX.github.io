@@ -1,4 +1,4 @@
-import 'package:flutter/material_ui.dart';
+import 'package:flutter/material.dart';
 
 void main() {
   runApp(const ManabiXXApp());
@@ -97,7 +97,7 @@ class _MigrationStatusCard extends StatelessWidget {
         padding: EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
+          children: [
             Text('移行ステータス', style: TextStyle(fontWeight: FontWeight.w700)),
             SizedBox(height: 12),
             _StatusRow(label: 'Flutter Web基盤', value: '準備中'),
