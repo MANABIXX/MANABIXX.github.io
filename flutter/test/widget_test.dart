@@ -5,20 +5,22 @@ import 'package:manabixx_web/kosen_practice.dart';
 import 'package:manabixx_web/knowledge_library.dart';
 import 'package:manabixx_web/main.dart';
 
+Future<void> prepareViewport(WidgetTester tester) async {
+  tester.view.physicalSize = const Size(800, 1400);
+  tester.view.devicePixelRatio = 1;
+  await tester.pumpAndSettle();
+}
+
 Future<void> tapVisible(WidgetTester tester, Finder finder) async {
-  final scrollable = find.byType(Scrollable).first;
-  await tester.scrollUntilVisible(
-    finder,
-    240,
-    scrollable: scrollable,
-    maxScrolls: 12,
-  );
+  await tester.ensureVisible(finder);
+  await tester.pumpAndSettle();
   await tester.tap(finder);
   await tester.pumpAndSettle();
 }
 
 void main() {
   testWidgets('renders the Flutter migration preview and foundation entry point', (tester) async {
+    await prepareViewport(tester);
     await tester.pumpWidget(const ManabiXXApp());
 
     expect(find.text('MANABIXX'), findsOneWidget);
@@ -39,6 +41,7 @@ void main() {
       explanation: 'ばねばかりは力の大きさを測定する器具。',
     );
 
+    await prepareViewport(tester);
     await tester.pumpWidget(
       MaterialApp(
         home: FoundationPracticePage(loadQuestions: () async => [question]),
@@ -75,6 +78,7 @@ void main() {
       sourceNote: '原資料との照合を進めています。',
     );
 
+    await prepareViewport(tester);
     await tester.pumpWidget(
       MaterialApp(
         home: FoundationPracticePage(
@@ -106,6 +110,7 @@ void main() {
       explanation: '「責任」は「せきにん」と読む。',
     );
 
+    await prepareViewport(tester);
     await tester.pumpWidget(
       MaterialApp(
         home: FoundationPracticePage(
@@ -138,6 +143,7 @@ void main() {
       formulas: ['密度＝質量÷体積'],
       keyTerms: ['質量', '体積'],
     );
+    await prepareViewport(tester);
     await tester.pumpWidget(MaterialApp(
       home: KnowledgeLibraryPage(loadRecords: () async => [record]),
     ));
@@ -163,6 +169,7 @@ void main() {
       explanation: '3x = 12 なので x = 4。',
     );
 
+    await prepareViewport(tester);
     await tester.pumpWidget(
       MaterialApp(
         home: KosenPracticePage(loadQuestions: () async => [question]),
@@ -174,7 +181,7 @@ void main() {
     await tapVisible(tester, find.text('演習を始める'));
 
     expect(find.text(question.prompt), findsOneWidget);
-    await tapVisible(tester, find.text('C. 4'));
+    await tapVisible(tester, find.text('4'));
 
     expect(find.text('正解！'), findsOneWidget);
     expect(find.text(question.explanation), findsOneWidget);
