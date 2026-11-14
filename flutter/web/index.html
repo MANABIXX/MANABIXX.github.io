@@ -6,6 +6,10 @@
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#121214">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../assets/study-icon.svg">
   <meta name="color-scheme" content="dark">
   <meta name="description" content="自分のペースで学び、理解を積み重ねる学習スペース。">
   <title>MANABIXX</title>
@@ -33,6 +37,13 @@
     }
     .loading-label { color: #9999a1; font-size: 12px; }
     @keyframes spin { to { transform: rotate(360deg); } }
+    #pwa-install-banner { position: fixed; z-index: 10000; left: 12px; right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); display: flex; align-items: center; gap: 12px; padding: 14px; border: 1px solid #494950; border-radius: 18px; background: rgba(35,35,40,.97); box-shadow: 0 12px 36px #0008; font: 13px/1.5 -apple-system, BlinkMacSystemFont, sans-serif; }
+    #pwa-install-banner[hidden] { display: none; }
+    #pwa-install-banner .pwa-copy { flex: 1; }
+    #pwa-install-banner strong { display: block; margin-bottom: 2px; color: #fff; }
+    #pwa-install-action { border: 0; border-radius: 11px; padding: 10px 12px; color: #fff; background: #ff7900; font-weight: 800; white-space: nowrap; }
+    #pwa-install-close { border: 0; padding: 4px; color: #aaa; background: transparent; font-size: 18px; }
+    @media (min-width: 700px) { #pwa-install-banner { left: auto; right: 24px; bottom: 24px; width: 390px; } }
     @media (prefers-reduced-motion: reduce) {
       .spinner { animation-duration: 1.8s; }
       #app-loading { transition: none; }
@@ -51,6 +62,11 @@
   </script>
 </head>
 <body>
+  <div id="pwa-install-banner" hidden>
+    <div class="pwa-copy"><strong>MANABIXXをホーム画面に追加</strong><span id="pwa-install-copy">追加するとアプリのように全画面で起動できます。</span></div>
+    <button id="pwa-install-action" type="button">追加方法</button>
+    <button id="pwa-install-close" type="button" aria-label="閉じる">×</button>
+  </div>
   <div id="app-loading" role="status" aria-label="MANABIXXを読み込み中">
     <div class="loading-content">
       <div class="brand">MANABIXX</div>
@@ -58,6 +74,27 @@
       <div class="loading-label">読み込み中…</div>
     </div>
   </div>
+  <script>
+    (() => {
+      const banner = document.getElementById("pwa-install-banner");
+      const action = document.getElementById("pwa-install-action");
+      const copy = document.getElementById("pwa-install-copy");
+      const close = document.getElementById("pwa-install-close");
+      const ua = navigator.userAgent || "";
+      const ios = /iPhone|iPad|iPod/.test(ua);
+      const standalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+      let installPrompt = null;
+      const show = () => { if (!standalone && !localStorage.getItem("manabixx-pwa-dismissed")) banner.hidden = false; };
+      if (ios && !standalone) { copy.textContent = "Safariの共有ボタンから「ホーム画面に追加」を選べます。"; action.textContent = "追加手順"; show(); }
+      window.addEventListener("beforeinstallprompt", (event) => { event.preventDefault(); installPrompt = event; action.textContent = "インストール"; show(); });
+      action.addEventListener("click", async () => {
+        if (installPrompt) { installPrompt.prompt(); await installPrompt.userChoice; installPrompt = null; banner.hidden = true; return; }
+        alert(ios ? "Safariの共有ボタン →「ホーム画面に追加」を選択してください。" : "ブラウザのメニューから「アプリをインストール」または「ホーム画面に追加」を選択してください。");
+      });
+      close.addEventListener("click", () => { banner.hidden = true; localStorage.setItem("manabixx-pwa-dismissed", "1"); });
+      if ("serviceWorker" in navigator) navigator.serviceWorker.register("flutter-sw.js").catch(() => {});
+    })();
+  </script>
   <script>
     {{flutter_js}}
     {{flutter_build_config}}
