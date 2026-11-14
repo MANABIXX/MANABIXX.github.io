@@ -12,15 +12,15 @@
     (() => {
       const path = location.pathname;
       const href = path.includes("/practice/kosen")
-        ? "/flutter/manifest-kosen.webmanifest"
+        ? "/manifest-kosen.webmanifest"
         : path.includes("/practice/foundation-training")
-          ? "/flutter/manifest-foundation.webmanifest"
-          : "/flutter/manifest.webmanifest";
+          ? "/manifest-foundation.webmanifest"
+          : "/manifest.webmanifest";
       document.write('<link id="app-manifest" rel="manifest" href="' + href + '">');
     })();
   </script>
-  <link rel="icon" type="image/svg+xml" href="/flutter/favicon.svg">
-  <link rel="apple-touch-icon" href="../assets/study-icon.svg">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/assets/study-icon.svg">
   <meta name="color-scheme" content="dark">
   <meta name="description" content="自分のペースで学び、理解を積み重ねる学習スペース。">
   <title>MANABIXX</title>
@@ -96,12 +96,12 @@
       const manifest = document.getElementById("app-manifest");
       const modePath = location.pathname;
       if (modePath.includes("/practice/kosen")) {
-        manifest.href = "/flutter/manifest-kosen.webmanifest";
+        manifest.href = "/manifest-kosen.webmanifest";
         document.title = "MANABIXX 高専モード";
         const label = banner.querySelector("strong");
         if (label) label.textContent = "高専モードをホーム画面に追加";
       } else if (modePath.includes("/practice/foundation-training")) {
-        manifest.href = "/flutter/manifest-foundation.webmanifest";
+        manifest.href = "/manifest-foundation.webmanifest";
         document.title = "MANABIXX 下積みモード";
         const label = banner.querySelector("strong");
         if (label) label.textContent = "下積みモードをホーム画面に追加";
@@ -117,7 +117,23 @@
         alert(ios ? "Safariの共有ボタン →「ホーム画面に追加」を選択してください。" : "ブラウザのメニューから「アプリをインストール」または「ホーム画面に追加」を選択してください。");
       });
       close.addEventListener("click", () => { banner.hidden = true; try { localStorage.setItem("manabixx-pwa-dismissed", "1"); } catch (_) {} });
-      if ("serviceWorker" in navigator) navigator.serviceWorker.register("/flutter/flutter-sw.js").catch(() => {});
+      window.manabixxOfflineReady = Promise.resolve();
+      if ("serviceWorker" in navigator) {
+        window.manabixxOfflineReady = navigator.serviceWorker.register("/flutter-sw.js", { updateViaCache: "none" }).then(async (registration) => {
+          // The service worker changes whenever app assets or question data change.
+          await registration.update();
+          if ("periodicSync" in registration) {
+            try {
+              await registration.periodicSync.register("manabixx-weekly-data-sync", {
+                minInterval: 7 * 24 * 60 * 60 * 1000
+              });
+            } catch (_) {
+              // Periodic Background Sync is browser- and permission-dependent.
+            }
+          }
+          return navigator.serviceWorker.ready;
+        }).catch(() => null);
+      }
 
       // Notifications are delivered while this PWA page remains open.
       const reminder = document.createElement("button");
@@ -136,7 +152,7 @@
         const day = now.getFullYear() + "-" + (now.getMonth()+1) + "-" + now.getDate();
         const time = String(now.getHours()).padStart(2,"0") + ":" + String(now.getMinutes()).padStart(2,"0");
         if (time === reminderState.time && notifiedDay !== day) {
-          new Notification("MANABIXX 学習リマインダー", { body: "今日の学習を始めましょう。", icon: modePath.includes("/practice/kosen") ? "/flutter/kosen-icon.svg" : "/flutter/foundation-icon.svg" });
+          new Notification("MANABIXX 学習リマインダー", { body: "今日の学習を始めましょう。", icon: modePath.includes("/practice/kosen") ? "/kosen-icon.svg" : "/foundation-icon.svg" });
           notifiedDay = day;
           localStorage.setItem("manabixx.daily-reminder.last-sent", day);
         }
@@ -176,6 +192,11 @@
     _flutter.loader.load({
       config: flutterConfig,
       onEntrypointLoaded: async (engineInitializer) => {
+        // First launch waits for the complete app and dataset cache, up to two minutes.
+        await Promise.race([
+          window.manabixxOfflineReady || Promise.resolve(),
+          new Promise((resolve) => window.setTimeout(resolve, 120000)),
+        ]);
         const appRunner = await engineInitializer.initializeEngine(flutterConfig);
         await appRunner.runApp();
         const splash = document.getElementById('app-loading');
