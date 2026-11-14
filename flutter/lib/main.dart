@@ -217,9 +217,11 @@ class _HomeDashboardState extends State<_HomeDashboard> {
 
   Future<void> _openExternal(String url) async {
     final ok = await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
-    if (!ok && mounted) ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('リンクを開けませんでした。')),
-    );
+    if (!ok && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('リンクを開けませんでした。')),
+      );
+    }
   }
 
   Widget _heading(String title, String sub) => Padding(
@@ -235,7 +237,7 @@ class _HomeDashboardState extends State<_HomeDashboard> {
     child: InkWell(
       borderRadius: BorderRadius.circular(17),
       onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) =>
-        FoundationPracticePage(title: name + 'の基礎演習', includeAllSubjects: true, initialSubject: key))),
+        FoundationPracticePage(title: '${name}の基礎演習', includeAllSubjects: true, initialSubject: key))),
       child: Padding(padding: const EdgeInsets.all(12), child: Row(children: [
         Container(width: 38, height: 38,
           decoration: BoxDecoration(color: const Color(0xFF382719), borderRadius: BorderRadius.circular(12)),
@@ -263,7 +265,7 @@ class _HomeDashboardState extends State<_HomeDashboard> {
   Widget _news(String title, String detail, String source, VoidCallback tap) => Card(
     child: ListTile(
       title: Text(title, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 13)),
-      subtitle: Text(detail + '\n' + source,
+      subtitle: Text('$detail\n$source',
         style: const TextStyle(color: Color(0xFF9999A1), fontSize: 10, height: 1.6)),
       isThreeLine: true,
       trailing: const Icon(Icons.open_in_new_rounded, color: _orange, size: 18),
@@ -303,16 +305,16 @@ class _HomeDashboardState extends State<_HomeDashboard> {
       const SizedBox(height: 12),
       Card(child: Padding(padding: const EdgeInsets.all(16), child: Column(
         crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Row(children: [
-            const Expanded(child: Text('今日の学習', style: TextStyle(fontWeight: FontWeight.w800))),
-            const Text('目安 20問', style: TextStyle(color: _orange, fontSize: 10, fontWeight: FontWeight.w800)),
+          const Row(children: [
+            Expanded(child: Text('今日の学習', style: TextStyle(fontWeight: FontWeight.w800))),
+            Text('目安 20問', style: TextStyle(color: _orange, fontSize: 10, fontWeight: FontWeight.w800)),
           ]),
           const SizedBox(height: 8),
           Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
             Text(_progressLoaded ? '$_todayAnswered' : '—', style: const TextStyle(fontSize: 36, fontWeight: FontWeight.w900)),
             const Padding(padding: EdgeInsets.only(bottom: 7, left: 6), child: Text('問回答', style: TextStyle(color: Color(0xFFB6B6BE), fontSize: 12))),
             const Spacer(),
-            Text((_todayAnswered / 20 * 100).clamp(0, 100).round().toString() + '%', style: const TextStyle(color: _orange, fontWeight: FontWeight.w900)),
+            Text('${(_todayAnswered / 20 * 100).clamp(0, 100).round()}%', style: const TextStyle(color: _orange, fontWeight: FontWeight.w900)),
           ]),
           const SizedBox(height: 8),
           ClipRRect(borderRadius: BorderRadius.circular(20), child: LinearProgressIndicator(
@@ -444,10 +446,12 @@ class _ModeHomePageState extends State<_ModeHomePage> {
 
   void _openModeSubject(String subject, String label) {
     Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) {
-      if (_kosen) return KosenPracticePage(title: '制作者専用モード',
-        initialSubject: subject, additionalDataPaths: const ['/data/questions.json']);
+      if (_kosen) {
+        return KosenPracticePage(title: '制作者専用モード',
+          initialSubject: subject, additionalDataPaths: const ['/data/questions.json']);
+      }
       return FoundationPracticePage(dataPath: '/data/foundation-training.json',
-        title: '下積みモード · ' + label, includeAllSubjects: true,
+        title: '下積みモード · $label', includeAllSubjects: true,
         additionalDataPaths: const ['/data/questions.json', '/data/public-exam.json'],
         initialSubject: subject);
     }));
