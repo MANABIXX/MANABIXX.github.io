@@ -29,6 +29,17 @@ for (const subject of expectedSubjects) {
     }
   }
 }
+const registryQuestions = kosen.questions.filter((question) => question.id.startsWith('registry-'));
+for (const source of sources.sources) {
+  if (!(source.topicHints ?? []).length) continue;
+  const generated = registryQuestions.filter((question) =>
+    question.sourceYear === source.year &&
+    question.subject === source.subject &&
+    question.sourceFile === source.localPath);
+  if (generated.length === 0) {
+    throw new Error('抽出された過去問分野からの生成問題がありません: ' + source.subject + ' ' + source.year);
+  }
+}
 const ids = new Set();
 for (const question of kosen.questions) {
   if (ids.has(question.id)) throw new Error('問題IDが重複しています: ' + question.id);
@@ -40,10 +51,10 @@ for (const question of kosen.questions) {
 }
 const mathIds = new Set(math.questions.map((question) => question.id));
 const generatedMath = kosen.questions.filter((question) =>
-  question.subject === 'math' && question.id.startsWith('reg-math-'));
+  question.subject === 'math' && (question.id.startsWith('reg-math-') || question.id.startsWith('registry-')));
 for (const question of generatedMath) {
   if (!mathIds.has(question.id)) {
     throw new Error('数学大問1用データへの統合漏れ: ' + question.id);
   }
 }
-console.log(`高専過去問生成データ OK: ${sources.sources.length} PDFs / ${kosen.questions.length} questions / ${generatedMath.length} generated math questions`);
+console.log(`高専過去問生成データ OK: ${sources.sources.length} PDFs / ${kosen.questions.length} questions / ${registryQuestions.length} registry-derived / ${generatedMath.length} math-section-1 questions`);
