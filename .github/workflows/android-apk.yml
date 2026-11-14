@@ -40,25 +40,18 @@ jobs:
         working-directory: flutter
         run: flutter create --platforms=android --org jp.manabixx .
 
-      - name: Work around Android Lint release analyzer crash
+      - name: Configure Android Lint workaround for all modules
         working-directory: flutter
         shell: bash
         run: |
-          if [ -f android/app/build.gradle.kts ]; then
-            APP_GRADLE="android/app/build.gradle.kts"
-          elif [ -f android/app/build.gradle ]; then
-            APP_GRADLE="android/app/build.gradle"
-          else
-            echo "Android app Gradle file not found"
-            exit 1
-          fi
-          cat >> "$APP_GRADLE" <<'GRADLE'
-
-          // Android Lint's CommentDetector currently crashes inside url_launcher_android
-          // with a JavaDocParser NoSuchMethodError; Dart analysis and Flutter tests run above.
-          tasks.configureEach {
-              if (name == "lintVitalAnalyzeRelease") {
-                  enabled = false
+          cat > android/disable-lint.init.gradle <<'GRADLE'
+          gradle.projectsEvaluated {
+              rootProject.allprojects { project ->
+                  project.tasks.configureEach { task ->
+                      if (task.name == "lintVitalAnalyzeRelease") {
+                          task.enabled = false
+                      }
+                  }
               }
           }
           GRADLE
@@ -89,7 +82,13 @@ jobs:
 
       - name: Build universal release APK
         working-directory: flutter
-        run: flutter build apk --release --no-pub
+        shell: bash
+        run: |
+          cd android
+          ./gradlew --no-daemon -I disable-lint.init.gradle :app:assembleRelease
+          cd ..
+          mkdir -p build/app/outputs/flutter-apk
+          cp android/app/build/outputs/apk/release/app-release.apk build/app/outputs/flutter-apk/app-release.apk
 
       - name: Verify APK and calculate checksum
         id: apk
@@ -111,7 +110,7 @@ jobs:
         working-directory: flutter
         shell: bash
         run: |
-          VERSION="$(sed -n 's/^version:[[:space:]]*\([^+[:space:]]*\).*/\1/p' pubspec.yaml)"
+          VERSION="$(sed -n 's/^version:[[:space:]]*\\([^+[:space:]]*\\).*/\\1/p' pubspec.yaml)"
           if [ -z "$VERSION" ]; then echo "Could not read version from pubspec.yaml"; exit 1; fi
           echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
@@ -140,8 +139,8 @@ jobs:
           Build: GitHub Actions from main.
           SHA-256: $APK_SHA256"
           else
-            gh release create "$TAG" "$APK#MANABIXX-Android.apk" \
-              --title "MANABIXX v$VERSION" \
+            gh release create "$TAG" "$APK#MANABIXX-Android.apk" \\
+              --title "MANABIXX v$VERSION" \\
               --notes "MANABIXX Android APK release.
 
           Install: download MANABIXX-Android.apk and open it on an Android device.
