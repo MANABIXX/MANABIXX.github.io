@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:manabixx_web/foundation_practice.dart';
@@ -37,6 +39,24 @@ void main() {
     await tapVisible(tester, find.text('学習'));
     expect(find.text('学習メニュー'), findsOneWidget);
     expect(find.text('基礎網羅問題'), findsOneWidget);
+  });
+
+  testWidgets('aggregates today answers across local practice datasets', (tester) async {
+    final now = DateTime.now().toIso8601String();
+    final yesterday = DateTime.now().subtract(const Duration(days: 1)).toIso8601String();
+    SharedPreferences.setMockInitialValues({
+      'manabixx.learning.data_questions.json.history': jsonEncode([
+        {'completedAt': now, 'total': 2, 'score': 2},
+        {'completedAt': yesterday, 'total': 7, 'score': 5},
+      ]),
+      'manabixx.learning.data_public-exam.json.history': jsonEncode([
+        {'completedAt': now, 'total': 3, 'score': 2},
+      ]),
+    });
+    await prepareViewport(tester);
+    await tester.pumpWidget(const ManabiXXApp());
+    await tester.pumpAndSettle();
+    expect(find.text('5'), findsOneWidget);
   });
 
   testWidgets('loads existing foundation questions and completes a session', (tester) async {
