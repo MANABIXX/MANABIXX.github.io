@@ -521,17 +521,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
             Expanded(flex: 5, child: choicesPanel),
           ])
         else
-          Column(children: [
-            Flexible(
-              flex: 4,
-              child: SingleChildScrollView(child: questionPanel),
-            ),
-            const SizedBox(height: 12),
-            Flexible(
-              flex: 6,
-              child: SingleChildScrollView(child: choicesPanel),
-            ),
-          ]),
+          Column(mainAxisSize: MainAxisSize.min, children: [questionPanel, const SizedBox(height: 12), choicesPanel]),
       ],
     );
   }
