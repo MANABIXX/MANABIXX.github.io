@@ -4,14 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
+<meta name="manabixx-app-base" content="/flutter/">
 <title>ページが見つかりません | MANABIXX</title>
 <script>
 (() => {
   const path = location.pathname;
-  if (path.startsWith('/flutter/') && path !== '/flutter/') {
+  const appBase = document.querySelector('meta[name="manabixx-app-base"]')?.content || '/flutter/';
+  if (path.startsWith(appBase) && path !== appBase) {
     const requested = path + location.search + location.hash;
     try { sessionStorage.setItem('manabixx_flutter_redirect', requested); } catch (_) {}
-    location.replace('/flutter/');
+    location.replace(appBase);
   }
 })();
 </script>

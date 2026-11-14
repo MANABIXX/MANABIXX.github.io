@@ -1,6 +1,6 @@
 {
   "repository": "MANABIXX/content-registry",
-  "commit": "614e36330a07eea963b8e1eca1921eba68d554aa",
+  "commit": "ee77f47e5cdff43bad800c6aa646115112b2b265",
   "datasets": [
     "question-bank",
     "public-exam",
@@ -16,6 +16,7 @@
     "supplementary-ja",
     "supplementary-ma",
     "supplementary-sc",
-    "supplementary-so"
+    "supplementary-so",
+    "kosen-past-exams"
   ]
 }

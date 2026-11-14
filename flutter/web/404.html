@@ -9,7 +9,8 @@
     (() => {
       const requested = location.pathname + location.search + location.hash;
       try { sessionStorage.setItem('manabixx_flutter_redirect', requested); } catch (_) {}
-      location.replace('/flutter/');
+      const appBase = location.pathname.startsWith('/flutter/') ? '/flutter/' : '/';
+      location.replace(appBase);
     })();
   </script>
 </head>

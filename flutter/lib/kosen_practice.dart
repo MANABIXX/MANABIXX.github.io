@@ -15,6 +15,8 @@ class KosenQuestion {
     required this.options,
     required this.correct,
     required this.explanation,
+    this.sourceLabel = '',
+    this.sourceNote = '',
   });
 
   final String id;
@@ -25,6 +27,8 @@ class KosenQuestion {
   final List<String> options;
   final int correct;
   final String explanation;
+  final String sourceLabel;
+  final String sourceNote;
 
   factory KosenQuestion.fromJson(Map<String, dynamic> json) {
     final options = (json['options'] as List<dynamic>).cast<String>();
@@ -41,12 +45,14 @@ class KosenQuestion {
       options: options,
       correct: correct,
       explanation: json['explanation'] as String,
+      sourceLabel: json['sourceLabel'] as String? ?? '',
+      sourceNote: json['sourceNote'] as String? ?? '',
     );
   }
 }
 
 class KosenPracticePage extends StatefulWidget {
-  const KosenPracticePage({super.key, this.loadQuestions, this.dataPath = '/data/kosen-questions.json', this.title = '専用演習', this.initialSubject = 'all'});
+  const KosenPracticePage({super.key, this.loadQuestions, this.dataPath = '/data/kosen-questions.json', this.title = '製作者専用モード', this.initialSubject = 'all'});
 
   final Future<List<KosenQuestion>> Function()? loadQuestions;
   final String dataPath;
@@ -63,6 +69,8 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
     'math': '数学',
     'science': '理科',
     'english': '英語',
+    'social': '社会',
+    'japanese': '国語',
   };
 
   List<KosenQuestion> _questions = [];
@@ -173,6 +181,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
   }
 
   String _subjectName(String value) => _subjects[value] ?? value;
+  String _topicName(String value) => const {'civics':'公民','history':'歴史','geography':'地理','earth':'地学','physics':'物理','chemistry':'化学','biology':'生物'}[value.toLowerCase()] ?? value;
 
   @override
   Widget build(BuildContext context) {
@@ -188,8 +197,9 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
       body: Focus(
         autofocus: true,
         onKeyEvent: (node, event) {
-          if (event is! KeyDownEvent || !_started || _finished || _selected != null) return KeyEventResult.ignored;
+          if (event is! KeyDownEvent || !_started || _finished) return KeyEventResult.ignored;
           final key = event.logicalKey;
+          if (_selected != null) { if (key == LogicalKeyboardKey.enter || key == LogicalKeyboardKey.numpadEnter) { _next(); return KeyEventResult.handled; } return KeyEventResult.ignored; }
           if (key == LogicalKeyboardKey.arrowLeft || key == LogicalKeyboardKey.arrowUp) { setState(() => _keyboardIndex = (_keyboardIndex + 3) % 4); return KeyEventResult.handled; }
           if (key == LogicalKeyboardKey.arrowRight || key == LogicalKeyboardKey.arrowDown) { setState(() => _keyboardIndex = (_keyboardIndex + 1) % 4); return KeyEventResult.handled; }
           if (key == LogicalKeyboardKey.digit1 || key == LogicalKeyboardKey.numpad1 || key == LogicalKeyboardKey.digit2 || key == LogicalKeyboardKey.numpad2 || key == LogicalKeyboardKey.digit3 || key == LogicalKeyboardKey.numpad3 || key == LogicalKeyboardKey.digit4 || key == LogicalKeyboardKey.numpad4) {
@@ -202,7 +212,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
         child: SafeArea(
         child: Center(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 760),
+            constraints: const BoxConstraints(maxWidth: 1120),
             child: Padding(
               padding: const EdgeInsets.all(20),
               child: _loading
@@ -238,7 +248,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
   Widget _buildSelection() => ListView(
         children: [
           Text(
-            'EXAM PRACTICE / INDEPENDENT MODE',
+            '入試対策 / 集中演習',
             style: Theme.of(context).textTheme.labelMedium?.copyWith(
                   color: Theme.of(context).colorScheme.primary,
                   letterSpacing: 1.4,
@@ -247,14 +257,14 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
           ),
           const SizedBox(height: 12),
           Text(
-            '専用演習',
+            widget.title,
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                   fontWeight: FontWeight.w800,
                 ),
           ),
           const SizedBox(height: 8),
           Text(
-            '教科ごとのオリジナル問題に、集中して取り組めます。',
+            '偏差値65を目標に、5教科の基礎から応用まで段階的に取り組む4択演習です。',
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           const SizedBox(height: 28),
@@ -314,7 +324,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
           ),
           const SizedBox(height: 12),
           const Text(
-            'このモードの問題は学習用のオリジナル問題です。公式過去問そのものではありません。',
+            '収録問題は過去問の設問を転載せず、出題形式を参考に新規作成したオリジナル問題です。',
           ),
         ],
       );
@@ -322,29 +332,33 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
   Widget _buildQuestion() {
     final question = _current;
     final answered = _selected != null;
-    return ListView(
-      children: [
-        Row(
+    final twoColumns = MediaQuery.sizeOf(context).width >= 900;
+
+    final questionPanel = Card(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(22, 26, 22, 26),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(child: Text('${_subjectName(question.subject)} / ${question.topic}')),
-            Text('${_index + 1} / ${_session.length}'),
+            Text('${question.level} · 問題 ${(_index + 1).toString().padLeft(2, '0')}',
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                color: Theme.of(context).colorScheme.primary, letterSpacing: 1.2)),
+            const SizedBox(height: 16),
+            Text(question.prompt,
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(height: 1.55, fontWeight: FontWeight.w800)),
+            if (question.sourceLabel.isNotEmpty || question.sourceNote.isNotEmpty) ...[
+              const SizedBox(height: 18),
+              Text('${question.sourceLabel} ${question.sourceNote}'.trim(),
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(color: const Color(0xFFB6B6BE), height: 1.5)),
+            ],
           ],
         ),
-        const SizedBox(height: 12),
-        LinearProgressIndicator(value: (_index + 1) / _session.length),
-        const SizedBox(height: 28),
-        Text(
-          '${question.level} · QUESTION ${(_index + 1).toString().padLeft(2, '0')}',
-          style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                color: Theme.of(context).colorScheme.primary,
-              ),
-        ),
-        const SizedBox(height: 12),
-        Text(
-          question.prompt,
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(height: 1.5),
-        ),
-        const SizedBox(height: 24),
+      ),
+    );
+
+    final choicesPanel = Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
         for (var i = 0; i < question.options.length; i++)
           Padding(
             padding: const EdgeInsets.only(bottom: 10),
@@ -357,49 +371,54 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
                   color: !answered && i == _keyboardIndex
                       ? Theme.of(context).colorScheme.primary
                       : answered && i == question.correct
-                      ? Colors.green
-                      : answered && i == _selected
-                          ? Colors.redAccent
-                          : Theme.of(context).colorScheme.outline,
-                ),
+                          ? Colors.green
+                          : answered && i == _selected
+                              ? Colors.redAccent
+                              : Theme.of(context).colorScheme.outline,
+                  width: !answered && i == _keyboardIndex ? 2 : 1),
               ),
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    radius: 14,
-                    child: Text(String.fromCharCode(65 + i)),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(child: Text(question.options[i])),
-                  if (answered && i == question.correct)
-                    const Icon(Icons.check_circle, color: Colors.green),
-                  if (answered && i == _selected && i != question.correct)
-                    const Icon(Icons.cancel, color: Colors.redAccent),
-                ],
-              ),
+              child: Row(children: [
+                CircleAvatar(radius: 14, child: Text(String.fromCharCode(65 + i))),
+                const SizedBox(width: 12),
+                Expanded(child: Text(question.options[i])),
+                if (answered && i == question.correct) const Icon(Icons.check_circle, color: Colors.green),
+                if (answered && i == _selected && i != question.correct) const Icon(Icons.cancel, color: Colors.redAccent),
+              ]),
             ),
           ),
-        if (answered) ...[
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    _selected == question.correct ? '正解！' : '正解は ${String.fromCharCode(65 + question.correct)} です',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(question.explanation),
-                ],
-              ),
-            ),
+        if (answered) Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(_selected == question.correct ? '正解！' : '正解は ${String.fromCharCode(65 + question.correct)} です',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 8),
+              Text(question.explanation),
+              const SizedBox(height: 8),
+              const Text('Enterキーで次へ進めます。', style: TextStyle(color: Color(0xFF99999A), fontSize: 12)),
+            ]),
           ),
-          const Padding(padding: EdgeInsets.symmetric(vertical: 12), child: Center(child: Text('次の問題へ自動で進みます…', style: TextStyle(color: Color(0xFF99999A))))),
-        ],
+        ),
+      ],
+    );
+
+    return ListView(
+      children: [
+        Row(children: [
+          Expanded(child: Text('${_subjectName(question.subject)} / ${_topicName(question.topic)}')),
+          Text('${_index + 1} / ${_session.length}'),
+        ]),
+        const SizedBox(height: 12),
+        LinearProgressIndicator(value: (_index + 1) / _session.length),
+        const SizedBox(height: 24),
+        if (twoColumns)
+          Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Expanded(flex: 6, child: questionPanel),
+            const SizedBox(width: 20),
+            Expanded(flex: 5, child: choicesPanel),
+          ])
+        else
+          Column(children: [questionPanel, const SizedBox(height: 18), choicesPanel]),
       ],
     );
   }
