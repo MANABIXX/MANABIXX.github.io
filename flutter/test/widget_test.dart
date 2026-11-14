@@ -111,7 +111,12 @@ void main() {
 
     expect(find.text('模試・予想問題'), findsWidgets);
     expect(find.text('1問'), findsOneWidget);
+    await tester.tap(find.byType(DropdownButtonFormField<String>).first);
+    await tester.pumpAndSettle();
     expect(find.text('国語'), findsOneWidget);
+    await tester.tap(find.text('国語'));
+    await tester.pumpAndSettle();
+    expect(find.text('1問'), findsOneWidget);
   });
 
   testWidgets('loads isolated practice data and completes a session', (tester) async {
