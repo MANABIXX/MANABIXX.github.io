@@ -2,7 +2,7 @@
 
 This folder is the reviewed content inbox for the daily question importer.
 
-Add one UTF-8 JSON file named `YYYY-MM-DD.json` for each batch. The top-level shape is:
+Add one UTF-8 JSON file per category, named `YYYY-MM-DD-foundation.json`, `YYYY-MM-DD-publicExam.json`, or `YYYY-MM-DD-kosen.json`. The top-level shape is:
 
 ```json
 {
