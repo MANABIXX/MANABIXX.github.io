@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:manabixx_web/foundation_practice.dart';
 import 'package:manabixx_web/kosen_practice.dart';
 
 void main() {
@@ -26,6 +27,8 @@ class ManabiXXApp extends StatelessWidget {
         useMaterial3: true,
       ),
       routes: {
+        '/foundation': (_) => const FoundationPracticePage(),
+        '/foundation/': (_) => const FoundationPracticePage(),
         '/kosen': (_) => const KosenPracticePage(),
         '/kosen/': (_) => const KosenPracticePage(),
       },
@@ -34,7 +37,8 @@ class ManabiXXApp extends StatelessWidget {
           appBar: AppBar(title: const Text('ページが見つかりません')),
           body: Center(
             child: FilledButton(
-              onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false),
+              onPressed: () => Navigator.of(context)
+                  .pushNamedAndRemoveUntil('/', (route) => false),
               child: const Text('ホームへ戻る'),
             ),
           ),
@@ -90,17 +94,19 @@ class MigrationHomePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 const Text(
-                  'Flutter Webへの移行基盤です。現在の公開サイトはそのまま維持し、'
-                  '画面・問題データ・学習履歴の互換性を確認しながら段階的に移植します。',
+                  '基礎網羅問題をFlutter Webへ移植しました。既存の1,180問を読み込み、'
+                  '教科・分野・問題数を選んで演習できます。公開サイトは維持したまま、'
+                  'ほかの学習機能も順次移行します。',
                   style: TextStyle(height: 1.8, color: Color(0xFFB7BBC5)),
                 ),
                 const SizedBox(height: 24),
                 const _MigrationStatusCard(),
                 const SizedBox(height: 16),
                 FilledButton.icon(
-                  onPressed: () => Navigator.of(context).pushNamed('/kosen'),
-                  icon: const Icon(Icons.school_outlined),
-                  label: const Text('高専専用モードを開く'),
+                  onPressed: () =>
+                      Navigator.of(context).pushNamed('/foundation'),
+                  icon: const Icon(Icons.auto_stories_outlined),
+                  label: const Text('基礎網羅問題を開く'),
                 ),
               ],
             ),
@@ -124,8 +130,9 @@ class _MigrationStatusCard extends StatelessWidget {
           children: [
             Text('移行ステータス', style: TextStyle(fontWeight: FontWeight.w700)),
             SizedBox(height: 12),
-            _StatusRow(label: 'Flutter Web基盤', value: '準備中'),
-            _StatusRow(label: '既存Study機能の移植', value: '未着手'),
+            _StatusRow(label: 'Flutter Web基盤', value: '実装済み'),
+            _StatusRow(label: '基礎網羅問題', value: '演習機能を実装'),
+            _StatusRow(label: '教材・入試・進捗機能', value: '移行中'),
             _StatusRow(label: '公開サイトの切替', value: '未実施'),
           ],
         ),
