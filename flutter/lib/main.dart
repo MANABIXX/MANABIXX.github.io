@@ -92,8 +92,8 @@ class _MigrationStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: const Padding(
+    return const Card(
+      child: Padding(
         padding: EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
