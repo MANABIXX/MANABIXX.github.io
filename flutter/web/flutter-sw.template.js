@@ -1,7 +1,7 @@
 const DATA_VERSION = '__DATA_VERSION__';
 const APP_VERSION = '__APP_VERSION__';
 const CACHE_PREFIX = 'manabixx-offline-';
-const CACHE_NAME = CACHE_PREFIX + APP_VERSION;
+const CACHE_NAME = CACHE_PREFIX + APP_VERSION + '-' + DATA_VERSION;
 const DATA_MANIFEST = '/offline-data-manifest.json';
 const APP_MANIFEST = '/offline-app-manifest.json';
 const APP_SHELL = ['/', '/index.html', '/404.html', '/manifest.webmanifest', DATA_MANIFEST, APP_MANIFEST];
@@ -12,26 +12,37 @@ async function fetchInto(cache, url) {
   await cache.put(url, response.clone());
 }
 
+async function fetchListInto(cache, urls) {
+  const queue = [...urls];
+  const workers = Array.from({ length: Math.min(6, queue.length) }, async () => {
+    while (queue.length) {
+      const url = queue.shift();
+      await fetchInto(cache, url);
+    }
+  });
+  await Promise.all(workers);
+}
+
 async function syncAllData(cache) {
   const response = await fetch(DATA_MANIFEST, { cache: 'no-store' });
-  if (!response.ok) throw new Error('Offline manifest unavailable: ' + response.status);
+  if (!response.ok) throw new Error('Offline data manifest unavailable: ' + response.status);
   const manifest = await response.json();
-  if (!Array.isArray(manifest.files) || manifest.files.length === 0) {
-    throw new Error('Offline manifest contains no datasets.');
+  if (!manifest.version || !Array.isArray(manifest.files) || manifest.files.length === 0) {
+    throw new Error('Offline data manifest is empty or invalid.');
   }
   await cache.put(DATA_MANIFEST, response.clone());
-  await Promise.all(manifest.files.map((url) => fetchInto(cache, url)));
+  await fetchListInto(cache, manifest.files);
 }
 
 async function precacheApp(cache) {
   const response = await fetch(APP_MANIFEST, { cache: 'no-store' });
-  if (!response.ok) throw new Error('App manifest unavailable: ' + response.status);
+  if (!response.ok) throw new Error('Offline app manifest unavailable: ' + response.status);
   const manifest = await response.json();
-  if (!Array.isArray(manifest.files) || manifest.files.length === 0) {
-    throw new Error('App manifest contains no files.');
+  if (!manifest.version || !Array.isArray(manifest.files) || manifest.files.length === 0) {
+    throw new Error('Offline app manifest is empty or invalid.');
   }
   await cache.put(APP_MANIFEST, response.clone());
-  await Promise.all(manifest.files.map((url) => fetchInto(cache, url)));
+  await fetchListInto(cache, manifest.files);
 }
 
 self.addEventListener('install', (event) => {
@@ -70,7 +81,9 @@ self.addEventListener('fetch', (event) => {
         }
         return response;
       } catch (_) {
-        return (await caches.match(request)) || (await caches.match('/index.html')) || (await caches.match('/'));
+        return (await caches.match(request)) ||
+          (await caches.match('/index.html')) ||
+          (await caches.match('/'));
       }
     })());
     return;
