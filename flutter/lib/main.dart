@@ -484,10 +484,10 @@ class _ModeHomePageState extends State<_ModeHomePage> {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 16, 20, 28),
         children: [
-          Text(_kosen ? 'FOCUS / KOSEN' : 'FOCUS / FOUNDATION',
+          Text(_kosen ? 'PRIVATE WORKSPACE' : 'FOCUS / FOUNDATION',
             style: const TextStyle(color: _orange, fontSize: 11, letterSpacing: 2, fontWeight: FontWeight.w900)),
           const SizedBox(height: 8),
-          Text(_kosen ? '今日の一問が、合格に近づく。' : '基礎を積み重ねて、確かな得点力へ。',
+          Text(_kosen ? '今日の一問を、次の目標につなげる。' : '基礎を積み重ねて、確かな得点力へ。',
             style: const TextStyle(fontSize: 23, fontWeight: FontWeight.w900)),
           const SizedBox(height: 20),
           Card(child: Padding(
