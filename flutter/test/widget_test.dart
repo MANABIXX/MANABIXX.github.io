@@ -43,6 +43,20 @@ void main() {
     expect(find.text('教材ライブラリ'), findsNothing);
   });
 
+  testWidgets('opens the independent Kosen home after password confirmation', (tester) async {
+    await prepareViewport(tester);
+    await tester.pumpWidget(const ManabiXXApp());
+    await tapVisible(tester, find.text('学習'));
+    await tapVisible(tester, find.text('製作者専用モード'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField).last, 'kosen');
+    await tester.tap(find.text('認証する'));
+    await tester.pumpAndSettle();
+    expect(find.text('専用ホーム'), findsOneWidget);
+    expect(find.text('ホーム画面に追加'), findsOneWidget);
+    expect(find.text('演習を始める'), findsOneWidget);
+  });
+
   testWidgets('aggregates today answers across local practice datasets', (tester) async {
     final now = DateTime.now().toIso8601String();
     final yesterday = DateTime.now().subtract(const Duration(days: 1)).toIso8601String();
