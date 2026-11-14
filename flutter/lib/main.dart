@@ -237,7 +237,7 @@ class _HomeDashboardState extends State<_HomeDashboard> {
     child: InkWell(
       borderRadius: BorderRadius.circular(17),
       onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) =>
-        FoundationPracticePage(title: '${name}の基礎演習', includeAllSubjects: true, initialSubject: key))),
+        FoundationPracticePage(title: '$nameの基礎演習', includeAllSubjects: true, initialSubject: key))),
       child: Padding(padding: const EdgeInsets.all(12), child: Row(children: [
         Container(width: 38, height: 38,
           decoration: BoxDecoration(color: const Color(0xFF382719), borderRadius: BorderRadius.circular(12)),
