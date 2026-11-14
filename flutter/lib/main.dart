@@ -5,7 +5,7 @@ import 'package:manabixx_web/kosen_practice.dart';
 import 'package:manabixx_web/knowledge_library.dart';
 
 void main() {
-  usePathUrlStrategy();
+  useHashUrlStrategy();
   runApp(const ManabiXXApp());
 }
 
