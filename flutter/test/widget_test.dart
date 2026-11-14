@@ -13,8 +13,7 @@ Future<void> prepareViewport(WidgetTester tester) async {
   tester.view.physicalSize = const Size(800, 1400);
   tester.view.devicePixelRatio = 1;
   await tester.pumpAndSettle();
-
-
+}
 
 Future<void> tapVisible(WidgetTester tester, Finder finder) async {
   await tester.ensureVisible(finder);
