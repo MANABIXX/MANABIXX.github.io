@@ -63,13 +63,8 @@ jobs:
       - name: Build Flutter for the Pages root
         working-directory: flutter
         run: flutter build web --release --wasm --base-href /
-      - name: Assemble root data, icon, and SPA fallback
-        run: |
-          mkdir -p flutter/build/web/data flutter/build/web/assets
-          cp -R static/data/. flutter/build/web/data/
-          cp static/assets/study-icon.svg flutter/build/web/assets/study-icon.svg
-          cp flutter/build/web/index.html flutter/build/web/404.html
-          npm run validate:flutter-root
+      - name: Assemble complete offline root app
+        run: npm run assemble:flutter-root && npm run validate:flutter-root
       - name: Save preview artifact
         if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
