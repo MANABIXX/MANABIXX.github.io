@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:manabixx_web/kosen_practice.dart';
 import 'package:manabixx_web/main.dart';
@@ -14,7 +14,7 @@ void main() {
   });
 
   testWidgets('loads real-shaped question data and completes a practice session', (tester) async {
-    final question = KosenQuestion(
+    const question = KosenQuestion(
       id: 'test-math-001',
       subject: 'math',
       topic: '一次関数',
