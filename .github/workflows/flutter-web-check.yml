@@ -26,18 +26,35 @@ jobs:
         working-directory: flutter
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install repository tools
+        working-directory: .
+        run: npm install
+      - name: Prepare offline dataset and versioned worker
+        working-directory: .
+        run: npm run prepare:flutter-offline
+      - name: Prepare bundled Japanese fonts
+        working-directory: .
+        run: npm run fetch:flutter-fonts
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
           cache: true
-      - name: Prepare bundled Japanese fonts
-        working-directory: .
-        run: npm run fetch:flutter-fonts
       - name: Resolve dependencies
         run: flutter pub get
       - name: Analyze Dart sources
         run: flutter analyze
       - name: Run widget tests
         run: flutter test
-      - name: Build GitHub Pages-compatible web output
-        run: flutter build web --release --wasm --base-href "${FLUTTER_BASE_HREF:-/flutter/}"
+      - name: Build GitHub Pages root output
+        run: flutter build web --release --wasm --base-href /
+      - name: Assemble root data, icon, and fallback
+        working-directory: .
+        run: |
+          mkdir -p flutter/build/web/data flutter/build/web/assets
+          cp -R static/data/. flutter/build/web/data/
+          cp static/assets/study-icon.svg flutter/build/web/assets/study-icon.svg
+          cp flutter/build/web/index.html flutter/build/web/404.html
+          npm run validate:flutter-root
