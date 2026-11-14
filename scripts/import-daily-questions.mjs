@@ -23,7 +23,7 @@ const valid = (q, file) => {
 
 let entries = [];
 try {
-  entries = (await fs.readdir(inbox)).filter((name) => /^\d{4}-\d{2}-\d{2}\.json$/.test(name)).sort();
+  entries = (await fs.readdir(inbox)).filter((name) => /^\d{4}-\d{2}-\d{2}-(foundation|publicExam|kosen)\.json$/.test(name)).sort();
 } catch (error) {
   if (error.code !== 'ENOENT') throw error;
 }
@@ -36,7 +36,7 @@ const dataRoot = path.join(root, 'static', 'data');
 const changed = [];
 for (const filename of entries) {
   const batch = JSON.parse(await fs.readFile(path.join(inbox, filename), 'utf8'));
-  const filenameMatch = filename.match(/^(\\d{4}-\\d{2}-\\d{2})-(foundation|publicExam|kosen)\\.json$/);
+  const filenameMatch = filename.match(/^(\d{4}-\d{2}-\d{2})-(foundation|publicExam|kosen)\.json$/);
   if (!filenameMatch || batch.date !== filenameMatch[1] || batch.category !== filenameMatch[2] || !Array.isArray(batch.questions)) {
     throw new Error('Daily batch filename/date/category mismatch: ' + filename);
   }
