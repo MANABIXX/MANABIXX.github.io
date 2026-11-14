@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:manabixx_web/kosen_practice.dart';
 
 void main() {
+  usePathUrlStrategy();
   runApp(const ManabiXXApp());
 }
 
@@ -24,6 +26,17 @@ class ManabiXXApp extends StatelessWidget {
         useMaterial3: true,
       ),
       routes: {'/kosen': (_) => const KosenPracticePage()},
+      onUnknownRoute: (_) => MaterialPageRoute<void>(
+        builder: (_) => Scaffold(
+          appBar: AppBar(title: const Text('ページが見つかりません')),
+          body: Center(
+            child: FilledButton(
+              onPressed: () => Navigator.of(_).pushNamedAndRemoveUntil('/', (route) => false),
+              child: const Text('ホームへ戻る'),
+            ),
+          ),
+        ),
+      ),
       home: const MigrationHomePage(),
     );
   }
