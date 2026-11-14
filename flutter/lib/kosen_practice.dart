@@ -87,11 +87,51 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
   int _keyboardIndex = 0;
   int? _selected;
   int _score = 0;
+  List<String> _wrongQuestionIds = [];
+  String get _historyKey => widget.dataPath == '/data/kosen-questions.json' ? 'manabixx.mode.kosen.history' : 'manabixx.mode.kosen.history.${widget.dataPath.hashCode}';
+  String get _wrongKey => '$_historyKey.wrong';
 
   @override
   void initState() {
     super.initState();
     _load();
+    _loadProgress();
+  }
+
+  Future<void> _loadProgress() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (!mounted) return;
+      setState(() => _wrongQuestionIds = prefs.getStringList(_wrongKey) ?? []);
+    } catch (_) {}
+  }
+
+  Future<void> _saveAnswer(KosenQuestion question, int choice) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (choice == question.correct) {
+        _wrongQuestionIds.remove(question.id);
+      } else if (!_wrongQuestionIds.contains(question.id)) {
+        _wrongQuestionIds.add(question.id);
+      }
+      await prefs.setStringList(_wrongKey, _wrongQuestionIds);
+      if (mounted) setState(() {});
+    } catch (_) {}
+  }
+
+  void _startReview() {
+    final review = _questions.where((question) => _wrongQuestionIds.contains(question.id)).toList()
+      ..shuffle(Random());
+    if (review.isEmpty) return;
+    setState(() {
+      _session = review;
+      _index = 0;
+      _keyboardIndex = 0;
+      _selected = null;
+      _score = 0;
+      _started = true;
+      _finished = false;
+    });
   }
 
   Future<List<KosenQuestion>> _fetchQuestions() async {
@@ -168,12 +208,13 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
       if (correct) _score++;
     });
     if (correct) unawaited(HapticFeedback.mediumImpact());
+    unawaited(_saveAnswer(_current, choice));
   }
 
   Future<void> _saveSession() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final key = 'manabixx.mode.kosen.history';
+      final key = _historyKey;
       final rows = (jsonDecode(prefs.getString(key) ?? '[]') as List<dynamic>)
           .whereType<Map<String, dynamic>>().toList();
       rows.insert(0, {'completedAt': DateTime.now().toIso8601String(), 'title': widget.title, 'total': _session.length, 'score': _score});
@@ -208,6 +249,23 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: _started && !_finished && _selected != null
+          ? SafeArea(
+              top: false,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 58,
+                  child: FilledButton.icon(
+                    onPressed: _next,
+                    icon: const Icon(Icons.arrow_forward_rounded),
+                    label: Text(_index + 1 == _session.length ? '結果を見る' : '次の問題へ'),
+                  ),
+                ),
+              ),
+            )
+          : null,
       appBar: AppBar(
         title: Text(widget.title),
         leading: IconButton(
@@ -316,6 +374,19 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
                   ),
                   const SizedBox(height: 12),
                   Text('対象問題：${_available.length}問'),
+                  const SizedBox(height: 8),
+                  Text('復習待ち：${_wrongQuestionIds.length}問'),
+                  if (_wrongQuestionIds.isNotEmpty) ...[
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      width: double.infinity,
+                      child: OutlinedButton.icon(
+                        onPressed: _startReview,
+                        icon: const Icon(Icons.refresh_rounded),
+                        label: Text('苦手問題を復習（${_wrongQuestionIds.length}問）'),
+                      ),
+                    ),
+                  ],
                   const SizedBox(height: 16),
                   SizedBox(
                     width: double.infinity,
