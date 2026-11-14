@@ -1,0 +1,20 @@
+{
+  "name": "MANABIXX 高専モード",
+  "short_name": "高専",
+  "description": "高専入試対策・5教科演習",
+  "start_url": "/flutter/practice/kosen",
+  "scope": "/flutter/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#121214",
+  "theme_color": "#121214",
+  "lang": "ja",
+  "icons": [
+    {
+      "src": "/flutter/kosen-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
