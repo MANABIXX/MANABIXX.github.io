@@ -53,12 +53,13 @@ class KosenQuestion {
 }
 
 class KosenPracticePage extends StatefulWidget {
-  const KosenPracticePage({super.key, this.loadQuestions, this.dataPath = '/data/kosen-questions.json', this.title = '製作者専用モード', this.initialSubject = 'all'});
+  const KosenPracticePage({super.key, this.loadQuestions, this.dataPath = '/data/kosen-questions.json', this.title = '製作者専用モード', this.initialSubject = 'all', this.additionalDataPaths = const []});
 
   final Future<List<KosenQuestion>> Function()? loadQuestions;
   final String dataPath;
   final String title;
   final String initialSubject;
+  final List<String> additionalDataPaths;
 
   @override
   State<KosenPracticePage> createState() => _KosenPracticePageState();
@@ -93,16 +94,23 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
   }
 
   Future<List<KosenQuestion>> _fetchQuestions() async {
-    final uri = Uri.base.resolve(widget.dataPath);
-    final response = await http.get(uri);
-    if (response.statusCode != 200) {
-      throw Exception('問題データを読み込めませんでした（HTTP ${response.statusCode}）。');
+    final paths = [widget.dataPath, ...widget.additionalDataPaths];
+    final combined = <KosenQuestion>[];
+    final ids = <String>{};
+    for (final path in paths) {
+      final uri = Uri.base.resolve(path);
+      final response = await http.get(uri);
+      if (response.statusCode != 200) {
+        throw Exception('問題データを読み込めませんでした（HTTP ${response.statusCode}）。');
+      }
+      final payload = jsonDecode(response.body) as Map<String, dynamic>;
+      final raw = payload['questions'] as List<dynamic>;
+      for (final item in raw) {
+        final question = KosenQuestion.fromJson(item as Map<String, dynamic>);
+        if (ids.add(question.id)) combined.add(question);
+      }
     }
-    final payload = jsonDecode(response.body) as Map<String, dynamic>;
-    final raw = payload['questions'] as List<dynamic>;
-    return raw
-        .map((item) => KosenQuestion.fromJson(item as Map<String, dynamic>))
-        .toList(growable: false);
+    return combined;
   }
 
   void _retry() {
