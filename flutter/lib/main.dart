@@ -163,7 +163,7 @@ class _AppHomePageState extends State<_AppHomePage> {
             backgroundColor: const Color(0xFF19191D),
             indicatorColor: const Color(0xFF3A281B),
             selectedIndex: _tab,
-            onDestinationSelected: (value) => setState(() => _tab = value),
+            onDestinationSelected: _selectTab,
             destinations: const [
               NavigationDestination(icon: Icon(Icons.home_rounded), label: 'ホーム'),
               NavigationDestination(icon: Icon(Icons.bolt_rounded), label: '学習'),
@@ -424,27 +424,41 @@ class _PrivateModeShell extends StatefulWidget {
 
 class _PrivateModeShellState extends State<_PrivateModeShell> {
   late int _tab = widget.initialTab;
+  Widget? _practicePage;
 
   bool get _isKosen => widget.mode == _PrivateMode.kosen;
   String get _title => _isKosen ? '製作者専用モード' : '下積みモード';
 
   @override
-  Widget build(BuildContext context) {
-    final practice = _isKosen
-        ? KosenPracticePage(
-            dataPath: widget.mathSectionOne
-                ? '/data/kosen-math-section-1.json'
-                : '/data/kosen-questions.json',
-            title: widget.mathSectionOne ? '数学・大問1集中演習' : '5教科演習',
-            initialSubject: widget.mathSectionOne ? 'math' : 'all',
-          )
-        : const FoundationPracticePage(
-            dataPath: '/data/foundation-training.json',
-            additionalDataPaths: ['/data/public-exam.json'],
-            title: '本番レベル演習',
-            includeAllSubjects: true,
-          );
+  void initState() {
+    super.initState();
+    if (_tab == 1) _practicePage = _createPracticePage();
+  }
 
+  Widget _createPracticePage() => _isKosen
+      ? KosenPracticePage(
+          dataPath: widget.mathSectionOne
+              ? '/data/kosen-math-section-1.json'
+              : '/data/kosen-questions.json',
+          title: widget.mathSectionOne ? '数学・大問1集中演習' : '5教科演習',
+          initialSubject: widget.mathSectionOne ? 'math' : 'all',
+        )
+      : const FoundationPracticePage(
+          dataPath: '/data/foundation-training.json',
+          additionalDataPaths: ['/data/public-exam.json'],
+          title: '本番レベル演習',
+          includeAllSubjects: true,
+        );
+
+  void _selectTab(int value) {
+    setState(() {
+      _tab = value;
+      if (value == 1) _practicePage ??= _createPracticePage();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: _bg,
       body: SafeArea(
@@ -454,11 +468,11 @@ class _PrivateModeShellState extends State<_PrivateModeShell> {
             _PrivateModeHome(
               title: _title,
               isKosen: _isKosen,
-              onPractice: () => setState(() => _tab = 1),
+              onPractice: () => _selectTab(1),
               onMainHome: () => Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false),
               onMathSectionOne: () => Navigator.of(context).pushNamed('/practice/kosen/math-section-1'),
             ),
-            practice,
+            _practicePage ?? const SizedBox.shrink(),
             const _ProgressPage(),
           ],
         ),
