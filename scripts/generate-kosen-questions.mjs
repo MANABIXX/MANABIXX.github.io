@@ -22,7 +22,7 @@ for (const [i, year] of years.entries()) {
   const signed = -(n+4) + n*3 - (n+1);
   const signedOptions = [signed, signed+2, signed-2, signed+4].map(String);
   const functionValue = -2*n + (n+5);
-  const functionOptions = [functionValue-2,functionValue-1,functionValue+1,functionValue+2].map(String);
+  const functionOptions = [functionValue-2,functionValue-1,functionValue,functionValue+1].map(String);
   questions.push(
     make(`reg-math-${year}-01`,'math','大問1・正負の数','高専入試基礎',`−${n+4}＋${n*3}−${n+1} の値はどれか。`,signedOptions,0,'負の数を含む加減は、符号を保って左から順に計算する。',year),
     make(`reg-math-${year}-02`,'math','大問1・平方根','高専入試基礎',`√${(n* n)*2} を a√2 と表すとき、a はいくつか。`,[String(n-1),String(n),String(n+1),String(n*2)],1,`${n}²×2 の平方根なので ${n}√2。`,year),
