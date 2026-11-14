@@ -29,6 +29,14 @@ class ManabiXXApp extends StatelessWidget {
       routes: {
         '/foundation': (_) => const FoundationPracticePage(),
         '/foundation/': (_) => const FoundationPracticePage(),
+        '/exam': (_) => const FoundationPracticePage(
+              dataPath: 'data/public-exam.json',
+              title: '公立高校入試問題',
+            ),
+        '/exam/': (_) => const FoundationPracticePage(
+              dataPath: 'data/public-exam.json',
+              title: '公立高校入試問題',
+            ),
         '/kosen': (_) => const KosenPracticePage(),
         '/kosen/': (_) => const KosenPracticePage(),
       },
@@ -102,11 +110,22 @@ class MigrationHomePage extends StatelessWidget {
                 const SizedBox(height: 24),
                 const _MigrationStatusCard(),
                 const SizedBox(height: 16),
-                FilledButton.icon(
-                  onPressed: () =>
-                      Navigator.of(context).pushNamed('/foundation'),
-                  icon: const Icon(Icons.auto_stories_outlined),
-                  label: const Text('基礎網羅問題を開く'),
+                Wrap(
+                  spacing: 12,
+                  runSpacing: 12,
+                  children: [
+                    FilledButton.icon(
+                      onPressed: () =>
+                          Navigator.of(context).pushNamed('/foundation'),
+                      icon: const Icon(Icons.auto_stories_outlined),
+                      label: const Text('基礎網羅問題を開く'),
+                    ),
+                    OutlinedButton.icon(
+                      onPressed: () => Navigator.of(context).pushNamed('/exam'),
+                      icon: const Icon(Icons.school_outlined),
+                      label: const Text('公立高校入試問題'),
+                    ),
+                  ],
                 ),
               ],
             ),
