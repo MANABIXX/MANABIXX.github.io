@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:manabixx_web/foundation_practice.dart';
 import 'package:manabixx_web/kosen_practice.dart';
 import 'package:manabixx_web/knowledge_library.dart';
+import 'package:manabixx_web/foundation_roadmap.dart';
 import 'package:manabixx_web/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -87,14 +88,45 @@ void main() {
 
     expect(find.text(question.prompt), findsOneWidget);
     await tester.tap(find.text('ばねばかり'));
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 120));
     await tester.pumpAndSettle();
 
-    // Answer feedback is intentionally brief; the session auto-advances.
+    // Explanation remains visible until the learner explicitly advances.
+    expect(find.text('正解！'), findsOneWidget);
+    expect(find.text(question.explanation), findsOneWidget);
+    expect(find.text('演習完了'), findsNothing);
+    await tapVisible(tester, find.text('結果を見る'));
     expect(find.text('演習完了'), findsOneWidget);
     expect(find.text('1 / 1'), findsOneWidget);
     expect(find.text('次の10問へ（目安3分）'), findsOneWidget);
+  });
+
+  testWidgets('records weak topics and opens one-tap review', (tester) async {
+    const question = FoundationQuestion(
+      id: 'weak-topic-001',
+      subject: 'science',
+      topic: '電流',
+      level: '基礎',
+      prompt: '電圧6V、抵抗3Ωの電流は何Aか。',
+      options: ['1A', '2A', '3A', '18A'],
+      correct: 1,
+      explanation: 'オームの法則より6÷3＝2A。',
+    );
+    await prepareViewport(tester);
+    await tester.pumpWidget(MaterialApp(
+      home: FoundationPracticePage(includeAllSubjects: true, loadQuestions: () async => [question]),
+    ));
+    await tester.pumpAndSettle();
+    await tapVisible(tester, find.text('演習を始める'));
+    await tester.tap(find.text('1A'));
+    await tester.pumpAndSettle();
+    expect(find.text('不正解'), findsOneWidget);
+    await tapVisible(tester, find.text('結果を見る'));
+    await tester.tap(find.text('教科選択へ戻る'));
+    await tester.pumpAndSettle();
+    expect(find.text('復習待ち：1問'), findsOneWidget);
+    expect(find.textContaining('理科 · 電流'), findsOneWidget);
+    await tapVisible(tester, find.text('間違えた問題を復習（1問）'));
+    expect(find.text(question.prompt), findsOneWidget);
   });
 
   testWidgets('supports arrow and Enter keyboard controls in foundation practice', (tester) async {
@@ -241,8 +273,10 @@ void main() {
     expect(find.text('正解！'), findsOneWidget);
     expect(find.text(question.explanation), findsOneWidget);
     await tester.pump(const Duration(milliseconds: 100));
-    await tester.pumpAndSettle();
-
+    expect(find.text('正解！'), findsOneWidget);
+    expect(find.text(question.explanation), findsOneWidget);
+    expect(find.text('演習完了'), findsNothing);
+    await tapVisible(tester, find.text('結果を見る'));
     expect(find.text('演習完了'), findsOneWidget);
     expect(find.text('1 / 1'), findsOneWidget);
   });
@@ -317,6 +351,14 @@ void main() {
     expect(find.text('理科 1問'), findsOneWidget);
     expect(find.text('社会 1問'), findsOneWidget);
     expect(find.text('国語 1問'), findsOneWidget);
+  });
+
+  testWidgets('shows both target schools in the foundation roadmap', (tester) async {
+    await prepareViewport(tester);
+    await tester.pumpWidget(const MaterialApp(home: FoundationRoadmapPage()));
+    expect(find.text('青藍泰斗高校'), findsOneWidget);
+    expect(find.text('佐野松桜高校'), findsOneWidget);
+    expect(find.text('今週の学習ルート'), findsOneWidget);
   });
 
   testWidgets('opens the independent Kosen home after password authentication', (tester) async {
