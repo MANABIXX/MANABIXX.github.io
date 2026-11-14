@@ -2,8 +2,8 @@
   "name": "MANABIXX 下積みモード",
   "short_name": "下積み",
   "description": "5教科の基礎反復と入試演習",
-  "start_url": "/flutter/practice/foundation-training",
-  "scope": "/flutter/",
+  "start_url": "/practice/foundation-training",
+  "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
   "background_color": "#121214",
@@ -11,7 +11,7 @@
   "lang": "ja",
   "icons": [
     {
-      "src": "/flutter/foundation-icon.svg",
+      "src": "/foundation-icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
