@@ -102,9 +102,9 @@
       const modePath = location.pathname;
       if (modePath.includes("/practice/kosen")) {
         manifest.href = "/manifest-kosen.webmanifest";
-        document.title = "MANABIXX 高専モード";
+        document.title = "MANABIXX 制作者専用モード";
         const label = banner.querySelector("strong");
-        if (label) label.textContent = "高専モードをホーム画面に追加";
+        if (label) label.textContent = "制作者専用モードをホーム画面に追加";
       } else if (modePath.includes("/practice/foundation-training")) {
         manifest.href = "/manifest-foundation.webmanifest";
         document.title = "MANABIXX 下積みモード";

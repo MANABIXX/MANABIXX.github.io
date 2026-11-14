@@ -33,7 +33,10 @@ void main() {
     await tester.pumpWidget(const ManabiXXApp());
 
     expect(find.text('MANABIXX'), findsOneWidget);
-    expect(find.text('今日も、一歩ずつ。'), findsOneWidget);
+    expect(find.textContaining('今日の一歩を、'), findsOneWidget);
+    expect(find.text('高専モード'), findsNothing);
+    expect(find.text('制作者専用モード'), findsOneWidget);
+    expect(find.text('2027年度・高校入試情報'), findsOneWidget);
     expect(find.text('学習スタート'), findsOneWidget);
     expect(find.text('ホーム'), findsOneWidget);
     expect(find.text('学習'), findsOneWidget);
@@ -42,6 +45,7 @@ void main() {
     expect(find.text('学習メニュー'), findsOneWidget);
     expect(find.text('基礎網羅問題'), findsOneWidget);
     expect(find.text('教材ライブラリ'), findsNothing);
+    expect(find.text('更新履歴'), findsOneWidget);
   });
 
   testWidgets('aggregates today answers across local practice datasets', (tester) async {
