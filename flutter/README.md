@@ -1,6 +1,6 @@
 # MANABIXX Flutter Web migration foundation
 
-This directory is an isolated migration workspace. It is not the production Pages entry point.
+This directory is an isolated migration workspace. It is not the production Pages entry point. The first functional slice is the Kosen practice route at `/kosen`, which reads the existing `static/data/kosen-questions.json` without copying or renumbering its records.
 
 ## Local checks
 
