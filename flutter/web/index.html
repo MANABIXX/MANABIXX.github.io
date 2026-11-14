@@ -24,7 +24,7 @@
     #app-loading {
       position: fixed; inset: 0; z-index: 9999; display: grid;
       place-items: center; background: #121214;
-      transition: opacity 160ms ease;
+      transition: none;
     }
     #app-loading.done { opacity: 0; pointer-events: none; }
     .loading-content { display: grid; justify-items: center; gap: 18px; }
@@ -33,21 +33,17 @@
     .spinner {
       width: 25px; height: 25px; border: 3px solid #38383e;
       border-top-color: #ff7900; border-radius: 50%;
-      animation: spin .8s linear infinite;
+      animation: none;
     }
     .loading-label { color: #9999a1; font-size: 12px; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    #pwa-install-banner { position: fixed; z-index: 10000; left: 12px; right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); display: flex; align-items: center; gap: 12px; padding: 14px; border: 1px solid #494950; border-radius: 18px; background: rgba(35,35,40,.97); box-shadow: 0 12px 36px #0008; font: 13px/1.5 -apple-system, BlinkMacSystemFont, sans-serif; }
+    #pwa-install-banner { position: fixed; z-index: 10000; left: 12px; right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); display: flex; align-items: center; gap: 12px; padding: 14px; border: 1px solid #494950; border-radius: 18px; background: rgba(35,35,40,.97); box-shadow: none; font: 13px/1.5 -apple-system, BlinkMacSystemFont, sans-serif; }
     #pwa-install-banner[hidden] { display: none; }
     #pwa-install-banner .pwa-copy { flex: 1; }
     #pwa-install-banner strong { display: block; margin-bottom: 2px; color: #fff; }
     #pwa-install-action { border: 0; border-radius: 11px; padding: 10px 12px; color: #fff; background: #ff7900; font-weight: 800; white-space: nowrap; }
     #pwa-install-close { border: 0; padding: 4px; color: #aaa; background: transparent; font-size: 18px; }
     @media (min-width: 700px) { #pwa-install-banner { left: auto; right: 24px; bottom: 24px; width: 390px; } }
-    @media (prefers-reduced-motion: reduce) {
-      .spinner { animation-duration: 1.8s; }
-      #app-loading { transition: none; }
-    }
+    @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
   </style>
   <script>
     (() => {
@@ -81,19 +77,32 @@
       const copy = document.getElementById("pwa-install-copy");
       const close = document.getElementById("pwa-install-close");
       const ua = navigator.userAgent || "";
+      const path = location.pathname;
+      const modeName = path.includes("/practice/kosen") || path.endsWith("/kosen") ? "高専モード" : path.includes("/practice/foundation-training") ? "下積みモード" : "MANABIXX";
+      const modeKey = modeName === "高専モード" ? "kosen" : modeName === "下積みモード" ? "training" : "main";
+      const manifest = document.querySelector("link[rel=manifest]");
+      const touchIcon = document.querySelector("link[rel=apple-touch-icon]");
+      if (modeKey !== "main") {
+        if (manifest) manifest.href = new URL(modeKey + ".webmanifest", document.baseURI).href;
+        if (touchIcon) touchIcon.href = new URL(modeKey + "-icon.png", document.baseURI).href;
+        document.title = modeName + " | MANABIXX";
+      }
       const ios = /iPhone|iPad|iPod/.test(ua);
       const android = /Android/.test(ua);
       const standalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+      const dismissedKey = "manabixx-pwa-dismissed-" + modeKey;
+      const bannerTitle = banner.querySelector("strong");
+      if (bannerTitle) bannerTitle.textContent = modeName + "をホーム画面に追加";
       let installPrompt = null;
-      const show = () => { try { if (!standalone && !localStorage.getItem("manabixx-pwa-dismissed")) banner.hidden = false; } catch (_) { if (!standalone) banner.hidden = false; } };
-      if (ios && !standalone) { copy.textContent = "Safariの共有ボタンから「ホーム画面に追加」を選べます。"; action.textContent = "追加手順"; show(); }
-      if (android && !standalone) { copy.textContent = "ブラウザのメニューからホーム画面への追加やアプリのインストールができます。"; show(); }
+      const show = () => { try { if (!standalone && !localStorage.getItem(dismissedKey)) banner.hidden = false; } catch (_) { if (!standalone) banner.hidden = false; } };
+      if (ios && !standalone) { copy.textContent = modeKey === "main" ? "Safariの共有ボタンから「ホーム画面に追加」を選べます。" : modeName + "専用アイコンを追加できます。Safariの共有ボタンから「ホーム画面に追加」を選択。"; action.textContent = "追加手順"; show(); }
+      if (android && !standalone) { copy.textContent = modeKey === "main" ? "ブラウザのメニューからホーム画面への追加やアプリのインストールができます。" : modeName + "専用アプリとしてホーム画面に追加できます。"; show(); }
       window.addEventListener("beforeinstallprompt", (event) => { event.preventDefault(); installPrompt = event; action.textContent = "インストール"; if (android) show(); });
       action.addEventListener("click", async () => {
         if (installPrompt) { installPrompt.prompt(); await installPrompt.userChoice; installPrompt = null; banner.hidden = true; return; }
         alert(ios ? "Safariの共有ボタン →「ホーム画面に追加」を選択してください。" : "ブラウザのメニューから「アプリをインストール」または「ホーム画面に追加」を選択してください。");
       });
-      close.addEventListener("click", () => { banner.hidden = true; try { localStorage.setItem("manabixx-pwa-dismissed", "1"); } catch (_) {} });
+      close.addEventListener("click", () => { banner.hidden = true; try { localStorage.setItem(dismissedKey, "1"); } catch (_) {} });
       if ("serviceWorker" in navigator) navigator.serviceWorker.register("flutter-sw.js").catch(() => {});
     })();
   </script>
@@ -114,8 +123,7 @@
         await appRunner.runApp();
         const splash = document.getElementById('app-loading');
         if (splash) {
-          splash.classList.add('done');
-          window.setTimeout(() => splash.remove(), 180);
+          splash.remove();
         }
       },
     });
