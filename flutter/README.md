@@ -2,6 +2,8 @@
 
 This directory is an isolated migration workspace. It is not the production Pages entry point. The first functional slice is the Kosen practice route at `/kosen`, which reads the existing `static/data/kosen-questions.json` without copying or renumbering its records.
 
+The web entry point uses path-based URLs. `web/404.html` restores direct GitHub Pages deep links before Flutter starts; validate this behavior on a Pages preview before any production cutover.
+
 ## Local checks
 
 ```sh
