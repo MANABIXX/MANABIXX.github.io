@@ -7,7 +7,7 @@ Production URL: https://manabixx.github.io/\nFlutter beta preview (after merge a
 
 ## Safety boundary
 
-The production Pages workflow currently builds the SvelteKit application from the repository root. The legacy static site and a separate Next.js prototype also exist in this repository. This Flutter workspace is isolated and must not be deployed to production until parity checks pass. Do not delete or overwrite any of those implementations during the foundation stage.
+Correction (2026-11-14): `main` の `.github/workflows/pages.yml` は `flutter/build/web` を Pages artifact として公開する構成に変更済み。直近の main push に対する `Build and deploy Study` は成功しているため、Flutter Web は現在の本番配信経路である。一方、以下の機能同等性一覧には未移植項目が残る。旧SvelteKit/静的実装は互換・復旧用の資産として保持し、全ルート・履歴・アクセス境界の確認なしに削除しない。
 
 ## Existing route and feature inventory
 
@@ -44,7 +44,7 @@ The production Pages workflow currently builds the SvelteKit application from th
 3. Add parity tests for each migrated route and user action.
 4. Verify Flutter analyze, widget tests, release web build, deep links, mobile layout, accessibility, and offline behavior.
 5. Compare all public routes and stored data against the current production implementation.
-6. Only after every gate passes, prepare a separately reviewed Pages cutover. Until then, keep the existing production Pages workflow unchanged.
+6. Pages切替は `main` のworkflowですでに実施済み。以後は本番Flutter配信を前提に、未移植機能・既存URL・履歴・アクセス境界を優先して検証し、重大な回帰が見つかった場合のみ直前の正常デプロイへ戻す。
 
 ## Current stage
 
@@ -52,4 +52,4 @@ The production Pages workflow currently builds the SvelteKit application from th
 - Stage 2: Flutter question-practice foundation, public exam, summary/foundation confirmation, five-subject mock practice, knowledge library, and a separate unlinked additional-practice route. Existing JSON data is loaded directly; practice selection, four-choice answering, explanations, results, library search and filters are implemented.
 - Four public datasets audited: 1,180 foundation questions, 323 public-exam questions, 450 summary questions, and 100 mock questions. No duplicate IDs or malformed four-choice records were found in the inspected datasets.
 - Still not migrated: motivation, release-note UI, workspace, private-content access boundary, Shitadumi app, full home/dashboard, full learning-history migration, PWA/offline behavior, and full browser/mobile/accessibility parity.
-- Production deployment: unchanged.
+- Production deployment: Flutter Web root deployment is active on `main`; latest observed Pages workflow succeeded. Full feature parity is not yet established.
