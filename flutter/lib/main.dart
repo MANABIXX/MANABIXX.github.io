@@ -461,6 +461,16 @@ class _ModeHomePageState extends State<_ModeHomePage> {
           if (_kosen) ...[
             const SizedBox(height: 10),
             OutlinedButton.icon(
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => const KosenQuestionImportPage(storageKey: 'manabixx.mode.kosen.history.custom'),
+                ),
+              ),
+              icon: const Icon(Icons.playlist_add_rounded),
+              label: const Text('過去問・オリジナル問題を取り込む'),
+            ),
+            const SizedBox(height: 10),
+            OutlinedButton.icon(
               onPressed: () => Navigator.of(context).pushNamed('/practice/kosen/math-section-1'),
               icon: const Icon(Icons.calculate_outlined),
               label: const Text('数学・大問1集中演習'),
