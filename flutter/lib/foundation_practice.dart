@@ -61,6 +61,8 @@ class FoundationPracticePage extends StatefulWidget {
     this.title = '基礎網羅問題',
     this.includeAllSubjects = false,
     this.additionalDataPaths = const [],
+    this.initialSubject = 'all',
+    this.initialTopic = 'all',
   });
 
   final Future<List<FoundationQuestion>> Function()? loadQuestions;
@@ -68,6 +70,8 @@ class FoundationPracticePage extends StatefulWidget {
   final String title;
   final bool includeAllSubjects;
   final List<String> additionalDataPaths;
+  final String initialSubject;
+  final String initialTopic;
 
   @override
   State<FoundationPracticePage> createState() => _FoundationPracticePageState();
@@ -76,8 +80,8 @@ class FoundationPracticePage extends StatefulWidget {
 class _FoundationPracticePageState extends State<FoundationPracticePage> {
   List<FoundationQuestion> _questions = [];
   List<FoundationQuestion> _session = [];
-  String _subject = 'all';
-  String _topic = 'all';
+  late String _subject;
+  late String _topic;
   String _amount = '10';
   String? _error;
   bool _loading = true;
@@ -159,6 +163,8 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
   @override
   void initState() {
     super.initState();
+    _subject = widget.initialSubject;
+    _topic = widget.initialTopic;
     _load();
     _loadProgress();
   }
