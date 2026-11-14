@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/services.dart';
 import 'dart:math';
 
 import 'package:material_ui/material_ui.dart';
@@ -242,13 +243,19 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
 
 
 
-  void _answer(int choice) {
+  Future<void> _answer(int choice) async {
     if (_selected != null) return;
+    final question = _current;
+    HapticFeedback.lightImpact();
     setState(() {
       _selected = choice;
-      if (choice == _current.correct) _score++;
+      if (choice == question.correct) _score++;
     });
-    _saveAnswer(_current, choice);
+    _saveAnswer(question, choice);
+    await Future<void>.delayed(const Duration(milliseconds: 420));
+    if (mounted && _started && !_finished && _selected == choice) {
+      _next();
+    }
   }
 
   void _next() {
@@ -284,7 +291,7 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: _started && !_finished ? null : AppBar(
         title: Text(widget.title),
         leading: IconButton(
           tooltip: 'Studyホームへ戻る',
@@ -295,7 +302,7 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 760),
+            constraints: const BoxConstraints(maxWidth: 430),
             child: Padding(
               padding: const EdgeInsets.all(20),
               child: _loading
@@ -448,110 +455,147 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
 
   Widget _buildQuestion() {
     final question = _current;
+    final answered = _selected != null;
+    final correct = _selected == question.correct;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        const SizedBox(height: 10),
         Row(
           children: [
-            TextButton.icon(
-              onPressed: _back,
-              icon: const Icon(Icons.arrow_back),
-              label: const Text('一覧へ戻る'),
+            Expanded(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: LinearProgressIndicator(
+                  minHeight: 4,
+                  value: (_index + 1) / _session.length,
+                  backgroundColor: const Color(0xFF333338),
+                  color: const Color(0xFFFF7900),
+                ),
+              ),
             ),
-            const Spacer(),
-            Text('${_index + 1} / ${_session.length}',
-                style: const TextStyle(fontFeatures: [])),
+            const SizedBox(width: 14),
+            Text('${_session.length - _index - 1}問',
+                style: const TextStyle(color: Color(0xFFB8B8BE), fontSize: 12)),
           ],
         ),
-        const SizedBox(height: 8),
-        LinearProgressIndicator(value: (_index + 1) / _session.length),
-        const SizedBox(height: 20),
-        Wrap(
-          spacing: 8,
+        const SizedBox(height: 24),
+        Row(
           children: [
-            Chip(label: Text(_subjectLabel(question.subject))),
-            Chip(label: Text(question.topic)),
-            Chip(label: Text(question.level)),
+            _PracticePill(text: _subjectLabel(question.subject)),
+            if (question.topic.isNotEmpty) ...[
+              const SizedBox(width: 8),
+              _PracticePill(text: question.topic),
+            ],
+            const Spacer(),
+            Text('${_index + 1}/${_session.length}',
+                style: const TextStyle(color: Color(0xFF77777F), fontSize: 12)),
           ],
         ),
-        const SizedBox(height: 18),
+        const SizedBox(height: 20),
         Expanded(
-          child: SingleChildScrollView(
-            child: Text(
-              question.prompt,
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    height: 1.6,
-                    fontWeight: FontWeight.w700,
-                  ),
+          child: Center(
+            child: SingleChildScrollView(
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.fromLTRB(22, 30, 22, 30),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF222226),
+                  borderRadius: BorderRadius.circular(24),
+                  border: Border.all(color: const Color(0xFF333338)),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text('QUESTION',
+                        style: TextStyle(color: Color(0xFFFF8A00), letterSpacing: 2,
+                            fontSize: 11, fontWeight: FontWeight.w800)),
+                    const SizedBox(height: 18),
+                    Text(question.prompt,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 22, height: 1.55,
+                          fontWeight: FontWeight.w800, color: Color(0xFFF5F5F6))),
+                    if (answered) ...[
+                      const SizedBox(height: 22),
+                      Text(correct ? '正解！' : '正解は ${String.fromCharCode(65 + question.correct)}',
+                        style: TextStyle(fontSize: 17, fontWeight: FontWeight.w800,
+                          color: correct ? const Color(0xFF69D49A) : const Color(0xFFFF7777))),
+                    ],
+                  ],
+                ),
+              ),
             ),
           ),
         ),
-        ...List.generate(question.options.length, (i) {
-          final answered = _selected != null;
-          final correct = i == question.correct;
-          final chosen = _selected == i;
-          final background = answered && correct
-              ? Theme.of(context).colorScheme.primaryContainer
-              : answered && chosen
-                  ? Theme.of(context).colorScheme.errorContainer
-                  : null;
-          return Padding(
+        if (answered && question.explanation.isNotEmpty)
+          Padding(
             padding: const EdgeInsets.only(bottom: 10),
+            child: Text(question.explanation,
+              maxLines: 2, overflow: TextOverflow.ellipsis,
+              style: const TextStyle(color: Color(0xFF9999A1), fontSize: 12, height: 1.4)),
+          ),
+        ...List.generate(question.options.length, (i) {
+          final isCorrect = i == question.correct;
+          final isChosen = i == _selected;
+          final bg = answered && isCorrect
+              ? const Color(0xFF173B2B)
+              : answered && isChosen
+                  ? const Color(0xFF422326)
+                  : const Color(0xFF222226);
+          final border = answered && isCorrect
+              ? const Color(0xFF3A9D6A)
+              : answered && isChosen
+                  ? const Color(0xFFB94D55)
+                  : const Color(0xFF38383E);
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 9),
             child: SizedBox(
+              height: 62,
               width: double.infinity,
               child: OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 18, vertical: 18),
-                  backgroundColor: background,
-                ),
                 onPressed: answered ? null : () => _answer(i),
-                child: Text('${String.fromCharCode(65 + i)}. ${question.options[i]}'),
+                style: OutlinedButton.styleFrom(
+                  backgroundColor: bg,
+                  foregroundColor: const Color(0xFFF4F4F5),
+                  disabledForegroundColor: const Color(0xFFF4F4F5),
+                  side: BorderSide(color: border, width: 1),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 30, height: 30,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: answered && isCorrect ? const Color(0xFF28784D) : const Color(0xFF34343A),
+                        borderRadius: BorderRadius.circular(9),
+                      ),
+                      child: Text(String.fromCharCode(65 + i),
+                        style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 12)),
+                    ),
+                    const SizedBox(width: 13),
+                    Expanded(child: Text(question.options[i],
+                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600))),
+                    if (answered && isCorrect)
+                      const Icon(Icons.check_rounded, color: Color(0xFF69D49A)),
+                    if (answered && isChosen && !isCorrect)
+                      const Icon(Icons.close_rounded, color: Color(0xFFFF7777)),
+                  ],
+                ),
               ),
             ),
           );
         }),
-        if (question.sourceLabel.isNotEmpty)
+        if (question.sourceLabel.isNotEmpty || question.sourceNote.isNotEmpty)
           Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: Text(question.sourceLabel,
-                style: Theme.of(context).textTheme.labelSmall),
+            padding: const EdgeInsets.only(top: 2, bottom: 4),
+            child: Text('${question.sourceLabel} ${question.sourceNote}'.trim(),
+              maxLines: 1, overflow: TextOverflow.ellipsis,
+              style: const TextStyle(fontSize: 10, color: Color(0xFF77777F))),
           ),
-        if (question.sourceNote.isNotEmpty)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: Text(question.sourceNote,
-                style: Theme.of(context).textTheme.bodySmall),
-          ),
-        if (_selected != null) ...[
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    _selected == question.correct ? '正解！' : '不正解',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w800,
-                      color: _selected == question.correct
-                          ? Theme.of(context).colorScheme.primary
-                          : Theme.of(context).colorScheme.error,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(question.explanation),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(height: 8),
-          FilledButton(
-            onPressed: _next,
-            child: Text(_index + 1 == _session.length ? '結果を見る' : '次の問題へ'),
-          ),
-        ],
+        const SizedBox(height: 4),
       ],
     );
   }
@@ -585,4 +629,22 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
           ),
         ),
       );
+}
+
+
+class _PracticePill extends StatelessWidget {
+  const _PracticePill({required this.text});
+  final String text;
+
+  @override
+  Widget build(BuildContext context) => Container(
+    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+    decoration: BoxDecoration(
+      color: const Color(0xFF29292E),
+      borderRadius: BorderRadius.circular(20),
+      border: Border.all(color: const Color(0xFF3A3A40)),
+    ),
+    child: Text(text, style: const TextStyle(
+      fontSize: 11, color: Color(0xFFBDBDC4), fontWeight: FontWeight.w600)),
+  );
 }

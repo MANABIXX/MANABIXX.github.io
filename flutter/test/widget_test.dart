@@ -29,9 +29,14 @@ void main() {
     await tester.pumpWidget(const ManabiXXApp());
 
     expect(find.text('MANABIXX'), findsOneWidget);
-    expect(find.text('Flutter Web preview'), findsOneWidget);
-    expect(find.text('基礎網羅問題を開く'), findsOneWidget);
-    expect(find.text('公開サイトの切替'), findsOneWidget);
+    expect(find.text('今日も、一歩ずつ。'), findsOneWidget);
+    expect(find.text('学習スタート'), findsOneWidget);
+    expect(find.text('ホーム'), findsOneWidget);
+    expect(find.text('学習'), findsOneWidget);
+    expect(find.text('記録'), findsOneWidget);
+    await tapVisible(tester, find.text('学習'));
+    expect(find.text('学習メニュー'), findsOneWidget);
+    expect(find.text('基礎網羅問題'), findsOneWidget);
   });
 
   testWidgets('loads existing foundation questions and completes a session', (tester) async {
@@ -59,12 +64,12 @@ void main() {
     await tapVisible(tester, find.text('演習を始める'));
 
     expect(find.text(question.prompt), findsOneWidget);
-    await tapVisible(tester, find.text('B. ばねばかり'));
+    await tester.tap(find.text('ばねばかり'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 450));
+    await tester.pumpAndSettle();
 
-    expect(find.text('正解！'), findsOneWidget);
-    expect(find.text(question.explanation), findsOneWidget);
-    await tapVisible(tester, find.text('結果を見る'));
-
+    // Answer feedback is intentionally brief; the session auto-advances.
     expect(find.text('演習完了'), findsOneWidget);
     expect(find.text('1 / 1'), findsOneWidget);
   });
@@ -99,8 +104,8 @@ void main() {
     await tapVisible(tester, find.text('演習を始める'));
 
     expect(find.text(question.prompt), findsOneWidget);
-    expect(find.text('出典照合中'), findsOneWidget);
-    expect(find.text(question.sourceNote), findsOneWidget);
+    expect(find.textContaining('出典照合中'), findsOneWidget);
+    expect(find.textContaining(question.sourceNote), findsOneWidget);
   });
 
   testWidgets('allows all five subjects in mock exam mode', (tester) async {

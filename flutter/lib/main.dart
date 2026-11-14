@@ -1,11 +1,17 @@
+import 'dart:convert';
+
 import 'package:material_ui/material_ui.dart';
 import 'package:manabixx_web/foundation_practice.dart';
 import 'package:manabixx_web/kosen_practice.dart';
 import 'package:manabixx_web/knowledge_library.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const ManabiXXApp());
-}
+const _bg = Color(0xFF121214);
+const _surface = Color(0xFF222226);
+const _line = Color(0xFF333338);
+const _orange = Color(0xFFFF7900);
+
+void main() => runApp(const ManabiXXApp());
 
 class ManabiXXApp extends StatelessWidget {
   const ManabiXXApp({super.key});
@@ -17,13 +23,65 @@ class ManabiXXApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.dark,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF8B9CFF),
-          brightness: Brightness.dark,
-          surface: const Color(0xFF111318),
+        scaffoldBackgroundColor: _bg,
+        colorScheme: const ColorScheme.dark(
+          primary: _orange,
+          secondary: Color(0xFFFF8A00),
+          surface: _surface,
+          error: Color(0xFFFF7777),
         ),
-        scaffoldBackgroundColor: const Color(0xFF08090C),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: _bg,
+          foregroundColor: Colors.white,
+          elevation: 0,
+          centerTitle: false,
+        ),
+        cardTheme: CardThemeData(
+          color: _surface,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+            side: const BorderSide(color: _line),
+          ),
+        ),
+        filledButtonTheme: FilledButtonThemeData(
+          style: FilledButton.styleFrom(
+            backgroundColor: _orange,
+            foregroundColor: Colors.white,
+            minimumSize: const Size(0, 56),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(17)),
+            textStyle: const TextStyle(fontWeight: FontWeight.w800, fontSize: 15),
+          ),
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+            foregroundColor: Colors.white,
+            side: const BorderSide(color: _line),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          ),
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: _surface,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(14),
+            borderSide: const BorderSide(color: _line),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(14),
+            borderSide: const BorderSide(color: _line),
+          ),
+        ),
         useMaterial3: true,
+      ),
+      builder: (context, child) => ColoredBox(
+        color: _bg,
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 430),
+            child: child ?? const SizedBox.shrink(),
+          ),
+        ),
       ),
       routes: {
         '/library': (_) => const KnowledgeLibraryPage(),
@@ -31,185 +89,266 @@ class ManabiXXApp extends StatelessWidget {
         '/foundation': (_) => const FoundationPracticePage(),
         '/foundation/': (_) => const FoundationPracticePage(),
         '/exam': (_) => const FoundationPracticePage(
-              dataPath: 'data/public-exam.json',
-              title: '公立高校入試問題',
-            ),
+          dataPath: 'data/public-exam.json', title: '公立高校入試問題'),
         '/exam/': (_) => const FoundationPracticePage(
-              dataPath: 'data/public-exam.json',
-              title: '公立高校入試問題',
-            ),
+          dataPath: 'data/public-exam.json', title: '公立高校入試問題'),
         '/summary': (_) => const FoundationPracticePage(
-              dataPath: 'data/summary-foundation.json',
-              title: '要点まとめ・基礎確認',
-            ),
+          dataPath: 'data/summary-foundation.json', title: '要点まとめ・基礎確認'),
         '/summary/': (_) => const FoundationPracticePage(
-              dataPath: 'data/summary-foundation.json',
-              title: '要点まとめ・基礎確認',
-            ),
+          dataPath: 'data/summary-foundation.json', title: '要点まとめ・基礎確認'),
         '/mock-exam': (_) => const FoundationPracticePage(
-              dataPath: 'data/mock-exams.json',
-              title: '模試・予想問題',
-              includeAllSubjects: true,
-            ),
+          dataPath: 'data/mock-exams.json', title: '模試・予想問題', includeAllSubjects: true),
         '/mock-exam/': (_) => const FoundationPracticePage(
-              dataPath: 'data/mock-exams.json',
-              title: '模試・予想問題',
-              includeAllSubjects: true,
-            ),
+          dataPath: 'data/mock-exams.json', title: '模試・予想問題', includeAllSubjects: true),
         '/kosen': (_) => const KosenPracticePage(),
         '/kosen/': (_) => const KosenPracticePage(),
       },
       onUnknownRoute: (_) => MaterialPageRoute<void>(
-        builder: (context) => Scaffold(
-          appBar: AppBar(title: const Text('ページが見つかりません')),
-          body: Center(
-            child: FilledButton(
-              onPressed: () => Navigator.of(context)
-                  .pushNamedAndRemoveUntil('/', (route) => false),
-              child: const Text('ホームへ戻る'),
-            ),
-          ),
-        ),
+        builder: (_) => const _AppHomePage(),
       ),
-      home: const MigrationHomePage(),
+      home: const _AppHomePage(),
     );
   }
 }
 
-class MigrationHomePage extends StatelessWidget {
-  const MigrationHomePage({super.key});
+class _AppHomePage extends StatefulWidget {
+  const _AppHomePage();
+  @override
+  State<_AppHomePage> createState() => _AppHomePageState();
+}
+
+class _AppHomePageState extends State<_AppHomePage> {
+  int _tab = 0;
+
+  void _openStudy() => Navigator.of(context).pushNamed('/foundation');
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'MANABIXX',
-          style: TextStyle(fontWeight: FontWeight.w800, letterSpacing: 1.2),
-        ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Center(child: Text('Flutter Web preview')),
-          ),
-        ],
-      ),
-      body: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 760),
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'STUDY, STEP BY STEP',
-                  style: TextStyle(
-                    color: Color(0xFF9AA8FF),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 2,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  '学びを、次の一歩へ。',
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        fontWeight: FontWeight.w800,
-                      ),
-                ),
-                const SizedBox(height: 12),
-                const Text(
-                  '基礎網羅問題をFlutter Webへ移植しました。既存の1,180問を読み込み、'
-                  '教科・分野・問題数を選んで演習できます。公開サイトは維持したまま、'
-                  'ほかの学習機能も順次移行します。',
-                  style: TextStyle(height: 1.8, color: Color(0xFFB7BBC5)),
-                ),
-                const SizedBox(height: 24),
-                const _MigrationStatusCard(),
-                const SizedBox(height: 16),
-                Wrap(
-                  spacing: 12,
-                  runSpacing: 12,
-                  children: [
-                    FilledButton.icon(
-                      onPressed: () =>
-                          Navigator.of(context).pushNamed('/foundation'),
-                      icon: const Icon(Icons.auto_stories_outlined),
-                      label: const Text('基礎網羅問題を開く'),
-                    ),
-                    OutlinedButton.icon(
-                      onPressed: () => Navigator.of(context).pushNamed('/library'),
-                      icon: const Icon(Icons.menu_book_outlined),
-                      label: const Text('教材ライブラリ'),
-                    ),
-                    OutlinedButton.icon(
-                      onPressed: () => Navigator.of(context).pushNamed('/exam'),
-                      icon: const Icon(Icons.school_outlined),
-                      label: const Text('公立高校入試問題'),
-                    ),
-                    OutlinedButton.icon(
-                      onPressed: () => Navigator.of(context).pushNamed('/summary'),
-                      icon: const Icon(Icons.menu_book_outlined),
-                      label: const Text('要点まとめ'),
-                    ),
-                    OutlinedButton.icon(
-                      onPressed: () => Navigator.of(context).pushNamed('/mock-exam'),
-                      icon: const Icon(Icons.assessment_outlined),
-                      label: const Text('模試・予想問題'),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _MigrationStatusCard extends StatelessWidget {
-  const _MigrationStatusCard();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Card(
-      child: Padding(
-        padding: EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+      backgroundColor: _bg,
+      body: SafeArea(
+        child: IndexedStack(
+          index: _tab,
           children: [
-            Text('移行ステータス', style: TextStyle(fontWeight: FontWeight.w700)),
-            SizedBox(height: 12),
-            _StatusRow(label: 'Flutter Web基盤', value: '実装済み'),
-            _StatusRow(label: '基礎網羅問題', value: '演習機能を実装'),
-            _StatusRow(label: '教材・入試・進捗機能', value: '移行中'),
-            _StatusRow(label: '公開サイトの切替', value: '未実施'),
+            _HomeDashboard(onStart: _openStudy),
+            _StudyMenu(onSelect: (route) => Navigator.of(context).pushNamed(route)),
+            const _ProgressPage(),
           ],
         ),
       ),
+      bottomNavigationBar: Container(
+        decoration: const BoxDecoration(
+          color: Color(0xFF19191D),
+          border: Border(top: BorderSide(color: _line)),
+        ),
+        child: SafeArea(
+          top: false,
+          child: NavigationBar(
+            height: 66,
+            backgroundColor: const Color(0xFF19191D),
+            indicatorColor: const Color(0xFF3A281B),
+            selectedIndex: _tab,
+            onDestinationSelected: (value) => setState(() => _tab = value),
+            destinations: const [
+              NavigationDestination(icon: Icon(Icons.home_rounded), label: 'ホーム'),
+              NavigationDestination(icon: Icon(Icons.bolt_rounded), label: '学習'),
+              NavigationDestination(icon: Icon(Icons.bar_chart_rounded), label: '記録'),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
 
-class _StatusRow extends StatelessWidget {
-  const _StatusRow({required this.label, required this.value});
+class _HomeDashboard extends StatefulWidget {
+  const _HomeDashboard({required this.onStart});
+  final VoidCallback onStart;
+  @override
+  State<_HomeDashboard> createState() => _HomeDashboardState();
+}
 
-  final String label;
-  final String value;
+class _HomeDashboardState extends State<_HomeDashboard> {
+  int _todayAnswered = 0;
+  bool _progressLoaded = false;
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Row(
-        children: [
-          Expanded(child: Text(label)),
-          Text(value, style: const TextStyle(color: Color(0xFFB7BBC5))),
-        ],
-      ),
-    );
+  void initState() {
+    super.initState();
+    _loadTodayProgress();
   }
+
+  Future<void> _loadTodayProgress() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final raw = prefs.getString('manabixx.learning.data_questions.json.history');
+      final history = raw == null ? <dynamic>[] : (jsonDecode(raw) as List<dynamic>);
+      final today = DateTime.now();
+      final answered = history.whereType<Map<String, dynamic>>().where((item) {
+        final value = item['completedAt'];
+        if (value is! String) return false;
+        final date = DateTime.tryParse(value)?.toLocal();
+        return date != null && date.year == today.year &&
+            date.month == today.month && date.day == today.day;
+      }).fold<int>(0, (sum, item) => sum + (item['total'] as int? ?? 0));
+      if (!mounted) return;
+      setState(() {
+        _todayAnswered = answered;
+        _progressLoaded = true;
+      });
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _progressLoaded = true);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.fromLTRB(22, 24, 22, 22),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Row(
+          children: [
+            Text('MANABIXX', style: TextStyle(
+              fontSize: 19, fontWeight: FontWeight.w900, letterSpacing: 1.5)),
+            Spacer(),
+            Icon(Icons.local_fire_department_rounded, color: _orange),
+          ],
+        ),
+        const SizedBox(height: 44),
+        const Text('TODAY', style: TextStyle(
+          color: _orange, fontSize: 11, fontWeight: FontWeight.w900, letterSpacing: 2)),
+        const SizedBox(height: 10),
+        const Text('今日も、一歩ずつ。', style: TextStyle(
+          fontSize: 27, height: 1.35, fontWeight: FontWeight.w900)),
+        const SizedBox(height: 26),
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: _surface, borderRadius: BorderRadius.circular(22),
+            border: Border.all(color: _line)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('今日の学習', style: TextStyle(color: Color(0xFFB6B6BE), fontSize: 13)),
+              const SizedBox(height: 14),
+              Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
+                Text(_progressLoaded ? '$_todayAnswered' : '—',
+                  style: const TextStyle(fontSize: 42, fontWeight: FontWeight.w900)),
+                const Padding(padding: EdgeInsets.only(bottom: 8, left: 6),
+                  child: Text('問回答', style: TextStyle(color: Color(0xFFB6B6BE)))),
+                const Spacer(),
+                const Text('TODAY', style: TextStyle(color: _orange, fontWeight: FontWeight.w800)),
+              ]),
+              const SizedBox(height: 12),
+              ClipRRect(borderRadius: const BorderRadius.all(Radius.circular(20)),
+                child: LinearProgressIndicator(
+                  value: (_todayAnswered / 20).clamp(0.0, 1.0).toDouble(),
+                  minHeight: 6,
+                  backgroundColor: const Color(0xFF3A3A40), color: _orange)),
+              const SizedBox(height: 8),
+              const Text('今日の回答数 · 目安 20問',
+                style: TextStyle(color: Color(0xFF77777F), fontSize: 11)),
+            ],
+          ),
+        ),
+        const Spacer(),
+        SizedBox(
+          width: double.infinity,
+          height: 68,
+          child: FilledButton.icon(
+            onPressed: widget.onStart,
+            icon: const Icon(Icons.play_arrow_rounded, size: 27),
+            label: const Text('学習スタート', style: TextStyle(fontSize: 18)),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+class _StudyMenu extends StatelessWidget {
+  const _StudyMenu({required this.onSelect});
+  final ValueChanged<String> onSelect;
+
+  @override
+  Widget build(BuildContext context) => ListView(
+    padding: const EdgeInsets.fromLTRB(20, 26, 20, 24),
+    children: [
+      const Text('LEARN', style: TextStyle(
+        color: _orange, letterSpacing: 2, fontSize: 11, fontWeight: FontWeight.w900)),
+      const SizedBox(height: 8),
+      const Text('学習メニュー', style: TextStyle(fontSize: 26, fontWeight: FontWeight.w900)),
+      const SizedBox(height: 22),
+      _MenuTile(icon: Icons.bolt_rounded, title: '基礎網羅問題',
+        subtitle: '理科・社会の基礎をテンポよく', onTap: () => onSelect('/foundation')),
+      _MenuTile(icon: Icons.school_outlined, title: '公立高校入試問題',
+        subtitle: '入試形式で実戦演習', onTap: () => onSelect('/exam')),
+      _MenuTile(icon: Icons.menu_book_outlined, title: '要点まとめ',
+        subtitle: '重要事項を確認', onTap: () => onSelect('/summary')),
+      _MenuTile(icon: Icons.assessment_outlined, title: '模試・予想問題',
+        subtitle: '5教科の総合演習', onTap: () => onSelect('/mock-exam')),
+      _MenuTile(icon: Icons.auto_stories_outlined, title: '教材ライブラリ',
+        subtitle: '分野別の教材を探す', onTap: () => onSelect('/library')),
+    ],
+  );
+}
+
+class _MenuTile extends StatelessWidget {
+  const _MenuTile({required this.icon, required this.title, required this.subtitle, required this.onTap});
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.only(bottom: 12),
+    child: Material(
+      color: _surface,
+      borderRadius: BorderRadius.circular(18),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(18),
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.all(17),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(18),
+            border: Border.all(color: _line)),
+          child: Row(children: [
+            Container(width: 44, height: 44,
+              decoration: BoxDecoration(color: const Color(0xFF382719),
+                borderRadius: BorderRadius.circular(14)),
+              child: Icon(icon, color: _orange)),
+            const SizedBox(width: 14),
+            Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(title, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 15)),
+              const SizedBox(height: 4),
+              Text(subtitle, style: const TextStyle(color: Color(0xFF9999A1), fontSize: 12)),
+            ])),
+            const Icon(Icons.chevron_right_rounded, color: Color(0xFF77777F)),
+          ]),
+        ),
+      ),
+    ),
+  );
+}
+
+class _ProgressPage extends StatelessWidget {
+  const _ProgressPage();
+  @override
+  Widget build(BuildContext context) => const Center(
+    child: Padding(
+      padding: EdgeInsets.all(28),
+      child: Column(mainAxisSize: MainAxisSize.min, children: [
+        Icon(Icons.insights_rounded, size: 44, color: _orange),
+        SizedBox(height: 14),
+        Text('学習記録', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900)),
+        SizedBox(height: 8),
+        Text('演習履歴と復習待ちは、各教材の画面で確認できます。',
+          textAlign: TextAlign.center, style: TextStyle(color: Color(0xFF9999A1))),
+      ]),
+    ),
+  );
 }
