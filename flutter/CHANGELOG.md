@@ -51,3 +51,6 @@
 - GitHub Pages workflow が `flutter/build/web` を公開成果物として使用していることを移行台帳・READMEに反映。
 - Flutter Webの本番配信が有効であることと、旧画面・学習履歴・アクセス境界などの機能同等性が未完了であることを区別して記録。
 - 旧実装を即時削除せず、回帰時の復旧資産として保持する方針を明記。
+## 2026-11-14（Android APKビルドのフォント準備）
+
+- Android APK用workflowでも、Flutterのanalyze/test/build前にNoto Sans JPのフォントとOFLライセンスを生成するよう修正。Web CIと同じフォント準備スクリプトを使用し、未生成アセットによるanalyze失敗を防止。
