@@ -363,7 +363,7 @@ class _ModeHomePageState extends State<_ModeHomePage> {
     final picked = await showDatePicker(
       context: context,
       initialDate: _examDate ?? DateTime(now.year, now.month, now.day + 60),
-      firstDate: now,
+      firstDate: DateTime(now.year, now.month, now.day),
       lastDate: DateTime(now.year + 2),
       helpText: '入試日を設定',
     );
@@ -399,7 +399,7 @@ class _ModeHomePageState extends State<_ModeHomePage> {
           Card(child: Padding(
             padding: const EdgeInsets.all(18),
             child: Row(children: [
-              Icon(Icons.local_fire_department_rounded, color: _orange, size: 34 + (_streak.clamp(0, 7) * 2).toDouble()),
+              Icon(Icons.local_fire_department_rounded, color: _orange, size: 34.0 + (_streak.clamp(0, 7) * 2).toDouble()),
               const SizedBox(width: 12),
               Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 const Text('連続学習日数', style: TextStyle(color: Colors.white70, fontSize: 12)),
@@ -450,7 +450,7 @@ class _ModeHomePageState extends State<_ModeHomePage> {
           const SizedBox(height: 12),
           Text(_kosen
             ? 'このホームは高専モード専用です。ブラウザーのメニューからホーム画面に追加すると、専用アプリとして起動できます。通知は画面左下から設定できます。'
-            : 'このホームは下積みモード専用です。ブラウザーのメニューからホーム画面に追加すると、専用アプリとして起動できます。',
+            : 'このホームは下積みモード専用です。ブラウザーのメニューからホーム画面に追加すると、専用アプリとして起動できます。通知は画面左下から設定できます。',
             style: const TextStyle(color: Colors.white60, fontSize: 12, height: 1.5)),
         ],
       ),
