@@ -156,7 +156,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
       _selected = choice;
       if (choice == _current.correct) _score++;
     });
-    await Future<void>.delayed(const Duration(milliseconds: 120));
+    await Future<void>.delayed(const Duration(milliseconds: 260));
     if (mounted && _started && !_finished && _selected == choice) _next();
   }
 
