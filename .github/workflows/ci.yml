@@ -50,7 +50,7 @@ jobs:
         run: flutter test
       - name: Build Flutter beta
         working-directory: flutter
-        run: flutter build web --release --base-href /flutter/
+        run: flutter build web --release --wasm --base-href /flutter/
       - name: Save preview artifact
         if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
