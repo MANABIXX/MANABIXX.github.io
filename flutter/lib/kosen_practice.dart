@@ -79,7 +79,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
   }
 
   Future<List<KosenQuestion>> _fetchQuestions() async {
-    final uri = Uri.base.resolve('data/kosen-questions.json');
+    final uri = Uri.base.resolve('/data/kosen-questions.json');
     final response = await http.get(uri);
     if (response.statusCode != 200) {
       throw Exception('問題データを読み込めませんでした（HTTP ${response.statusCode}）。');
