@@ -30,7 +30,7 @@ const hash = createHash('sha256');
 const urls = [];
 for (const file of allFiles) {
   const relative = path.relative(output, file).split(path.sep).join('/');
-  if (relative === 'offline-app-manifest.json') continue;
+  if (relative === 'offline-app-manifest.json' || relative.startsWith('data/')) continue;
   const bytes = await fs.readFile(file);
   hash.update(relative);
   hash.update(bytes);
