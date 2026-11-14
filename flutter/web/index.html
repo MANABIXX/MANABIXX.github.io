@@ -24,7 +24,7 @@
     #app-loading {
       position: fixed; inset: 0; z-index: 9999; display: grid;
       place-items: center; background: #121214;
-      transition: opacity 160ms ease;
+      transition: none;
     }
     #app-loading.done { opacity: 0; pointer-events: none; }
     .loading-content { display: grid; justify-items: center; gap: 18px; }
@@ -33,21 +33,17 @@
     .spinner {
       width: 25px; height: 25px; border: 3px solid #38383e;
       border-top-color: #ff7900; border-radius: 50%;
-      animation: spin .8s linear infinite;
+      animation: none;
     }
     .loading-label { color: #9999a1; font-size: 12px; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    #pwa-install-banner { position: fixed; z-index: 10000; left: 12px; right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); display: flex; align-items: center; gap: 12px; padding: 14px; border: 1px solid #494950; border-radius: 18px; background: rgba(35,35,40,.97); box-shadow: 0 12px 36px #0008; font: 13px/1.5 -apple-system, BlinkMacSystemFont, sans-serif; }
+    #pwa-install-banner { position: fixed; z-index: 10000; left: 12px; right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); display: flex; align-items: center; gap: 12px; padding: 14px; border: 1px solid #494950; border-radius: 18px; background: rgba(35,35,40,.97); box-shadow: none; font: 13px/1.5 -apple-system, BlinkMacSystemFont, sans-serif; }
     #pwa-install-banner[hidden] { display: none; }
     #pwa-install-banner .pwa-copy { flex: 1; }
     #pwa-install-banner strong { display: block; margin-bottom: 2px; color: #fff; }
     #pwa-install-action { border: 0; border-radius: 11px; padding: 10px 12px; color: #fff; background: #ff7900; font-weight: 800; white-space: nowrap; }
     #pwa-install-close { border: 0; padding: 4px; color: #aaa; background: transparent; font-size: 18px; }
     @media (min-width: 700px) { #pwa-install-banner { left: auto; right: 24px; bottom: 24px; width: 390px; } }
-    @media (prefers-reduced-motion: reduce) {
-      .spinner { animation-duration: 1.8s; }
-      #app-loading { transition: none; }
-    }
+    @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
   </style>
   <script>
     (() => {
