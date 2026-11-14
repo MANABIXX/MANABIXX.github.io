@@ -668,17 +668,7 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
                   const SizedBox(width: 20),
                   Expanded(flex: 5, child: optionsPanel),
                 ])
-              : Column(children: [
-                  Flexible(
-                    flex: 4,
-                    child: SingleChildScrollView(child: questionPanel),
-                  ),
-                  const SizedBox(height: 12),
-                  Flexible(
-                    flex: 6,
-                    child: SingleChildScrollView(child: optionsPanel),
-                  ),
-                ]),
+              : Column(mainAxisSize: MainAxisSize.min, children: [questionPanel, const SizedBox(height: 18), optionsPanel]),
           );
         })),
       ],
