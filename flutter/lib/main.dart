@@ -23,6 +23,16 @@ class ManabiXXApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.dark,
+        // Prefer the browser/OS Japanese sans-serif fonts. This avoids remote
+        // CJK fallback downloads and lets each platform use its native JP glyphs.
+        fontFamily: 'sans-serif',
+        fontFamilyFallback: const [
+          'Hiragino Sans',
+          'Hiragino Kaku Gothic ProN',
+          'Yu Gothic',
+          'Meiryo',
+          'sans-serif',
+        ],
         scaffoldBackgroundColor: _bg,
         colorScheme: const ColorScheme.dark(
           primary: _orange,
