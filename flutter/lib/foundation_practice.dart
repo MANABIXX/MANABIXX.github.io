@@ -89,7 +89,7 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
   }
 
   Future<List<FoundationQuestion>> _fetchQuestions() async {
-    final uri = Uri.base.resolve(widget.dataPath);
+    final uri = Uri.base.resolve(widget.dataPath.startsWith('/') ? widget.dataPath : '/${widget.dataPath}');
     final response = await http.get(uri);
     if (response.statusCode != 200) {
       throw Exception('問題データを読み込めませんでした（HTTP ${response.statusCode}）。');
