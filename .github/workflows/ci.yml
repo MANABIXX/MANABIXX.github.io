@@ -29,6 +29,8 @@ jobs:
         run: npm run validate:kosen
       - name: Generate foundation-training questions
         run: npm run generate:foundation-training
+      - name: Prepare complete offline dataset and versioned worker
+        run: npm run prepare:flutter-offline
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -58,13 +60,15 @@ jobs:
       - name: Test Flutter app
         working-directory: flutter
         run: flutter test
-      - name: Build Flutter beta
+      - name: Build Flutter for the Pages root
         working-directory: flutter
-        run: flutter build web --release --wasm --base-href "${FLUTTER_BASE_HREF:-/flutter/}"
+        run: flutter build web --release --wasm --base-href /
+      - name: Assemble complete offline root app
+        run: npm run assemble:flutter-root && npm run validate:flutter-root
       - name: Save preview artifact
         if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
         with:
           name: study-build-preview
-          path: build/
+          path: flutter/build/web/
           retention-days: 7
