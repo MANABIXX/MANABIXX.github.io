@@ -1,34 +1,48 @@
-# MANABIXX Flutter Web migration workspace
+# MANABIXX Flutter Web
 
-This directory contains an isolated Flutter Web implementation. It is not the production Pages entry point; the existing SvelteKit site remains live until route, data, progress, PWA, and browser parity checks pass.
+Flutter Web is now the production GitHub Pages app and is deployed at the repository root:
+https://manabixx.github.io/
 
-## Implemented migration slices
+The former SvelteKit app remains in the repository for source/reference and compatibility checks; the Pages deployment artifact is the Flutter build.
 
-- `/`: Flutter migration dashboard with links to the implemented practice modules.
-- `/library`: existing `static/data/knowledge-base.json` (262 indexed/authored records); search by title, terms and explanation, filter by subject/grade/field, and expand learning details.
-- Practice progress: local browser persistence for completed sessions, answer totals, and wrong-question IDs, separated by dataset/mode.
-- `/foundation`: existing `static/data/questions.json` (1,180 records); 1,171 science/social questions selected from the 1,180-record source file, topic filters, 10/20/30/50/all question sessions, four-choice answers, explanations, and results.
-- `/exam`: existing `static/data/public-exam.json` (323 records); science/social practice with source-status notes.
-- `/summary`: existing `static/data/summary-foundation.json` (450 records); summary/foundation question sessions.
-- `/mock-exam`: existing `static/data/mock-exams.json` (100 records); five-subject practice. The five-subject selector is limited to this mode.
-- `/kosen`: separate additional practice route. It is intentionally not linked from the public migration dashboard.
+## Offline behavior
 
-The four public datasets above were audited on 2026-11-14: 2,053 questions total, no duplicate IDs, and no missing required fields / invalid four-choice answer indexes in the inspected records.
+- `npm run prepare:flutter-offline` scans every JSON dataset under `static/data/`, writes a versioned dataset manifest, and generates the service worker source.
+- `npm run assemble:flutter-root` copies the complete data directory and app icon into the Flutter output, creates the root `404.html` SPA fallback, and generates a manifest containing every built app resource.
+- The service worker pre-caches the app shell, Flutter runtime/assets, and all problem datasets during installation. Once installation has completed, practice screens can load the bundled data while offline.
+- Every app launch checks the service worker registration. A changed app/data version installs a new cache before the old cache is removed.
+- Where supported by the browser, Periodic Background Sync requests a weekly data refresh. Browsers without that API still refresh on the next app launch. Background execution is controlled by the browser/OS and cannot be guaranteed while the app is closed.
 
-## Local checks
+## Production build
+
+Run from the repository root after syncing and generating the data:
 
 ```sh
+npm install
+npm run sync:registry
+npm run generate:kosen
+npm run validate:kosen
+npm run generate:foundation-training
+npm run prepare:flutter-offline
+npm run fetch:flutter-fonts
+
 cd flutter
 flutter pub get
 flutter analyze
 flutter test
-flutter build web --release --base-href /
+flutter build web --release --wasm --base-href /
+cd ..
+
+npm run assemble:flutter-root
+npm run validate:flutter-root
 ```
 
-## Migration rules
+The Pages workflow runs the same preparation, test, build, assembly, and validation steps and deploys `flutter/build/web` to the site root.
 
-- Keep the production site and Pages workflow unchanged until route and feature parity is verified.
-- Port every existing public route and preserve deep links, question IDs, progress storage, settings, and PWA behavior.
-- Do not replace real data with fixtures or present placeholder actions as working features.
-- Do not introduce programming-language lessons into Study; Dart is implementation technology only.
-- Use `docs/flutter-migration-inventory.md` as the complete parity checklist.
+## Routing
+
+Flutter uses path URL strategy. The root `404.html` is an exact copy of the Flutter entry point so GitHub Pages deep links (for example `/practice/kosen` and `/summary/science`) boot Flutter while preserving the requested path.
+
+## Data and progress
+
+Problem JSON remains source-controlled under `static/data/`. Practice history, answer totals, and wrong-question IDs are stored locally per dataset/mode using the browser persistence backend. The offline service worker separately caches all source data and built app resources.
