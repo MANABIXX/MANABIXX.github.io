@@ -318,4 +318,17 @@ void main() {
     expect(find.text('社会 1問'), findsOneWidget);
     expect(find.text('国語 1問'), findsOneWidget);
   });
+
+  testWidgets('opens the independent Kosen home after password authentication', (tester) async {
+    await prepareViewport(tester);
+    await tester.pumpWidget(const ManabiXXApp());
+    await tapVisible(tester, find.text('学習'));
+    await tapVisible(tester, find.text('製作者専用モード'));
+    expect(find.text('認証する'), findsOneWidget);
+    await tester.enterText(find.byType(TextField), 'kosen');
+    await tapVisible(tester, find.text('認証する'));
+    expect(find.text('今日の一問が、合格に近づく。'), findsOneWidget);
+    expect(find.text('数学・大問1集中演習'), findsOneWidget);
+    expect(find.text('学習ヒートマップ'), findsOneWidget);
+  });
 }
