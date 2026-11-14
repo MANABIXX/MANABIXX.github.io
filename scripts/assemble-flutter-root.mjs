@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
+import { flutterOfflineDatasets } from './flutter-offline-data.mjs';
 
 const repoRoot = process.cwd();
 const output = path.join(repoRoot, 'flutter', 'build', 'web');
@@ -9,7 +10,9 @@ const iconSource = path.join(repoRoot, 'static', 'assets', 'study-icon.svg');
 
 await fs.mkdir(path.join(output, 'data'), { recursive: true });
 await fs.mkdir(path.join(output, 'assets'), { recursive: true });
-await fs.cp(dataSource, path.join(output, 'data'), { recursive: true, force: true });
+for (const filename of flutterOfflineDatasets) {
+  await fs.copyFile(path.join(dataSource, filename), path.join(output, 'data', filename));
+}
 await fs.copyFile(iconSource, path.join(output, 'assets', 'study-icon.svg'));
 const index = await fs.readFile(path.join(output, 'index.html'));
 await fs.writeFile(path.join(output, '404.html'), index);
@@ -33,6 +36,7 @@ for (const file of allFiles) {
   if (relative === 'offline-app-manifest.json') continue;
   const bytes = await fs.readFile(file);
   hash.update(relative);
+  hash.update('\0');
   hash.update(bytes);
   if (relative !== 'flutter-sw.js') urls.push('/' + relative);
 }
@@ -45,4 +49,4 @@ const workerPath = path.join(output, 'flutter-sw.js');
 const worker = await fs.readFile(workerPath, 'utf8');
 if (!worker.includes('__APP_VERSION__')) throw new Error('Flutter service worker app-version placeholder missing.');
 await fs.writeFile(workerPath, worker.replaceAll('__APP_VERSION__', version));
-console.log(`Assembled root Flutter app: ${urls.length} files cached offline (version ${version}).`);
+console.log(`Assembled Flutter root: ${urls.length} app resources and ${flutterOfflineDatasets.length} approved datasets cached offline.`);
