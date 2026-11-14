@@ -245,7 +245,7 @@ class _HomeDashboardState extends State<_HomeDashboard> {
               const SizedBox(height: 12),
               ClipRRect(borderRadius: const BorderRadius.all(Radius.circular(20)),
                 child: LinearProgressIndicator(
-                  value: (_todayAnswered / 20).clamp(0.0, 1.0),
+                  value: (_todayAnswered / 20).clamp(0.0, 1.0).toDouble(),
                   minHeight: 6,
                   backgroundColor: const Color(0xFF3A3A40), color: _orange)),
               const SizedBox(height: 8),
