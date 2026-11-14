@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 
 import 'package:material_ui/material_ui.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class KosenQuestion {
   const KosenQuestion({
@@ -140,7 +141,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
     final nextSession = [..._available]..shuffle(Random());
     if (nextSession.isEmpty) return;
     setState(() {
-      _session = nextSession;
+      _session = nextSession.take(10).toList(growable: false);
       _index = 0;
       _keyboardIndex = 0;
       _selected = null;
@@ -152,23 +153,38 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
 
   Future<void> _answer(int choice) async {
     if (_selected != null) return;
+    final correct = choice == _current.correct;
     setState(() {
       _selected = choice;
-      if (choice == _current.correct) _score++;
+      if (correct) _score++;
     });
+    if (correct) HapticFeedback.mediumImpact();
     await Future<void>.delayed(const Duration(milliseconds: 120));
     if (mounted && _started && !_finished && _selected == choice) _next();
   }
 
+  Future<void> _saveSession() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final key = 'manabixx.mode.kosen.history';
+      final rows = (jsonDecode(prefs.getString(key) ?? '[]') as List<dynamic>)
+          .whereType<Map<String, dynamic>>().toList();
+      rows.insert(0, {'completedAt': DateTime.now().toIso8601String(), 'title': widget.title, 'total': _session.length, 'score': _score});
+      await prefs.setString(key, jsonEncode(rows.take(120).toList()));
+    } catch (_) {}
+  }
+
   void _next() {
+    final completes = _index + 1 == _session.length;
     setState(() {
-      if (_index + 1 == _session.length) {
+      if (completes) {
         _finished = true;
       } else {
         _index++;
         _selected = null;
       }
     });
+    if (completes) _saveSession();
   }
 
   void _backToSelection() {
@@ -441,7 +457,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
             FilledButton.icon(
               onPressed: _start,
               icon: const Icon(Icons.refresh),
-              label: const Text('もう一度解く'),
+              label: const Text('次の10問へ（目安3分）'),
             ),
             TextButton(onPressed: _backToSelection, child: const Text('教科選択へ戻る')),
           ],
