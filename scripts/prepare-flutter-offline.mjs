@@ -29,9 +29,14 @@ for (const file of paths) {
   urls.push('/data/' + relative);
 }
 const version = hash.digest('hex').slice(0, 20);
-const manifest = { version, generatedAt: new Date().toISOString(), files: urls };
-await fs.writeFile(path.join(webRoot, 'offline-data-manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
+await fs.writeFile(
+  path.join(webRoot, 'offline-data-manifest.json'),
+  JSON.stringify({ version, files: urls }, null, 2) + '\n'
+);
 
 const template = await fs.readFile(path.join(webRoot, 'flutter-sw.template.js'), 'utf8');
-await fs.writeFile(path.join(webRoot, 'flutter-sw.js'), template.replaceAll('__DATA_VERSION__', version));
+await fs.writeFile(
+  path.join(webRoot, 'flutter-sw.js'),
+  template.replaceAll('__DATA_VERSION__', version)
+);
 console.log(`Prepared ${urls.length} offline datasets (version ${version}).`);
