@@ -42,4 +42,8 @@ jobs:
           else
             git commit -m "chore: import reviewed daily question batches"
             git push
+            gh workflow run pages.yml --ref main
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           fi
