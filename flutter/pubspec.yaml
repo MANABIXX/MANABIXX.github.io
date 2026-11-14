@@ -5,6 +5,7 @@ version: 0.1.0+1
 environment:
   sdk: ">=3.4.0 <4.0.0"
 dependencies:
+  material_ui: ^1.0.0
   http: ^1.2.2
   flutter:
     sdk: flutter
