@@ -32,6 +32,9 @@ jobs:
       - name: Install repository tools
         working-directory: .
         run: npm install
+      - name: Generate Flutter-only training dataset
+        working-directory: .
+        run: npm run generate:foundation-training
       - name: Prepare offline dataset and versioned worker
         working-directory: .
         run: npm run prepare:flutter-offline
