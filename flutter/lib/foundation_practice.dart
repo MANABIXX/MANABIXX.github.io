@@ -56,7 +56,7 @@ class FoundationPracticePage extends StatefulWidget {
   const FoundationPracticePage({
     super.key,
     this.loadQuestions,
-    this.dataPath = 'data/questions.json',
+    this.dataPath = '/data/questions.json',
     this.title = '基礎網羅問題',
     this.includeAllSubjects = false,
   });
