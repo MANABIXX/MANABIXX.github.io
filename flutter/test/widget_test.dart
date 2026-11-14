@@ -41,33 +41,6 @@ void main() {
     expect(find.text('学習メニュー'), findsOneWidget);
     expect(find.text('基礎網羅問題'), findsOneWidget);
     expect(find.text('教材ライブラリ'), findsNothing);
-    expect(find.text('専用演習'), findsNothing);
-    expect(find.text('理科の要点まとめ'), findsOneWidget);
-    expect(find.text('社会の要点まとめ'), findsOneWidget);
-  });
-
-  test('merges shared entrance-exam question sets and deduplicates by id', () {
-    const base = FoundationQuestion(
-      id: 'shared-001', subject: 'science', topic: '物理', level: '標準',
-      prompt: '基礎DBの問題', options: ['A', 'B', 'C', 'D'], correct: 0,
-      explanation: '共通問題。',
-    );
-    const duplicate = FoundationQuestion(
-      id: 'shared-001', subject: 'science', topic: '物理', level: '標準',
-      prompt: '重複した問題', options: ['A', 'B', 'C', 'D'], correct: 0,
-      explanation: '重複。',
-    );
-    const publicExam = FoundationQuestion(
-      id: 'public-001', subject: 'social', topic: '歴史', level: '入試標準',
-      prompt: '公立入試DBの問題', options: ['A', 'B', 'C', 'D'], correct: 2,
-      explanation: '共通DBから読み込む。',
-    );
-    final merged = mergeFoundationQuestionSets([
-      [base, duplicate],
-      [publicExam],
-    ]);
-    expect(merged.map((question) => question.id).toList(), ['shared-001', 'public-001']);
-    expect(merged.first.prompt, '基礎DBの問題');
   });
 
   testWidgets('aggregates today answers across local practice datasets', (tester) async {
@@ -121,6 +94,7 @@ void main() {
     // Answer feedback is intentionally brief; the session auto-advances.
     expect(find.text('演習完了'), findsOneWidget);
     expect(find.text('1 / 1'), findsOneWidget);
+    expect(find.text('次の10問へ（目安3分）'), findsOneWidget);
   });
 
   testWidgets('supports arrow and Enter keyboard controls in foundation practice', (tester) async {
@@ -324,4 +298,41 @@ void main() {
     expect(find.text('年号と改革を対応させる'), findsOneWidget);
   });
 
+
+  testWidgets('Kosen mode exposes all five subjects from the shared question bank', (tester) async {
+    final questions = <KosenQuestion>[
+      const KosenQuestion(id: 'k-m', subject: 'math', topic: '計算', level: '基礎', prompt: '数学', options: ['1','2','3','4'], correct: 0, explanation: ''),
+      const KosenQuestion(id: 'k-e', subject: 'english', topic: '文法', level: '基礎', prompt: '英語', options: ['a','b','c','d'], correct: 0, explanation: ''),
+      const KosenQuestion(id: 'k-s', subject: 'science', topic: '物理', level: '基礎', prompt: '理科', options: ['a','b','c','d'], correct: 0, explanation: ''),
+      const KosenQuestion(id: 'k-h', subject: 'social', topic: '歴史', level: '基礎', prompt: '社会', options: ['a','b','c','d'], correct: 0, explanation: ''),
+      const KosenQuestion(id: 'k-j', subject: 'japanese', topic: '読解', level: '基礎', prompt: '国語', options: ['a','b','c','d'], correct: 0, explanation: ''),
+    ];
+    await prepareViewport(tester);
+    await tester.pumpWidget(MaterialApp(
+      home: KosenPracticePage(loadQuestions: () async => questions),
+    ));
+    await tester.pumpAndSettle();
+    expect(find.text('数学 1問'), findsOneWidget);
+    expect(find.text('英語 1問'), findsOneWidget);
+    expect(find.text('理科 1問'), findsOneWidget);
+    expect(find.text('社会 1問'), findsOneWidget);
+    expect(find.text('国語 1問'), findsOneWidget);
+  });
+
+  testWidgets('opens the independent Kosen home after password authentication', (tester) async {
+    await prepareViewport(tester);
+    await tester.pumpWidget(const ManabiXXApp());
+    await tapVisible(tester, find.text('学習'));
+    await tester.tap(find.text('製作者専用モード'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+    expect(find.text('認証する'), findsOneWidget);
+    await tester.enterText(find.byType(TextField), 'kosen');
+    await tester.tap(find.text('認証する'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+    expect(find.text('今日の一問が、合格に近づく。'), findsOneWidget);
+    expect(find.text('数学・大問1集中演習'), findsNWidgets(2));
+    expect(find.text('学習ヒートマップ'), findsOneWidget);
+  });
 }

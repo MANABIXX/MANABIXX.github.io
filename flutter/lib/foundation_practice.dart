@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'dart:math';
@@ -50,18 +51,6 @@ class FoundationQuestion {
       sourceNote: json['sourceNote'] as String? ?? '',
     );
   }
-}
-
-List<FoundationQuestion> mergeFoundationQuestionSets(
-  Iterable<Iterable<FoundationQuestion>> sets,
-) {
-  final byId = <String, FoundationQuestion>{};
-  for (final set in sets) {
-    for (final question in set) {
-      byId.putIfAbsent(question.id, () => question);
-    }
-  }
-  return byId.values.toList(growable: false);
 }
 
 class FoundationPracticePage extends StatefulWidget {
@@ -175,24 +164,28 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
   }
 
   Future<List<FoundationQuestion>> _fetchQuestions() async {
-    Future<List<FoundationQuestion>> loadPath(String path) async {
-      final normalized = path.startsWith('/') ? path : '/$path';
-      final response = await http.get(Uri.base.resolve(normalized));
-      if (response.statusCode != 200) {
-        throw Exception('問題データを読み込めませんでした（HTTP ${response.statusCode}）。');
+    final uri = Uri.base.resolve(widget.dataPath.startsWith('/') ? widget.dataPath : '/${widget.dataPath}');
+    final response = await http.get(uri);
+    if (response.statusCode != 200) {
+      throw Exception('問題データを読み込めませんでした（HTTP ${response.statusCode}）。');
+    }
+    final payload = jsonDecode(response.body) as Map<String, dynamic>;
+    final raw = <dynamic>[...(payload['questions'] as List<dynamic>)];
+    for (final path in widget.additionalDataPaths) {
+      final extraUri = Uri.base.resolve(path.startsWith('/') ? path : '/$path');
+      final extraResponse = await http.get(extraUri);
+      if (extraResponse.statusCode != 200) {
+        throw Exception('追加問題データを読み込めませんでした（HTTP ${extraResponse.statusCode}）。');
       }
-      final payload = jsonDecode(response.body) as Map<String, dynamic>;
-      final raw = payload['questions'] as List<dynamic>;
-      return raw
-          .map((item) => FoundationQuestion.fromJson(item as Map<String, dynamic>))
-          .toList(growable: false);
+      final extraPayload = jsonDecode(extraResponse.body) as Map<String, dynamic>;
+      raw.addAll(extraPayload['questions'] as List<dynamic>);
     }
-
-    final sets = <Iterable<FoundationQuestion>>[];
-    for (final path in [widget.dataPath, ...widget.additionalDataPaths]) {
-      sets.add(await loadPath(path));
+    final byId = <String, FoundationQuestion>{};
+    for (final item in raw) {
+      final question = FoundationQuestion.fromJson(item as Map<String, dynamic>);
+      byId.putIfAbsent(question.id, () => question);
     }
-    return mergeFoundationQuestionSets(sets)
+    return byId.values
         .where((item) => widget.includeAllSubjects ||
             item.subject == 'science' || item.subject == 'social')
         .toList(growable: false);
@@ -271,10 +264,12 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
   Future<void> _answer(int choice) async {
     if (_selected != null) return;
     final question = _current;
+    final correct = choice == question.correct;
     setState(() {
       _selected = choice;
-      if (choice == question.correct) _score++;
+      if (correct) _score++;
     });
+    if (correct) unawaited(HapticFeedback.mediumImpact());
     _saveAnswer(question, choice);
     await Future<void>.delayed(const Duration(milliseconds: 120));
     if (mounted && _started && !_finished && _selected == choice) {
@@ -653,7 +648,7 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
                   width: double.infinity,
                   child: FilledButton(
                     onPressed: _start,
-                    child: const Text('もう一度解く'),
+                    child: const Text('次の10問へ（目安3分）'),
                   ),
                 ),
                 TextButton(onPressed: _back, child: const Text('条件を変更する')),
