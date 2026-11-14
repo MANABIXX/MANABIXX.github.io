@@ -228,6 +228,17 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
 
   FoundationQuestion get _current => _session[_index];
 
+  Map<String, int> get _weakTopics {
+    final counts = <String, int>{};
+    for (final question in _questions) {
+      if (_wrongQuestionIds.contains(question.id)) {
+        final label = '${_subjectLabel(question.subject)} · ${_topicLabel(question.topic)}';
+        counts.update(label, (value) => value + 1, ifAbsent: () => 1);
+      }
+    }
+    return counts;
+  }
+
   void _start() {
     final nextSession = [..._available]..shuffle(Random());
     final count = _amount == 'all' ? nextSession.length : int.parse(_amount);
@@ -261,7 +272,7 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
 
 
 
-  Future<void> _answer(int choice) async {
+  void _answer(int choice) {
     if (_selected != null) return;
     final question = _current;
     final correct = choice == question.correct;
@@ -270,11 +281,7 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
       if (correct) _score++;
     });
     if (correct) unawaited(HapticFeedback.mediumImpact());
-    _saveAnswer(question, choice);
-    await Future<void>.delayed(const Duration(milliseconds: 120));
-    if (mounted && _started && !_finished && _selected == choice) {
-      _next();
-    }
+    unawaited(_saveAnswer(question, choice));
   }
 
   void _next() {
@@ -538,7 +545,7 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
           return Padding(
             padding: const EdgeInsets.only(bottom: 9),
             child: SizedBox(
-              height: 62,
+              height: 68,
               width: double.infinity,
               child: OutlinedButton(
                 onPressed: answered ? null : () => _answer(i),
@@ -581,7 +588,7 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
               const SizedBox(height: 7),
               Text(question.explanation, style: const TextStyle(height: 1.6)),
               const SizedBox(height: 8),
-              const Text('Enterキーで次の問題へ', style: TextStyle(color: Color(0xFF99999A), fontSize: 11)),
+              const Text('解説を確認したら、画面下の「次の問題へ」を押してください。', style: TextStyle(color: Color(0xFF99999A), fontSize: 11)),
             ]),
           ),
       ],
