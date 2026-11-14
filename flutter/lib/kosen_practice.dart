@@ -79,6 +79,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
   List<KosenQuestion> _questions = [];
   List<KosenQuestion> _session = [];
   late String _subject = widget.initialSubject;
+  String _topic = 'all';
   String? _error;
   bool _loading = true;
   bool _started = false;
@@ -121,7 +122,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
   }
 
   void _startReview() {
-    final review = _questions.where((question) => _wrongQuestionIds.contains(question.id)).toList()
+    final review = _available.where((question) => _wrongQuestionIds.contains(question.id)).toList()
       ..shuffle(Random());
     if (review.isEmpty) return;
     setState(() {
@@ -190,8 +191,16 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
     }
   }
 
-  List<KosenQuestion> get _available => _questions
+  List<String> get _topics => _questions
       .where((question) => _subject == 'all' || question.subject == _subject)
+      .map((question) => question.topic)
+      .where((topic) => topic.isNotEmpty)
+      .toSet()
+      .toList()..sort();
+
+  List<KosenQuestion> get _available => _questions
+      .where((question) => (_subject == 'all' || question.subject == _subject) &&
+          (_topic == 'all' || question.topic == _topic))
       .toList(growable: false);
 
   KosenQuestion get _current => _session[_index];
@@ -379,7 +388,24 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
                             ))
                         .toList(),
                     onChanged: (value) {
-                      if (value != null) setState(() => _subject = value);
+                      if (value != null) setState(() { _subject = value; _topic = 'all'; });
+                    },
+                  ),
+                  const SizedBox(height: 12),
+                  DropdownButtonFormField<String>(
+                    initialValue: _topics.contains(_topic) || _topic == 'all' ? _topic : 'all',
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: '単元・分野',
+                    ),
+                    items: [
+                      const DropdownMenuItem(value: 'all', child: Text('すべての単元')),
+                      ..._topics.map((topic) => DropdownMenuItem(
+                        value: topic, child: Text(_topicName(topic)),
+                      )),
+                    ],
+                    onChanged: (value) {
+                      if (value != null) setState(() => _topic = value);
                     },
                   ),
                   const SizedBox(height: 12),
