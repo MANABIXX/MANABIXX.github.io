@@ -290,7 +290,7 @@ void main() {
     ));
     await tester.pumpAndSettle();
     expect(find.text('要点まとめ'), findsOneWidget);
-    expect(find.textContaining('歴史'), findsOneWidget);
+    expect(find.text('歴史'), findsOneWidget);
     await tester.tap(find.text('明治維新'));
     await tester.pumpAndSettle();
     expect(find.text('重要語句'), findsOneWidget);
