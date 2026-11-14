@@ -68,6 +68,16 @@ for (const filename of entries) {
   }
   current.questions = [...existing.values()];
   await fs.writeFile(target, JSON.stringify(current, null, 2) + '\n');
+  if (batch.category === 'kosen') {
+    const mathTarget = path.join(dataRoot, 'kosen-math-section-1.json');
+    const mathData = JSON.parse(await fs.readFile(mathTarget, 'utf8'));
+    const mathById = new Map((mathData.questions ?? []).map((question) => [question.id, question]));
+    for (const question of batch.questions.filter((item) => item.subject === 'math')) {
+      mathById.set(question.id, question);
+    }
+    mathData.questions = [...mathById.values()];
+    await fs.writeFile(mathTarget, JSON.stringify(mathData, null, 2) + '\n');
+  }
   changed.push(destinations[batch.category]);
   console.log('Imported ' + batch.questions.length + ' questions from ' + filename + ' into ' + destinations[batch.category]);
 }
