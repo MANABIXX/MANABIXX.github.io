@@ -17,27 +17,37 @@ concurrency:
 
 jobs:
   build-apk:
-    name: Build and release MANABIXX Android APK
+    name: Validate, build, and publish MANABIXX APK
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Java
+      - name: Set up Java 17
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: "17"
 
-      - name: Set up Flutter
+      - name: Set up Flutter stable
         uses: subosito/flutter-action@v2
         with:
           channel: stable
           cache: true
 
-      - name: Generate Android platform project
+      - name: Generate Android project
         working-directory: flutter
         run: flutter create --platforms=android --org jp.manabixx .
+
+      - name: Set Android app display name
+        working-directory: flutter
+        shell: bash
+        run: |
+          MANIFEST="android/app/src/main/AndroidManifest.xml"
+          test -f "$MANIFEST"
+          sed -i 's/android:label="[^"]*"/android:label="MANABIXX"/' "$MANIFEST"
+          grep -q 'android:label="MANABIXX"' "$MANIFEST"
 
       - name: Resolve dependencies
         working-directory: flutter
@@ -45,15 +55,30 @@ jobs:
 
       - name: Analyze Dart sources
         working-directory: flutter
-        run: flutter analyze
+        run: flutter analyze --no-pub
 
-      - name: Run widget tests
+      - name: Run Flutter tests
         working-directory: flutter
-        run: flutter test
+        run: flutter test --no-pub
 
-      - name: Build release APK
+      - name: Build universal release APK
         working-directory: flutter
-        run: flutter build apk --release
+        run: flutter build apk --release --no-pub
+
+      - name: Verify APK and calculate checksum
+        id: apk
+        working-directory: flutter
+        shell: bash
+        run: |
+          APK="build/app/outputs/flutter-apk/app-release.apk"
+          test -s "$APK"
+          SIZE="$(stat -c '%s' "$APK")"
+          SHA="$(sha256sum "$APK" | cut -d ' ' -f 1)"
+          echo "path=$APK" >> "$GITHUB_OUTPUT"
+          echo "size=$SIZE" >> "$GITHUB_OUTPUT"
+          echo "sha256=$SHA" >> "$GITHUB_OUTPUT"
+          echo "APK size: $SIZE bytes"
+          echo "SHA-256: $SHA"
 
       - name: Read app version
         id: version
@@ -65,7 +90,7 @@ jobs:
           echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
-      - name: Upload APK artifact
+      - name: Upload APK as workflow artifact
         uses: actions/upload-artifact@v4
         with:
           name: MANABIXX-Android-APK
@@ -73,17 +98,34 @@ jobs:
           if-no-files-found: error
           retention-days: 30
 
-      - name: Publish GitHub Release
+      - name: Create or update GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ steps.version.outputs.tag }}
           VERSION: ${{ steps.version.outputs.version }}
           APK: flutter/build/app/outputs/flutter-apk/app-release.apk
+          APK_SHA256: ${{ steps.apk.outputs.sha256 }}
         run: |
           if gh release view "$TAG" >/dev/null 2>&1; then
             gh release upload "$TAG" "$APK" --clobber
+            gh release edit "$TAG" --title "MANABIXX v$VERSION" --notes "MANABIXX Android APK release.
+
+          Install: download MANABIXX-Android.apk and open it on an Android device.
+          Build: GitHub Actions from main.
+          SHA-256: $APK_SHA256"
           else
-            gh release create "$TAG" "$APK" \
+            gh release create "$TAG" "$APK#MANABIXX-Android.apk" \
               --title "MANABIXX v$VERSION" \
-              --notes "MANABIXX Android release. Built from the main branch by GitHub Actions."
+              --notes "MANABIXX Android APK release.
+
+          Install: download MANABIXX-Android.apk and open it on an Android device.
+          Build: GitHub Actions from main.
+          SHA-256: $APK_SHA256"
           fi
+
+      - name: Verify published release asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          gh release view "$TAG" --json assets --jq '.assets[] | select(.name == "MANABIXX-Android.apk") | select(.size > 0) | .name' | grep -qx "MANABIXX-Android.apk"
