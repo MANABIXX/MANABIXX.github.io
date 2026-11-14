@@ -6,6 +6,8 @@ const readJson = async (name) => JSON.parse(await fs.readFile(path.join(root, na
 const index = await fs.readFile(path.join(root, 'index.html'), 'utf8');
 const fallback = await fs.readFile(path.join(root, '404.html'), 'utf8');
 const manifest = await readJson('manifest.webmanifest');
+const kosenManifest = await readJson('manifest-kosen.webmanifest');
+const foundationManifest = await readJson('manifest-foundation.webmanifest');
 const offline = await readJson('offline-data-manifest.json');
 const app = await readJson('offline-app-manifest.json');
 const worker = await fs.readFile(path.join(root, 'flutter-sw.js'), 'utf8');
@@ -13,7 +15,12 @@ const routes = await fs.readFile(path.join(process.cwd(), 'flutter', 'lib', 'mai
 
 if (!index.includes('<base href="/">')) throw new Error('Flutter base href must be /.');
 if (fallback !== index) throw new Error('404.html must mirror the Flutter entry point for GitHub Pages deep links.');
-if (manifest.start_url !== '/' || manifest.scope !== '/') throw new Error('PWA manifest must be scoped to /.');
+for (const [name, item] of [['main', manifest], ['kosen', kosenManifest], ['foundation', foundationManifest]]) {
+  if (item.scope !== '/') throw new Error(`${name} PWA manifest must be scoped to /.`);
+}
+if (manifest.start_url !== '/' || kosenManifest.start_url !== '/practice/kosen' || foundationManifest.start_url !== '/practice/foundation-training') {
+  throw new Error('PWA manifest start URLs do not match the clean root routes.');
+}
 if (!offline.version || !Array.isArray(offline.files) || offline.files.length === 0) {
   throw new Error('Offline data manifest is empty or invalid.');
 }
