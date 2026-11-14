@@ -393,7 +393,7 @@ class _StudyMenu extends StatelessWidget {
         subtitle: '5教科の総合演習', onTap: () => onSelect('/mock-exam')),
       _MenuTile(icon: Icons.lock_outline_rounded, title: '製作者専用モード', subtitle: '認証制・5教科の実戦演習', onTap: () => onSelect('/practice/kosen')),
       _MenuTile(icon: Icons.calculate_outlined, title: '数学・大問1集中演習', subtitle: '計算・小問集合を重点反復', onTap: () => onSelect('/practice/kosen/math-section-1')),
-      _MenuTile(icon: Icons.repeat_rounded, title: '下積みモード', subtitle: '5教科の基礎反復と苦手問題の復習', onTap: () => onSelect('/practice/foundation-training')),
+      _MenuTile(icon: Icons.repeat_rounded, title: '下積みモード', subtitle: '佐野松桜高校の合格を目指す5教科の基礎反復', onTap: () => onSelect('/practice/foundation-training')),
       _MenuTile(icon: Icons.auto_stories_outlined, title: '教材ライブラリ',
         subtitle: '分野別の教材を探す', onTap: () => onSelect('/library')),
     ],
