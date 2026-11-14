@@ -118,15 +118,16 @@
       const renderReminder = () => { reminder.textContent = reminderState && reminderState.enabled ? "通知 ON · " + reminderState.time : "学習通知 OFF"; };
       reminder.hidden = standalone && !modePath.includes("/practice/");
       renderReminder();
-      let notifiedDay = "";
+      let notifiedDay = localStorage.getItem("manabixx.daily-reminder.last-sent") || "";
       const checkReminder = () => {
         if (!reminderState || !reminderState.enabled || !("Notification" in window) || Notification.permission !== "granted") return;
         const now = new Date();
         const day = now.getFullYear() + "-" + (now.getMonth()+1) + "-" + now.getDate();
         const time = String(now.getHours()).padStart(2,"0") + ":" + String(now.getMinutes()).padStart(2,"0");
         if (time === reminderState.time && notifiedDay !== day) {
-          new Notification("MANABIXX 学習リマインダー", { body: "今日の学習を始めましょう。", icon: modePath.includes("/practice/kosen") ? "kosen-icon.svg" : "foundation-icon.svg" });
+          new Notification("MANABIXX 学習リマインダー", { body: "今日の学習を始めましょう。", icon: modePath.includes("/practice/kosen") ? "/flutter/kosen-icon.svg" : "/flutter/foundation-icon.svg" });
           notifiedDay = day;
+          localStorage.setItem("manabixx.daily-reminder.last-sent", day);
         }
       };
       window.setInterval(checkReminder, 30000);
