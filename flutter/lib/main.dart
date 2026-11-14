@@ -564,6 +564,15 @@ class _ModeHomePageState extends State<_ModeHomePage> {
               icon: const Icon(Icons.route_outlined),
               label: const Text('青藍泰斗・佐野松桜 合格マップ'),
             ),
+            const SizedBox(height: 10),
+            OutlinedButton.icon(
+              onPressed: () => launchUrl(
+                Uri.parse('https://manabixx.github.io/blog/study/'),
+                mode: LaunchMode.externalApplication,
+              ),
+              icon: const Icon(Icons.article_outlined),
+              label: const Text('あなた専用の対策ブログ'),
+            ),
           ],
           const SizedBox(height: 10),
           OutlinedButton.icon(
