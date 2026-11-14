@@ -46,6 +46,12 @@ async function assertCachedFile(url, label) {
 }
 for (const url of offline.files) await assertCachedFile(url, 'dataset');
 for (const url of app.files) await assertCachedFile(url, 'app asset');
+for (const [name, item] of [['main', manifest], ['kosen', kosenManifest], ['foundation', foundationManifest]]) {
+  for (const icon of item.icons || []) await assertCachedFile(icon.src, `${name} icon`);
+}
+for (const url of ['/manifest-kosen.webmanifest', '/manifest-foundation.webmanifest', '/favicon.svg', '/kosen-icon.svg', '/foundation-icon.svg']) {
+  if (!app.files.includes(url)) throw new Error(`Offline app manifest is missing ${url}`);
+}
 
 if (!app.files.includes('/flutter_bootstrap.js') || !app.files.includes('/index.html')) {
   throw new Error('Offline app manifest does not include the Flutter bootstrap and entry point.');
