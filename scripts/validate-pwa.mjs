@@ -25,12 +25,12 @@ await fs.access(path.join(root, 'src', 'service-worker.js'));
 
 const flutterWeb = path.join(root, 'flutter', 'web');
 for (const [file, start, icon] of [
-  ['manifest-kosen.webmanifest', '/flutter/practice/kosen', 'kosen-icon.svg'],
-  ['manifest-foundation.webmanifest', '/flutter/practice/foundation-training', 'foundation-icon.svg'],
+  ['manifest-kosen.webmanifest', '/practice/kosen', 'kosen-icon.svg'],
+  ['manifest-foundation.webmanifest', '/practice/foundation-training', 'foundation-icon.svg'],
 ]) {
   const modeManifest = JSON.parse(await fs.readFile(path.join(flutterWeb, file), 'utf8'));
   if (modeManifest.display !== 'standalone' || modeManifest.start_url !== start ||
-      modeManifest.scope !== '/flutter/' || !modeManifest.icons?.some((item) => item.src.endsWith(icon))) {
+      modeManifest.scope !== '/' || !modeManifest.icons?.some((item) => item.src === '/' + icon)) {
     throw new Error(`Invalid independent Flutter PWA manifest: ${file}`);
   }
   await fs.access(path.join(flutterWeb, icon));
