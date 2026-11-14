@@ -6,6 +6,7 @@ const index = await fs.readFile(path.join(root, 'index.html'), 'utf8');
 const fallback = await fs.readFile(path.join(root, '404.html'), 'utf8');
 const manifest = JSON.parse(await fs.readFile(path.join(root, 'manifest.webmanifest'), 'utf8'));
 const offline = JSON.parse(await fs.readFile(path.join(root, 'offline-data-manifest.json'), 'utf8'));
+const app = JSON.parse(await fs.readFile(path.join(root, 'offline-app-manifest.json'), 'utf8'));
 
 if (!index.includes('<base href="/">')) throw new Error('Flutter base href must be /.');
 if (fallback !== index) throw new Error('404.html must mirror the Flutter entry point.');
@@ -13,9 +14,13 @@ if (manifest.start_url !== '/' || manifest.scope !== '/') throw new Error('PWA m
 if (!offline.version || !Array.isArray(offline.files) || offline.files.length === 0) {
   throw new Error('Offline data manifest is empty or invalid.');
 }
-for (const url of offline.files) {
-  const local = path.join(root, url.replace(/^\\//, ''));
-  await fs.access(local);
+if (!app.version || !Array.isArray(app.files) || app.files.length === 0) {
+  throw new Error('Offline app manifest is empty or invalid.');
 }
+const localPath = (url) => path.join(root, url.startsWith('/') ? url.slice(1) : url);
+for (const url of offline.files) await fs.access(localPath(url));
+for (const url of app.files) await fs.access(localPath(url));
+const worker = await fs.readFile(path.join(root, 'flutter-sw.js'), 'utf8');
+if (worker.includes('__APP_VERSION__')) throw new Error('Offline worker app version was not injected.');
 await fs.access(path.join(root, 'assets', 'study-icon.svg'));
-console.log(`Root Flutter build validated: ${offline.files.length} datasets, base href /, 404 fallback present.`);
+console.log(`Root Flutter build validated: ${app.files.length} app resources and ${offline.files.length} datasets cached; base href / and 404 fallback present.`);
