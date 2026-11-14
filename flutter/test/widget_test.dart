@@ -51,6 +51,40 @@ void main() {
     expect(find.text('1 / 1'), findsOneWidget);
   });
 
+  testWidgets('uses the public entrance exam dataset and shows source status', (tester) async {
+    const question = FoundationQuestion(
+      id: 'test-exam-001',
+      subject: 'science',
+      topic: '物理・運動',
+      level: '公立入試標準',
+      prompt: '平均の速さを求める式はどれか。',
+      options: ['道のり÷時間', '時間÷道のり', '道のり×時間', '道のり＋時間'],
+      correct: 0,
+      explanation: '平均の速さは道のりを時間で割って求める。',
+      sourceLabel: '出典照合中',
+      sourceNote: '原資料との照合を進めています。',
+    );
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: FoundationPracticePage(
+          dataPath: 'data/public-exam.json',
+          title: '公立高校入試問題',
+          loadQuestions: () async => [question],
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('公立高校入試問題'), findsWidgets);
+    await tester.tap(find.text('演習を始める'));
+    await tester.pumpAndSettle();
+
+    expect(find.text(question.prompt), findsOneWidget);
+    expect(find.text('出典照合中'), findsOneWidget);
+    expect(find.text(question.sourceNote), findsOneWidget);
+  });
+
   testWidgets('loads isolated practice data and completes a session', (tester) async {
     const question = KosenQuestion(
       id: 'test-math-001',
