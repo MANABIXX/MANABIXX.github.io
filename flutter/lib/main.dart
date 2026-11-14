@@ -251,7 +251,7 @@ class _HomeDashboardState extends State<_HomeDashboard> {
           ],
         ),
         const SizedBox(height: 44),
-        const Text('TODAY', style: TextStyle(
+        const Text('今日', style: TextStyle(
           color: _orange, fontSize: 11, fontWeight: FontWeight.w900, letterSpacing: 2)),
         const SizedBox(height: 10),
         const Text('今日も、一歩ずつ。', style: TextStyle(
@@ -274,7 +274,7 @@ class _HomeDashboardState extends State<_HomeDashboard> {
                 const Padding(padding: EdgeInsets.only(bottom: 8, left: 6),
                   child: Text('問回答', style: TextStyle(color: Color(0xFFB6B6BE)))),
                 const Spacer(),
-                const Text('TODAY', style: TextStyle(color: _orange, fontWeight: FontWeight.w800)),
+                const Text('今日', style: TextStyle(color: _orange, fontWeight: FontWeight.w800)),
               ]),
               const SizedBox(height: 12),
               ClipRRect(borderRadius: const BorderRadius.all(Radius.circular(20)),
@@ -546,7 +546,7 @@ class _StudyMenu extends StatelessWidget {
   Widget build(BuildContext context) => ListView(
     padding: const EdgeInsets.fromLTRB(20, 26, 20, 24),
     children: [
-      const Text('LEARN', style: TextStyle(
+      const Text('学習', style: TextStyle(
         color: _orange, letterSpacing: 2, fontSize: 11, fontWeight: FontWeight.w900)),
       const SizedBox(height: 8),
       const Text('学習メニュー', style: TextStyle(fontSize: 26, fontWeight: FontWeight.w900)),
