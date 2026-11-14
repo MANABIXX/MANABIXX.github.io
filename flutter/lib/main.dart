@@ -5,13 +5,14 @@ import 'package:manabixx_web/foundation_practice.dart';
 import 'package:manabixx_web/kosen_practice.dart';
 import 'package:manabixx_web/knowledge_library.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 
 const _bg = Color(0xFF121214);
 const _surface = Color(0xFF222226);
 const _line = Color(0xFF333338);
 const _orange = Color(0xFFFF7900);
 
-void main() => runApp(const ManabiXXApp());
+void main() { usePathUrlStrategy(); runApp(const ManabiXXApp()); }
 
 class ManabiXXApp extends StatelessWidget {
   const ManabiXXApp({super.key});
