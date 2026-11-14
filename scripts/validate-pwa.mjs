@@ -36,5 +36,6 @@ for (const [file, start, icon] of [
   await fs.access(path.join(flutterWeb, icon));
 }
 await fs.access(path.join(flutterWeb, 'favicon.svg'));
+await fs.access(path.join(flutterWeb, 'apple-touch-icon.svg'));
 
 console.log(`PWA configuration OK: ${manifest.name} plus two independent Flutter mode manifests`);
