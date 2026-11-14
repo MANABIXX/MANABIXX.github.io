@@ -97,12 +97,12 @@ class ManabiXXApp extends StatelessWidget {
       routes: {
         '/library': (_) => const KnowledgeLibraryPage(),
         '/library/': (_) => const KnowledgeLibraryPage(),
-        '/practice/foundation': (_) => const FoundationPracticePage(),
+        '/practice/foundation': (_) => const FoundationPracticePage(includeAllSubjects: true),
         '/practice/kosen': (_) => const KosenPracticePage(),
         '/practice/kosen/math-section-1': (_) => const KosenPracticePage(dataPath: '/data/kosen-math-section-1.json', title: '数学・大問1集中演習', initialSubject: 'math'),
         '/practice/foundation-training': (_) => const FoundationPracticePage(dataPath: 'data/mock-exams.json', title: '下積みモード', includeAllSubjects: true),
         '/records': (_) => const _ProgressPage(),
-        '/foundation': (_) => const FoundationPracticePage(),
+        '/foundation': (_) => const FoundationPracticePage(includeAllSubjects: true),
         '/foundation/': (_) => const FoundationPracticePage(),
         '/exam': (_) => const FoundationPracticePage(
           dataPath: 'data/public-exam.json', title: '公立高校入試問題'),
@@ -305,7 +305,7 @@ class _StudyMenu extends StatelessWidget {
       const Text('学習メニュー', style: TextStyle(fontSize: 26, fontWeight: FontWeight.w900)),
       const SizedBox(height: 22),
       _MenuTile(icon: Icons.bolt_rounded, title: '基礎網羅問題',
-        subtitle: '理科・社会の基礎をテンポよく', onTap: () => onSelect('/foundation')),
+        subtitle: '5教科の基礎をテンポよく', onTap: () => onSelect('/foundation')),
       _MenuTile(icon: Icons.school_outlined, title: '公立高校入試問題',
         subtitle: '入試形式で実戦演習', onTap: () => onSelect('/exam')),
       _MenuTile(icon: Icons.menu_book_outlined, title: '要点まとめ',
