@@ -16,7 +16,10 @@
     "generate:kosen": "node scripts/generate-kosen-questions.mjs",
     "fetch:flutter-fonts": "node scripts/fetch-flutter-fonts.mjs",
     "generate:foundation-training": "node scripts/generate-foundation-training.mjs",
-    "validate:kosen": "node scripts/validate-kosen-generated.mjs"
+    "validate:kosen": "node scripts/validate-kosen-generated.mjs",
+    "prepare:flutter-offline": "node scripts/prepare-flutter-offline.mjs",
+    "validate:flutter-root": "node scripts/validate-flutter-root.mjs",
+    "assemble:flutter-root": "node scripts/assemble-flutter-root.mjs"
   },
   "dependencies": {
     "bits-ui": "^1.0.0",

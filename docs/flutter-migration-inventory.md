@@ -3,11 +3,13 @@
 Last inspected: 2026-11-14 (JST)  
 Repository: `MANABIXX/MANABIXX.github.io`  
 Production branch: `main`  
-Production URL: https://manabixx.github.io/\nFlutter beta preview (after merge and Pages deployment): https://manabixx.github.io/flutter/
+Production URL: https://manabixx.github.io/ (Flutter Web root deployment)
 
-## Safety boundary
+## Deployment decision and known limitations
 
-The production Pages workflow currently builds the SvelteKit application from the repository root. The legacy static site and a separate Next.js prototype also exist in this repository. This Flutter workspace is isolated and must not be deployed to production until parity checks pass. Do not delete or overwrite any of those implementations during the foundation stage.
+The Pages workflow is being switched to the Flutter Web build at `/` by explicit product direction. The SvelteKit and legacy sources remain in the repository, but they are no longer the Pages deployment artifact after this cutover. This is a root-app deployment, not a claim that every former route has been ported.
+
+Motivation, release notes, workspace, private-content boundaries, the separate Shitadumi app, and full learning-history migration remain incomplete in Flutter. Users who relied on those former routes will not find them in the root app until they are migrated. Do not describe this cutover as full feature parity.
 
 ## Existing route and feature inventory
 
@@ -37,19 +39,19 @@ The production Pages workflow currently builds the SvelteKit application from th
 - Keep the existing public URLs and verify direct navigation, reload, browser back/forward, and trailing-slash behavior.
 - Preserve the independent PWA identity, icon, manifest, offline cache scope, and update behavior.
 
-## Deployment and cutover gates
+## Deployment and cutover verification
 
-1. Complete a source-level route, data, persistence, and access-control audit.
-2. Port one self-contained screen and its real data path at a time.
-3. Add parity tests for each migrated route and user action.
-4. Verify Flutter analyze, widget tests, release web build, deep links, mobile layout, accessibility, and offline behavior.
-5. Compare all public routes and stored data against the current production implementation.
-6. Only after every gate passes, prepare a separately reviewed Pages cutover. Until then, keep the existing production Pages workflow unchanged.
+- The Pages workflow builds Flutter with `--base-href /`, copies the Flutter route datasets into the root output, and publishes a matching `404.html` for direct navigation and reload on clean URLs.
+- `prepare:flutter-offline` hashes the seven JSON datasets used by Flutter routes and generates a versioned data manifest and worker. Supplementary/private JSON files not referenced by Flutter are excluded.
+- `assemble:flutter-root` copies the approved datasets and icon, generates an app-resource manifest, and injects a build version into the worker.
+- The service worker pre-caches Flutter runtime resources and approved problem datasets before activation; it keeps the previous cache until the new cache is ready. The app checks for worker updates on launch. Browsers supporting Periodic Background Sync can refresh datasets weekly.
+- Background sync while the app is closed depends on browser and OS support; the guaranteed fallback is an update check on the next launch.
+- This root deployment does not complete the remaining route, private-content, accessibility, or stored-progress parity items listed above.
 
 ## Current stage
 
 - Stage 1: isolated Flutter app scaffold and CI validation workflow.
 - Stage 2: Flutter question-practice foundation, public exam, summary/foundation confirmation, five-subject mock practice, knowledge library, and a separate unlinked additional-practice route. Existing JSON data is loaded directly; practice selection, four-choice answering, explanations, results, library search and filters are implemented.
 - Four public datasets audited: 1,180 foundation questions, 323 public-exam questions, 450 summary questions, and 100 mock questions. No duplicate IDs or malformed four-choice records were found in the inspected datasets.
-- Still not migrated: motivation, release-note UI, workspace, private-content access boundary, Shitadumi app, full home/dashboard, full learning-history migration, PWA/offline behavior, and full browser/mobile/accessibility parity.
-- Production deployment: unchanged.
+- Still not migrated: motivation, release-note UI, workspace, private-content access boundary, Shitadumi app, full learning-history migration, and full browser/mobile/accessibility parity. Offline caching is now implemented for the Flutter app and its seven route datasets only.
+- Production deployment: Flutter Web at the Pages root after this cutover; SvelteKit and legacy sources remain in the repository but are not the deployed app.
