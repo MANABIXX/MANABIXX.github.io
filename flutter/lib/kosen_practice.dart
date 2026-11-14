@@ -152,12 +152,11 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
 
   Future<void> _answer(int choice) async {
     if (_selected != null) return;
-    HapticFeedback.lightImpact();
     setState(() {
       _selected = choice;
       if (choice == _current.correct) _score++;
     });
-    await Future<void>.delayed(const Duration(milliseconds: 420));
+    await Future<void>.delayed(const Duration(milliseconds: 260));
     if (mounted && _started && !_finished && _selected == choice) _next();
   }
 
