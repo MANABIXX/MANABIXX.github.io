@@ -72,7 +72,8 @@ void main() {
     expect(find.text('このモードを開くにはパスワードが必要です。'), findsOneWidget);
     await tester.enterText(find.byType(TextField).last, 'kosen');
     await tester.tap(find.text('認証する'));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.text('製作者専用モード'), findsWidgets);
     expect(find.text('専用ホーム'), findsOneWidget);
