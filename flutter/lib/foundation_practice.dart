@@ -87,52 +87,68 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
   int _totalCorrect = 0;
   List<String> _wrongQuestionIds = [];
   List<Map<String, dynamic>> _history = [];
+  bool _progressStorageAvailable = true;
 
   String get _storageKey => 'manabixx.learning.${widget.dataPath.replaceAll('/', '_')}';
 
   Future<void> _loadProgress() async {
-    final prefs = await SharedPreferences.getInstance();
-    final raw = prefs.getString('$_storageKey.history');
-    final wrong = prefs.getStringList('$_storageKey.wrong') ?? [];
-    final decoded = raw == null ? <dynamic>[] : jsonDecode(raw) as List<dynamic>;
-    final history = decoded.whereType<Map<String, dynamic>>().toList();
-    if (!mounted) return;
-    setState(() {
-      _history = history;
-      _wrongQuestionIds = wrong;
-      _completedSessions = history.length;
-      _totalAnswered = history.fold<int>(0, (sum, item) => sum + (item['total'] as int? ?? 0));
-      _totalCorrect = history.fold<int>(0, (sum, item) => sum + (item['score'] as int? ?? 0));
-    });
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final raw = prefs.getString('$_storageKey.history');
+      final wrong = prefs.getStringList('$_storageKey.wrong') ?? [];
+      final decoded = raw == null ? <dynamic>[] : jsonDecode(raw) as List<dynamic>;
+      final history = decoded.whereType<Map<String, dynamic>>().toList();
+      if (!mounted) return;
+      setState(() {
+        _history = history;
+        _wrongQuestionIds = wrong;
+        _completedSessions = history.length;
+        _totalAnswered = history.fold<int>(0, (sum, item) => sum + (item['total'] as int? ?? 0));
+        _totalCorrect = history.fold<int>(0, (sum, item) => sum + (item['score'] as int? ?? 0));
+      });
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _progressStorageAvailable = false);
+    }
   }
 
   Future<void> _saveAnswer(FoundationQuestion question, int choice) async {
-    final prefs = await SharedPreferences.getInstance();
-    if (choice == question.correct) {
-      _wrongQuestionIds.remove(question.id);
-    } else if (!_wrongQuestionIds.contains(question.id)) {
-      _wrongQuestionIds.add(question.id);
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (choice == question.correct) {
+        _wrongQuestionIds.remove(question.id);
+      } else if (!_wrongQuestionIds.contains(question.id)) {
+        _wrongQuestionIds.add(question.id);
+      }
+      await prefs.setStringList('$_storageKey.wrong', _wrongQuestionIds);
+      if (mounted) setState(() {});
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _progressStorageAvailable = false);
     }
-    await prefs.setStringList('$_storageKey.wrong', _wrongQuestionIds);
-    if (mounted) setState(() {});
   }
 
   Future<void> _saveSession() async {
-    final prefs = await SharedPreferences.getInstance();
-    _history.insert(0, {
-      'completedAt': DateTime.now().toIso8601String(),
-      'title': widget.title,
-      'total': _session.length,
-      'score': _score,
-    });
-    if (_history.length > 100) _history = _history.take(100).toList();
-    await prefs.setString('$_storageKey.history', jsonEncode(_history));
-    if (!mounted) return;
-    setState(() {
-      _completedSessions = _history.length;
-      _totalAnswered += _session.length;
-      _totalCorrect += _score;
-    });
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      _history.insert(0, {
+        'completedAt': DateTime.now().toIso8601String(),
+        'title': widget.title,
+        'total': _session.length,
+        'score': _score,
+      });
+      if (_history.length > 100) _history = _history.take(100).toList();
+      await prefs.setString('$_storageKey.history', jsonEncode(_history));
+      if (!mounted) return;
+      setState(() {
+        _completedSessions = _history.length;
+        _totalAnswered += _session.length;
+        _totalCorrect += _score;
+      });
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _progressStorageAvailable = false);
+    }
   }
 
   @override
@@ -207,6 +223,24 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
       _finished = false;
     });
   }
+
+  void _startReview() {
+    final reviewQuestions = _questions
+        .where((question) => _wrongQuestionIds.contains(question.id))
+        .toList()
+      ..shuffle(Random());
+    if (reviewQuestions.isEmpty) return;
+    setState(() {
+      _session = reviewQuestions;
+      _index = 0;
+      _selected = null;
+      _score = 0;
+      _started = true;
+      _finished = false;
+    });
+  }
+
+
 
   void _answer(int choice) {
     if (_selected != null) return;
@@ -327,6 +361,13 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
                   Text('学習記録：$_completedSessions回 · $_totalAnswered問回答 · 正解 $_totalCorrect問'),
                   Text('復習待ち：${_wrongQuestionIds.length}問',
                       style: Theme.of(context).textTheme.bodySmall),
+                  if (!_progressStorageAvailable)
+                    Text(
+                      'この端末では学習記録を保存できません。演習は続けられます。',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: Theme.of(context).colorScheme.error,
+                          ),
+                    ),
                   const SizedBox(height: 20),
                   DropdownButtonFormField<String>(
                     initialValue: _subject,
@@ -387,6 +428,17 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
                       label: const Text('演習を始める'),
                     ),
                   ),
+                  if (_wrongQuestionIds.isNotEmpty) ...[
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      width: double.infinity,
+                      child: OutlinedButton.icon(
+                        onPressed: _startReview,
+                        icon: const Icon(Icons.refresh_rounded),
+                        label: Text('間違えた問題を復習（${_wrongQuestionIds.length}問）'),
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),
