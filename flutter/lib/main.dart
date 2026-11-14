@@ -181,16 +181,22 @@ class _HomeDashboardState extends State<_HomeDashboard> {
   Future<void> _loadTodayProgress() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final raw = prefs.getString('manabixx.learning.data_questions.json.history');
-      final history = raw == null ? <dynamic>[] : (jsonDecode(raw) as List<dynamic>);
       final today = DateTime.now();
-      final answered = history.whereType<Map<String, dynamic>>().where((item) {
-        final value = item['completedAt'];
-        if (value is! String) return false;
-        final date = DateTime.tryParse(value)?.toLocal();
-        return date != null && date.year == today.year &&
-            date.month == today.month && date.day == today.day;
-      }).fold<int>(0, (sum, item) => sum + (item['total'] as int? ?? 0));
+      var answered = 0;
+      final historyKeys = prefs.getKeys().where((key) =>
+          key.startsWith('manabixx.learning.') && key.endsWith('.history'));
+      for (final key in historyKeys) {
+        final raw = prefs.getString(key);
+        if (raw == null) continue;
+        final history = jsonDecode(raw) as List<dynamic>;
+        answered += history.whereType<Map<String, dynamic>>().where((item) {
+          final value = item['completedAt'];
+          if (value is! String) return false;
+          final date = DateTime.tryParse(value)?.toLocal();
+          return date != null && date.year == today.year &&
+              date.month == today.month && date.day == today.day;
+        }).fold<int>(0, (sum, item) => sum + (item['total'] as int? ?? 0));
+      }
       if (!mounted) return;
       setState(() {
         _todayAnswered = answered;
