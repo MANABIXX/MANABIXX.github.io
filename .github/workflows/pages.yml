@@ -50,7 +50,7 @@ jobs:
         run: flutter test
       - name: Build Flutter beta for /flutter/
         working-directory: flutter
-        run: flutter build web --release --base-href /flutter/
+        run: flutter build web --release --wasm --base-href /flutter/
       - name: Add Flutter beta to Pages artifact
         run: |
           mkdir -p build/flutter
