@@ -1,4 +1,4 @@
-name: Build Android APK
+name: Build and Release MANABIXX Android APK
 
 on:
   workflow_dispatch:
@@ -9,15 +9,15 @@ on:
       - ".github/workflows/android-apk.yml"
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: android-apk-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build-apk:
-    name: Build MANABIXX Android APK
+    name: Build and release MANABIXX Android APK
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -47,14 +47,43 @@ jobs:
         working-directory: flutter
         run: flutter analyze
 
+      - name: Run widget tests
+        working-directory: flutter
+        run: flutter test
+
       - name: Build release APK
         working-directory: flutter
         run: flutter build apk --release
 
-      - name: Upload APK
+      - name: Read app version
+        id: version
+        working-directory: flutter
+        shell: bash
+        run: |
+          VERSION="$(sed -n 's/^version:[[:space:]]*\([^+[:space:]]*\).*/\1/p' pubspec.yaml)"
+          if [ -z "$VERSION" ]; then echo "Could not read version from pubspec.yaml"; exit 1; fi
+          echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: MANABIXX-Android-APK
           path: flutter/build/app/outputs/flutter-apk/app-release.apk
           if-no-files-found: error
           retention-days: 30
+
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.version.outputs.tag }}
+          VERSION: ${{ steps.version.outputs.version }}
+          APK: flutter/build/app/outputs/flutter-apk/app-release.apk
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" "$APK" --clobber
+          else
+            gh release create "$TAG" "$APK" \
+              --title "MANABIXX v$VERSION" \
+              --notes "MANABIXX Android release. Built from the main branch by GitHub Actions."
+          fi
