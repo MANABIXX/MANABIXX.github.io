@@ -52,7 +52,7 @@ class KosenQuestion {
 }
 
 class KosenPracticePage extends StatefulWidget {
-  const KosenPracticePage({super.key, this.loadQuestions, this.dataPath = '/data/kosen-questions.json', this.title = widget.title, this.initialSubject = 'all'});
+  const KosenPracticePage({super.key, this.loadQuestions, this.dataPath = '/data/kosen-questions.json', this.title = '製作者専用モード', this.initialSubject = 'all'});
 
   final Future<List<KosenQuestion>> Function()? loadQuestions;
   final String dataPath;
@@ -256,7 +256,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
           ),
           const SizedBox(height: 12),
           Text(
-            '専用演習',
+            widget.title,
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                   fontWeight: FontWeight.w800,
                 ),
@@ -339,7 +339,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('${question.level} · QUESTION ${(_index + 1).toString().padLeft(2, '0')}',
+            Text('${question.level} · 問題 ${(_index + 1).toString().padLeft(2, '0')}',
               style: Theme.of(context).textTheme.labelMedium?.copyWith(
                 color: Theme.of(context).colorScheme.primary, letterSpacing: 1.2)),
             const SizedBox(height: 16),
