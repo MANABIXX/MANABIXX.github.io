@@ -353,6 +353,19 @@ void main() {
     expect(find.text('国語 1問'), findsOneWidget);
   });
 
+  testWidgets('imports creator questions into isolated local storage', (tester) async {
+    await prepareViewport(tester);
+    await tester.pumpWidget(const MaterialApp(
+      home: KosenQuestionImportPage(storageKey: 'manabixx.mode.kosen.history.custom'),
+    ));
+    const batch = '[{"id":"custom-math-001","subject":"math","topic":"計算","level":"基礎","prompt":"2＋3はいくつか。","options":["3","4","5","6"],"correct":2,"explanation":"2＋3＝5。"}]';
+    await tester.enterText(find.byType(TextField), batch);
+    await tapVisible(tester, find.text('端末に取り込む'));
+    expect(find.text('1問を端末に保存しました。'), findsOneWidget);
+    final prefs = await SharedPreferences.getInstance();
+    expect(prefs.getString('manabixx.mode.kosen.history.custom'), contains('custom-math-001'));
+  });
+
   testWidgets('shows both target schools in the foundation roadmap', (tester) async {
     await prepareViewport(tester);
     await tester.pumpWidget(const MaterialApp(home: FoundationRoadmapPage()));
