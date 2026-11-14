@@ -181,6 +181,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
   }
 
   String _subjectName(String value) => _subjects[value] ?? value;
+  String _topicName(String value) => const {'civics':'公民','history':'歴史','geography':'地理','earth':'地学','physics':'物理','chemistry':'化学','biology':'生物'}[value.toLowerCase()] ?? value;
 
   @override
   Widget build(BuildContext context) {
@@ -404,7 +405,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
     return ListView(
       children: [
         Row(children: [
-          Expanded(child: Text('${_subjectName(question.subject)} / ${question.topic}')),
+          Expanded(child: Text('${_subjectName(question.subject)} / ${_topicName(question.topic)}')),
           Text('${_index + 1} / ${_session.length}'),
         ]),
         const SizedBox(height: 12),
