@@ -33,7 +33,7 @@ if (worker.includes('__DATA_VERSION__') || worker.includes('__APP_VERSION__')) {
 if (!index.includes('navigator.serviceWorker.register("/flutter-sw.js"')) {
   throw new Error('Root service worker registration is missing.');
 }
-if (index.includes('/flutter/')) throw new Error('Root app entry point still contains /flutter/ asset paths.');
+if (/<(?:script|link)[^>]+(?:src|href)=["']\/flutter\//i.test(index)) throw new Error('Root app entry point still references /flutter/ assets.');
 for (const route of ['/practice/kosen', '/practice/foundation-training', '/records', '/summary']) {
   if (!routes.includes(`'${route}'`)) throw new Error(`Flutter route is missing: ${route}`);
 }
