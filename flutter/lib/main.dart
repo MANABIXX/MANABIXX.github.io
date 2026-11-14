@@ -281,6 +281,20 @@ class _HomeDashboardState extends State<_HomeDashboard> {
             label: const Text('学習スタート', style: TextStyle(fontSize: 18)),
           ),
         ),
+        const SizedBox(height: 12),
+        Row(children: [
+          Expanded(child: OutlinedButton.icon(
+            onPressed: () => Navigator.of(context).pushNamed('/practice/kosen'),
+            icon: const Icon(Icons.school_outlined),
+            label: const Text('高専モード'),
+          )),
+          const SizedBox(width: 10),
+          Expanded(child: OutlinedButton.icon(
+            onPressed: () => Navigator.of(context).pushNamed('/practice/foundation-training'),
+            icon: const Icon(Icons.repeat_rounded),
+            label: const Text('下積みモード'),
+          )),
+        ]),
       ],
     ),
   );
