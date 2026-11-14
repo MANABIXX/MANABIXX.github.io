@@ -263,7 +263,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
           ),
           const SizedBox(height: 8),
           Text(
-            '国語・数学・英語・理科・社会の5教科を4択で演習。過去問形式を参考にした問題を収録しています。',
+            '5教科の4択演習。基礎から応用まで段階的に取り組み、過去問資料から抽出した分野も確認できます。',
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           const SizedBox(height: 28),
