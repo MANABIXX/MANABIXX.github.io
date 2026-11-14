@@ -89,9 +89,11 @@ class ManabiXXApp extends StatelessWidget {
       ),
       routes: {
         '/practice/foundation': (_) => const FoundationPracticePage(includeAllSubjects: true),
-        '/practice/kosen': (_) => const _PasswordGatePage(password: 'kosen', title: '製作者専用モード', child: KosenPracticePage(title: '製作者専用モード')) ,
-        '/practice/kosen/math-section-1': (_) => const _PasswordGatePage(password: 'kosen', title: '数学・大問1集中演習', child: KosenPracticePage(dataPath: '/data/kosen-math-section-1.json', title: '数学・大問1集中演習', initialSubject: 'math')),
-        '/practice/foundation-training': (_) => const _PasswordGatePage(password: 'haru', title: '下積みモード', child: FoundationPracticePage(dataPath: '/data/foundation-training.json', title: '下積みモード', includeAllSubjects: true, additionalDataPaths: ['/data/public-exam.json'])),
+        '/practice/kosen': (_) => const _PasswordGatePage(password: 'kosen', title: '製作者専用モード', child: _ModeHomePage(mode: 'kosen')),
+        '/practice/kosen/study': (_) => const _PasswordGatePage(password: 'kosen', title: '高専モード', child: KosenPracticePage(title: '高専モード')),
+        '/practice/kosen/math-section-1': (_) => const _PasswordGatePage(password: 'kosen', title: '高専モード', child: KosenPracticePage(dataPath: '/data/kosen-math-section-1.json', title: '数学・大問1集中演習', initialSubject: 'math')),
+        '/practice/foundation-training': (_) => const _PasswordGatePage(password: 'haru', title: '下積みモード', child: _ModeHomePage(mode: 'foundation')),
+        '/practice/foundation-training/study': (_) => const _PasswordGatePage(password: 'haru', title: '下積みモード', child: FoundationPracticePage(dataPath: '/data/foundation-training.json', title: '下積みモード', includeAllSubjects: true, additionalDataPaths: ['/data/public-exam.json'])),
         '/records': (_) => const _ProgressPage(),
         '/foundation': (_) => const FoundationPracticePage(includeAllSubjects: true),
         '/foundation/': (_) => const FoundationPracticePage(),
@@ -282,6 +284,191 @@ class _HomeDashboardState extends State<_HomeDashboard> {
       ],
     ),
   );
+}
+
+class _ModeHomePage extends StatefulWidget {
+  const _ModeHomePage({required this.mode});
+  final String mode;
+  @override
+  State<_ModeHomePage> createState() => _ModeHomePageState();
+}
+
+class _ModeHomePageState extends State<_ModeHomePage> {
+  List<Map<String, dynamic>> _history = [];
+  DateTime? _examDate;
+  bool _loaded = false;
+  bool _remindersEnabled = false;
+
+  bool get _kosen => widget.mode == 'kosen';
+  String get _title => _kosen ? '高専モード' : '下積みモード';
+  String get _practiceRoute => _kosen ? '/practice/kosen/study' : '/practice/foundation-training/study';
+  String get _historyKey => _kosen
+      ? 'manabixx.mode.kosen.history'
+      : 'manabixx.learning._data_foundation-training.json.history';
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    final prefs = await SharedPreferences.getInstance();
+    final raw = prefs.getString(_historyKey);
+    final rows = raw == null ? <dynamic>[] : jsonDecode(raw) as List<dynamic>;
+    final date = prefs.getString('manabixx.exam-date');
+    if (!mounted) return;
+    setState(() {
+      _history = rows.whereType<Map<String, dynamic>>().toList();
+      _examDate = date == null ? null : DateTime.tryParse(date);
+      _remindersEnabled = prefs.getBool('manabixx.reminders.enabled') ?? false;
+      _loaded = true;
+    });
+  }
+
+  Set<String> get _activeDays => _history.map((item) {
+    final raw = item['completedAt'];
+    if (raw is! String) return '';
+    final date = DateTime.tryParse(raw)?.toLocal();
+    return date == null ? '' : '${date.year}-${date.month}-${date.day}';
+  }).where((value) => value.isNotEmpty).toSet();
+
+  int get _streak {
+    final active = _activeDays;
+    var day = DateTime.now();
+    String key(DateTime d) => '${d.year}-${d.month}-${d.day}';
+    if (!active.contains(key(day))) day = day.subtract(const Duration(days: 1));
+    var count = 0;
+    while (active.contains(key(day))) {
+      count++;
+      day = day.subtract(const Duration(days: 1));
+    }
+    return count;
+  }
+
+  Future<void> _setExamDate() async {
+    final now = DateTime.now();
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: _examDate ?? DateTime(now.year, now.month, now.day + 60),
+      firstDate: now,
+      lastDate: DateTime(now.year + 2),
+      helpText: '入試日を設定',
+    );
+    if (picked == null) return;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('manabixx.exam-date', picked.toIso8601String());
+    if (mounted) setState(() => _examDate = picked);
+  }
+
+  Future<void> _toggleReminder() async {
+    final prefs = await SharedPreferences.getInstance();
+    final next = !_remindersEnabled;
+    await prefs.setBool('manabixx.reminders.enabled', next);
+    if (!mounted) return;
+    setState(() => _remindersEnabled = next);
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(next
+        ? '通知設定を有効にしました。ブラウザーの通知許可と、アプリを開いている状態が必要です。'
+        : '通知設定をオフにしました。',
+    ));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final now = DateTime.now();
+    final examDays = _examDate == null ? null : _examDate!.difference(DateTime(now.year, now.month, now.day)).inDays;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(_title),
+        leading: IconButton(
+          tooltip: '通常ホームへ',
+          onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false),
+          icon: const Icon(Icons.home_outlined),
+        ),
+        actions: [
+          IconButton(
+            tooltip: '学習リマインダー',
+            onPressed: _toggleReminder,
+            icon: Icon(_remindersEnabled ? Icons.notifications_active : Icons.notifications_none),
+          ),
+        ],
+      ),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(20, 16, 20, 28),
+        children: [
+          Text(_kosen ? 'FOCUS / KOSEN' : 'FOCUS / FOUNDATION',
+            style: const TextStyle(color: _orange, fontSize: 11, letterSpacing: 2, fontWeight: FontWeight.w900)),
+          const SizedBox(height: 8),
+          Text(_kosen ? '今日の一問が、合格に近づく。' : '基礎を積み重ねて、確かな得点力へ。',
+            style: const TextStyle(fontSize: 23, fontWeight: FontWeight.w900)),
+          const SizedBox(height: 20),
+          Card(child: Padding(
+            padding: const EdgeInsets.all(18),
+            child: Row(children: [
+              const Icon(Icons.local_fire_department_rounded, color: _orange, size: 34),
+              const SizedBox(width: 12),
+              Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                const Text('連続学習日数', style: TextStyle(color: Colors.white70, fontSize: 12)),
+                Text(_loaded ? '$_streak 日' : '—', style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w900)),
+              ])),
+              Text('${_history.fold<int>(0, (sum, row) => sum + (row['total'] as int? ?? 0))}問',
+                style: const TextStyle(color: Colors.white70)),
+            ]),
+          )),
+          const SizedBox(height: 16),
+          Card(child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              const Text('学習ヒートマップ', style: TextStyle(fontWeight: FontWeight.w800)),
+              const SizedBox(height: 12),
+              Wrap(spacing: 5, runSpacing: 5, children: List.generate(28, (i) {
+                final date = DateTime(now.year, now.month, now.day).subtract(Duration(days: 27 - i));
+                final active = _activeDays.contains('${date.year}-${date.month}-${date.day}');
+                return Tooltip(message: '${date.month}/${date.day}',
+                  child: Container(width: 17, height: 17, decoration: BoxDecoration(
+                    color: active ? const Color(0xFFFF7900) : const Color(0xFF38383E),
+                    borderRadius: BorderRadius.circular(4))));
+              })),
+            ]),
+          )),
+          const SizedBox(height: 16),
+          Card(child: ListTile(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            title: const Text('入試までのカウントダウン'),
+            subtitle: Text(examDays == null ? '日程を設定すると残り日数を表示します。' : 'あと $examDays 日'),
+            trailing: const Icon(Icons.edit_calendar_outlined),
+            onTap: _setExamDate,
+          )),
+          const SizedBox(height: 20),
+          FilledButton.icon(
+            onPressed: () => Navigator.of(context).pushNamed(_practiceRoute),
+            icon: const Icon(Icons.play_arrow_rounded),
+            label: const Text('学習を始める'),
+          ),
+          if (_kosen) ...[
+            const SizedBox(height: 10),
+            OutlinedButton.icon(
+              onPressed: () => Navigator.of(context).pushNamed('/practice/kosen/math-section-1'),
+              icon: const Icon(Icons.calculate_outlined),
+              label: const Text('数学・大問1集中演習'),
+            ),
+          ],
+          const SizedBox(height: 12),
+          OutlinedButton.icon(
+            onPressed: _toggleReminder,
+            icon: Icon(_remindersEnabled ? Icons.notifications_off_outlined : Icons.notifications_active_outlined),
+            label: Text(_remindersEnabled ? '学習通知をオフ' : '学習リマインダーを設定'),
+          ),
+          const SizedBox(height: 8),
+          Text(_kosen
+            ? 'このホームは高専モード専用です。ブラウザーのメニューからホーム画面に追加すると、専用アプリとして起動できます。'
+            : 'このホームは下積みモード専用です。ブラウザーのメニューからホーム画面に追加すると、専用アプリとして起動できます。',
+            style: const TextStyle(color: Colors.white60, fontSize: 12, height: 1.5)),
+        ],
+      ),
+    );
+  }
 }
 
 class _PasswordGatePage extends StatefulWidget {
