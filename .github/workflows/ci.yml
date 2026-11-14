@@ -34,6 +34,23 @@ jobs:
         run: npm run validate:pwa
       - name: Build preview
         run: npm run build
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.50.0'
+          channel: stable
+          cache: true
+      - name: Install Flutter dependencies
+        working-directory: flutter
+        run: flutter pub get
+      - name: Analyze Flutter app
+        working-directory: flutter
+        run: flutter analyze
+      - name: Test Flutter app
+        working-directory: flutter
+        run: flutter test
+      - name: Build Flutter beta
+        working-directory: flutter
+        run: flutter build web --release --base-href /flutter/
       - name: Save preview artifact
         if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4

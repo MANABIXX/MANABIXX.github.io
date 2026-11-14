@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>MANABIXX</title>
+  <script>
+    (() => {
+      const requested = location.pathname + location.search + location.hash;
+      try {
+        sessionStorage.setItem('manabixx_flutter_redirect', requested);
+      } catch (_) {}
+      location.replace('/');
+    })();
+  </script>
+</head>
+<body>
+  <p>ページを開いています…</p>
+</body>
+</html>

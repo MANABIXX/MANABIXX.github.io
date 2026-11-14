@@ -1,0 +1,40 @@
+name: Flutter Web migration check
+
+on:
+  push:
+    branches:
+      - migration/flutter-web-foundation-2026-11-14
+  pull_request:
+    branches: [main]
+    paths:
+      - "flutter/**"
+      - ".github/workflows/flutter-web-check.yml"
+      - "docs/flutter-migration-inventory.md"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: flutter-web-migration-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: flutter
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Resolve dependencies
+        run: flutter pub get
+      - name: Analyze Dart sources
+        run: flutter analyze
+      - name: Run widget tests
+        run: flutter test
+      - name: Build GitHub Pages-compatible web output
+        run: flutter build web --release --base-href /flutter/

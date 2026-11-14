@@ -1,0 +1,588 @@
+import 'dart:convert';
+import 'dart:math';
+
+import 'package:material_ui/material_ui.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
+class FoundationQuestion {
+  const FoundationQuestion({
+    required this.id,
+    required this.subject,
+    required this.topic,
+    required this.level,
+    required this.prompt,
+    required this.options,
+    required this.correct,
+    required this.explanation,
+    this.sourceLabel = '',
+    this.sourceNote = '',
+  });
+
+  final String id;
+  final String subject;
+  final String topic;
+  final String level;
+  final String prompt;
+  final List<String> options;
+  final int correct;
+  final String explanation;
+  final String sourceLabel;
+  final String sourceNote;
+
+  factory FoundationQuestion.fromJson(Map<String, dynamic> json) {
+    final options = (json['options'] as List<dynamic>).cast<String>();
+    final correct = json['correct'] as int;
+    if (options.length != 4 || correct < 0 || correct > 3) {
+      throw const FormatException('問題データの選択肢または正答番号が不正です。');
+    }
+    return FoundationQuestion(
+      id: json['id'] as String,
+      subject: json['subject'] as String,
+      topic: json['topic'] as String? ?? '',
+      level: json['level'] as String? ?? '基礎',
+      prompt: json['prompt'] as String,
+      options: options,
+      correct: correct,
+      explanation: json['explanation'] as String? ?? '',
+      sourceLabel: json['sourceLabel'] as String? ?? '',
+      sourceNote: json['sourceNote'] as String? ?? '',
+    );
+  }
+}
+
+class FoundationPracticePage extends StatefulWidget {
+  const FoundationPracticePage({
+    super.key,
+    this.loadQuestions,
+    this.dataPath = 'data/questions.json',
+    this.title = '基礎網羅問題',
+    this.includeAllSubjects = false,
+  });
+
+  final Future<List<FoundationQuestion>> Function()? loadQuestions;
+  final String dataPath;
+  final String title;
+  final bool includeAllSubjects;
+
+  @override
+  State<FoundationPracticePage> createState() => _FoundationPracticePageState();
+}
+
+class _FoundationPracticePageState extends State<FoundationPracticePage> {
+  List<FoundationQuestion> _questions = [];
+  List<FoundationQuestion> _session = [];
+  String _subject = 'all';
+  String _topic = 'all';
+  String _amount = '10';
+  String? _error;
+  bool _loading = true;
+  bool _started = false;
+  bool _finished = false;
+  int _index = 0;
+  int? _selected;
+  int _score = 0;
+  int _completedSessions = 0;
+  int _totalAnswered = 0;
+  int _totalCorrect = 0;
+  List<String> _wrongQuestionIds = [];
+  List<Map<String, dynamic>> _history = [];
+  bool _progressStorageAvailable = true;
+
+  String get _storageKey => 'manabixx.learning.${widget.dataPath.replaceAll('/', '_')}';
+
+  Future<void> _loadProgress() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final raw = prefs.getString('$_storageKey.history');
+      final wrong = prefs.getStringList('$_storageKey.wrong') ?? [];
+      final decoded = raw == null ? <dynamic>[] : jsonDecode(raw) as List<dynamic>;
+      final history = decoded.whereType<Map<String, dynamic>>().toList();
+      if (!mounted) return;
+      setState(() {
+        _history = history;
+        _wrongQuestionIds = wrong;
+        _completedSessions = history.length;
+        _totalAnswered = history.fold<int>(0, (sum, item) => sum + (item['total'] as int? ?? 0));
+        _totalCorrect = history.fold<int>(0, (sum, item) => sum + (item['score'] as int? ?? 0));
+      });
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _progressStorageAvailable = false);
+    }
+  }
+
+  Future<void> _saveAnswer(FoundationQuestion question, int choice) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (choice == question.correct) {
+        _wrongQuestionIds.remove(question.id);
+      } else if (!_wrongQuestionIds.contains(question.id)) {
+        _wrongQuestionIds.add(question.id);
+      }
+      await prefs.setStringList('$_storageKey.wrong', _wrongQuestionIds);
+      if (mounted) setState(() {});
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _progressStorageAvailable = false);
+    }
+  }
+
+  Future<void> _saveSession() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      _history.insert(0, {
+        'completedAt': DateTime.now().toIso8601String(),
+        'title': widget.title,
+        'total': _session.length,
+        'score': _score,
+      });
+      if (_history.length > 100) _history = _history.take(100).toList();
+      await prefs.setString('$_storageKey.history', jsonEncode(_history));
+      if (!mounted) return;
+      setState(() {
+        _completedSessions = _history.length;
+        _totalAnswered += _session.length;
+        _totalCorrect += _score;
+      });
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _progressStorageAvailable = false);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+    _loadProgress();
+  }
+
+  Future<List<FoundationQuestion>> _fetchQuestions() async {
+    final uri = Uri.base.resolve(widget.dataPath.startsWith('/') ? widget.dataPath : '/${widget.dataPath}');
+    final response = await http.get(uri);
+    if (response.statusCode != 200) {
+      throw Exception('問題データを読み込めませんでした（HTTP ${response.statusCode}）。');
+    }
+    final payload = jsonDecode(response.body) as Map<String, dynamic>;
+    final raw = payload['questions'] as List<dynamic>;
+    return raw
+        .map((item) => FoundationQuestion.fromJson(item as Map<String, dynamic>))
+        .where((item) => widget.includeAllSubjects ||
+            item.subject == 'science' || item.subject == 'social')
+        .toList(growable: false);
+  }
+
+  Future<void> _load() async {
+    try {
+      final loaded = await (widget.loadQuestions ?? _fetchQuestions)();
+      if (!mounted) return;
+      setState(() {
+        _questions = loaded
+            .where((item) => widget.includeAllSubjects ||
+                item.subject == 'science' || item.subject == 'social')
+            .toList(growable: false);
+        _loading = false;
+        _error = null;
+      });
+    } catch (error) {
+      if (!mounted) return;
+      setState(() {
+        _error = error.toString();
+        _loading = false;
+      });
+    }
+  }
+
+  List<String> get _topics => _questions
+      .where((item) => _subject == 'all' || item.subject == _subject)
+      .map((item) => item.topic)
+      .where((item) => item.isNotEmpty)
+      .toSet()
+      .toList()
+    ..sort();
+
+  List<FoundationQuestion> get _available => _questions
+      .where((item) =>
+          (_subject == 'all' || item.subject == _subject) &&
+          (_topic == 'all' || item.topic == _topic))
+      .toList(growable: false);
+
+  FoundationQuestion get _current => _session[_index];
+
+  void _start() {
+    final nextSession = [..._available]..shuffle(Random());
+    final count = _amount == 'all' ? nextSession.length : int.parse(_amount);
+    if (nextSession.isEmpty) return;
+    setState(() {
+      _session = nextSession.take(count).toList(growable: false);
+      _index = 0;
+      _selected = null;
+      _score = 0;
+      _started = true;
+      _finished = false;
+    });
+  }
+
+  void _startReview() {
+    final reviewQuestions = _questions
+        .where((question) => _wrongQuestionIds.contains(question.id))
+        .toList()
+      ..shuffle(Random());
+    if (reviewQuestions.isEmpty) return;
+    setState(() {
+      _session = reviewQuestions;
+      _index = 0;
+      _selected = null;
+      _score = 0;
+      _started = true;
+      _finished = false;
+    });
+  }
+
+
+
+  void _answer(int choice) {
+    if (_selected != null) return;
+    setState(() {
+      _selected = choice;
+      if (choice == _current.correct) _score++;
+    });
+    _saveAnswer(_current, choice);
+  }
+
+  void _next() {
+    final completes = _index + 1 == _session.length;
+    setState(() {
+      if (completes) {
+        _finished = true;
+      } else {
+        _index++;
+        _selected = null;
+      }
+    });
+    if (completes) _saveSession();
+  }
+
+  void _back() {
+    setState(() {
+      _started = false;
+      _finished = false;
+      _selected = null;
+    });
+  }
+
+  String _subjectLabel(String value) => switch (value) {
+        'science' => '理科',
+        'social' => '社会',
+        'math' => '数学',
+        'english' => '英語',
+        'japanese' => '国語',
+        _ => '理科・社会',
+      };
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+        leading: IconButton(
+          tooltip: 'Studyホームへ戻る',
+          onPressed: () => Navigator.of(context).maybePop(),
+          icon: const Icon(Icons.arrow_back),
+        ),
+      ),
+      body: SafeArea(
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 760),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: _loading
+                  ? const Center(child: CircularProgressIndicator())
+                  : _error != null
+                      ? _buildError()
+                      : !_started
+                          ? _buildSelection()
+                          : _finished
+                              ? _buildResult()
+                              : _buildQuestion(),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildError() => Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.cloud_off_outlined, size: 36),
+            const SizedBox(height: 12),
+            Text(_error!, textAlign: TextAlign.center),
+            const SizedBox(height: 16),
+            FilledButton(onPressed: _load, child: const Text('再読み込み')),
+          ],
+        ),
+      );
+
+  Widget _buildSelection() => ListView(
+        children: [
+          const SizedBox(height: 32),
+          Text('FOUNDATION / PRACTICE',
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                    letterSpacing: 2,
+                  )),
+          const SizedBox(height: 12),
+          Text(widget.title == '基礎網羅問題' ? '基礎を、一問ずつ。' : '入試形式で、実力を試す。',
+              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    fontWeight: FontWeight.w800,
+                  )),
+          const SizedBox(height: 8),
+          Text(widget.title == '基礎網羅問題'
+              ? '理科・社会の基礎問題から、今取り組む範囲を選びます。'
+              : widget.includeAllSubjects
+                  ? '5教科の問題を組み合わせて、実戦形式で演習します。'
+                  : '理科・社会の入試形式問題に挑戦します。出典情報も確認できます。'),
+          const SizedBox(height: 24),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('収録問題', style: Theme.of(context).textTheme.labelLarge),
+                  const SizedBox(height: 6),
+                  Text('${_questions.length}問',
+                      style: Theme.of(context).textTheme.headlineMedium),
+                  const SizedBox(height: 10),
+                  Text('学習記録：$_completedSessions回 · $_totalAnswered問回答 · 正解 $_totalCorrect問'),
+                  Text('復習待ち：${_wrongQuestionIds.length}問',
+                      style: Theme.of(context).textTheme.bodySmall),
+                  if (!_progressStorageAvailable)
+                    Text(
+                      'この端末では学習記録を保存できません。演習は続けられます。',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: Theme.of(context).colorScheme.error,
+                          ),
+                    ),
+                  const SizedBox(height: 20),
+                  DropdownButtonFormField<String>(
+                    initialValue: _subject,
+                    decoration: const InputDecoration(labelText: '教科'),
+                    items: [
+                      DropdownMenuItem(
+                        value: 'all',
+                        child: Text(widget.includeAllSubjects ? '全教科' : '理科・社会'),
+                      ),
+                      const DropdownMenuItem(value: 'science', child: Text('理科')),
+                      const DropdownMenuItem(value: 'social', child: Text('社会')),
+                      if (widget.includeAllSubjects) ...[
+                        const DropdownMenuItem(value: 'japanese', child: Text('国語')),
+                        const DropdownMenuItem(value: 'math', child: Text('数学')),
+                        const DropdownMenuItem(value: 'english', child: Text('英語')),
+                      ],
+                    ],
+                    onChanged: (value) => setState(() {
+                      _subject = value ?? 'all';
+                      _topic = 'all';
+                    }),
+                  ),
+                  const SizedBox(height: 14),
+                  DropdownButtonFormField<String>(
+                    initialValue: _topic,
+                    decoration: const InputDecoration(labelText: '分野・単元'),
+                    items: [
+                      const DropdownMenuItem(value: 'all', child: Text('すべて')),
+                      ..._topics.map((topic) =>
+                          DropdownMenuItem(value: topic, child: Text(topic))),
+                    ],
+                    onChanged: (value) =>
+                        setState(() => _topic = value ?? 'all'),
+                  ),
+                  const SizedBox(height: 14),
+                  DropdownButtonFormField<String>(
+                    initialValue: _amount,
+                    decoration: const InputDecoration(labelText: '問題数'),
+                    items: const [
+                      DropdownMenuItem(value: '10', child: Text('10問')),
+                      DropdownMenuItem(value: '20', child: Text('20問')),
+                      DropdownMenuItem(value: '30', child: Text('30問')),
+                      DropdownMenuItem(value: '50', child: Text('50問')),
+                      DropdownMenuItem(value: 'all', child: Text('全問')),
+                    ],
+                    onChanged: (value) =>
+                        setState(() => _amount = value ?? '10'),
+                  ),
+                  const SizedBox(height: 20),
+                  Text('${_available.length}問から出題できます。',
+                      style: Theme.of(context).textTheme.bodySmall),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    width: double.infinity,
+                    child: FilledButton.icon(
+                      onPressed: _available.isEmpty ? null : _start,
+                      icon: const Icon(Icons.play_arrow_rounded),
+                      label: const Text('演習を始める'),
+                    ),
+                  ),
+                  if (_wrongQuestionIds.isNotEmpty) ...[
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      width: double.infinity,
+                      child: OutlinedButton.icon(
+                        onPressed: _startReview,
+                        icon: const Icon(Icons.refresh_rounded),
+                        label: Text('間違えた問題を復習（${_wrongQuestionIds.length}問）'),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ),
+        ],
+      );
+
+  Widget _buildQuestion() {
+    final question = _current;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            TextButton.icon(
+              onPressed: _back,
+              icon: const Icon(Icons.arrow_back),
+              label: const Text('一覧へ戻る'),
+            ),
+            const Spacer(),
+            Text('${_index + 1} / ${_session.length}',
+                style: const TextStyle(fontFeatures: [])),
+          ],
+        ),
+        const SizedBox(height: 8),
+        LinearProgressIndicator(value: (_index + 1) / _session.length),
+        const SizedBox(height: 20),
+        Wrap(
+          spacing: 8,
+          children: [
+            Chip(label: Text(_subjectLabel(question.subject))),
+            Chip(label: Text(question.topic)),
+            Chip(label: Text(question.level)),
+          ],
+        ),
+        const SizedBox(height: 18),
+        Expanded(
+          child: SingleChildScrollView(
+            child: Text(
+              question.prompt,
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    height: 1.6,
+                    fontWeight: FontWeight.w700,
+                  ),
+            ),
+          ),
+        ),
+        ...List.generate(question.options.length, (i) {
+          final answered = _selected != null;
+          final correct = i == question.correct;
+          final chosen = _selected == i;
+          final background = answered && correct
+              ? Theme.of(context).colorScheme.primaryContainer
+              : answered && chosen
+                  ? Theme.of(context).colorScheme.errorContainer
+                  : null;
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: SizedBox(
+              width: double.infinity,
+              child: OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 18, vertical: 18),
+                  backgroundColor: background,
+                ),
+                onPressed: answered ? null : () => _answer(i),
+                child: Text('${String.fromCharCode(65 + i)}. ${question.options[i]}'),
+              ),
+            ),
+          );
+        }),
+        if (question.sourceLabel.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Text(question.sourceLabel,
+                style: Theme.of(context).textTheme.labelSmall),
+          ),
+        if (question.sourceNote.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Text(question.sourceNote,
+                style: Theme.of(context).textTheme.bodySmall),
+          ),
+        if (_selected != null) ...[
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    _selected == question.correct ? '正解！' : '不正解',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w800,
+                      color: _selected == question.correct
+                          ? Theme.of(context).colorScheme.primary
+                          : Theme.of(context).colorScheme.error,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(question.explanation),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 8),
+          FilledButton(
+            onPressed: _next,
+            child: Text(_index + 1 == _session.length ? '結果を見る' : '次の問題へ'),
+          ),
+        ],
+      ],
+    );
+  }
+
+  Widget _buildResult() => Center(
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(28),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.check_circle_outline, size: 42),
+                const SizedBox(height: 14),
+                Text('演習完了',
+                    style: Theme.of(context).textTheme.headlineMedium),
+                const SizedBox(height: 10),
+                Text('$_score / ${_session.length}',
+                    style: Theme.of(context).textTheme.displaySmall),
+                Text('正答率 ${(_score / _session.length * 100).round()}%'),
+                const SizedBox(height: 20),
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton(
+                    onPressed: _start,
+                    child: const Text('もう一度解く'),
+                  ),
+                ),
+                TextButton(onPressed: _back, child: const Text('条件を変更する')),
+              ],
+            ),
+          ),
+        ),
+      );
+}

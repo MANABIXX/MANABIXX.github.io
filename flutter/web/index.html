@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <base href="$FLUTTER_BASE_HREF">
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#08090c">
+  <meta name="description" content="自分のペースで学び、理解を積み重ねる学習スペース。">
+  <title>MANABIXX</title>
+  <script>
+    (() => {
+      try {
+        const redirect = sessionStorage.getItem('manabixx_flutter_redirect');
+        if (redirect) {
+          sessionStorage.removeItem('manabixx_flutter_redirect');
+          history.replaceState(null, '', redirect);
+        }
+      } catch (_) {}
+    })();
+  </script>
+</head>
+<body>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
