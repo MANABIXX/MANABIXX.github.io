@@ -44,7 +44,7 @@ jobs:
         working-directory: flutter
         shell: bash
         run: |
-          APP_GRADLE="$(find android/app -maxdepth 1 -type f \\( -name 'build.gradle' -o -name 'build.gradle.kts' \\) -print -quit)"
+          APP_GRADLE="$(find android/app -maxdepth 1 -type f \( -name 'build.gradle' -o -name 'build.gradle.kts' \) -print -quit)"
           test -n "$APP_GRADLE"
           cat >> "$APP_GRADLE" <<'GRADLE'
 
