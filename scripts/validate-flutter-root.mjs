@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { flutterOfflineDatasets } from './flutter-offline-data.mjs';
 
 const root = path.join(process.cwd(), 'flutter', 'build', 'web');
 const index = await fs.readFile(path.join(root, 'index.html'), 'utf8');
