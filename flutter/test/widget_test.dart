@@ -41,6 +41,33 @@ void main() {
     expect(find.text('学習メニュー'), findsOneWidget);
     expect(find.text('基礎網羅問題'), findsOneWidget);
     expect(find.text('教材ライブラリ'), findsNothing);
+    expect(find.text('専用演習'), findsNothing);
+    expect(find.text('理科の要点まとめ'), findsOneWidget);
+    expect(find.text('社会の要点まとめ'), findsOneWidget);
+  });
+
+  test('merges shared entrance-exam question sets and deduplicates by id', () {
+    const base = FoundationQuestion(
+      id: 'shared-001', subject: 'science', topic: '物理', level: '標準',
+      prompt: '基礎DBの問題', options: ['A', 'B', 'C', 'D'], correct: 0,
+      explanation: '共通問題。',
+    );
+    const duplicate = FoundationQuestion(
+      id: 'shared-001', subject: 'science', topic: '物理', level: '標準',
+      prompt: '重複した問題', options: ['A', 'B', 'C', 'D'], correct: 0,
+      explanation: '重複。',
+    );
+    const publicExam = FoundationQuestion(
+      id: 'public-001', subject: 'social', topic: '歴史', level: '入試標準',
+      prompt: '公立入試DBの問題', options: ['A', 'B', 'C', 'D'], correct: 2,
+      explanation: '共通DBから読み込む。',
+    );
+    final merged = mergeFoundationQuestionSets([
+      [base, duplicate],
+      [publicExam],
+    ]);
+    expect(merged.map((question) => question.id).toList(), ['shared-001', 'public-001']);
+    expect(merged.first.prompt, '基礎DBの問題');
   });
 
   testWidgets('aggregates today answers across local practice datasets', (tester) async {

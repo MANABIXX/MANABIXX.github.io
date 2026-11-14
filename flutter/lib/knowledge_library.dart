@@ -227,7 +227,14 @@ class _KnowledgeLibraryPageState extends State<KnowledgeLibraryPage> {
       border: Border.all(color: const Color(0xFF55515A)),
     ),
     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text(title, style: const TextStyle(fontWeight: FontWeight.w900, color: Color(0xFFFFB15C))),
+      Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+        decoration: BoxDecoration(
+          color: const Color(0x66FFB15C),
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Text(title, style: const TextStyle(fontWeight: FontWeight.w900, color: Color(0xFFFFD39A))),
+      ),
       const SizedBox(height: 7),
       Text(body, style: const TextStyle(height: 1.75)),
     ]),
