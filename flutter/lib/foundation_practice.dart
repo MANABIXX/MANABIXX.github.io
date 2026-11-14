@@ -56,11 +56,13 @@ class FoundationPracticePage extends StatefulWidget {
     this.loadQuestions,
     this.dataPath = 'data/questions.json',
     this.title = '基礎網羅問題',
+    this.includeAllSubjects = false,
   });
 
   final Future<List<FoundationQuestion>> Function()? loadQuestions;
   final String dataPath;
   final String title;
+  final bool includeAllSubjects;
 
   @override
   State<FoundationPracticePage> createState() => _FoundationPracticePageState();
@@ -96,7 +98,8 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
     final raw = payload['questions'] as List<dynamic>;
     return raw
         .map((item) => FoundationQuestion.fromJson(item as Map<String, dynamic>))
-        .where((item) => item.subject == 'science' || item.subject == 'social')
+        .where((item) => widget.includeAllSubjects ||
+            item.subject == 'science' || item.subject == 'social')
         .toList(growable: false);
   }
 
@@ -106,7 +109,8 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
       if (!mounted) return;
       setState(() {
         _questions = loaded
-            .where((item) => item.subject == 'science' || item.subject == 'social')
+            .where((item) => widget.includeAllSubjects ||
+                item.subject == 'science' || item.subject == 'social')
             .toList(growable: false);
         _loading = false;
         _error = null;
@@ -180,6 +184,9 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
   String _subjectLabel(String value) => switch (value) {
         'science' => '理科',
         'social' => '社会',
+        'math' => '数学',
+        'english' => '英語',
+        'japanese' => '国語',
         _ => '理科・社会',
       };
 
@@ -245,7 +252,9 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
           const SizedBox(height: 8),
           Text(widget.title == '基礎網羅問題'
               ? '理科・社会の基礎問題から、今取り組む範囲を選びます。'
-              : '理科・社会の入試形式問題に挑戦します。出典情報も確認できます。'),
+              : widget.includeAllSubjects
+                  ? '5教科の問題を組み合わせて、実戦形式で演習します。'
+                  : '理科・社会の入試形式問題に挑戦します。出典情報も確認できます。'),
           const SizedBox(height: 24),
           Card(
             child: Padding(
@@ -261,10 +270,18 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
                   DropdownButtonFormField<String>(
                     initialValue: _subject,
                     decoration: const InputDecoration(labelText: '教科'),
-                    items: const [
-                      DropdownMenuItem(value: 'all', child: Text('理科・社会')),
-                      DropdownMenuItem(value: 'science', child: Text('理科')),
-                      DropdownMenuItem(value: 'social', child: Text('社会')),
+                    items: [
+                      DropdownMenuItem(
+                        value: 'all',
+                        child: Text(widget.includeAllSubjects ? '全教科' : '理科・社会'),
+                      ),
+                      const DropdownMenuItem(value: 'science', child: Text('理科')),
+                      const DropdownMenuItem(value: 'social', child: Text('社会')),
+                      if (widget.includeAllSubjects) ...[
+                        const DropdownMenuItem(value: 'japanese', child: Text('国語')),
+                        const DropdownMenuItem(value: 'math', child: Text('数学')),
+                        const DropdownMenuItem(value: 'english', child: Text('英語')),
+                      ],
                     ],
                     onChanged: (value) => setState(() {
                       _subject = value ?? 'all';
