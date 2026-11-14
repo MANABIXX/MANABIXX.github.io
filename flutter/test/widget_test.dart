@@ -20,7 +20,7 @@ void main() {
       topic: '一次関数',
       level: '基礎',
       prompt: '3x - 2 = 10 のとき、x はいくつか。',
-      options: const ['2', '3', '4', '5'],
+      options: ['2', '3', '4', '5'],
       correct: 2,
       explanation: '3x = 12 なので x = 4。',
     );
