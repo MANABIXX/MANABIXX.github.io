@@ -5,7 +5,7 @@ This directory contains an isolated Flutter Web implementation. It is not the pr
 ## Implemented migration slices
 
 - `/`: Flutter migration dashboard with links to the implemented practice modules.
-- `/foundation`: existing `static/data/questions.json` (1,180 records); science/social filters, topic filters, 10/20/30/50/all question sessions, four-choice answers, explanations, and results.
+- `/foundation`: existing `static/data/questions.json` (1,180 records); 1,171 science/social questions selected from the 1,180-record source file, topic filters, 10/20/30/50/all question sessions, four-choice answers, explanations, and results.
 - `/exam`: existing `static/data/public-exam.json` (323 records); science/social practice with source-status notes.
 - `/summary`: existing `static/data/summary-foundation.json` (450 records); summary/foundation question sessions.
 - `/mock-exam`: existing `static/data/mock-exams.json` (100 records); five-subject practice. The five-subject selector is limited to this mode.
