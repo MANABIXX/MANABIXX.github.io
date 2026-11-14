@@ -89,7 +89,7 @@ class ManabiXXApp extends StatelessWidget {
         color: _bg,
         child: Center(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 430),
+            constraints: const BoxConstraints(maxWidth: 1180),
             child: child ?? const SizedBox.shrink(),
           ),
         ),
@@ -97,6 +97,11 @@ class ManabiXXApp extends StatelessWidget {
       routes: {
         '/library': (_) => const KnowledgeLibraryPage(),
         '/library/': (_) => const KnowledgeLibraryPage(),
+        '/practice/foundation': (_) => const FoundationPracticePage(),
+        '/practice/kosen': (_) => const KosenPracticePage(),
+        '/practice/kosen/math-section-1': (_) => const KosenPracticePage(dataPath: '/data/kosen-math-section-1.json', title: '数学・大問1集中演習', initialSubject: 'math'),
+        '/practice/foundation-training': (_) => const FoundationPracticePage(dataPath: 'data/mock-exams.json', title: '下積みモード', includeAllSubjects: true),
+        '/records': (_) => const _ProgressPage(),
         '/foundation': (_) => const FoundationPracticePage(),
         '/foundation/': (_) => const FoundationPracticePage(),
         '/exam': (_) => const FoundationPracticePage(
@@ -307,6 +312,9 @@ class _StudyMenu extends StatelessWidget {
         subtitle: '重要事項を確認', onTap: () => onSelect('/summary')),
       _MenuTile(icon: Icons.assessment_outlined, title: '模試・予想問題',
         subtitle: '5教科の総合演習', onTap: () => onSelect('/mock-exam')),
+      _MenuTile(icon: Icons.school_outlined, title: '専用演習', subtitle: '教科別の集中演習', onTap: () => onSelect('/practice/kosen')),
+      _MenuTile(icon: Icons.calculate_outlined, title: '数学・大問1集中演習', subtitle: '計算・小問集合を重点反復', onTap: () => onSelect('/practice/kosen/math-section-1')),
+      _MenuTile(icon: Icons.repeat_rounded, title: '下積みモード', subtitle: '5教科の基礎反復と苦手問題の復習', onTap: () => onSelect('/practice/foundation-training')),
       _MenuTile(icon: Icons.auto_stories_outlined, title: '教材ライブラリ',
         subtitle: '分野別の教材を探す', onTap: () => onSelect('/library')),
     ],
