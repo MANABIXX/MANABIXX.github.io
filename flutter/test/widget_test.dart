@@ -285,7 +285,7 @@ void main() {
     );
     await prepareViewport(tester);
     await tester.pumpWidget(MaterialApp(
-      home: KnowledgeLibraryPage(title: '要点まとめ', loadRecords: () async => [record]),
+      home: KnowledgeLibraryPage(title: '要点まとめ', initialSubject: 'social', loadRecords: () async => [record]),
     ));
     await tester.pumpAndSettle();
     expect(find.text('要点まとめ'), findsOneWidget);
