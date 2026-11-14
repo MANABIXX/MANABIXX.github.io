@@ -439,7 +439,7 @@ class _PrivateModeShellState extends State<_PrivateModeShell> {
             initialSubject: widget.mathSectionOne ? 'math' : 'all',
           )
         : const FoundationPracticePage(
-            dataPath: '/data/mock-exams.json',
+            dataPath: '/data/foundation-training.json',
             additionalDataPaths: ['/data/public-exam.json'],
             title: '本番レベル演習',
             includeAllSubjects: true,
@@ -456,6 +456,7 @@ class _PrivateModeShellState extends State<_PrivateModeShell> {
               isKosen: _isKosen,
               onPractice: () => setState(() => _tab = 1),
               onMainHome: () => Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false),
+              onMathSectionOne: () => Navigator.of(context).pushNamed('/practice/kosen/math-section-1'),
             ),
             practice,
             const _ProgressPage(),
@@ -484,12 +485,14 @@ class _PrivateModeHome extends StatelessWidget {
     required this.isKosen,
     required this.onPractice,
     required this.onMainHome,
+    required this.onMathSectionOne,
   });
 
   final String title;
   final bool isKosen;
   final VoidCallback onPractice;
   final VoidCallback onMainHome;
+  final VoidCallback onMathSectionOne;
 
   @override
   Widget build(BuildContext context) => ListView(
@@ -524,6 +527,14 @@ class _PrivateModeHome extends StatelessWidget {
             icon: const Icon(Icons.play_arrow_rounded),
             label: const Text('演習を始める'),
           )),
+          if (isKosen) ...[
+            const SizedBox(height: 8),
+            SizedBox(width: double.infinity, child: OutlinedButton.icon(
+              onPressed: onMathSectionOne,
+              icon: const Icon(Icons.calculate_outlined),
+              label: const Text('数学・大問1集中演習'),
+            )),
+          ],
         ]),
       ),
       const SizedBox(height: 18),
@@ -531,9 +542,9 @@ class _PrivateModeHome extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(color: const Color(0xFF202B34), borderRadius: BorderRadius.circular(16), border: Border.all(color: const Color(0xFF405363))),
         child: const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('ホーム画面に追加', style: TextStyle(fontWeight: FontWeight.w900, color: Color(0xFF9ED4FF))),
+          Text(isKosen ? '高専モード専用アプリとして追加' : '下積みモード専用アプリとして追加', style: const TextStyle(fontWeight: FontWeight.w900, color: Color(0xFF9ED4FF))),
           SizedBox(height: 6),
-          Text('この専用モードは、ブラウザーの共有メニューから「ホーム画面に追加」を選ぶと、専用アイコンから直接起動できます。', style: TextStyle(height: 1.65)),
+          Text(isKosen ? 'Safariの共有メニューから「ホーム画面に追加」を選ぶと、高専モード専用アイコンから直接起動できます。' : 'Safariの共有メニューから「ホーム画面に追加」を選ぶと、下積みモード専用アイコンから直接起動できます。', style: const TextStyle(height: 1.65)),
         ]),
       ),
     ],
