@@ -113,6 +113,14 @@
         modeName = path.includes("/practice/kosen") ? "高専対策" : path.includes("/practice/foundation-training") ? "下積みモード" : "MANABIXX";
         pwaDismissKey = "manabixx-pwa-dismissed-" + modeName;
         const modeSpecific = modeName !== "MANABIXX";
+      const modeKey = modeName === "高専対策" ? "kosen" : modeName === "下積みモード" ? "training" : "main";
+      const manifest = document.querySelector("link[rel=manifest]");
+      const touchIcon = document.querySelector("link[rel=apple-touch-icon]");
+      if (modeSpecific) {
+        if (manifest) manifest.href = new URL(modeKey + ".webmanifest", document.baseURI).href;
+        if (touchIcon) touchIcon.href = new URL("../assets/" + modeKey + "-icon.png", document.baseURI).href;
+        document.title = modeName + " | MANABIXX";
+      }
         const bannerTitle = banner.querySelector("strong");
         if (bannerTitle) bannerTitle.textContent = modeName + "をホーム画面に追加";
         if (ios && !standalone) {
