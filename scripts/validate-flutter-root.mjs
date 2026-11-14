@@ -9,6 +9,7 @@ const manifest = await readJson('manifest.webmanifest');
 const offline = await readJson('offline-data-manifest.json');
 const app = await readJson('offline-app-manifest.json');
 const worker = await fs.readFile(path.join(root, 'flutter-sw.js'), 'utf8');
+const routes = await fs.readFile(path.join(process.cwd(), 'flutter', 'lib', 'main.dart'), 'utf8');
 
 if (!index.includes('<base href="/">')) throw new Error('Flutter base href must be /.');
 if (fallback !== index) throw new Error('404.html must mirror the Flutter entry point for GitHub Pages deep links.');
@@ -26,6 +27,9 @@ if (!index.includes('navigator.serviceWorker.register("/flutter-sw.js"')) {
   throw new Error('Root service worker registration is missing.');
 }
 if (index.includes('/flutter/')) throw new Error('Root app entry point still contains /flutter/ asset paths.');
+for (const route of ['/practice/kosen', '/practice/foundation-training', '/records', '/summary']) {
+  if (!routes.includes(`'${route}'`)) throw new Error(`Flutter route is missing: ${route}`);
+}
 
 async function assertCachedFile(url, label) {
   if (typeof url !== 'string' || !url.startsWith('/') || url.startsWith('//') || url.includes('..')) {
