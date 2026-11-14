@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/services.dart';
 
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -90,6 +91,27 @@ void main() {
     await tester.pumpAndSettle();
 
     // Answer feedback is intentionally brief; the session auto-advances.
+    expect(find.text('演習完了'), findsOneWidget);
+    expect(find.text('1 / 1'), findsOneWidget);
+  });
+
+  testWidgets('supports arrow and Enter keyboard controls in foundation practice', (tester) async {
+    const question = FoundationQuestion(
+      id: 'keyboard-001', subject: 'math', topic: '計算', level: '基礎',
+      prompt: '2＋2はいくつか。', options: ['3', '4', '5', '6'],
+      correct: 1, explanation: '2＋2＝4。',
+    );
+    await prepareViewport(tester);
+    await tester.pumpWidget(MaterialApp(
+      home: FoundationPracticePage(includeAllSubjects: true, loadQuestions: () async => [question]),
+    ));
+    await tester.pumpAndSettle();
+    await tapVisible(tester, find.text('演習を始める'));
+    await tester.sendKeyEvent(LogicalKeyboardKey.arrowRight);
+    await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 450));
+    await tester.pumpAndSettle();
     expect(find.text('演習完了'), findsOneWidget);
     expect(find.text('1 / 1'), findsOneWidget);
   });
@@ -211,11 +233,13 @@ void main() {
     await tapVisible(tester, find.text('演習を始める'));
 
     expect(find.text(question.prompt), findsOneWidget);
-    await tapVisible(tester, find.text('4'));
-
+    await tester.tap(find.text('4'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 200));
     expect(find.text('正解！'), findsOneWidget);
     expect(find.text(question.explanation), findsOneWidget);
-    await tapVisible(tester, find.text('結果を見る'));
+    await tester.pump(const Duration(milliseconds: 250));
+    await tester.pumpAndSettle();
 
     expect(find.text('演習完了'), findsOneWidget);
     expect(find.text('1 / 1'), findsOneWidget);

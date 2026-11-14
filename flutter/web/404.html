@@ -8,14 +8,10 @@
   <script>
     (() => {
       const requested = location.pathname + location.search + location.hash;
-      try {
-        sessionStorage.setItem('manabixx_flutter_redirect', requested);
-      } catch (_) {}
-      location.replace('/');
+      try { sessionStorage.setItem('manabixx_flutter_redirect', requested); } catch (_) {}
+      location.replace('/flutter/');
     })();
   </script>
 </head>
-<body>
-  <p>ページを開いています…</p>
-</body>
+<body><p>ページを開いています…</p></body>
 </html>
