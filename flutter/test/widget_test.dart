@@ -119,7 +119,7 @@ void main() {
     await tapVisible(tester, find.text('演習を始める'));
     await tester.tap(find.text('1A'));
     await tester.pumpAndSettle();
-    expect(find.text('不正解'), findsOneWidget);
+    expect(find.textContaining('正解は'), findsOneWidget);
     await tapVisible(tester, find.text('結果を見る'));
     await tester.tap(find.text('教科選択へ戻る'));
     await tester.pumpAndSettle();
