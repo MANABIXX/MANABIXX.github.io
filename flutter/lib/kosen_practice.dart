@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:flutter/services.dart';
 
 import 'package:material_ui/material_ui.dart';
 import 'package:http/http.dart' as http;
@@ -45,9 +46,12 @@ class KosenQuestion {
 }
 
 class KosenPracticePage extends StatefulWidget {
-  const KosenPracticePage({super.key, this.loadQuestions});
+  const KosenPracticePage({super.key, this.loadQuestions, this.dataPath = '/data/kosen-questions.json', this.title = '専用演習', this.initialSubject = 'all'});
 
   final Future<List<KosenQuestion>> Function()? loadQuestions;
+  final String dataPath;
+  final String title;
+  final String initialSubject;
 
   @override
   State<KosenPracticePage> createState() => _KosenPracticePageState();
@@ -63,12 +67,13 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
 
   List<KosenQuestion> _questions = [];
   List<KosenQuestion> _session = [];
-  String _subject = 'all';
+  late String _subject = widget.initialSubject;
   String? _error;
   bool _loading = true;
   bool _started = false;
   bool _finished = false;
   int _index = 0;
+  int _keyboardIndex = 0;
   int? _selected;
   int _score = 0;
 
@@ -79,7 +84,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
   }
 
   Future<List<KosenQuestion>> _fetchQuestions() async {
-    final uri = Uri.base.resolve('/data/kosen-questions.json');
+    final uri = Uri.base.resolve(widget.dataPath);
     final response = await http.get(uri);
     if (response.statusCode != 200) {
       throw Exception('問題データを読み込めませんでした（HTTP ${response.statusCode}）。');
@@ -129,6 +134,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
     setState(() {
       _session = nextSession;
       _index = 0;
+      _keyboardIndex = 0;
       _selected = null;
       _score = 0;
       _started = true;
@@ -136,12 +142,15 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
     });
   }
 
-  void _answer(int choice) {
+  Future<void> _answer(int choice) async {
     if (_selected != null) return;
+    HapticFeedback.lightImpact();
     setState(() {
       _selected = choice;
       if (choice == _current.correct) _score++;
     });
+    await Future<void>.delayed(const Duration(milliseconds: 420));
+    if (mounted && _started && !_finished && _selected == choice) _next();
   }
 
   void _next() {
@@ -169,14 +178,28 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('専用演習'),
+        title: Text(widget.title),
         leading: IconButton(
           tooltip: 'MANABIXXホームへ戻る',
           onPressed: () => Navigator.of(context).maybePop(),
           icon: const Icon(Icons.arrow_back),
         ),
       ),
-      body: SafeArea(
+      body: Focus(
+        autofocus: true,
+        onKeyEvent: (node, event) {
+          if (event is! KeyDownEvent || !_started || _finished || _selected != null) return KeyEventResult.ignored;
+          final key = event.logicalKey;
+          if (key == LogicalKeyboardKey.arrowLeft || key == LogicalKeyboardKey.arrowUp) { setState(() => _keyboardIndex = (_keyboardIndex + 3) % 4); return KeyEventResult.handled; }
+          if (key == LogicalKeyboardKey.arrowRight || key == LogicalKeyboardKey.arrowDown) { setState(() => _keyboardIndex = (_keyboardIndex + 1) % 4); return KeyEventResult.handled; }
+          if (key == LogicalKeyboardKey.digit1 || key == LogicalKeyboardKey.numpad1 || key == LogicalKeyboardKey.digit2 || key == LogicalKeyboardKey.numpad2 || key == LogicalKeyboardKey.digit3 || key == LogicalKeyboardKey.numpad3 || key == LogicalKeyboardKey.digit4 || key == LogicalKeyboardKey.numpad4) {
+            final digit = key.keyId >= LogicalKeyboardKey.numpad1.keyId ? key.keyId - LogicalKeyboardKey.numpad1.keyId + 1 : key.keyId - LogicalKeyboardKey.digit1.keyId + 1;
+            setState(() => _keyboardIndex = digit - 1); return KeyEventResult.handled;
+          }
+          if (key == LogicalKeyboardKey.enter || key == LogicalKeyboardKey.numpadEnter) { _answer(_keyboardIndex); return KeyEventResult.handled; }
+          return KeyEventResult.ignored;
+        },
+        child: SafeArea(
         child: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 760),
@@ -193,6 +216,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
                               : _buildQuestion(),
             ),
           ),
+        ),
         ),
       ),
     );
@@ -330,7 +354,9 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
                 alignment: Alignment.centerLeft,
                 side: BorderSide(
-                  color: answered && i == question.correct
+                  color: !answered && i == _keyboardIndex
+                      ? Theme.of(context).colorScheme.primary
+                      : answered && i == question.correct
                       ? Colors.green
                       : answered && i == _selected
                           ? Colors.redAccent
@@ -372,10 +398,7 @@ class _KosenPracticePageState extends State<KosenPracticePage> {
               ),
             ),
           ),
-          FilledButton(
-            onPressed: _next,
-            child: Text(_index + 1 == _session.length ? '結果を見る' : '次の問題へ'),
-          ),
+          const Padding(padding: EdgeInsets.symmetric(vertical: 12), child: Center(child: Text('次の問題へ自動で進みます…', style: TextStyle(color: Color(0xFF99999A))))),
         ],
       ],
     );
