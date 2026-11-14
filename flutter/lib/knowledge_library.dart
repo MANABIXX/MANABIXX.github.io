@@ -25,7 +25,7 @@ class KnowledgeRecord {
   factory KnowledgeRecord.fromJson(Map<String, dynamic> json) {
     List<String> strings(String key) => (json[key] as List<dynamic>? ?? [])
         .whereType<String>().toList(growable: false);
-    final terms = (json['keyTerms'] as List<dynamic>? ?? []).map((term) {
+    final terms = ((json['keyTerms'] ?? json['terms']) as List<dynamic>? ?? []).map((term) {
       if (term is String) return term;
       if (term is List && term.isNotEmpty) return term.map((v) => '$v').join('：');
       return '';
@@ -40,9 +40,9 @@ class KnowledgeRecord {
       explanation: json['explanation'] as String? ?? '',
       targets: strings('targets'),
       keyTerms: terms,
-      formulas: strings('formulas'),
-      questionPatterns: strings('questionPatterns'),
-      commonErrors: strings('commonErrors'),
+      formulas: strings('formulas').isNotEmpty ? strings('formulas') : (json['formula'] is String ? [json['formula'] as String] : []),
+      questionPatterns: strings('questionPatterns').isNotEmpty ? strings('questionPatterns') : strings('questions'),
+      commonErrors: strings('commonErrors').isNotEmpty ? strings('commonErrors') : strings('errors'),
     );
   }
 }
