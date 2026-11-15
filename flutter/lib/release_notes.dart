@@ -4,6 +4,8 @@ class ReleaseNotesPage extends StatelessWidget {
   const ReleaseNotesPage({super.key});
 
   static const _items = <_ReleaseEntry>[
+    _ReleaseEntry(date: '2026-11-15', category: 'ROUTING', title: '未対応URLの案内とホーム復帰を追加',
+      body: 'Flutter側でまだ対応していないURLを開いたとき、ホーム画面へ黙って戻すのではなく、ページが見つからないこととホームへ戻る操作を明示するようにしました。既存の対応済みルートや学習データは変更していません。'),
     _ReleaseEntry(date: '2026-11-15', category: 'CLEANUP', title: '不要なプログラミング学習ページを撤去',
       body: '学習対象に含めないコードラボの公開ルート・メニュー・実行サンプルを撤去しました。問題データ監査などの内部開発ツールは維持し、通常の教科学習機能には変更ありません。'),
     _ReleaseEntry(date: '2026-11-15', category: 'BUILD / ANDROID', title: 'Android APKの生成物チェックを修正',

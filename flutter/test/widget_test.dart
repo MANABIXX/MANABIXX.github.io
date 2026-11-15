@@ -420,4 +420,25 @@ void main() {
     expect(find.text('数学・大問1集中演習'), findsOneWidget);
     expect(find.text('学習ヒートマップ'), findsOneWidget);
   });
+
+  testWidgets('shows a not-found page for unsupported routes and returns home', (tester) async {
+    await prepareViewport(tester);
+    await tester.pumpWidget(const ManabiXXApp());
+    await tester.pumpAndSettle();
+
+    final navigationContext = tester.element(find.byType(NavigationBar));
+    Navigator.of(navigationContext).pushNamed('/unsupported-migration-route');
+    await tester.pumpAndSettle();
+
+    expect(find.text('ページが見つかりません'), findsOneWidget);
+    expect(find.text('このページは見つかりませんでした。'), findsOneWidget);
+    expect(find.text('ホームへ戻る'), findsOneWidget);
+
+    await tester.tap(find.text('ホームへ戻る'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('このページは見つかりませんでした。'), findsNothing);
+    expect(find.byType(NavigationBar), findsOneWidget);
+  });
+
 }
