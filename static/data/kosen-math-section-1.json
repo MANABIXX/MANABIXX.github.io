@@ -1,7 +1,6 @@
 {
-  "version": 1,
-  "updatedAt": "2026-11-14",
-  "description": "高専数学の大問1を想定したオリジナル小問集合。公式過去問の転載ではありません。",
+  "title": "高専数学・大問1集中演習",
+  "registryCommit": "ee77f47e5cdff43bad800c6aa646115112b2b265",
   "questions": [
     {
       "id": "k1-001",
@@ -362,6 +361,450 @@
       ],
       "correct": 2,
       "explanation": "8＝3x−4より3x＝12、x＝4。移項時に−4の符号を変える。"
+    },
+    {
+      "id": "k-math-001",
+      "subject": "math",
+      "topic": "一次関数",
+      "level": "基礎",
+      "prompt": "一次関数 y=3x−2 で、x=4 のときの y の値はどれか。",
+      "options": [
+        "8",
+        "10",
+        "12",
+        "14"
+      ],
+      "correct": 1,
+      "explanation": "x=4を代入すると y=3×4−2=12−2=10。"
+    },
+    {
+      "id": "k-math-002",
+      "subject": "math",
+      "topic": "平方根",
+      "level": "基礎",
+      "prompt": "√72 を a√2 の形に表したとき、a の値はどれか。",
+      "options": [
+        "4",
+        "5",
+        "6",
+        "8"
+      ],
+      "correct": 2,
+      "explanation": "72=36×2 なので、√72=√36×√2=6√2。"
+    },
+    {
+      "id": "k-math-003",
+      "subject": "math",
+      "topic": "二次方程式",
+      "level": "標準",
+      "prompt": "x²−5x+6=0 の解の組はどれか。",
+      "options": [
+        "1と6",
+        "−2と−3",
+        "2と3",
+        "−1と−6"
+      ],
+      "correct": 2,
+      "explanation": "x²−5x+6=(x−2)(x−3)。よって x=2,3。"
+    },
+    {
+      "id": "k-math-004",
+      "subject": "math",
+      "topic": "三平方の定理",
+      "level": "標準",
+      "prompt": "直角三角形の直角をはさむ2辺が6 cm、8 cmのとき、斜辺の長さはどれか。",
+      "options": [
+        "9 cm",
+        "10 cm",
+        "12 cm",
+        "14 cm"
+      ],
+      "correct": 1,
+      "explanation": "斜辺を c とすると c²=6²+8²=36+64=100。c=10 cm。"
+    },
+    {
+      "id": "reg-math-2024-01",
+      "subject": "math",
+      "topic": "大問1・正負の数",
+      "level": "高専入試基礎",
+      "prompt": "−7＋9−4 の値はどれか。",
+      "options": [
+        "-2",
+        "0",
+        "-4",
+        "2"
+      ],
+      "correct": 0,
+      "explanation": "負の数を含む加減は、符号を保って左から順に計算する。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2024年度の数学PDFを取り込み、抽出した分野語句：確率を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2024,
+      "sourceFile": "/data/kosen-past-papers/2024-math.pdf"
+    },
+    {
+      "id": "reg-math-2024-02",
+      "subject": "math",
+      "topic": "大問1・平方根",
+      "level": "高専入試基礎",
+      "prompt": "√18 を a√2 と表すとき、a はいくつか。",
+      "options": [
+        "2",
+        "3",
+        "4",
+        "6"
+      ],
+      "correct": 1,
+      "explanation": "3²×2 の平方根なので 3√2。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2024年度の数学PDFを取り込み、抽出した分野語句：確率を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2024,
+      "sourceFile": "/data/kosen-past-papers/2024-math.pdf"
+    },
+    {
+      "id": "reg-math-2024-03",
+      "subject": "math",
+      "topic": "大問1・一次方程式",
+      "level": "高専入試基礎",
+      "prompt": "4x−3＝9 のとき、x はいくつか。",
+      "options": [
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "correct": 1,
+      "explanation": "移項して定数項をまとめ、xの係数で割る。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2024年度の数学PDFを取り込み、抽出した分野語句：確率を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2024,
+      "sourceFile": "/data/kosen-past-papers/2024-math.pdf"
+    },
+    {
+      "id": "reg-math-2024-04",
+      "subject": "math",
+      "topic": "大問1・因数分解",
+      "level": "高専入試標準",
+      "prompt": "x²＋9x＋20 を因数分解したものはどれか。",
+      "options": [
+        "(x+3)(x+6)",
+        "(x+4)(x+5)",
+        "(x-4)(x-5)",
+        "(x+5)²"
+      ],
+      "correct": 1,
+      "explanation": "積が定数項、和がxの係数になる2数を探す。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2024年度の数学PDFを取り込み、抽出した分野語句：確率を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2024,
+      "sourceFile": "/data/kosen-past-papers/2024-math.pdf"
+    },
+    {
+      "id": "reg-math-2024-05",
+      "subject": "math",
+      "topic": "大問1・関数",
+      "level": "高専入試標準",
+      "prompt": "y＝−2x＋8 で x＝3 のとき、y はいくつか。",
+      "options": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "correct": 2,
+      "explanation": "xの値を代入すると y＝−2×x＋定数。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2024年度の数学PDFを取り込み、抽出した分野語句：確率を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2024,
+      "sourceFile": "/data/kosen-past-papers/2024-math.pdf"
+    },
+    {
+      "id": "reg-math-2025-01",
+      "subject": "math",
+      "topic": "大問1・正負の数",
+      "level": "高専入試基礎",
+      "prompt": "−8＋12−5 の値はどれか。",
+      "options": [
+        "-1",
+        "1",
+        "-3",
+        "3"
+      ],
+      "correct": 0,
+      "explanation": "負の数を含む加減は、符号を保って左から順に計算する。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2025年度の数学PDFを取り込み、抽出した分野語句：確率を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2025,
+      "sourceFile": "/data/kosen-past-papers/2025-math.pdf"
+    },
+    {
+      "id": "reg-math-2025-02",
+      "subject": "math",
+      "topic": "大問1・平方根",
+      "level": "高専入試基礎",
+      "prompt": "√32 を a√2 と表すとき、a はいくつか。",
+      "options": [
+        "3",
+        "4",
+        "5",
+        "8"
+      ],
+      "correct": 1,
+      "explanation": "4²×2 の平方根なので 4√2。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2025年度の数学PDFを取り込み、抽出した分野語句：確率を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2025,
+      "sourceFile": "/data/kosen-past-papers/2025-math.pdf"
+    },
+    {
+      "id": "reg-math-2025-03",
+      "subject": "math",
+      "topic": "大問1・一次方程式",
+      "level": "高専入試基礎",
+      "prompt": "5x−4＝11 のとき、x はいくつか。",
+      "options": [
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "correct": 1,
+      "explanation": "移項して定数項をまとめ、xの係数で割る。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2025年度の数学PDFを取り込み、抽出した分野語句：確率を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2025,
+      "sourceFile": "/data/kosen-past-papers/2025-math.pdf"
+    },
+    {
+      "id": "reg-math-2025-04",
+      "subject": "math",
+      "topic": "大問1・因数分解",
+      "level": "高専入試標準",
+      "prompt": "x²＋11x＋30 を因数分解したものはどれか。",
+      "options": [
+        "(x+4)(x+7)",
+        "(x+5)(x+6)",
+        "(x-5)(x-6)",
+        "(x+6)²"
+      ],
+      "correct": 1,
+      "explanation": "積が定数項、和がxの係数になる2数を探す。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2025年度の数学PDFを取り込み、抽出した分野語句：確率を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2025,
+      "sourceFile": "/data/kosen-past-papers/2025-math.pdf"
+    },
+    {
+      "id": "reg-math-2025-05",
+      "subject": "math",
+      "topic": "大問1・関数",
+      "level": "高専入試標準",
+      "prompt": "y＝−2x＋9 で x＝4 のとき、y はいくつか。",
+      "options": [
+        "-1",
+        "0",
+        "1",
+        "2"
+      ],
+      "correct": 2,
+      "explanation": "xの値を代入すると y＝−2×x＋定数。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2025年度の数学PDFを取り込み、抽出した分野語句：確率を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2025,
+      "sourceFile": "/data/kosen-past-papers/2025-math.pdf"
+    },
+    {
+      "id": "reg-math-2026-01",
+      "subject": "math",
+      "topic": "大問1・正負の数",
+      "level": "高専入試基礎",
+      "prompt": "−9＋15−6 の値はどれか。",
+      "options": [
+        "0",
+        "2",
+        "-2",
+        "4"
+      ],
+      "correct": 0,
+      "explanation": "負の数を含む加減は、符号を保って左から順に計算する。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2026年度の数学PDFを取り込み、抽出した分野語句：確率・図形を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-math.pdf"
+    },
+    {
+      "id": "reg-math-2026-02",
+      "subject": "math",
+      "topic": "大問1・平方根",
+      "level": "高専入試基礎",
+      "prompt": "√50 を a√2 と表すとき、a はいくつか。",
+      "options": [
+        "4",
+        "5",
+        "6",
+        "10"
+      ],
+      "correct": 1,
+      "explanation": "5²×2 の平方根なので 5√2。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2026年度の数学PDFを取り込み、抽出した分野語句：確率・図形を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-math.pdf"
+    },
+    {
+      "id": "reg-math-2026-03",
+      "subject": "math",
+      "topic": "大問1・一次方程式",
+      "level": "高専入試基礎",
+      "prompt": "6x−5＝13 のとき、x はいくつか。",
+      "options": [
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "correct": 1,
+      "explanation": "移項して定数項をまとめ、xの係数で割る。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2026年度の数学PDFを取り込み、抽出した分野語句：確率・図形を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-math.pdf"
+    },
+    {
+      "id": "reg-math-2026-04",
+      "subject": "math",
+      "topic": "大問1・因数分解",
+      "level": "高専入試標準",
+      "prompt": "x²＋13x＋42 を因数分解したものはどれか。",
+      "options": [
+        "(x+5)(x+8)",
+        "(x+6)(x+7)",
+        "(x-6)(x-7)",
+        "(x+7)²"
+      ],
+      "correct": 1,
+      "explanation": "積が定数項、和がxの係数になる2数を探す。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2026年度の数学PDFを取り込み、抽出した分野語句：確率・図形を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-math.pdf"
+    },
+    {
+      "id": "reg-math-2026-05",
+      "subject": "math",
+      "topic": "大問1・関数",
+      "level": "高専入試標準",
+      "prompt": "y＝−2x＋10 で x＝5 のとき、y はいくつか。",
+      "options": [
+        "-2",
+        "-1",
+        "0",
+        "1"
+      ],
+      "correct": 2,
+      "explanation": "xの値を代入すると y＝−2×x＋定数。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2026年度の数学PDFを取り込み、抽出した分野語句：確率・図形を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-math.pdf"
+    },
+    {
+      "id": "reg-math-2026-06",
+      "subject": "math",
+      "topic": "応用・二次方程式",
+      "level": "高専入試応用",
+      "prompt": "x²−5x＋6＝0 の解はどれか。",
+      "options": [
+        "x＝1, 6",
+        "x＝2, 3",
+        "x＝−2, −3",
+        "x＝0, 5"
+      ],
+      "correct": 1,
+      "explanation": "左辺を (x−2)(x−3) と因数分解する。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2026年度の数学PDFを取り込み、抽出した分野語句：確率・図形を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-math.pdf"
+    },
+    {
+      "id": "registry-2024-math-確率",
+      "subject": "math",
+      "topic": "大問1・確率",
+      "level": "高専入試・大問1",
+      "prompt": "正六面体のさいころを1回投げる。偶数の目が出る確率はどれか。",
+      "options": [
+        "1/3",
+        "1/2",
+        "2/3",
+        "5/6"
+      ],
+      "correct": 1,
+      "explanation": "偶数は2・4・6の3通り。3/6＝1/2。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2024年度の数学過去問PDFから「確率」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2024,
+      "sourceFile": "/data/kosen-past-papers/2024-math.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/03_2024_sugaku_mondai.pdf"
+    },
+    {
+      "id": "registry-2025-math-確率",
+      "subject": "math",
+      "topic": "大問1・確率",
+      "level": "高専入試・大問1",
+      "prompt": "正六面体のさいころを1回投げる。偶数の目が出る確率はどれか。",
+      "options": [
+        "1/3",
+        "1/2",
+        "2/3",
+        "5/6"
+      ],
+      "correct": 1,
+      "explanation": "偶数は2・4・6の3通り。3/6＝1/2。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2025年度の数学過去問PDFから「確率」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2025,
+      "sourceFile": "/data/kosen-past-papers/2025-math.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/03_2025_sugaku_mondai%20(1).pdf"
+    },
+    {
+      "id": "registry-2026-math-確率",
+      "subject": "math",
+      "topic": "大問1・確率",
+      "level": "高専入試・大問1",
+      "prompt": "正六面体のさいころを1回投げる。偶数の目が出る確率はどれか。",
+      "options": [
+        "1/3",
+        "1/2",
+        "2/3",
+        "5/6"
+      ],
+      "correct": 1,
+      "explanation": "偶数は2・4・6の3通り。3/6＝1/2。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2026年度の数学過去問PDFから「確率」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-math.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/03_2026_sugaku_mondai%20(1).pdf"
+    },
+    {
+      "id": "registry-2026-math-図形",
+      "subject": "math",
+      "topic": "大問1・図形",
+      "level": "高専入試・大問1",
+      "prompt": "直角をはさむ2辺が6cm、8cmの直角三角形の斜辺は何cmか。",
+      "options": [
+        "9",
+        "10",
+        "12",
+        "14"
+      ],
+      "correct": 1,
+      "explanation": "三平方の定理より √(6²＋8²)＝10cm。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2026年度の数学過去問PDFから「図形」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-math.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/03_2026_sugaku_mondai%20(1).pdf"
     }
   ]
 }

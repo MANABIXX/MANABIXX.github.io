@@ -1,0 +1,174 @@
+{
+  "registryCommit": "ee77f47e5cdff43bad800c6aa646115112b2b265",
+  "years": [
+    2024,
+    2025,
+    2026
+  ],
+  "subjects": [
+    "math",
+    "english",
+    "science",
+    "social"
+  ],
+  "sources": [
+    {
+      "year": 2024,
+      "subject": "social",
+      "filename": "2024-social.pdf",
+      "registryPath": "高専過去問三年分国語以外/02_2024_syakai_monndai2.pdf",
+      "localPath": "/data/kosen-past-papers/2024-social.pdf",
+      "extractedCharacters": 21835,
+      "topicHints": [
+        "地形図",
+        "貿易",
+        "産業",
+        "明治",
+        "憲法"
+      ],
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2024_syakai_monndai2.pdf"
+    },
+    {
+      "year": 2025,
+      "subject": "social",
+      "filename": "2025-social.pdf",
+      "registryPath": "高専過去問三年分国語以外/02_2025_syakai_mondai (1).pdf",
+      "localPath": "/data/kosen-past-papers/2025-social.pdf",
+      "extractedCharacters": 20686,
+      "topicHints": [
+        "気候",
+        "地形図",
+        "明治",
+        "憲法"
+      ],
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2025_syakai_mondai%20(1).pdf"
+    },
+    {
+      "year": 2026,
+      "subject": "social",
+      "filename": "2026-social.pdf",
+      "registryPath": "高専過去問三年分国語以外/02_2026_syakai_mondai2 (1).pdf",
+      "localPath": "/data/kosen-past-papers/2026-social.pdf",
+      "extractedCharacters": 20072,
+      "topicHints": [
+        "貿易",
+        "産業",
+        "明治",
+        "憲法",
+        "需要",
+        "供給"
+      ],
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2026_syakai_mondai2%20(1).pdf"
+    },
+    {
+      "year": 2024,
+      "subject": "math",
+      "filename": "2024-math.pdf",
+      "registryPath": "高専過去問三年分国語以外/03_2024_sugaku_mondai.pdf",
+      "localPath": "/data/kosen-past-papers/2024-math.pdf",
+      "extractedCharacters": 17072,
+      "topicHints": [
+        "確率"
+      ],
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/03_2024_sugaku_mondai.pdf"
+    },
+    {
+      "year": 2025,
+      "subject": "math",
+      "filename": "2025-math.pdf",
+      "registryPath": "高専過去問三年分国語以外/03_2025_sugaku_mondai (1).pdf",
+      "localPath": "/data/kosen-past-papers/2025-math.pdf",
+      "extractedCharacters": 10681,
+      "topicHints": [
+        "確率"
+      ],
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/03_2025_sugaku_mondai%20(1).pdf"
+    },
+    {
+      "year": 2026,
+      "subject": "math",
+      "filename": "2026-math.pdf",
+      "registryPath": "高専過去問三年分国語以外/03_2026_sugaku_mondai (1).pdf",
+      "localPath": "/data/kosen-past-papers/2026-math.pdf",
+      "extractedCharacters": 8915,
+      "topicHints": [
+        "確率",
+        "図形"
+      ],
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/03_2026_sugaku_mondai%20(1).pdf"
+    },
+    {
+      "year": 2024,
+      "subject": "science",
+      "filename": "2024-science.pdf",
+      "registryPath": "高専過去問三年分国語以外/04_2024_rika_mondai.pdf",
+      "localPath": "/data/kosen-past-papers/2024-science.pdf",
+      "extractedCharacters": 37476,
+      "topicHints": [
+        "電流",
+        "電圧",
+        "抵抗",
+        "中和",
+        "天体"
+      ],
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2024_rika_mondai.pdf"
+    },
+    {
+      "year": 2025,
+      "subject": "science",
+      "filename": "2025-science.pdf",
+      "registryPath": "高専過去問三年分国語以外/04_2025_rika_mondai (1).pdf",
+      "localPath": "/data/kosen-past-papers/2025-science.pdf",
+      "extractedCharacters": 0,
+      "topicHints": [],
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2025_rika_mondai%20(1).pdf"
+    },
+    {
+      "year": 2026,
+      "subject": "science",
+      "filename": "2026-science.pdf",
+      "registryPath": "高専過去問三年分国語以外/04_2026_rika_mondai (1).pdf",
+      "localPath": "/data/kosen-past-papers/2026-science.pdf",
+      "extractedCharacters": 26872,
+      "topicHints": [
+        "電流",
+        "電圧",
+        "抵抗",
+        "中和",
+        "遺伝",
+        "地震"
+      ],
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2026_rika_mondai%20(1).pdf"
+    },
+    {
+      "year": 2024,
+      "subject": "english",
+      "filename": "2024-english.pdf",
+      "registryPath": "高専過去問三年分国語以外/05_2024_eigo_mondai.pdf",
+      "localPath": "/data/kosen-past-papers/2024-english.pdf",
+      "extractedCharacters": 19706,
+      "topicHints": [],
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/05_2024_eigo_mondai.pdf"
+    },
+    {
+      "year": 2025,
+      "subject": "english",
+      "filename": "2025-english.pdf",
+      "registryPath": "高専過去問三年分国語以外/05_2025_eigo_mondai.pdf",
+      "localPath": "/data/kosen-past-papers/2025-english.pdf",
+      "extractedCharacters": 19435,
+      "topicHints": [],
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/05_2025_eigo_mondai.pdf"
+    },
+    {
+      "year": 2026,
+      "subject": "english",
+      "filename": "2026-english.pdf",
+      "registryPath": "高専過去問三年分国語以外/05_2026_eigo_mondai.pdf",
+      "localPath": "/data/kosen-past-papers/2026-english.pdf",
+      "extractedCharacters": 23656,
+      "topicHints": [],
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/05_2026_eigo_mondai.pdf"
+    }
+  ]
+}

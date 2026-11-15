@@ -1,6 +1,8 @@
 {
-  "version": 1,
-  "updatedAt": "2026-11-14",
+  "title": "高専入試対策・5教科オリジナル演習",
+  "generatedAt": "2026-11-15T22:39:43.654Z",
+  "registryCommit": "ee77f47e5cdff43bad800c6aa646115112b2b265",
+  "questionPolicy": "過去問PDFそのものの転載ではなく、出題形式と抽出した分野語句を参考に新規作成した4択問題。",
   "questions": [
     {
       "id": "k-math-001",
@@ -181,6 +183,1354 @@
       ],
       "correct": 2,
       "explanation": "雨が降っていたため、屋内でサッカーをすることにした。結果・結論を表す Therefore が適切。"
+    },
+    {
+      "id": "reg-math-2024-01",
+      "subject": "math",
+      "topic": "大問1・正負の数",
+      "level": "高専入試基礎",
+      "prompt": "−7＋9−4 の値はどれか。",
+      "options": [
+        "-2",
+        "0",
+        "-4",
+        "2"
+      ],
+      "correct": 0,
+      "explanation": "負の数を含む加減は、符号を保って左から順に計算する。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2024年度の数学PDFを取り込み、抽出した分野語句：確率を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2024,
+      "sourceFile": "/data/kosen-past-papers/2024-math.pdf"
+    },
+    {
+      "id": "reg-math-2024-02",
+      "subject": "math",
+      "topic": "大問1・平方根",
+      "level": "高専入試基礎",
+      "prompt": "√18 を a√2 と表すとき、a はいくつか。",
+      "options": [
+        "2",
+        "3",
+        "4",
+        "6"
+      ],
+      "correct": 1,
+      "explanation": "3²×2 の平方根なので 3√2。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2024年度の数学PDFを取り込み、抽出した分野語句：確率を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2024,
+      "sourceFile": "/data/kosen-past-papers/2024-math.pdf"
+    },
+    {
+      "id": "reg-math-2024-03",
+      "subject": "math",
+      "topic": "大問1・一次方程式",
+      "level": "高専入試基礎",
+      "prompt": "4x−3＝9 のとき、x はいくつか。",
+      "options": [
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "correct": 1,
+      "explanation": "移項して定数項をまとめ、xの係数で割る。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2024年度の数学PDFを取り込み、抽出した分野語句：確率を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2024,
+      "sourceFile": "/data/kosen-past-papers/2024-math.pdf"
+    },
+    {
+      "id": "reg-math-2024-04",
+      "subject": "math",
+      "topic": "大問1・因数分解",
+      "level": "高専入試標準",
+      "prompt": "x²＋9x＋20 を因数分解したものはどれか。",
+      "options": [
+        "(x+3)(x+6)",
+        "(x+4)(x+5)",
+        "(x-4)(x-5)",
+        "(x+5)²"
+      ],
+      "correct": 1,
+      "explanation": "積が定数項、和がxの係数になる2数を探す。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2024年度の数学PDFを取り込み、抽出した分野語句：確率を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2024,
+      "sourceFile": "/data/kosen-past-papers/2024-math.pdf"
+    },
+    {
+      "id": "reg-math-2024-05",
+      "subject": "math",
+      "topic": "大問1・関数",
+      "level": "高専入試標準",
+      "prompt": "y＝−2x＋8 で x＝3 のとき、y はいくつか。",
+      "options": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "correct": 2,
+      "explanation": "xの値を代入すると y＝−2×x＋定数。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2024年度の数学PDFを取り込み、抽出した分野語句：確率を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2024,
+      "sourceFile": "/data/kosen-past-papers/2024-math.pdf"
+    },
+    {
+      "id": "reg-math-2025-01",
+      "subject": "math",
+      "topic": "大問1・正負の数",
+      "level": "高専入試基礎",
+      "prompt": "−8＋12−5 の値はどれか。",
+      "options": [
+        "-1",
+        "1",
+        "-3",
+        "3"
+      ],
+      "correct": 0,
+      "explanation": "負の数を含む加減は、符号を保って左から順に計算する。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2025年度の数学PDFを取り込み、抽出した分野語句：確率を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2025,
+      "sourceFile": "/data/kosen-past-papers/2025-math.pdf"
+    },
+    {
+      "id": "reg-math-2025-02",
+      "subject": "math",
+      "topic": "大問1・平方根",
+      "level": "高専入試基礎",
+      "prompt": "√32 を a√2 と表すとき、a はいくつか。",
+      "options": [
+        "3",
+        "4",
+        "5",
+        "8"
+      ],
+      "correct": 1,
+      "explanation": "4²×2 の平方根なので 4√2。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2025年度の数学PDFを取り込み、抽出した分野語句：確率を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2025,
+      "sourceFile": "/data/kosen-past-papers/2025-math.pdf"
+    },
+    {
+      "id": "reg-math-2025-03",
+      "subject": "math",
+      "topic": "大問1・一次方程式",
+      "level": "高専入試基礎",
+      "prompt": "5x−4＝11 のとき、x はいくつか。",
+      "options": [
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "correct": 1,
+      "explanation": "移項して定数項をまとめ、xの係数で割る。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2025年度の数学PDFを取り込み、抽出した分野語句：確率を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2025,
+      "sourceFile": "/data/kosen-past-papers/2025-math.pdf"
+    },
+    {
+      "id": "reg-math-2025-04",
+      "subject": "math",
+      "topic": "大問1・因数分解",
+      "level": "高専入試標準",
+      "prompt": "x²＋11x＋30 を因数分解したものはどれか。",
+      "options": [
+        "(x+4)(x+7)",
+        "(x+5)(x+6)",
+        "(x-5)(x-6)",
+        "(x+6)²"
+      ],
+      "correct": 1,
+      "explanation": "積が定数項、和がxの係数になる2数を探す。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2025年度の数学PDFを取り込み、抽出した分野語句：確率を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2025,
+      "sourceFile": "/data/kosen-past-papers/2025-math.pdf"
+    },
+    {
+      "id": "reg-math-2025-05",
+      "subject": "math",
+      "topic": "大問1・関数",
+      "level": "高専入試標準",
+      "prompt": "y＝−2x＋9 で x＝4 のとき、y はいくつか。",
+      "options": [
+        "-1",
+        "0",
+        "1",
+        "2"
+      ],
+      "correct": 2,
+      "explanation": "xの値を代入すると y＝−2×x＋定数。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2025年度の数学PDFを取り込み、抽出した分野語句：確率を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2025,
+      "sourceFile": "/data/kosen-past-papers/2025-math.pdf"
+    },
+    {
+      "id": "reg-math-2026-01",
+      "subject": "math",
+      "topic": "大問1・正負の数",
+      "level": "高専入試基礎",
+      "prompt": "−9＋15−6 の値はどれか。",
+      "options": [
+        "0",
+        "2",
+        "-2",
+        "4"
+      ],
+      "correct": 0,
+      "explanation": "負の数を含む加減は、符号を保って左から順に計算する。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2026年度の数学PDFを取り込み、抽出した分野語句：確率・図形を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-math.pdf"
+    },
+    {
+      "id": "reg-math-2026-02",
+      "subject": "math",
+      "topic": "大問1・平方根",
+      "level": "高専入試基礎",
+      "prompt": "√50 を a√2 と表すとき、a はいくつか。",
+      "options": [
+        "4",
+        "5",
+        "6",
+        "10"
+      ],
+      "correct": 1,
+      "explanation": "5²×2 の平方根なので 5√2。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2026年度の数学PDFを取り込み、抽出した分野語句：確率・図形を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-math.pdf"
+    },
+    {
+      "id": "reg-math-2026-03",
+      "subject": "math",
+      "topic": "大問1・一次方程式",
+      "level": "高専入試基礎",
+      "prompt": "6x−5＝13 のとき、x はいくつか。",
+      "options": [
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "correct": 1,
+      "explanation": "移項して定数項をまとめ、xの係数で割る。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2026年度の数学PDFを取り込み、抽出した分野語句：確率・図形を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-math.pdf"
+    },
+    {
+      "id": "reg-math-2026-04",
+      "subject": "math",
+      "topic": "大問1・因数分解",
+      "level": "高専入試標準",
+      "prompt": "x²＋13x＋42 を因数分解したものはどれか。",
+      "options": [
+        "(x+5)(x+8)",
+        "(x+6)(x+7)",
+        "(x-6)(x-7)",
+        "(x+7)²"
+      ],
+      "correct": 1,
+      "explanation": "積が定数項、和がxの係数になる2数を探す。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2026年度の数学PDFを取り込み、抽出した分野語句：確率・図形を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-math.pdf"
+    },
+    {
+      "id": "reg-math-2026-05",
+      "subject": "math",
+      "topic": "大問1・関数",
+      "level": "高専入試標準",
+      "prompt": "y＝−2x＋10 で x＝5 のとき、y はいくつか。",
+      "options": [
+        "-2",
+        "-1",
+        "0",
+        "1"
+      ],
+      "correct": 2,
+      "explanation": "xの値を代入すると y＝−2×x＋定数。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2026年度の数学PDFを取り込み、抽出した分野語句：確率・図形を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-math.pdf"
+    },
+    {
+      "id": "reg-math-2026-06",
+      "subject": "math",
+      "topic": "応用・二次方程式",
+      "level": "高専入試応用",
+      "prompt": "x²−5x＋6＝0 の解はどれか。",
+      "options": [
+        "x＝1, 6",
+        "x＝2, 3",
+        "x＝−2, −3",
+        "x＝0, 5"
+      ],
+      "correct": 1,
+      "explanation": "左辺を (x−2)(x−3) と因数分解する。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2026年度の数学PDFを取り込み、抽出した分野語句：確率・図形を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-math.pdf"
+    },
+    {
+      "id": "reg-english-2026-06",
+      "subject": "english",
+      "topic": "応用・仮定法",
+      "level": "高専入試応用",
+      "prompt": "If I (　) you, I would talk to her.",
+      "options": [
+        "am",
+        "is",
+        "were",
+        "be"
+      ],
+      "correct": 2,
+      "explanation": "現在の事実に反する仮定を表す仮定法では、主語がIでもwereを使う。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2026年度の英語PDFを取り込み、出題形式を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-english.pdf"
+    },
+    {
+      "id": "reg-science-2026-06",
+      "subject": "science",
+      "topic": "応用・濃度変化",
+      "level": "高専入試応用",
+      "prompt": "質量パーセント濃度10％の食塩水100gから水を20g蒸発させた。濃度は何％か。",
+      "options": [
+        "8％",
+        "10％",
+        "12.5％",
+        "15％"
+      ],
+      "correct": 2,
+      "explanation": "食塩は10gのまま、溶液は80gになる。10÷80×100＝12.5％。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2026年度の理科PDFを取り込み、抽出した分野語句：電流・電圧・抵抗・中和を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-science.pdf"
+    },
+    {
+      "id": "reg-social-2026-06",
+      "subject": "social",
+      "topic": "応用・経済",
+      "level": "高専入試応用",
+      "prompt": "物価が継続的に上昇し、貨幣の価値が下がる現象はどれか。",
+      "options": [
+        "デフレーション",
+        "インフレーション",
+        "景気後退",
+        "円高"
+      ],
+      "correct": 1,
+      "explanation": "物価が継続的に上昇する現象をインフレーションという。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2026年度の社会PDFを取り込み、抽出した分野語句：貿易・産業・明治・憲法を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-social.pdf"
+    },
+    {
+      "id": "reg-japanese-2026-06",
+      "subject": "japanese",
+      "topic": "応用・論理展開",
+      "level": "高専入試応用",
+      "prompt": "文章中の「したがって」が示す関係として最も適切なものはどれか。",
+      "options": [
+        "前の内容と反対の内容を示す",
+        "前の内容から導かれる結論を示す",
+        "具体例を追加する",
+        "時間の順序を示す"
+      ],
+      "correct": 1,
+      "explanation": "「したがって」は、前の内容を受けた結論・結果を示す接続語。",
+      "sourceLabel": "独自作成",
+      "sourceNote": "国語は今回の過去問レジストリ対象外。"
+    },
+    {
+      "id": "reg-english-2024-01",
+      "subject": "english",
+      "topic": "文法・受け身",
+      "level": "高専入試基礎",
+      "prompt": "This picture (　) by my sister yesterday.",
+      "options": [
+        "draw",
+        "drew",
+        "was drawn",
+        "is drawing"
+      ],
+      "correct": 2,
+      "explanation": "過去の受け身は was/were＋過去分詞。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2024年度の英語PDFを取り込み、出題形式を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2024,
+      "sourceFile": "/data/kosen-past-papers/2024-english.pdf"
+    },
+    {
+      "id": "reg-english-2024-02",
+      "subject": "english",
+      "topic": "文法・関係代名詞",
+      "level": "高専入試基礎",
+      "prompt": "The girl (　) lives next door is a tennis player.",
+      "options": [
+        "which",
+        "who",
+        "where",
+        "when"
+      ],
+      "correct": 1,
+      "explanation": "先行詞が人で、後ろが動詞 lives なので主格 who。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2024年度の英語PDFを取り込み、出題形式を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2024,
+      "sourceFile": "/data/kosen-past-papers/2024-english.pdf"
+    },
+    {
+      "id": "reg-english-2025-03",
+      "subject": "english",
+      "topic": "文法・不定詞",
+      "level": "高専入試基礎",
+      "prompt": "I decided (　) a new language this year.",
+      "options": [
+        "study",
+        "studying",
+        "to study",
+        "studied"
+      ],
+      "correct": 2,
+      "explanation": "decide の後ろは to 不定詞。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2025年度の英語PDFを取り込み、出題形式を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2025,
+      "sourceFile": "/data/kosen-past-papers/2025-english.pdf"
+    },
+    {
+      "id": "reg-english-2025-04",
+      "subject": "english",
+      "topic": "読解・指示語",
+      "level": "高専入試標準",
+      "prompt": "英文中の they が何を指すか判断するとき、最も適切なのはどれか。",
+      "options": [
+        "前後の文脈から複数の人・物を探す",
+        "必ず直前の動詞を指す",
+        "文末の単語を指す",
+        "主語とは無関係に決める"
+      ],
+      "correct": 0,
+      "explanation": "代名詞は数・意味・前後の文脈を合わせて判断する。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2025年度の英語PDFを取り込み、出題形式を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2025,
+      "sourceFile": "/data/kosen-past-papers/2025-english.pdf"
+    },
+    {
+      "id": "reg-english-2026-05",
+      "subject": "english",
+      "topic": "文法・比較",
+      "level": "高専入試基礎",
+      "prompt": "This book is (　) than that one.",
+      "options": [
+        "interesting",
+        "more interesting",
+        "most interesting",
+        "the interesting"
+      ],
+      "correct": 1,
+      "explanation": "長い形容詞の比較級は more＋形容詞＋than。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2026年度の英語PDFを取り込み、出題形式を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-english.pdf"
+    },
+    {
+      "id": "reg-science-2024-01",
+      "subject": "science",
+      "topic": "物理・電流",
+      "level": "高専入試標準",
+      "prompt": "抵抗器に 6V の電圧を加えたところ、電流は 0.5A だった。抵抗は何Ωか。",
+      "options": [
+        "3",
+        "6",
+        "12",
+        "30"
+      ],
+      "correct": 2,
+      "explanation": "オームの法則より R＝V÷I＝6÷0.5＝12Ω。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2024年度の理科PDFを取り込み、抽出した分野語句：電流・電圧・抵抗・中和を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2024,
+      "sourceFile": "/data/kosen-past-papers/2024-science.pdf"
+    },
+    {
+      "id": "reg-science-2024-02",
+      "subject": "science",
+      "topic": "化学・質量パーセント濃度",
+      "level": "高専入試標準",
+      "prompt": "食塩 12g を水 108g に溶かした。質量パーセント濃度は何％か。",
+      "options": [
+        "10",
+        "11",
+        "12",
+        "20"
+      ],
+      "correct": 0,
+      "explanation": "溶液は120g。12÷120×100＝10％。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2024年度の理科PDFを取り込み、抽出した分野語句：電流・電圧・抵抗・中和を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2024,
+      "sourceFile": "/data/kosen-past-papers/2024-science.pdf"
+    },
+    {
+      "id": "reg-science-2025-03",
+      "subject": "science",
+      "topic": "生物・遺伝",
+      "level": "高専入試基礎",
+      "prompt": "遺伝子の本体として正しいものはどれか。",
+      "options": [
+        "RNAだけ",
+        "DNA",
+        "デンプン",
+        "タンパク質だけ"
+      ],
+      "correct": 1,
+      "explanation": "遺伝情報を担う基本的な物質はDNA。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2025年度の理科PDFを取り込み、出題形式を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2025,
+      "sourceFile": "/data/kosen-past-papers/2025-science.pdf"
+    },
+    {
+      "id": "reg-science-2025-04",
+      "subject": "science",
+      "topic": "地学・地震",
+      "level": "高専入試基礎",
+      "prompt": "震源からの距離が大きくなるほど、一般に初期微動継続時間はどうなるか。",
+      "options": [
+        "短くなる",
+        "長くなる",
+        "常に一定",
+        "0になる"
+      ],
+      "correct": 1,
+      "explanation": "P波とS波の到着時刻の差は震源から遠いほど大きくなる。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2025年度の理科PDFを取り込み、出題形式を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2025,
+      "sourceFile": "/data/kosen-past-papers/2025-science.pdf"
+    },
+    {
+      "id": "reg-science-2026-05",
+      "subject": "science",
+      "topic": "化学・中和",
+      "level": "高専入試基礎",
+      "prompt": "塩酸と水酸化ナトリウム水溶液が中和するとき、主にできるものの組合せはどれか。",
+      "options": [
+        "水と酸素",
+        "水と塩化ナトリウム",
+        "水素と酸素",
+        "二酸化炭素と水"
+      ],
+      "correct": 1,
+      "explanation": "酸とアルカリの中和で水と塩ができる。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2026年度の理科PDFを取り込み、抽出した分野語句：電流・電圧・抵抗・中和を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-science.pdf"
+    },
+    {
+      "id": "reg-social-2024-01",
+      "subject": "social",
+      "topic": "地理・気候",
+      "level": "高専入試基礎",
+      "prompt": "日本海側の冬に降雪が多くなりやすい主な理由はどれか。",
+      "options": [
+        "季節風が日本海で水蒸気を含むため",
+        "偏西風が一年中止まるため",
+        "海流がすべて北向きのため",
+        "太平洋高気圧が強まるため"
+      ],
+      "correct": 0,
+      "explanation": "冬の季節風が日本海を渡る間に水蒸気を含み、山地で雪を降らせる。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2024年度の社会PDFを取り込み、抽出した分野語句：地形図・貿易・産業・明治を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2024,
+      "sourceFile": "/data/kosen-past-papers/2024-social.pdf"
+    },
+    {
+      "id": "reg-social-2024-02",
+      "subject": "social",
+      "topic": "歴史・近代",
+      "level": "高専入試基礎",
+      "prompt": "明治政府が近代的な中央集権国家をつくるため、1871年に行った改革はどれか。",
+      "options": [
+        "廃藩置県",
+        "地租改正",
+        "大政奉還",
+        "版籍奉還"
+      ],
+      "correct": 0,
+      "explanation": "1871年、藩を廃止して府県を置く廃藩置県を実施した。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2024年度の社会PDFを取り込み、抽出した分野語句：地形図・貿易・産業・明治を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2024,
+      "sourceFile": "/data/kosen-past-papers/2024-social.pdf"
+    },
+    {
+      "id": "reg-social-2025-03",
+      "subject": "social",
+      "topic": "公民・三権分立",
+      "level": "高専入試標準",
+      "prompt": "国会の主な役割として正しいものはどれか。",
+      "options": [
+        "法律を制定する",
+        "裁判を行う",
+        "行政を指揮する",
+        "条約の違憲性を最終判断する"
+      ],
+      "correct": 0,
+      "explanation": "国会は国権の最高機関であり、唯一の立法機関。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2025年度の社会PDFを取り込み、抽出した分野語句：気候・地形図・明治・憲法を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2025,
+      "sourceFile": "/data/kosen-past-papers/2025-social.pdf"
+    },
+    {
+      "id": "reg-social-2025-04",
+      "subject": "social",
+      "topic": "公民・市場経済",
+      "level": "高専入試標準",
+      "prompt": "需要量が増え、供給量が変わらない場合、一般に市場価格はどうなりやすいか。",
+      "options": [
+        "上がる",
+        "下がる",
+        "必ず0円になる",
+        "必ず変わらない"
+      ],
+      "correct": 0,
+      "explanation": "需要が供給を上回る方向に働くと価格は上昇しやすい。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2025年度の社会PDFを取り込み、抽出した分野語句：気候・地形図・明治・憲法を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2025,
+      "sourceFile": "/data/kosen-past-papers/2025-social.pdf"
+    },
+    {
+      "id": "reg-social-2026-05",
+      "subject": "social",
+      "topic": "地理・貿易",
+      "level": "高専入試基礎",
+      "prompt": "ある国が他国に比べて相対的に低い費用で生産できる財に特化する考え方はどれか。",
+      "options": [
+        "比較優位",
+        "人口転換",
+        "三権分立",
+        "地産地消"
+      ],
+      "correct": 0,
+      "explanation": "比較優位に基づく分業は国際貿易の利益を説明する。",
+      "sourceLabel": "過去問資料参照・オリジナル",
+      "sourceNote": "2026年度の社会PDFを取り込み、抽出した分野語句：貿易・産業・明治・憲法を参考に設問・選択肢を新規作成。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-social.pdf"
+    },
+    {
+      "id": "reg-japanese-001-01",
+      "subject": "japanese",
+      "topic": "漢字",
+      "level": "高専入試基礎",
+      "prompt": "「抽象」の読み方として正しいものはどれか。",
+      "options": [
+        "ちゅうしょう",
+        "ちゅうぞう",
+        "ぬきしょう",
+        "ちゅうそう"
+      ],
+      "correct": 0,
+      "explanation": "「抽象」は「ちゅうしょう」と読む。",
+      "sourceLabel": "独自作成",
+      "sourceNote": "国語は今回の過去問レジストリ対象外。基礎確認用のオリジナル問題。"
+    },
+    {
+      "id": "reg-japanese-001-02",
+      "subject": "japanese",
+      "topic": "文法",
+      "level": "高専入試基礎",
+      "prompt": "「静かな」の品詞として正しいものはどれか。",
+      "options": [
+        "動詞",
+        "形容詞",
+        "形容動詞",
+        "副詞"
+      ],
+      "correct": 2,
+      "explanation": "「静かだ」と活用するので形容動詞。",
+      "sourceLabel": "独自作成",
+      "sourceNote": "国語は今回の過去問レジストリ対象外。基礎確認用のオリジナル問題。"
+    },
+    {
+      "id": "reg-japanese-001-03",
+      "subject": "japanese",
+      "topic": "敬語",
+      "level": "高専入試基礎",
+      "prompt": "「先生がおっしゃった」の敬語の種類はどれか。",
+      "options": [
+        "尊敬語",
+        "謙譲語",
+        "丁寧語",
+        "美化語"
+      ],
+      "correct": 0,
+      "explanation": "動作主である先生を高める尊敬語。",
+      "sourceLabel": "独自作成",
+      "sourceNote": "国語は今回の過去問レジストリ対象外。基礎確認用のオリジナル問題。"
+    },
+    {
+      "id": "reg-japanese-001-04",
+      "subject": "japanese",
+      "topic": "読解",
+      "level": "高専入試基礎",
+      "prompt": "筆者の主張を読み取るとき、最も適切な方法はどれか。",
+      "options": [
+        "結論と理由の対応を確認する",
+        "最初の一文だけで決める",
+        "例だけを抜き出す",
+        "接続語を無視する"
+      ],
+      "correct": 0,
+      "explanation": "結論を支える理由・具体例とのつながりを追う。",
+      "sourceLabel": "独自作成",
+      "sourceNote": "国語は今回の過去問レジストリ対象外。基礎確認用のオリジナル問題。"
+    },
+    {
+      "id": "reg-japanese-001-05",
+      "subject": "japanese",
+      "topic": "語彙",
+      "level": "高専入試基礎",
+      "prompt": "「懸念」の意味として最も近いものはどれか。",
+      "options": [
+        "心配",
+        "感謝",
+        "納得",
+        "期待"
+      ],
+      "correct": 0,
+      "explanation": "懸念は、気にかかって不安に思うこと。",
+      "sourceLabel": "独自作成",
+      "sourceNote": "国語は今回の過去問レジストリ対象外。基礎確認用のオリジナル問題。"
+    },
+    {
+      "id": "registry-2024-social-地形図",
+      "subject": "social",
+      "topic": "地理・地形図",
+      "level": "高専入試・過去問分析",
+      "prompt": "地形図で等高線の間隔が狭い場所は、一般にどのような地形か。",
+      "options": [
+        "傾斜が急",
+        "傾斜が緩やか",
+        "平ら",
+        "必ず谷底"
+      ],
+      "correct": 0,
+      "explanation": "等高線の間隔が狭いほど急斜面。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2024年度の社会過去問PDFから「地形図」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2024,
+      "sourceFile": "/data/kosen-past-papers/2024-social.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2024_syakai_monndai2.pdf"
+    },
+    {
+      "id": "registry-2024-social-貿易",
+      "subject": "social",
+      "topic": "地理・貿易",
+      "level": "高専入試・過去問分析",
+      "prompt": "各国が相対的に生産費用の低い財に特化する考え方はどれか。",
+      "options": [
+        "比較優位",
+        "人口転換",
+        "三権分立",
+        "需要曲線"
+      ],
+      "correct": 0,
+      "explanation": "比較優位に基づく分業は国際貿易の利益を説明する。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2024年度の社会過去問PDFから「貿易」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2024,
+      "sourceFile": "/data/kosen-past-papers/2024-social.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2024_syakai_monndai2.pdf"
+    },
+    {
+      "id": "registry-2024-social-産業",
+      "subject": "social",
+      "topic": "地理・産業",
+      "level": "高専入試・過去問分析",
+      "prompt": "小売業や飲食業が分類される産業はどれか。",
+      "options": [
+        "第一次産業",
+        "第二次産業",
+        "第三次産業",
+        "第四次産業"
+      ],
+      "correct": 2,
+      "explanation": "商業・サービス業は第三次産業。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2024年度の社会過去問PDFから「産業」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2024,
+      "sourceFile": "/data/kosen-past-papers/2024-social.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2024_syakai_monndai2.pdf"
+    },
+    {
+      "id": "registry-2024-social-明治",
+      "subject": "social",
+      "topic": "歴史・明治",
+      "level": "高専入試・過去問分析",
+      "prompt": "1871年に藩を廃止して府県を置いた改革はどれか。",
+      "options": [
+        "廃藩置県",
+        "地租改正",
+        "大政奉還",
+        "文明開化"
+      ],
+      "correct": 0,
+      "explanation": "明治政府は1871年に廃藩置県を実施した。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2024年度の社会過去問PDFから「明治」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2024,
+      "sourceFile": "/data/kosen-past-papers/2024-social.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2024_syakai_monndai2.pdf"
+    },
+    {
+      "id": "registry-2024-social-憲法",
+      "subject": "social",
+      "topic": "公民・憲法",
+      "level": "高専入試・過去問分析",
+      "prompt": "日本国憲法の三つの基本原理に含まれないものはどれか。",
+      "options": [
+        "国民主権",
+        "基本的人権の尊重",
+        "平和主義",
+        "身分制度の維持"
+      ],
+      "correct": 3,
+      "explanation": "三つの基本原理は国民主権・基本的人権の尊重・平和主義。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2024年度の社会過去問PDFから「憲法」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2024,
+      "sourceFile": "/data/kosen-past-papers/2024-social.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2024_syakai_monndai2.pdf"
+    },
+    {
+      "id": "registry-2025-social-気候",
+      "subject": "social",
+      "topic": "地理・気候",
+      "level": "高専入試・過去問分析",
+      "prompt": "日本海側で冬に雪が多くなりやすい主な理由はどれか。",
+      "options": [
+        "季節風が日本海で水蒸気を含むため",
+        "太平洋高気圧が強まるため",
+        "偏西風が止まるため",
+        "海流がなくなるため"
+      ],
+      "correct": 0,
+      "explanation": "冬の季節風が日本海で水蒸気を含み、山地で雪を降らせる。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2025年度の社会過去問PDFから「気候」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2025,
+      "sourceFile": "/data/kosen-past-papers/2025-social.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2025_syakai_mondai%20(1).pdf"
+    },
+    {
+      "id": "registry-2025-social-地形図",
+      "subject": "social",
+      "topic": "地理・地形図",
+      "level": "高専入試・過去問分析",
+      "prompt": "地形図で等高線の間隔が狭い場所は、一般にどのような地形か。",
+      "options": [
+        "傾斜が急",
+        "傾斜が緩やか",
+        "平ら",
+        "必ず谷底"
+      ],
+      "correct": 0,
+      "explanation": "等高線の間隔が狭いほど急斜面。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2025年度の社会過去問PDFから「地形図」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2025,
+      "sourceFile": "/data/kosen-past-papers/2025-social.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2025_syakai_mondai%20(1).pdf"
+    },
+    {
+      "id": "registry-2025-social-明治",
+      "subject": "social",
+      "topic": "歴史・明治",
+      "level": "高専入試・過去問分析",
+      "prompt": "1871年に藩を廃止して府県を置いた改革はどれか。",
+      "options": [
+        "廃藩置県",
+        "地租改正",
+        "大政奉還",
+        "文明開化"
+      ],
+      "correct": 0,
+      "explanation": "明治政府は1871年に廃藩置県を実施した。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2025年度の社会過去問PDFから「明治」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2025,
+      "sourceFile": "/data/kosen-past-papers/2025-social.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2025_syakai_mondai%20(1).pdf"
+    },
+    {
+      "id": "registry-2025-social-憲法",
+      "subject": "social",
+      "topic": "公民・憲法",
+      "level": "高専入試・過去問分析",
+      "prompt": "日本国憲法の三つの基本原理に含まれないものはどれか。",
+      "options": [
+        "国民主権",
+        "基本的人権の尊重",
+        "平和主義",
+        "身分制度の維持"
+      ],
+      "correct": 3,
+      "explanation": "三つの基本原理は国民主権・基本的人権の尊重・平和主義。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2025年度の社会過去問PDFから「憲法」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2025,
+      "sourceFile": "/data/kosen-past-papers/2025-social.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2025_syakai_mondai%20(1).pdf"
+    },
+    {
+      "id": "registry-2026-social-貿易",
+      "subject": "social",
+      "topic": "地理・貿易",
+      "level": "高専入試・過去問分析",
+      "prompt": "各国が相対的に生産費用の低い財に特化する考え方はどれか。",
+      "options": [
+        "比較優位",
+        "人口転換",
+        "三権分立",
+        "需要曲線"
+      ],
+      "correct": 0,
+      "explanation": "比較優位に基づく分業は国際貿易の利益を説明する。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2026年度の社会過去問PDFから「貿易」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-social.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2026_syakai_mondai2%20(1).pdf"
+    },
+    {
+      "id": "registry-2026-social-産業",
+      "subject": "social",
+      "topic": "地理・産業",
+      "level": "高専入試・過去問分析",
+      "prompt": "小売業や飲食業が分類される産業はどれか。",
+      "options": [
+        "第一次産業",
+        "第二次産業",
+        "第三次産業",
+        "第四次産業"
+      ],
+      "correct": 2,
+      "explanation": "商業・サービス業は第三次産業。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2026年度の社会過去問PDFから「産業」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-social.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2026_syakai_mondai2%20(1).pdf"
+    },
+    {
+      "id": "registry-2026-social-明治",
+      "subject": "social",
+      "topic": "歴史・明治",
+      "level": "高専入試・過去問分析",
+      "prompt": "1871年に藩を廃止して府県を置いた改革はどれか。",
+      "options": [
+        "廃藩置県",
+        "地租改正",
+        "大政奉還",
+        "文明開化"
+      ],
+      "correct": 0,
+      "explanation": "明治政府は1871年に廃藩置県を実施した。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2026年度の社会過去問PDFから「明治」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-social.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2026_syakai_mondai2%20(1).pdf"
+    },
+    {
+      "id": "registry-2026-social-憲法",
+      "subject": "social",
+      "topic": "公民・憲法",
+      "level": "高専入試・過去問分析",
+      "prompt": "日本国憲法の三つの基本原理に含まれないものはどれか。",
+      "options": [
+        "国民主権",
+        "基本的人権の尊重",
+        "平和主義",
+        "身分制度の維持"
+      ],
+      "correct": 3,
+      "explanation": "三つの基本原理は国民主権・基本的人権の尊重・平和主義。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2026年度の社会過去問PDFから「憲法」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-social.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2026_syakai_mondai2%20(1).pdf"
+    },
+    {
+      "id": "registry-2026-social-需要",
+      "subject": "social",
+      "topic": "公民・需要",
+      "level": "高専入試・過去問分析",
+      "prompt": "供給量が変わらず需要量が増えた場合、一般に価格はどうなりやすいか。",
+      "options": [
+        "上がる",
+        "下がる",
+        "必ず0円になる",
+        "変化しない"
+      ],
+      "correct": 0,
+      "explanation": "需要が増えれば価格は上がりやすい。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2026年度の社会過去問PDFから「需要」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-social.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2026_syakai_mondai2%20(1).pdf"
+    },
+    {
+      "id": "registry-2026-social-供給",
+      "subject": "social",
+      "topic": "公民・供給",
+      "level": "高専入試・過去問分析",
+      "prompt": "需要量が変わらず供給量が増えた場合、一般に価格はどうなりやすいか。",
+      "options": [
+        "上がる",
+        "下がる",
+        "必ず2倍になる",
+        "変化しない"
+      ],
+      "correct": 1,
+      "explanation": "供給が増えれば価格は下がりやすい。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2026年度の社会過去問PDFから「供給」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-social.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2026_syakai_mondai2%20(1).pdf"
+    },
+    {
+      "id": "registry-2024-math-確率",
+      "subject": "math",
+      "topic": "大問1・確率",
+      "level": "高専入試・大問1",
+      "prompt": "正六面体のさいころを1回投げる。偶数の目が出る確率はどれか。",
+      "options": [
+        "1/3",
+        "1/2",
+        "2/3",
+        "5/6"
+      ],
+      "correct": 1,
+      "explanation": "偶数は2・4・6の3通り。3/6＝1/2。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2024年度の数学過去問PDFから「確率」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2024,
+      "sourceFile": "/data/kosen-past-papers/2024-math.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/03_2024_sugaku_mondai.pdf"
+    },
+    {
+      "id": "registry-2025-math-確率",
+      "subject": "math",
+      "topic": "大問1・確率",
+      "level": "高専入試・大問1",
+      "prompt": "正六面体のさいころを1回投げる。偶数の目が出る確率はどれか。",
+      "options": [
+        "1/3",
+        "1/2",
+        "2/3",
+        "5/6"
+      ],
+      "correct": 1,
+      "explanation": "偶数は2・4・6の3通り。3/6＝1/2。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2025年度の数学過去問PDFから「確率」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2025,
+      "sourceFile": "/data/kosen-past-papers/2025-math.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/03_2025_sugaku_mondai%20(1).pdf"
+    },
+    {
+      "id": "registry-2026-math-確率",
+      "subject": "math",
+      "topic": "大問1・確率",
+      "level": "高専入試・大問1",
+      "prompt": "正六面体のさいころを1回投げる。偶数の目が出る確率はどれか。",
+      "options": [
+        "1/3",
+        "1/2",
+        "2/3",
+        "5/6"
+      ],
+      "correct": 1,
+      "explanation": "偶数は2・4・6の3通り。3/6＝1/2。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2026年度の数学過去問PDFから「確率」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-math.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/03_2026_sugaku_mondai%20(1).pdf"
+    },
+    {
+      "id": "registry-2026-math-図形",
+      "subject": "math",
+      "topic": "大問1・図形",
+      "level": "高専入試・大問1",
+      "prompt": "直角をはさむ2辺が6cm、8cmの直角三角形の斜辺は何cmか。",
+      "options": [
+        "9",
+        "10",
+        "12",
+        "14"
+      ],
+      "correct": 1,
+      "explanation": "三平方の定理より √(6²＋8²)＝10cm。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2026年度の数学過去問PDFから「図形」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-math.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/03_2026_sugaku_mondai%20(1).pdf"
+    },
+    {
+      "id": "registry-2024-science-電流",
+      "subject": "science",
+      "topic": "物理・電流",
+      "level": "高専入試・過去問分析",
+      "prompt": "6Vの電圧を3Ωの抵抗に加えた。流れる電流は何Aか。",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "18"
+      ],
+      "correct": 1,
+      "explanation": "I＝V÷R＝6÷3＝2A。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2024年度の理科過去問PDFから「電流」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2024,
+      "sourceFile": "/data/kosen-past-papers/2024-science.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2024_rika_mondai.pdf"
+    },
+    {
+      "id": "registry-2024-science-電圧",
+      "subject": "science",
+      "topic": "物理・電圧",
+      "level": "高専入試・過去問分析",
+      "prompt": "4Ωの抵抗に2Aの電流が流れる。電圧は何Vか。",
+      "options": [
+        "2",
+        "4",
+        "6",
+        "8"
+      ],
+      "correct": 3,
+      "explanation": "V＝RI＝4×2＝8V。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2024年度の理科過去問PDFから「電圧」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2024,
+      "sourceFile": "/data/kosen-past-papers/2024-science.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2024_rika_mondai.pdf"
+    },
+    {
+      "id": "registry-2024-science-抵抗",
+      "subject": "science",
+      "topic": "物理・抵抗",
+      "level": "高専入試・過去問分析",
+      "prompt": "12Vの電圧で3Aの電流が流れる回路の抵抗は何Ωか。",
+      "options": [
+        "3",
+        "4",
+        "9",
+        "36"
+      ],
+      "correct": 1,
+      "explanation": "R＝V÷I＝12÷3＝4Ω。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2024年度の理科過去問PDFから「抵抗」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2024,
+      "sourceFile": "/data/kosen-past-papers/2024-science.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2024_rika_mondai.pdf"
+    },
+    {
+      "id": "registry-2024-science-中和",
+      "subject": "science",
+      "topic": "化学・中和",
+      "level": "高専入試・過去問分析",
+      "prompt": "塩酸と水酸化ナトリウム水溶液が中和すると、主に何ができるか。",
+      "options": [
+        "水と酸素",
+        "水と塩化ナトリウム",
+        "水素と酸素",
+        "二酸化炭素と水"
+      ],
+      "correct": 1,
+      "explanation": "酸とアルカリの中和では水と塩ができる。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2024年度の理科過去問PDFから「中和」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2024,
+      "sourceFile": "/data/kosen-past-papers/2024-science.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2024_rika_mondai.pdf"
+    },
+    {
+      "id": "registry-2024-science-天体",
+      "subject": "science",
+      "topic": "地学・天体",
+      "level": "高専入試・過去問分析",
+      "prompt": "昼と夜が繰り返される主な原因はどれか。",
+      "options": [
+        "地球の公転",
+        "地球の自転",
+        "月の公転",
+        "太陽の自転"
+      ],
+      "correct": 1,
+      "explanation": "地球の自転によって昼と夜が生じる。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2024年度の理科過去問PDFから「天体」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2024,
+      "sourceFile": "/data/kosen-past-papers/2024-science.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2024_rika_mondai.pdf"
+    },
+    {
+      "id": "registry-2026-science-電流",
+      "subject": "science",
+      "topic": "物理・電流",
+      "level": "高専入試・過去問分析",
+      "prompt": "6Vの電圧を3Ωの抵抗に加えた。流れる電流は何Aか。",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "18"
+      ],
+      "correct": 1,
+      "explanation": "I＝V÷R＝6÷3＝2A。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2026年度の理科過去問PDFから「電流」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-science.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2026_rika_mondai%20(1).pdf"
+    },
+    {
+      "id": "registry-2026-science-電圧",
+      "subject": "science",
+      "topic": "物理・電圧",
+      "level": "高専入試・過去問分析",
+      "prompt": "4Ωの抵抗に2Aの電流が流れる。電圧は何Vか。",
+      "options": [
+        "2",
+        "4",
+        "6",
+        "8"
+      ],
+      "correct": 3,
+      "explanation": "V＝RI＝4×2＝8V。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2026年度の理科過去問PDFから「電圧」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-science.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2026_rika_mondai%20(1).pdf"
+    },
+    {
+      "id": "registry-2026-science-抵抗",
+      "subject": "science",
+      "topic": "物理・抵抗",
+      "level": "高専入試・過去問分析",
+      "prompt": "12Vの電圧で3Aの電流が流れる回路の抵抗は何Ωか。",
+      "options": [
+        "3",
+        "4",
+        "9",
+        "36"
+      ],
+      "correct": 1,
+      "explanation": "R＝V÷I＝12÷3＝4Ω。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2026年度の理科過去問PDFから「抵抗」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-science.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2026_rika_mondai%20(1).pdf"
+    },
+    {
+      "id": "registry-2026-science-中和",
+      "subject": "science",
+      "topic": "化学・中和",
+      "level": "高専入試・過去問分析",
+      "prompt": "塩酸と水酸化ナトリウム水溶液が中和すると、主に何ができるか。",
+      "options": [
+        "水と酸素",
+        "水と塩化ナトリウム",
+        "水素と酸素",
+        "二酸化炭素と水"
+      ],
+      "correct": 1,
+      "explanation": "酸とアルカリの中和では水と塩ができる。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2026年度の理科過去問PDFから「中和」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-science.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2026_rika_mondai%20(1).pdf"
+    },
+    {
+      "id": "registry-2026-science-遺伝",
+      "subject": "science",
+      "topic": "生物・遺伝",
+      "level": "高専入試・過去問分析",
+      "prompt": "遺伝情報を担う物質として正しいものはどれか。",
+      "options": [
+        "デンプン",
+        "DNA",
+        "脂肪",
+        "水"
+      ],
+      "correct": 1,
+      "explanation": "遺伝情報の基本的な担い手はDNA。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2026年度の理科過去問PDFから「遺伝」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-science.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2026_rika_mondai%20(1).pdf"
+    },
+    {
+      "id": "registry-2026-science-地震",
+      "subject": "science",
+      "topic": "地学・地震",
+      "level": "高専入試・過去問分析",
+      "prompt": "震源から遠くなるほど、一般に初期微動継続時間はどうなるか。",
+      "options": [
+        "短くなる",
+        "長くなる",
+        "変化しない",
+        "必ず0秒になる"
+      ],
+      "correct": 1,
+      "explanation": "P波とS波の到着時刻の差は遠いほど大きくなる。",
+      "sourceLabel": "過去問レジストリ分析・オリジナル",
+      "sourceNote": "2026年度の理科過去問PDFから「地震」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
+      "sourceYear": 2026,
+      "sourceFile": "/data/kosen-past-papers/2026-science.pdf",
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2026_rika_mondai%20(1).pdf"
     }
   ]
 }
