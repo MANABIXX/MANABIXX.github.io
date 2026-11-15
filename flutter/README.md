@@ -5,6 +5,7 @@ This directory contains the Flutter Web application currently published at the G
 ## Implemented migration slices
 
 - `/`: Flutter migration dashboard with links to the implemented practice modules.
+- Unsupported URLs: a dedicated not-found screen explains that the route is unavailable and provides a working return-to-home action.
 - `/library`: existing `static/data/knowledge-base.json` (262 indexed/authored records); search by title, terms and explanation, filter by subject/grade/field, and expand learning details.
 - Practice progress: local browser persistence for completed sessions, answer totals, and wrong-question IDs, separated by dataset/mode.
 - `/foundation`: existing `static/data/questions.json` (1,180 records); 1,171 science/social questions selected from the 1,180-record source file, topic filters, 10/20/30/50/all question sessions, four-choice answers, explanations, and results.
