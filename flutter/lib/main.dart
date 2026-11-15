@@ -121,8 +121,9 @@ class ManabiXXApp extends StatelessWidget {
         '/kosen': (_) => const _PasswordGatePage(password: 'kosen', title: '制作者専用モード', child: KosenPracticePage(title: '制作者専用モード')),
         '/kosen/': (_) => const _PasswordGatePage(password: 'kosen', title: '制作者専用モード', child: KosenPracticePage(title: '制作者専用モード')),
       },
-      onUnknownRoute: (_) => MaterialPageRoute<void>(
-        builder: (_) => const _AppHomePage(),
+      onUnknownRoute: (settings) => MaterialPageRoute<void>(
+        settings: settings,
+        builder: (_) => const _NotFoundPage(),
       ),
       home: const _AppHomePage(),
     );
@@ -793,3 +794,44 @@ class _ProgressPage extends StatelessWidget {
     ),
   );
 }
+
+class _NotFoundPage extends StatelessWidget {
+  const _NotFoundPage();
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(title: const Text('ページが見つかりません')),
+    body: Center(
+      child: Padding(
+        padding: const EdgeInsets.all(28),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 420),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.search_off_rounded, size: 46, color: _orange),
+              const SizedBox(height: 16),
+              const Text('このページは見つかりませんでした。',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900)),
+              const SizedBox(height: 10),
+              const Text('URLが正しいか確認するか、ホームから利用できる学習メニューを選んでください。',
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Color(0xFF9999A1), height: 1.8)),
+              const SizedBox(height: 22),
+              FilledButton.icon(
+                onPressed: () => Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute<void>(builder: (_) => const _AppHomePage()),
+                  (route) => false,
+                ),
+                icon: const Icon(Icons.home_rounded),
+                label: const Text('ホームへ戻る'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
