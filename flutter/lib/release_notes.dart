@@ -4,6 +4,8 @@ class ReleaseNotesPage extends StatelessWidget {
   const ReleaseNotesPage({super.key});
 
   static const _items = <_ReleaseEntry>[
+    _ReleaseEntry(date: '2026-11-15', category: 'BUILD / CI', title: 'PDF教材同期とAndroidリリースのCIを修正',
+      body: 'PDF教材の同期ジョブにpdftotextを追加し、PDFから文字を抽出できるようにしました。Android APKのGitHub Releaseでは、リリースノートを一時ファイル経由で渡すように変更。教材データやアプリの学習履歴形式は変更していません。'),
     _ReleaseEntry(date: '2026-11-15', category: 'ROUTING', title: '未対応URLの案内とホーム復帰を追加',
       body: 'Flutter側でまだ対応していないURLを開いたとき、ホーム画面へ黙って戻すのではなく、ページが見つからないこととホームへ戻る操作を明示するようにしました。既存の対応済みルートや学習データは変更していません。'),
     _ReleaseEntry(date: '2026-11-15', category: 'CLEANUP', title: '不要なプログラミング学習ページを撤去',
