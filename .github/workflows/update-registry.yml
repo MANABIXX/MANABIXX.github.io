@@ -24,6 +24,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install PDF text extraction tools
+        run: sudo apt-get update && sudo apt-get install -y poppler-utils
       - name: Install dependencies
         run: npm install
       - name: Check for a newer content registry
