@@ -2,6 +2,9 @@ import 'dart:convert';
 
 import 'package:material_ui/material_ui.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
+
+const _motivationBlogUrl = 'https://manabixx.github.io/blog/';
 
 class ToYouPage extends StatelessWidget {
   const ToYouPage({super.key});
@@ -16,6 +19,25 @@ class ToYouPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(title: const Text('君へ')),
+    bottomNavigationBar: SafeArea(
+      minimum: const EdgeInsets.fromLTRB(20, 8, 20, 16),
+      child: OutlinedButton.icon(
+        onPressed: () async {
+          final opened = await launchUrl(
+            Uri.parse(_motivationBlogUrl),
+            mode: LaunchMode.externalApplication,
+          );
+          if (!opened && context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('記事サイトを開けませんでした。')),
+            );
+          }
+        },
+        icon: const Icon(Icons.open_in_new_rounded),
+        label: const Text('学習習慣・モチベーション記事を読む'),
+        style: OutlinedButton.styleFrom(minimumSize: const Size(0, 52)),
+      ),
+    ),
     body: FutureBuilder<List<Map<String, dynamic>>>(
       future: _load(),
       builder: (context, snapshot) {

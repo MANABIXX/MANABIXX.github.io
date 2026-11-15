@@ -8,6 +8,7 @@ import 'package:manabixx_web/kosen_practice.dart';
 import 'package:manabixx_web/knowledge_library.dart';
 import 'package:manabixx_web/foundation_roadmap.dart';
 import 'package:manabixx_web/main.dart';
+import 'package:manabixx_web/to_you.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> prepareViewport(WidgetTester tester) async {
@@ -441,4 +442,9 @@ void main() {
     expect(find.byType(NavigationBar), findsOneWidget);
   });
 
+
+  testWidgets('君へページから独立したモチベーション記事サイトへ移動する導線を表示する', (tester) async {
+    await tester.pumpWidget(const MaterialApp(home: ToYouPage()));
+    expect(find.text('学習習慣・モチベーション記事を読む'), findsOneWidget);
+  });
 }
