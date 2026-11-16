@@ -6,6 +6,7 @@ import 'package:manabixx_web/kosen_practice.dart';
 import 'package:manabixx_web/knowledge_library.dart';
 import 'package:manabixx_web/foundation_roadmap.dart';
 import 'package:manabixx_web/to_you.dart';
+import 'package:manabixx_web/workspace.dart';
 import 'package:manabixx_web/release_notes.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -99,6 +100,8 @@ class ManabiXXApp extends StatelessWidget {
         '/practice/foundation-training': (_) => const _PasswordGatePage(password: 'haru', title: '下積みモード', child: _ModeHomePage(mode: 'foundation')),
         '/practice/foundation-training/study': (_) => const _PasswordGatePage(password: 'haru', title: '下積みモード', child: FoundationPracticePage(dataPath: '/data/foundation-training.json', title: '下積みモード', includeAllSubjects: true, additionalDataPaths: ['/data/questions.json', '/data/public-exam.json'])),
         '/records': (_) => const _ProgressPage(),
+        '/workspace': (_) => const WorkspacePage(),
+        '/workspace/': (_) => const WorkspacePage(),
         '/to-you': (_) => const ToYouPage(),
         '/releases': (_) => const ReleaseNotesPage(),
         '/release-notes': (_) => const ReleaseNotesPage(),
@@ -731,6 +734,8 @@ class _StudyMenu extends StatelessWidget {
         subtitle: '理科・社会を分野別に確認', onTap: () => onSelect('/summary')),
       _MenuTile(icon: Icons.assessment_outlined, title: '模試・予想問題',
         subtitle: '5教科の総合演習', onTap: () => onSelect('/mock-exam')),
+      _MenuTile(icon: Icons.event_note_rounded, title: '学習ワークスペース',
+        subtitle: '計画・集中タイマー・暗記カード・メモ', onTap: () => onSelect('/workspace')),
       _MenuTile(icon: Icons.lock_outline_rounded, title: '制作者専用モード', subtitle: '認証制・5教科の実戦演習', onTap: () => onSelect('/practice/kosen')),
       _MenuTile(icon: Icons.repeat_rounded, title: '下積みモード', subtitle: '5教科の基礎反復と苦手問題の復習', onTap: () => onSelect('/practice/foundation-training')),
        _MenuTile(icon: Icons.history_rounded, title: '更新履歴', subtitle: '直近5回の変更内容', onTap: () => onSelect('/releases')),

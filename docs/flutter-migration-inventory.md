@@ -1,6 +1,6 @@
 # Flutter Web migration inventory
 
-Last inspected: 2026-11-15 (JST)  
+Last inspected: 2026-11-16 (JST)  
 Repository: `MANABIXX/MANABIXX.github.io`  
 Production branch: `main`  
 Production URL: https://manabixx.github.io/ (Flutter Web at Pages root)
@@ -23,7 +23,7 @@ Correction (2026-11-14): `main` の `.github/workflows/pages.yml` は `flutter/b
 | Motivation | legacy `src/routes/motivation/` and `motivation.html`; Flutter `/to-you` message screen; separate `MANABIXX/blog` Hugo site | Flutter keeps the short daily-message experience and links to the independent Hugo Extended + Hugo Theme Stack v4 site at `https://manabixx.github.io/blog/`. Long-form motivation/study-habit articles are managed in that repository, not duplicated into the Flutter app. The blog repository remains read-only during morning runs |
 | Release notes | `src/routes/releases/`; legacy `release-notes.html`; Flutter `/releases` and `/release-notes` | Flutter release-note screen is implemented; full historical entry parity and archive migration remain pending |
 | Summary / notes | `src/routes/summary/`; legacy `summary.html`; `static/data/summary-foundation.json` | Flutter `/summary` implemented with 450 records; visual note/library parity pending |
-| Workspace | `src/routes/workspace/` | Not started |
+| Workspace | `src/routes/workspace/` | Flutter `/workspace` implemented: daily task list, 15/25/45/60-minute focus timer, question-backed flashcards, and daily notes. Uses the legacy local persistence keys; cross-device sync is not provided. Widget tests added; browser/mobile parity still needs production verification |
 | Private content | legacy `private.html`, `n-exclusive.html`, `s-exclusive.html`; matching JSON | Not started; audit access boundary first |
 | Shitadumi mode | `shitadumi/` static app, articles, mock exams, opinion, PWA and release notes | Not started |
 | PWA / offline | Flutter service worker, root resource manifest, mode-specific manifests | Flutter runtime and nine explicitly approved route datasets are precached; weekly Periodic Background Sync is browser-dependent |
@@ -52,7 +52,8 @@ Correction (2026-11-14): `main` の `.github/workflows/pages.yml` は `flutter/b
 - Stage 1: isolated Flutter app scaffold and CI validation workflow.
 - Stage 2: Flutter question-practice foundation, public exam, summary/foundation confirmation, five-subject mock practice, knowledge library, and a separate unlinked additional-practice route. Existing JSON data is loaded directly; practice selection, four-choice answering, explanations, results, library search and filters are implemented.
 - Four public datasets audited: 1,180 foundation questions, 323 public-exam questions, 450 summary questions, and 100 mock questions. No duplicate IDs or malformed four-choice records were found in the inspected datasets.
-- Still not migrated or not yet parity-verified: full motivation archive, release-note history parity, workspace, private-content access boundary, Shitadumi app, full home/dashboard, full learning-history migration, and full browser/mobile/accessibility parity.
+- Still not migrated or not yet parity-verified: full motivation archive, release-note history parity, private-content access boundary, Shitadumi app, full home/dashboard, full learning-history migration, and full browser/mobile/accessibility parity.
+- 2026-11-16: `/workspace` was migrated with task, timer, flashcard and note functions. It reuses the previous local persistence keys; cross-device sync remains unsupported.
 - 2026-11-15: unsupported Flutter routes now render an explicit not-found screen with a return-to-home action; the route fallback is covered by a widget test.
 - Production deployment: Flutter Web root deployment is active on `main`; the latest observed Pages workflow for the migration branch succeeded, but the open PR #19 is not mergeable and its result is not evidence of full feature parity.
 

@@ -4,6 +4,8 @@ class ReleaseNotesPage extends StatelessWidget {
   const ReleaseNotesPage({super.key});
 
   static const _items = <_ReleaseEntry>[
+    _ReleaseEntry(date: '2026-11-16', category: 'WORKSPACE', title: '学習ワークスペースをFlutterへ移植',
+      body: '学習計画、15・25・45・60分の集中タイマー、既存の4択問題を使う暗記カード、日付ごとの学習メモを追加。旧ワークスペースと同じ端末内保存キーを引き継ぎ、学習計画・メモ・集中回数を保持します。端末間同期は行いません。'),
     _ReleaseEntry(date: '2026-11-15', category: 'BUILD / CI', title: 'PDF教材同期とAndroidリリースのCIを修正',
       body: 'PDF教材の同期ジョブにpdftotextを追加し、PDFから文字を抽出できるようにしました。Android APKのGitHub Releaseでは、リリースノートを一時ファイル経由で渡すように変更。教材データやアプリの学習履歴形式は変更していません。'),
     _ReleaseEntry(date: '2026-11-15', category: 'ROUTING', title: '未対応URLの案内とホーム復帰を追加',
