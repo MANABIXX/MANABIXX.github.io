@@ -52,7 +52,9 @@ class _LegacyBackupPageState extends State<LegacyBackupPage> {
         setState(() { _message = 'バックアップに失敗しました: $error'; });
       }
     } finally {
-      if (mounted) setState(() { _busy = false; });
+      if (mounted) {
+        setState(() { _busy = false; });
+      }
     }
   }
 
