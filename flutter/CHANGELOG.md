@@ -92,3 +92,9 @@
 ## 2026-11-16（MANABIXXブログへの統合）
 - アプリ内の「君へ」メッセージ画面をMANABIXXブログへの案内ページへ変更。
 - ホーム・学習メニュー・専用モードの入口表示を「MANABIXXブログ」に統一し、ブログ記事は独立サイトで読む構成に整理。
+
+
+## 2026-11-16（Rust・Leptos画面移行）
+- 「君へ」画面をFlutterのDart実装からRust＋LeptosのWebAssembly画面へ移行。
+- Flutterはアプリ全体と画面遷移を担当し、ブログ案内UIはLeptos側で描画。
+- `/knowledge/?view=blog` で知識ライブラリとブログ案内を同じWASMアプリから切り替える構成に変更。
