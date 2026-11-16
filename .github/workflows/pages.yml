@@ -73,16 +73,17 @@ jobs:
           targets: wasm32-unknown-unknown
       - name: Install Trunk
         run: cargo install trunk --locked
-      - name: Build SQLite knowledge database
-        run: python scripts/build-knowledge-db.py
-      - name: Build Leptos knowledge library
+      - name: Build SQLite WASM bridge
         working-directory: knowledge-ui
         run: |
           mkdir -p public
           cp ../data/knowledge-base.json public/knowledge-base.json
           cp ../data/summary-assets.json public/summary-assets.json
-          cp ../data/knowledge.sqlite public/knowledge.sqlite
-          trunk build --release --public-url /knowledge/
+          npm install --no-audit --no-fund
+          npm run build:sqlite
+      - name: Build Leptos knowledge library
+        working-directory: knowledge-ui
+        run: trunk build --release --public-url /knowledge/
       - name: Assemble Leptos knowledge library
         run: |
           mkdir -p flutter/build/web/knowledge
