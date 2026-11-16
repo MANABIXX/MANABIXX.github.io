@@ -62,9 +62,9 @@ class _WorkspacePageState extends State<WorkspacePage> {
       final prefs = await SharedPreferences.getInstance();
       final raw = prefs.getString(_tasksKey);
       final rows = raw == null ? <dynamic>[] : jsonDecode(raw) as List<dynamic>;
-      final note = prefs.getString('manabixx-planner-note-${_today}') ?? '';
+      final note = prefs.getString('manabixx-planner-note-$_today') ?? '';
       final count = int.tryParse(
-            prefs.getString('manabixx-focus-count-${_today}') ?? '',
+            prefs.getString('manabixx-focus-count-$_today') ?? '',
           ) ??
           0;
       if (!mounted) return;
@@ -161,7 +161,7 @@ class _WorkspacePageState extends State<WorkspacePage> {
   Future<void> _saveNote() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(
-      'manabixx-planner-note-${_today}',
+      'manabixx-planner-note-$_today',
       _noteController.text,
     );
     if (mounted) setState(() => _noteSaved = true);
@@ -170,7 +170,7 @@ class _WorkspacePageState extends State<WorkspacePage> {
   Future<void> _saveFocusCount() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(
-      'manabixx-focus-count-${_today}',
+      'manabixx-focus-count-$_today',
       _focusCount.toString(),
     );
   }
@@ -443,7 +443,7 @@ class _WorkspacePageState extends State<WorkspacePage> {
                     children: [
                       Expanded(
                         child: DropdownButtonFormField<String>(
-                          value: _subject,
+                          initialValue: _subject,
                           decoration: const InputDecoration(
                               labelText: '教科', border: OutlineInputBorder()),
                           items: const ['理科', '社会', '数学', '英語', '国語', 'その他']
@@ -457,14 +457,14 @@ class _WorkspacePageState extends State<WorkspacePage> {
                       const SizedBox(width: 10),
                       Expanded(
                         child: DropdownButtonFormField<int>(
-                          value: _minutes,
+                          initialValue: _minutes,
                           decoration: const InputDecoration(
                               labelText: '予定時間',
                               border: OutlineInputBorder()),
                           items: const [15, 25, 45, 60]
                               .map((minutes) => DropdownMenuItem(
                                   value: minutes,
-                                  child: Text('${minutes}分')))
+                                  child: Text('$minutes分')))
                               .toList(),
                           onChanged: (value) => _setMinutes(value ?? 25),
                         ),
@@ -584,7 +584,7 @@ class _WorkspacePageState extends State<WorkspacePage> {
                     spacing: 8,
                     children: [15, 25, 45, 60]
                         .map((minutes) => ChoiceChip(
-                              label: Text('${minutes}分'),
+                              label: Text('$minutes分'),
                               selected: _minutes == minutes,
                               onSelected: (_) => _setMinutes(minutes),
                             ))
