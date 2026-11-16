@@ -9,8 +9,8 @@ class ReleaseNotesPage extends StatelessWidget {
     _ReleaseEntry(date: '2026-11-16', category: 'REBUILD / RUST', title: 'MANABIXX 2.0の共通学習基盤を構築',
       body: 'Flutterの既存画面と学習データを維持したまま、Rust共通基盤を追加。4択問題の検証、解答記録、復習間隔の計算を共通化し、既存JSON形式との互換テストを追加しました。SQLiteの学習データ保存スキーマと、既存SharedPreferencesデータを消さずに取り込むための移行計画も追加。段階的再構築のため、本番画面・保存先はまだ切り替えていません。'),
 
-    _ReleaseEntry(date: '2026-11-16', category: 'BLOG', title: '「君へ」画面をRust・Leptosで再構築',
-      body: '「君へ」画面をFlutterのDart実装からRust＋LeptosのWebAssembly画面へ移行。Flutterは画面遷移とアプリ全体を担当し、Leptos画面から独立したMANABIXXブログへ移動できる構成にしました。'),
+    _ReleaseEntry(date: '2026-11-16', category: 'BLOG', title: 'MANABIXXブログへの導線を整理',
+      body: 'アプリ内のブログ入口を独立したMANABIXX Blogへ接続。ブログ本体の生成・記事編集は別リポジトリのHexo＋hexo-adminで管理し、Flutterアプリとは分離しています。'),
     _ReleaseEntry(date: '2026-11-16', category: 'KNOWLEDGE / WASM', title: '要点まとめをLeptos・SQLite構成へ移行',
       body: '要点まとめをRust＋LeptosのWebAssemblyアプリとして構築し、知識データの検索基盤にSQLite-Wasmを導入。Flutterの学習アプリ内から利用できるように統合しました。GitHub Pagesは静的配信のため、SQLiteデータベース自体はブラウザー側で利用します。公開後の実機表示・検索操作は別途確認が必要です。'),
     _ReleaseEntry(date: '2026-11-16', category: 'WORKSPACE', title: '学習ワークスペースをFlutterへ移植',
