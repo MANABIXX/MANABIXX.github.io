@@ -4,8 +4,8 @@ class ReleaseNotesPage extends StatelessWidget {
   const ReleaseNotesPage({super.key});
 
   static const _items = <_ReleaseEntry>[
-    _ReleaseEntry(date: '2026-11-16', category: 'BLOG', title: '「君へ」をMANABIXXブログへ統合',
-      body: 'アプリ内の「君へ」メッセージ画面をMANABIXXブログへの案内ページに変更。ホーム・学習メニュー・専用モードの表示名も「MANABIXXブログ」に統一し、記事は独立したブログで読む構成に整理しました。'),
+    _ReleaseEntry(date: '2026-11-16', category: 'BLOG', title: '「君へ」画面をRust・Leptosで再構築',
+      body: '「君へ」画面をFlutterのDart実装からRust＋LeptosのWebAssembly画面へ移行。Flutterは画面遷移とアプリ全体を担当し、Leptos画面から独立したMANABIXXブログへ移動できる構成にしました。'),
     _ReleaseEntry(date: '2026-11-16', category: 'KNOWLEDGE / WASM', title: '要点まとめをLeptos・SQLite構成へ移行',
       body: '要点まとめをRust＋LeptosのWebAssemblyアプリとして構築し、知識データの検索基盤にSQLite-Wasmを導入。Flutterの学習アプリ内から利用できるように統合しました。GitHub Pagesは静的配信のため、SQLiteデータベース自体はブラウザー側で利用します。公開後の実機表示・検索操作は別途確認が必要です。'),
     _ReleaseEntry(date: '2026-11-16', category: 'WORKSPACE', title: '学習ワークスペースをFlutterへ移植',
