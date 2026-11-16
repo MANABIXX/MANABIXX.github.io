@@ -67,6 +67,19 @@ jobs:
       - name: Build Flutter as the Pages root app
         working-directory: flutter
         run: flutter build web --release --wasm --base-href /
+      - name: Build Quartz knowledge library
+        run: |
+          git clone --depth 1 --branch v4 https://github.com/jackyzha0/quartz.git quartz-src
+          cp knowledge/quartz.config.ts quartz-src/quartz.config.ts
+          cp knowledge/quartz.layout.ts quartz-src/quartz.layout.ts
+          npm ci --prefix quartz-src
+          node scripts/generate-quartz-summary.mjs quartz-src/content
+          cd quartz-src
+          npx quartz build -d content -o public
+          cd ..
+          mkdir -p flutter/build/web/summary
+          cp -a quartz-src/public/. flutter/build/web/summary/
+          test -s flutter/build/web/summary/index.html
       - name: Assemble complete offline root app
         run: npm run assemble:flutter-root && npm run validate:flutter-root
       - uses: actions/configure-pages@v5
