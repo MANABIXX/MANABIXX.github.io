@@ -1,41 +1,39 @@
-import 'package:material_ui/material_ui.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'dart:ui_web' as ui_web;
 
-class LeptosKnowledgePage extends StatelessWidget {
+import 'package:material_ui/material_ui.dart';
+import 'package:web/web.dart' as web;
+
+class LeptosKnowledgePage extends StatefulWidget {
   const LeptosKnowledgePage({super.key});
 
-  Future<void> _open(BuildContext context) async {
-    final uri = Uri.base.resolve('/knowledge/');
-    final ok = await launchUrl(uri, mode: LaunchMode.platformDefault);
-    if (!ok && context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('知識ライブラリを開けませんでした。')),
-      );
+  @override
+  State<LeptosKnowledgePage> createState() => _LeptosKnowledgePageState();
+}
+
+class _LeptosKnowledgePageState extends State<LeptosKnowledgePage> {
+  static const _viewType = 'manabixx-leptos-knowledge-library';
+  static bool _registered = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (!_registered) {
+      ui_web.platformViewRegistry.registerViewFactory(_viewType, (int viewId) {
+        final frame = web.HTMLIFrameElement()
+          ..src = '/knowledge/'
+          ..title = 'MANABIXX 知識ライブラリ'
+          ..style.border = '0'
+          ..style.width = '100%'
+          ..style.height = '100%';
+        return frame;
+      });
+      _registered = true;
     }
   }
 
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(title: const Text('要点まとめ')),
-    body: ListView(
-      padding: const EdgeInsets.all(20),
-      children: [
-        const Text('知識をつなげて理解する',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800)),
-        const SizedBox(height: 8),
-        const Text('RustとLeptosで構築した知識ライブラリ。理科・社会の単元検索、分野別の整理、重要事項の確認ができます。'),
-        const SizedBox(height: 20),
-        Card(child: ListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
-          leading: Icon(Icons.account_tree_outlined, size: 32,
-            color: Theme.of(context).colorScheme.primary),
-          title: const Text('知識ライブラリを開く',
-            style: TextStyle(fontWeight: FontWeight.w800)),
-          subtitle: const Text('全文検索・理科・社会・重要項目'),
-          trailing: const Icon(Icons.open_in_new),
-          onTap: () => _open(context),
-        )),
-      ],
-    ),
+    body: const HtmlElementView(viewType: _viewType),
   );
 }
