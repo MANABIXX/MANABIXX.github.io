@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:material_ui/material_ui.dart';
 import 'package:manabixx_web/foundation_practice.dart';
 import 'package:manabixx_web/kosen_practice.dart';
-import 'package:manabixx_web/quartz_summary_page.dart';
+import 'package:manabixx_web/leptos_knowledge_page.dart';
 import 'package:manabixx_web/foundation_roadmap.dart';
 import 'package:manabixx_web/to_you.dart';
 import 'package:manabixx_web/workspace.dart';
@@ -111,10 +111,10 @@ class ManabiXXApp extends StatelessWidget {
           dataPath: '/data/public-exam.json', title: '公立高校入試問題', includeAllSubjects: true),
         '/exam/': (_) => const FoundationPracticePage(
           dataPath: '/data/public-exam.json', title: '公立高校入試問題', includeAllSubjects: true),
-        '/summary': (_) => const QuartzSummaryPage(initialSubject: 'science'),
-        '/summary/': (_) => const QuartzSummaryPage(initialSubject: 'science'),
-        '/summary/science': (_) => const QuartzSummaryPage(initialSubject: 'science'),
-        '/summary/science/': (_) => const QuartzSummaryPage(initialSubject: 'science'),
+        '/summary': (_) => const LeptosKnowledgePage(),
+        '/summary/': (_) => const LeptosKnowledgePage(),
+        '/summary/science': (_) => const LeptosKnowledgePage(),
+        '/summary/science/': (_) => const LeptosKnowledgePage(),
         '/summary/social': (_) => const QuartzSummaryPage(initialSubject: 'social'),
         '/summary/social/': (_) => const QuartzSummaryPage(initialSubject: 'social'),
         '/mock-exam': (_) => const FoundationPracticePage(
