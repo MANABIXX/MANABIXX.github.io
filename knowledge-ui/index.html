@@ -8,6 +8,7 @@
     <title>知識ライブラリ | MANABIXX</title>
     <link data-trunk rel="css" href="style.css" />
     <link data-trunk rel="copy-dir" href="public" />
+    <script>window.isBlogView = () => new URLSearchParams(location.search).get("view") === "blog";</script>
     <script type="module" src="sqlite-bridge.js"></script>
     <link data-trunk rel="rust" href="Cargo.toml" />
   </head>
