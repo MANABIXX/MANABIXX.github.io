@@ -65,7 +65,7 @@ void main() {
       (tester) async {
     tester.view.physicalSize = const Size(390, 844);
     tester.view.devicePixelRatio = 1;
-    await tester.pumpWidget(MaterialApp(
+    await tester.pumpWidget(const MaterialApp(
       home: WorkspacePage(loadQuestions: _sampleQuestions),
     ));
     await tester.pumpAndSettle();
