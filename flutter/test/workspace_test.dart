@@ -47,7 +47,10 @@ void main() {
     final stored = jsonDecode(prefs.getString('manabixx-planner-tasks-v1')!);
     expect(stored.first['title'], '理科の電流を10問解く');
 
-    await tester.tap(find.text('学習メモ'));
+    final notesTab = find.text('学習メモ');
+    await tester.ensureVisible(notesTab);
+    await tester.pumpAndSettle();
+    await tester.tap(notesTab);
     await tester.pumpAndSettle();
     await tester.enterText(
         find.byKey(const Key('workspace-note-input')), 'オームの法則を復習する');
