@@ -4,6 +4,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:manabixx_web/foundation_practice.dart';
 import 'package:manabixx_web/kosen_practice.dart';
 import 'package:manabixx_web/leptos_knowledge_page.dart';
+import 'package:manabixx_web/legacy_backup.dart';
 import 'package:manabixx_web/foundation_roadmap.dart';
 import 'package:manabixx_web/to_you.dart';
 import 'package:manabixx_web/workspace.dart';
@@ -100,6 +101,7 @@ class ManabiXXApp extends StatelessWidget {
         '/practice/foundation-training': (_) => const _PasswordGatePage(password: 'haru', title: '下積みモード', child: _ModeHomePage(mode: 'foundation')),
         '/practice/foundation-training/study': (_) => const _PasswordGatePage(password: 'haru', title: '下積みモード', child: FoundationPracticePage(dataPath: '/data/foundation-training.json', title: '下積みモード', includeAllSubjects: true, additionalDataPaths: ['/data/questions.json', '/data/public-exam.json'])),
         '/records': (_) => const _ProgressPage(),
+        '/settings/data-export': (_) => const LegacyBackupPage(),
         '/workspace': (_) => const WorkspacePage(),
         '/workspace/': (_) => const WorkspacePage(),
         '/to-you': (_) => const ToYouPage(),
@@ -734,6 +736,7 @@ class _StudyMenu extends StatelessWidget {
         subtitle: '理科・社会を分野別に確認', onTap: () => onSelect('/summary')),
       _MenuTile(icon: Icons.assessment_outlined, title: '模試・予想問題',
         subtitle: '5教科の総合演習', onTap: () => onSelect('/mock-exam')),
+      _MenuTile(icon: Icons.backup_outlined, title: '学習データのバックアップ', subtitle: '既存の履歴・計画・メモをJSONに保存', onTap: () => onSelect('/settings/data-export')),
       _MenuTile(icon: Icons.event_note_rounded, title: '学習ワークスペース',
         subtitle: '計画・集中タイマー・暗記カード・メモ', onTap: () => onSelect('/workspace')),
       _MenuTile(icon: Icons.lock_outline_rounded, title: '制作者専用モード', subtitle: '認証制・5教科の実戦演習', onTap: () => onSelect('/practice/kosen')),
