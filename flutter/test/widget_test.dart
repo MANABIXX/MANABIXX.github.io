@@ -443,8 +443,8 @@ void main() {
   });
 
 
-  testWidgets('君へページから独立したモチベーション記事サイトへ移動する導線を表示する', (tester) async {
+  testWidgets('MANABIXXブログへの案内を表示する', (tester) async {
     await tester.pumpWidget(const MaterialApp(home: ToYouPage()));
-    expect(find.text('学習習慣・モチベーション記事を読む'), findsOneWidget);
+    expect(find.text('MANABIXXブログを開く'), findsOneWidget);
   });
 }
