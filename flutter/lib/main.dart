@@ -344,7 +344,7 @@ class _HomeDashboardState extends State<_HomeDashboard> {
       _heading('学習メニュー', '目的に合わせて、次の一歩を選ぼう。'),
       _entry(Icons.menu_book_outlined, '要点まとめ', '理科・社会を参考書のように整理', () => Navigator.of(context).pushNamed('/summary')),
       _entry(Icons.assignment_outlined, '模試・予想問題', '5教科をまとめて実戦チェック', () => Navigator.of(context).pushNamed('/mock-exam')),
-      _entry(Icons.mail_outline_rounded, '君へ', '勉強の途中で読みたいメッセージ', () => Navigator.of(context).pushNamed('/to-you')),
+      _entry(Icons.mail_outline_rounded, 'MANABIXXブログ', '学習習慣・モチベーション記事を読む', () => Navigator.of(context).pushNamed('/to-you')),
       const SizedBox(height: 20),
       _heading('2027年度・高校入試情報', '栃木県教育委員会などの公開資料。最新情報は必ず公式資料で確認してください。'),
       _news('県立高校入試の日程・要項', '学力検査は2027年2月24日。特色選抜の学校独自検査は2月25日・26日。', '県教育委員会・2026年10月16日更新', () => _openExternal(_prefecture)),
@@ -582,7 +582,7 @@ class _ModeHomePageState extends State<_ModeHomePage> {
           OutlinedButton.icon(
             onPressed: () => Navigator.of(context).pushNamed('/to-you'),
             icon: const Icon(Icons.mail_outline_rounded),
-            label: const Text('君へ'),
+            label: const Text('MANABIXXブログ'),
           ),
           if (_kosen) ...[
             const SizedBox(height: 10),
@@ -728,8 +728,8 @@ class _StudyMenu extends StatelessWidget {
         subtitle: '5教科の基礎をテンポよく', onTap: () => onSelect('/foundation')),
       _MenuTile(icon: Icons.school_outlined, title: '公立高校入試問題',
         subtitle: '入試形式で実戦演習', onTap: () => onSelect('/exam')),
-      _MenuTile(icon: Icons.mail_outline_rounded, title: '君へ',
-        subtitle: '受験の日々に寄り添うメッセージ', onTap: () => onSelect('/to-you')),
+      _MenuTile(icon: Icons.mail_outline_rounded, title: 'MANABIXXブログ',
+        subtitle: '学習・モチベーション記事を読む', onTap: () => onSelect('/to-you')),
       _MenuTile(icon: Icons.menu_book_outlined, title: '要点まとめ',
         subtitle: '理科・社会を分野別に確認', onTap: () => onSelect('/summary')),
       _MenuTile(icon: Icons.assessment_outlined, title: '模試・予想問題',
