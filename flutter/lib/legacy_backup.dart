@@ -1,5 +1,7 @@
 import 'dart:convert';
-import 'dart:html' as html;
+import 'dart:js_interop';
+
+import 'package:web/web.dart' as web;
 
 import 'package:material_ui/material_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,19 +32,25 @@ class _LegacyBackupPageState extends State<LegacyBackupPage> {
         'entries': entries,
       };
       final json = const JsonEncoder.withIndent('  ').convert(backup);
-      final uri = Uri.dataFromString(json,
-        mimeType: 'application/json', encoding: utf8);
-      final anchor = html.AnchorElement(href: uri.toString())
-        ..download = 'manabixx-backup-${DateTime.now().toIso8601String().substring(0, 10)}.json'
-        ..style.display = 'none';
-      html.document.body?.append(anchor);
+      final blob = web.Blob(
+        <JSAny>[json.toJS].toJS,
+        web.BlobPropertyBag(type: 'application/json'),
+      );
+      final objectUrl = web.URL.createObjectURL(blob);
+      final anchor = web.document.createElement('a') as web.HTMLAnchorElement
+        ..href = objectUrl
+        ..download = 'manabixx-backup-${DateTime.now().toIso8601String().substring(0, 10)}.json';
+      web.document.body?.append(anchor);
       anchor.click();
       anchor.remove();
+      web.URL.revokeObjectURL(objectUrl);
       if (mounted) setState(() {
         _message = '${entries.length}件の保存データをJSONに書き出しました。元データは削除していません。';
       });
     } catch (error) {
-      if (mounted) setState(() { _message = 'バックアップに失敗しました: $error'; });
+      if (mounted) {
+        setState(() { _message = 'バックアップに失敗しました: $error'; });
+      }
     } finally {
       if (mounted) setState(() { _busy = false; });
     }
