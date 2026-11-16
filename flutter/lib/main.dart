@@ -115,8 +115,8 @@ class ManabiXXApp extends StatelessWidget {
         '/summary/': (_) => const LeptosKnowledgePage(),
         '/summary/science': (_) => const LeptosKnowledgePage(),
         '/summary/science/': (_) => const LeptosKnowledgePage(),
-        '/summary/social': (_) => const QuartzSummaryPage(initialSubject: 'social'),
-        '/summary/social/': (_) => const QuartzSummaryPage(initialSubject: 'social'),
+        '/summary/social': (_) => const LeptosKnowledgePage(),
+        '/summary/social/': (_) => const LeptosKnowledgePage(),
         '/mock-exam': (_) => const FoundationPracticePage(
           dataPath: '/data/mock-exams.json', title: '模試・予想問題', includeAllSubjects: true),
         '/mock-exam/': (_) => const FoundationPracticePage(
