@@ -4,7 +4,7 @@ const CACHE_PREFIX = 'manabixx-offline-';
 const CACHE_NAME = CACHE_PREFIX + APP_VERSION + '-' + DATA_VERSION;
 const DATA_MANIFEST = '/offline-data-manifest.json';
 const APP_MANIFEST = '/offline-app-manifest.json';
-const APP_SHELL = ['/', '/index.html', '/404.html', '/manifest.webmanifest', DATA_MANIFEST, APP_MANIFEST];
+const APP_SHELL = ['/', '/index.html', '/404.html', '/manifest.webmanifest', '/summary/', '/summary/index.html', DATA_MANIFEST, APP_MANIFEST];
 
 async function fetchInto(cache, url) {
   const response = await fetch(url, { cache: 'no-store' });
