@@ -445,6 +445,6 @@ void main() {
 
   testWidgets('MANABIXXブログへの案内を表示する', (tester) async {
     await tester.pumpWidget(const MaterialApp(home: ToYouPage()));
-    expect(find.text('MANABIXXブログを開く'), findsOneWidget);
+    expect(find.text('MANABIXXブログはWeb版で利用できます。'), findsOneWidget);
   });
 }
