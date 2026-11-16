@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:material_ui/material_ui.dart';
 import 'package:manabixx_web/foundation_practice.dart';
 import 'package:manabixx_web/kosen_practice.dart';
-import 'package:manabixx_web/knowledge_library.dart';
+import 'package:manabixx_web/quartz_summary_page.dart';
 import 'package:manabixx_web/foundation_roadmap.dart';
 import 'package:manabixx_web/to_you.dart';
 import 'package:manabixx_web/workspace.dart';
@@ -111,12 +111,12 @@ class ManabiXXApp extends StatelessWidget {
           dataPath: '/data/public-exam.json', title: '公立高校入試問題', includeAllSubjects: true),
         '/exam/': (_) => const FoundationPracticePage(
           dataPath: '/data/public-exam.json', title: '公立高校入試問題', includeAllSubjects: true),
-        '/summary': (_) => const KnowledgeLibraryPage(title: '要点まとめ', initialSubject: 'science'),
-        '/summary/': (_) => const KnowledgeLibraryPage(title: '要点まとめ', initialSubject: 'science'),
-        '/summary/science': (_) => const KnowledgeLibraryPage(title: '理科の要点まとめ', initialSubject: 'science'),
-        '/summary/science/': (_) => const KnowledgeLibraryPage(title: '理科の要点まとめ', initialSubject: 'science'),
-        '/summary/social': (_) => const KnowledgeLibraryPage(title: '社会の要点まとめ', initialSubject: 'social'),
-        '/summary/social/': (_) => const KnowledgeLibraryPage(title: '社会の要点まとめ', initialSubject: 'social'),
+        '/summary': (_) => const QuartzSummaryPage(initialSubject: 'science'),
+        '/summary/': (_) => const QuartzSummaryPage(initialSubject: 'science'),
+        '/summary/science': (_) => const QuartzSummaryPage(initialSubject: 'science'),
+        '/summary/science/': (_) => const QuartzSummaryPage(initialSubject: 'science'),
+        '/summary/social': (_) => const QuartzSummaryPage(initialSubject: 'social'),
+        '/summary/social/': (_) => const QuartzSummaryPage(initialSubject: 'social'),
         '/mock-exam': (_) => const FoundationPracticePage(
           dataPath: '/data/mock-exams.json', title: '模試・予想問題', includeAllSubjects: true),
         '/mock-exam/': (_) => const FoundationPracticePage(
