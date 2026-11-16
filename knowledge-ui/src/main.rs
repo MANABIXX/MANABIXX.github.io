@@ -21,7 +21,7 @@ struct Entry {
 }
 
 #[component]
-fn App() -> impl IntoView {
+fn KnowledgeApp() -> impl IntoView {
     let (records, set_records) = signal(Vec::<Entry>::new());
     let (query, set_query) = signal(String::new());
     let (subject, set_subject) = signal(String::from("all"));
@@ -102,6 +102,44 @@ fn App() -> impl IntoView {
             </section>
             <footer class="footer">"MANABIXX Knowledge Library · Rust / Leptos / SQLite WebAssembly"</footer>
         </main>
+    }
+}
+
+#[wasm_bindgen]
+extern "C" {
+    #[wasm_bindgen(js_namespace = window, js_name = isBlogView)]
+    fn is_blog_view() -> bool;
+}
+
+#[component]
+fn BlogApp() -> impl IntoView {
+    view! {
+        <main class="shell">
+            <header class="topbar">
+                <a class="brand" href="https://manabixx.github.io/">MANABIXX</a>
+                <a class="back" href="https://manabixx.github.io/">"← 学習アプリへ戻る"</a>
+            </header>
+            <section class="hero">
+                <div class="eyebrow">MANABIXX / BLOG · RUST + LEPTOS</div>
+                <h1>"学びを続けるための読みもの。"</h1>
+                <p>"学習習慣・勉強法・モチベーションの記事を、MANABIXXブログで。"</p>
+            </section>
+            <section class="entry">
+                <h2>"MANABIXXブログ"</h2>
+                <p>"学習を続けるヒントや、日々の学びに役立つ記事を掲載しています。"</p>
+                <a class="filter active" href="https://manabixx.github.io/blog/" target="_blank" rel="noopener noreferrer">"MANABIXXブログを開く ↗"</a>
+            </section>
+            <footer class="footer">"MANABIXX BLOG · Rust / Leptos"</footer>
+        </main>
+    }
+}
+
+#[component]
+fn App() -> impl IntoView {
+    if is_blog_view() {
+        view! { <BlogApp/> }.into_view()
+    } else {
+        view! { <KnowledgeApp/> }.into_view()
     }
 }
 
