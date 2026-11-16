@@ -4,6 +4,8 @@ class ReleaseNotesPage extends StatelessWidget {
   const ReleaseNotesPage({super.key});
 
   static const _items = <_ReleaseEntry>[
+    _ReleaseEntry(date: '2026-11-16', category: 'KNOWLEDGE / WASM', title: '要点まとめをLeptos・SQLite構成へ移行',
+      body: '要点まとめをRust＋LeptosのWebAssemblyアプリとして構築し、知識データの検索基盤にSQLite-Wasmを導入。Flutterの学習アプリ内から利用できるように統合しました。GitHub Pagesは静的配信のため、SQLiteデータベース自体はブラウザー側で利用します。公開後の実機表示・検索操作は別途確認が必要です。'),
     _ReleaseEntry(date: '2026-11-16', category: 'WORKSPACE', title: '学習ワークスペースをFlutterへ移植',
       body: '学習計画、15・25・45・60分の集中タイマー、既存の4択問題を使う暗記カード、日付ごとの学習メモを追加。旧ワークスペースと同じ端末内保存キーを引き継ぎ、学習計画・メモ・集中回数を保持します。端末間同期は行いません。'),
     _ReleaseEntry(date: '2026-11-15', category: 'BUILD / CI', title: 'PDF教材同期とAndroidリリースのCIを修正',
