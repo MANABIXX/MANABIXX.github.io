@@ -4,6 +4,8 @@ class ReleaseNotesPage extends StatelessWidget {
   const ReleaseNotesPage({super.key});
 
   static const _items = <_ReleaseEntry>[
+    _ReleaseEntry(date: '2026-11-16', category: 'DATA / MIGRATION', title: '旧学習データのJSONバックアップ機能を追加',
+      body: '再構築中に学習履歴・苦手問題・計画・メモなどを保護できるよう、SharedPreferencesの全キーを端末内でJSONへ書き出す画面を追加。データの送信・削除・保存先切り替えは行わず、既存データを保持したまま移行準備ができます。'),
     _ReleaseEntry(date: '2026-11-16', category: 'REBUILD / RUST', title: 'MANABIXX 2.0の共通学習基盤を構築',
       body: 'Flutterの既存画面と学習データを維持したまま、Rust共通基盤を追加。4択問題の検証、解答記録、復習間隔の計算を共通化し、既存JSON形式との互換テストを追加しました。SQLiteの学習データ保存スキーマと、既存SharedPreferencesデータを消さずに取り込むための移行計画も追加。段階的再構築のため、本番画面・保存先はまだ切り替えていません。'),
 
