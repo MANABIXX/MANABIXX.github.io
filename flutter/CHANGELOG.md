@@ -87,3 +87,8 @@
 ## 2026-11-14（Android APKビルドのフォント準備）
 
 - Android APK用workflowでも、Flutterのanalyze/test/build前にNoto Sans JPのフォントとOFLライセンスを生成するよう修正。Web CIと同じフォント準備スクリプトを使用し、未生成アセットによるanalyze失敗を防止。
+
+
+## 2026-11-16（MANABIXXブログへの統合）
+- アプリ内の「君へ」メッセージ画面をMANABIXXブログへの案内ページへ変更。
+- ホーム・学習メニュー・専用モードの入口表示を「MANABIXXブログ」に統一し、ブログ記事は独立サイトで読む構成に整理。
