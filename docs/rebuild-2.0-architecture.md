@@ -7,7 +7,7 @@ Status: foundation branch; not production cutover.
 - Main learning app: Flutter / Dart remains the cross-platform shell during migration.
 - Shared learning domain: Rust crate at `rust-core/`; single source of truth for question validation, answer records and review scheduling.
 - Knowledge library: Rust + Leptos WebAssembly, using SQLite-Wasm for browser-side query and persistence.
-- Independent blog: separate `MANABIXX/blog` repository. Its current publishing engine is Rust, its interactive search UI is Leptos/WASM, and its build-time search index is SQLite/FTS5. It is not the app's Leptos knowledge library.
+- Independent blog: separate `MANABIXX/blog` repository, rebuilt independently with Hexo + hexo-admin and a dedicated theme. The editor runs locally; GitHub Pages receives generated static files. Blog dependencies, posts and admin functions do not belong in the app repository.
 - Delivery: GitHub Pages remains static hosting. No server-only feature may be represented as private merely because it is noindex or hidden in client UI.
 
 ## Migration rules
