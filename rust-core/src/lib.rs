@@ -144,3 +144,6 @@ mod tests {
         assert_eq!(mastery.incorrect_count, 1);
     }
 }
+
+
+pub mod migration;
