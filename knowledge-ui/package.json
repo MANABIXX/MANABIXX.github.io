@@ -1,0 +1,14 @@
+{
+  "name": "manabixx-knowledge-ui",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:sqlite": "esbuild src/sqlite-bridge.js --bundle --format=esm --target=es2022 --outfile=public/sqlite-bridge.js --loader:.wasm=file --asset-names=[name]"
+  },
+  "dependencies": {
+    "@sqlite.org/sqlite-wasm": "3.54.1-build1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  }
+}
