@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "static" / "data"
 BANKS = (
     "questions.json",
+    "foundation-training.json",
     "public-exam.json",
     "mock-exams.json",
     "summary-foundation.json",
