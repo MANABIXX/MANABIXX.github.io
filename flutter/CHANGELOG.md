@@ -1,5 +1,11 @@
 # Flutter版 更新履歴
 
+## 2026-11-19（Knowledge LibraryのWebビルド修正）
+
+- Rust + LeptosのKnowledge Libraryで、HTML見出し内の中点がRustマクロのトークンとして解釈される問題をASCII表記へ変更。
+- ブログ案内画面と知識ライブラリ画面の切り替えをLeptosの`Show`へ統一し、異なるコンポーネント型を直接`if/else`で返していた型不一致を解消。
+- Flutter本体・既存データ・学習履歴・公開ルートは変更していません。GitHub ActionsでWebビルドとPages反映を再確認します。
+
 ## 2026-11-18（レビュー済み5教科問題バッチの復元）
 
 - 11月17日に取り込まれた5教科各10問・計50問が、日次レジストリ同期によって `static/data/questions.json` から脱落していたため、直前のmain履歴から同じIDの50問だけを復元。
