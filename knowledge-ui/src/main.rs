@@ -120,7 +120,7 @@ fn BlogApp() -> impl IntoView {
                 <a class="back" href="https://manabixx.github.io/">"← 学習アプリへ戻る"</a>
             </header>
             <section class="hero">
-                <div class="eyebrow">MANABIXX / BLOG · RUST + LEPTOS</div>
+                <div class="eyebrow">MANABIXX / BLOG - RUST + LEPTOS</div>
                 <h1>"学びを続けるための読みもの。"</h1>
                 <p>"学習習慣・勉強法・モチベーションの記事を、MANABIXXブログで。"</p>
             </section>
@@ -136,10 +136,13 @@ fn BlogApp() -> impl IntoView {
 
 #[component]
 fn App() -> impl IntoView {
-    if is_blog_view() {
-        view! { <BlogApp/> }.into_view()
-    } else {
-        view! { <KnowledgeApp/> }.into_view()
+    view! {
+        <Show
+            when=move || is_blog_view()
+            fallback=|| view! { <KnowledgeApp/> }
+        >
+            <BlogApp/>
+        </Show>
     }
 }
 
