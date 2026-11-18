@@ -575,8 +575,8 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
                     widget.balancedPerSubject
                         ? '全${_available.length}問から各教科10問ずつ、合計50問を出題します。'
                         : '${_available.length}問から出題できます。',
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
-                      style: Theme.of(context).textTheme.bodySmall),
                   const SizedBox(height: 12),
                   SizedBox(
                     width: double.infinity,
