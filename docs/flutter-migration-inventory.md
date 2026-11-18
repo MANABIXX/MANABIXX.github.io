@@ -1,6 +1,6 @@
 # Flutter Web migration inventory
 
-Last inspected: 2026-11-16 (JST)  
+Last inspected: 2026-11-18 (JST)  
 Repository: `MANABIXX/MANABIXX.github.io`  
 Production branch: `main`  
 Production URL: https://manabixx.github.io/ (Flutter Web at Pages root)
@@ -15,7 +15,7 @@ Correction (2026-11-14): `main` の `.github/workflows/pages.yml` は `flutter/b
 | --- | --- | --- |
 | Home / Study dashboard | SvelteKit `src/routes/+page.svelte`; legacy `index.html` | Flutter migration dashboard implemented; full dashboard parity pending |
 | Unsupported route handling | SvelteKit/legacy routing and static 404 fallback | Flutter now shows a dedicated not-found screen and a working return-to-home action instead of silently displaying the dashboard; full legacy URL mapping remains pending |
-| Question practice | `src/lib/QuestionPractice.svelte`; `static/data/questions.json` | Flutter `/foundation` implemented with 1,180 existing records; local session history and wrong-answer IDs now persist per practice dataset; complete history migration and full UI parity pending |
+| Question practice | `src/lib/QuestionPractice.svelte`; `static/data/questions.json` | Flutter `/foundation` implemented with 1,230 existing records; local session history and wrong-answer IDs now persist per practice dataset; complete history migration and full UI parity pending |
 | Public high-school exam practice | `src/routes/exam/`; legacy `public-exam.html`; `static/data/public-exam.json` | Flutter `/exam` implemented with 323 existing records and source-status display; source verification and UI parity pending |
 | Additional dedicated practice | Existing isolated practice route and `static/data/kosen-questions.json` | Flutter `/kosen` implemented; kept off the public dashboard |
 | Library | `src/routes/library/`; `static/data/knowledge-base.json` | Flutter `/library` implemented with 262 existing records, search, subject/grade/field filters and expandable details; saved-item parity pending |
@@ -51,9 +51,10 @@ Correction (2026-11-14): `main` の `.github/workflows/pages.yml` は `flutter/b
 
 - Stage 1: isolated Flutter app scaffold and CI validation workflow.
 - Stage 2: Flutter question-practice foundation, public exam, summary/foundation confirmation, five-subject mock practice, knowledge library, and a separate unlinked additional-practice route. Existing JSON data is loaded directly; practice selection, four-choice answering, explanations, results, library search and filters are implemented.
-- Four public datasets audited: 1,180 foundation questions, 323 public-exam questions, 450 summary questions, and 100 mock questions. No duplicate IDs or malformed four-choice records were found in the inspected datasets.
+- Four public datasets audited: 1,230 foundation questions, 323 public-exam questions, 450 summary questions, and 100 mock questions. No duplicate IDs or malformed four-choice records were found in the inspected datasets.
 - Still not migrated or not yet parity-verified: full motivation archive, release-note history parity, private-content access boundary, Shitadumi app, full home/dashboard, full learning-history migration, and full browser/mobile/accessibility parity.
 - 2026-11-16: `/workspace` was migrated with task, timer, flashcard and note functions. It reuses the previous local persistence keys; cross-device sync remains unsupported.
+- 2026-11-18: `static/data/questions.json` contains 1,230 validated records; `static/data/foundation-training.json` contains 75 records (15 per subject), including 50 newly added questions. The generator now merges and preserves appended questions instead of overwriting them.
 - 2026-11-15: unsupported Flutter routes now render an explicit not-found screen with a return-to-home action; the route fallback is covered by a widget test.
 - Production deployment: Flutter Web root deployment is active on `main`; the latest observed Pages workflow for the migration branch succeeded, but the open PR #19 is not mergeable and its result is not evidence of full feature parity.
 
