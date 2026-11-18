@@ -56,9 +56,14 @@ for (const filename of entries) {
       throw new Error('Question ID must begin with daily-' + batch.date + '-: ' + question.id);
     }
   }
-  for (const subject of subjects) {
-    if (counts[subject] < 10) {
-      throw new Error(filename + ' needs at least 10 ' + subject + ' questions; found ' + counts[subject]);
+  const minimums = batch.category === 'foundation'
+    ? { japanese: 6, math: 6, english: 6, science: 6, social: 6 }
+    : batch.category === 'publicExam'
+      ? { science: 10, social: 10 }
+      : Object.fromEntries(subjects.map((subject) => [subject, 10]));
+  for (const [subject, minimum] of Object.entries(minimums)) {
+    if (counts[subject] < minimum) {
+      throw new Error(filename + ' needs at least ' + minimum + ' ' + subject + ' questions; found ' + counts[subject]);
     }
   }
 
@@ -73,6 +78,16 @@ for (const filename of entries) {
     existing.set(question.id, question);
   }
   current.questions = [...existing.values()];
+  if (batch.category === 'publicExam') {
+    const publicCounts = current.questions.reduce((result, question) => {
+      result[question.subject] = (result[question.subject] ?? 0) + 1;
+      return result;
+    }, {});
+    current.updatedAt = batch.date;
+    current.counts = { total: current.questions.length, ...publicCounts };
+  } else if (batch.category === 'foundation' && current.updatedAt) {
+    current.updatedAt = batch.date;
+  }
   await fs.writeFile(target, JSON.stringify(current, null, 2) + '\n');
   if (batch.category === 'kosen') {
     const mathTarget = path.join(dataRoot, 'kosen-math-section-1.json');
