@@ -427,6 +427,856 @@
       "explanation": "三つの基本原理は国民主権・基本的人権の尊重・平和主義。",
       "sourceLabel": "下積み・基礎反復",
       "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-01",
+      "subject": "japanese",
+      "topic": "接続語",
+      "level": "合格基礎",
+      "prompt": "「しかし」が表す関係はどれか。",
+      "options": [
+        "順接",
+        "逆接",
+        "並列",
+        "添加"
+      ],
+      "correct": 1,
+      "explanation": "「しかし」は前の内容と反対・対照的な内容を続ける逆接の接続語。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-02",
+      "subject": "japanese",
+      "topic": "四字熟語",
+      "level": "合格基礎",
+      "prompt": "「以心伝心」の意味はどれか。",
+      "options": [
+        "言葉にしなくても心が通じ合う",
+        "一度に二つの利益を得る",
+        "昔から新しい知識を得る",
+        "多くの人が同じ意見を持つ"
+      ],
+      "correct": 0,
+      "explanation": "以心伝心は、言葉を使わなくても互いの気持ちが通じること。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-03",
+      "subject": "japanese",
+      "topic": "語句",
+      "level": "合格基礎",
+      "prompt": "「安全」の対義語はどれか。",
+      "options": [
+        "安心",
+        "危険",
+        "平和",
+        "確実"
+      ],
+      "correct": 1,
+      "explanation": "安全の反対の意味を表す語は危険。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-04",
+      "subject": "japanese",
+      "topic": "助詞",
+      "level": "合格基礎",
+      "prompt": "「水を飲む」の「を」の働きはどれか。",
+      "options": [
+        "主語を示す",
+        "動作の対象を示す",
+        "場所を示す",
+        "理由を示す"
+      ],
+      "correct": 1,
+      "explanation": "「を」は動作の対象を示す格助詞。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-05",
+      "subject": "japanese",
+      "topic": "文の成分",
+      "level": "合格基礎",
+      "prompt": "「私は昨日、図書館へ行った。」の述語はどれか。",
+      "options": [
+        "私",
+        "昨日",
+        "図書館へ",
+        "行った"
+      ],
+      "correct": 3,
+      "explanation": "文の述語は、主語について説明する「行った」。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-06",
+      "subject": "japanese",
+      "topic": "主語",
+      "level": "合格基礎",
+      "prompt": "「桜が美しく咲いた。」の主語はどれか。",
+      "options": [
+        "桜が",
+        "美しく",
+        "咲いた",
+        "美しく咲いた"
+      ],
+      "correct": 0,
+      "explanation": "何が咲いたのかを表す「桜が」が主語。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-07",
+      "subject": "japanese",
+      "topic": "品詞",
+      "level": "合格基礎",
+      "prompt": "「大きい」の品詞はどれか。",
+      "options": [
+        "名詞",
+        "動詞",
+        "形容詞",
+        "形容動詞"
+      ],
+      "correct": 2,
+      "explanation": "「大きい」は性質や状態を表す形容詞。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-08",
+      "subject": "japanese",
+      "topic": "文章構成",
+      "level": "合格基礎",
+      "prompt": "「まず、次に、最後に」が示すものはどれか。",
+      "options": [
+        "理由",
+        "順序",
+        "逆接",
+        "例示"
+      ],
+      "correct": 1,
+      "explanation": "「まず・次に・最後に」は物事を進める順序を示す。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-09",
+      "subject": "japanese",
+      "topic": "漢字",
+      "level": "合格基礎",
+      "prompt": "「きょうりょく」を漢字で書くとどれか。",
+      "options": [
+        "協力",
+        "強力",
+        "教力",
+        "共力"
+      ],
+      "correct": 0,
+      "explanation": "力を合わせる意味の「きょうりょく」は「協力」。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-10",
+      "subject": "japanese",
+      "topic": "文法",
+      "level": "合格基礎",
+      "prompt": "「美しい花が咲いた。」で「美しい」が修飾する語はどれか。",
+      "options": [
+        "咲いた",
+        "花",
+        "が",
+        "美しい"
+      ],
+      "correct": 1,
+      "explanation": "「美しい」は名詞「花」の様子を説明している。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-11",
+      "subject": "math",
+      "topic": "一次方程式",
+      "level": "合格基礎",
+      "prompt": "4x−3＝13 のとき、x はいくつか。",
+      "options": [
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "correct": 1,
+      "explanation": "4x＝16より、x＝4。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-12",
+      "subject": "math",
+      "topic": "分数",
+      "level": "合格基礎",
+      "prompt": "5/6−1/3 の値はどれか。",
+      "options": [
+        "1/6",
+        "1/2",
+        "2/3",
+        "4/3"
+      ],
+      "correct": 1,
+      "explanation": "1/3＝2/6なので、5/6−2/6＝3/6＝1/2。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-13",
+      "subject": "math",
+      "topic": "小数",
+      "level": "合格基礎",
+      "prompt": "0.25×80 の値はどれか。",
+      "options": [
+        "2",
+        "10",
+        "20",
+        "25"
+      ],
+      "correct": 2,
+      "explanation": "0.25は1/4なので、80÷4＝20。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-14",
+      "subject": "math",
+      "topic": "比例",
+      "level": "合格基礎",
+      "prompt": "y＝3x のとき、x＝4 に対応する y はどれか。",
+      "options": [
+        "7",
+        "9",
+        "12",
+        "16"
+      ],
+      "correct": 2,
+      "explanation": "y＝3×4＝12。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-15",
+      "subject": "math",
+      "topic": "式の値",
+      "level": "合格基礎",
+      "prompt": "x＝2、y＝3 のとき、3x＋2y の値はどれか。",
+      "options": [
+        "10",
+        "11",
+        "12",
+        "13"
+      ],
+      "correct": 2,
+      "explanation": "3×2＋2×3＝6＋6＝12。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-16",
+      "subject": "math",
+      "topic": "図形",
+      "level": "合格基礎",
+      "prompt": "底辺7cm、高さ4cmの平行四辺形の面積はどれか。",
+      "options": [
+        "11cm²",
+        "14cm²",
+        "28cm²",
+        "56cm²"
+      ],
+      "correct": 2,
+      "explanation": "平行四辺形の面積は底辺×高さなので、7×4＝28cm²。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-17",
+      "subject": "math",
+      "topic": "単位",
+      "level": "合格基礎",
+      "prompt": "1時間45分は何分か。",
+      "options": [
+        "95分",
+        "100分",
+        "105分",
+        "115分"
+      ],
+      "correct": 2,
+      "explanation": "1時間は60分。60＋45＝105分。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-18",
+      "subject": "math",
+      "topic": "割合",
+      "level": "合格基礎",
+      "prompt": "250の30％はいくつか。",
+      "options": [
+        "25",
+        "50",
+        "75",
+        "100"
+      ],
+      "correct": 2,
+      "explanation": "250×0.3＝75。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-19",
+      "subject": "math",
+      "topic": "平方根",
+      "level": "合格基礎",
+      "prompt": "x²＝49、xが正の数のとき、x はどれか。",
+      "options": [
+        "−7",
+        "−1",
+        "7",
+        "49"
+      ],
+      "correct": 2,
+      "explanation": "7²＝49で、正の数という条件からx＝7。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-20",
+      "subject": "math",
+      "topic": "資料の活用",
+      "level": "合格基礎",
+      "prompt": "5、7、8、10の平均値はいくつか。",
+      "options": [
+        "7",
+        "7.5",
+        "8",
+        "8.5"
+      ],
+      "correct": 1,
+      "explanation": "合計30を4個で割るので、30÷4＝7.5。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-21",
+      "subject": "english",
+      "topic": "疑問文",
+      "level": "合格基礎",
+      "prompt": "「あなたのお姉さんは音楽が好きですか。」に合う英文はどれか。",
+      "options": [
+        "Do your sister like music?",
+        "Does your sister like music?",
+        "Is your sister likes music?",
+        "Are your sister like music?"
+      ],
+      "correct": 1,
+      "explanation": "主語your sisterは三人称単数なのでDoesを使い、動詞は原形likeにする。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-22",
+      "subject": "english",
+      "topic": "過去進行形",
+      "level": "合格基礎",
+      "prompt": "「彼が電話したとき、私は本を読んでいました。」に合う英文はどれか。",
+      "options": [
+        "I read a book when he calls.",
+        "I was reading a book when he called.",
+        "I am reading a book when he called.",
+        "I were reading a book when he called."
+      ],
+      "correct": 1,
+      "explanation": "過去のある時点で続いていた動作はwas/were＋動詞ingで表す。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-23",
+      "subject": "english",
+      "topic": "There is構文",
+      "level": "合格基礎",
+      "prompt": "「テーブルの上にリンゴがいくつかあります。」に合う英文はどれか。",
+      "options": [
+        "There is some apples on the table.",
+        "There are some apples on the table.",
+        "It are some apples on the table.",
+        "They is some apples on the table."
+      ],
+      "correct": 1,
+      "explanation": "複数形のapplesに合わせてThere areを使う。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-24",
+      "subject": "english",
+      "topic": "依頼",
+      "level": "合格基礎",
+      "prompt": "「窓を開けていただけますか。」という丁寧な依頼はどれか。",
+      "options": [
+        "You open the window.",
+        "Could you open the window?",
+        "Must you open the window?",
+        "Are you open the window?"
+      ],
+      "correct": 1,
+      "explanation": "Could you ～? は丁寧に依頼するときの表現。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-25",
+      "subject": "english",
+      "topic": "現在完了",
+      "level": "合格基礎",
+      "prompt": "「私は一度も京都へ行ったことがありません。」に合う英文はどれか。",
+      "options": [
+        "I never go to Kyoto.",
+        "I have never been to Kyoto.",
+        "I was never in Kyoto.",
+        "I am never going Kyoto."
+      ],
+      "correct": 1,
+      "explanation": "経験を表す現在完了はhave＋過去分詞。beの過去分詞はbeen。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-26",
+      "subject": "english",
+      "topic": "関係代名詞",
+      "level": "合格基礎",
+      "prompt": "「走っている少年は私の弟です。」に合う英文はどれか。",
+      "options": [
+        "The boy who is running is my brother.",
+        "The boy which is running is my brother.",
+        "The boy where is running is my brother.",
+        "The boy what is running is my brother."
+      ],
+      "correct": 0,
+      "explanation": "人を説明する関係代名詞はwho。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-27",
+      "subject": "english",
+      "topic": "比較",
+      "level": "合格基礎",
+      "prompt": "「この問題はあの問題より簡単です。」に合う英文はどれか。",
+      "options": [
+        "This question is easiest than that one.",
+        "This question is more easy than that one.",
+        "This question is easier than that one.",
+        "This question is easy than that one."
+      ],
+      "correct": 2,
+      "explanation": "easyの比較級はyをiに変えて-erを付けたeasier。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-28",
+      "subject": "english",
+      "topic": "助動詞",
+      "level": "合格基礎",
+      "prompt": "「ここで携帯電話を使ってはいけません。」に合う英文はどれか。",
+      "options": [
+        "You must not use phones here.",
+        "You must use phones here.",
+        "You can use phones here.",
+        "You should use phones here."
+      ],
+      "correct": 0,
+      "explanation": "must notは「～してはいけない」という禁止を表す。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-29",
+      "subject": "english",
+      "topic": "不定詞",
+      "level": "合格基礎",
+      "prompt": "「私は勉強するために図書館へ行きました。」に合う英文はどれか。",
+      "options": [
+        "I went to the library study.",
+        "I went to the library to study.",
+        "I went to the library studying.",
+        "I went to the library studied."
+      ],
+      "correct": 1,
+      "explanation": "目的を表す不定詞はto＋動詞の原形。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-30",
+      "subject": "english",
+      "topic": "疑問詞",
+      "level": "合格基礎",
+      "prompt": "「あなたは何冊の本を持っていますか。」に合う英文はどれか。",
+      "options": [
+        "How much books do you have?",
+        "How many books do you have?",
+        "How long books do you have?",
+        "How often books do you have?"
+      ],
+      "correct": 1,
+      "explanation": "booksは数えられる名詞の複数形なのでHow manyを使う。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-31",
+      "subject": "science",
+      "topic": "単位",
+      "level": "合格基礎",
+      "prompt": "電圧を表す単位はどれか。",
+      "options": [
+        "A（アンペア）",
+        "V（ボルト）",
+        "Ω（オーム）",
+        "W（ワット）"
+      ],
+      "correct": 1,
+      "explanation": "電圧の単位はボルト（V）。電流はアンペア、抵抗はオーム。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-32",
+      "subject": "science",
+      "topic": "光合成",
+      "level": "合格基礎",
+      "prompt": "植物が光合成で主に放出する気体はどれか。",
+      "options": [
+        "酸素",
+        "二酸化炭素",
+        "窒素",
+        "水素"
+      ],
+      "correct": 0,
+      "explanation": "光合成では二酸化炭素と水から養分をつくり、酸素を放出する。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-33",
+      "subject": "science",
+      "topic": "酸・アルカリ",
+      "level": "合格基礎",
+      "prompt": "赤色リトマス紙を青色に変える水溶液はどれか。",
+      "options": [
+        "酸性",
+        "中性",
+        "アルカリ性",
+        "食塩水だけ"
+      ],
+      "correct": 2,
+      "explanation": "アルカリ性の水溶液は赤色リトマス紙を青色に変える。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-34",
+      "subject": "science",
+      "topic": "状態変化",
+      "level": "合格基礎",
+      "prompt": "液体が気体に変わる状態変化を何というか。",
+      "options": [
+        "凝固",
+        "融解",
+        "蒸発",
+        "凝縮"
+      ],
+      "correct": 2,
+      "explanation": "液体が気体に変わることを蒸発（気化）という。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-35",
+      "subject": "science",
+      "topic": "人体",
+      "level": "合格基礎",
+      "prompt": "呼吸で空気中の酸素を取り入れる主な器官はどれか。",
+      "options": [
+        "胃",
+        "肺",
+        "腎臓",
+        "肝臓"
+      ],
+      "correct": 1,
+      "explanation": "肺で酸素を取り入れ、二酸化炭素を体外へ出す。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-36",
+      "subject": "science",
+      "topic": "天体",
+      "level": "合格基礎",
+      "prompt": "月の満ち欠けが起こる主な理由はどれか。",
+      "options": [
+        "月自身が光る量が変わるから",
+        "太陽・地球・月の位置関係が変わるから",
+        "月の大きさが変わるから",
+        "地球の自転が止まるから"
+      ],
+      "correct": 1,
+      "explanation": "太陽に照らされた月の半分のうち、地球から見える部分が変わるため。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-37",
+      "subject": "science",
+      "topic": "光",
+      "level": "合格基礎",
+      "prompt": "凸レンズに平行な光を当てたとき、光が集まる点を何というか。",
+      "options": [
+        "焦点",
+        "支点",
+        "作用点",
+        "反射点"
+      ],
+      "correct": 0,
+      "explanation": "凸レンズを通った平行光線が集まる点を焦点という。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-38",
+      "subject": "science",
+      "topic": "密度",
+      "level": "合格基礎",
+      "prompt": "密度を求める式として正しいものはどれか。",
+      "options": [
+        "体積÷質量",
+        "質量÷体積",
+        "質量×体積",
+        "質量＋体積"
+      ],
+      "correct": 1,
+      "explanation": "密度は単位体積あたりの質量で、質量÷体積で求める。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-39",
+      "subject": "science",
+      "topic": "金属",
+      "level": "合格基礎",
+      "prompt": "多くの金属に共通する性質として正しいものはどれか。",
+      "options": [
+        "電気を通しやすい",
+        "水に必ず溶ける",
+        "常温ですべて液体である",
+        "磁石に必ず引きつけられる"
+      ],
+      "correct": 0,
+      "explanation": "金属は一般に電気や熱を通しやすく、金属光沢がある。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-40",
+      "subject": "science",
+      "topic": "化学変化",
+      "level": "合格基礎",
+      "prompt": "酸とアルカリが互いの性質を打ち消し合う反応を何というか。",
+      "options": [
+        "燃焼",
+        "中和",
+        "分解",
+        "酸化"
+      ],
+      "correct": 1,
+      "explanation": "酸とアルカリが反応して互いの性質を打ち消すことを中和という。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-41",
+      "subject": "social",
+      "topic": "地理",
+      "level": "合格基礎",
+      "prompt": "緯度0度の線を何というか。",
+      "options": [
+        "本初子午線",
+        "赤道",
+        "北回帰線",
+        "日付変更線"
+      ],
+      "correct": 1,
+      "explanation": "緯度0度を赤道という。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-42",
+      "subject": "social",
+      "topic": "公民",
+      "level": "合格基礎",
+      "prompt": "日本で国会が持つ地位はどれか。",
+      "options": [
+        "国権の最高機関",
+        "司法権の最高機関",
+        "行政権の最高機関",
+        "地方自治の最高機関"
+      ],
+      "correct": 0,
+      "explanation": "日本国憲法で国会は国権の最高機関と定められている。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-43",
+      "subject": "social",
+      "topic": "歴史",
+      "level": "合格基礎",
+      "prompt": "明治維新が始まった年として正しいものはどれか。",
+      "options": [
+        "1603年",
+        "1868年",
+        "1945年",
+        "1952年"
+      ],
+      "correct": 1,
+      "explanation": "1868年に明治政府が成立し、明治維新が進められた。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-44",
+      "subject": "social",
+      "topic": "歴史",
+      "level": "合格基礎",
+      "prompt": "第一次世界大戦後の1919年に結ばれた講和条約はどれか。",
+      "options": [
+        "サンフランシスコ平和条約",
+        "ベルサイユ条約",
+        "ポーツマス条約",
+        "下関条約"
+      ],
+      "correct": 1,
+      "explanation": "第一次世界大戦後、1919年にベルサイユ条約が結ばれた。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-45",
+      "subject": "social",
+      "topic": "公民",
+      "level": "合格基礎",
+      "prompt": "日本国憲法が施行された日はいつか。",
+      "options": [
+        "1945年8月15日",
+        "1946年11月3日",
+        "1947年5月3日",
+        "1952年4月28日"
+      ],
+      "correct": 2,
+      "explanation": "日本国憲法は1947年5月3日に施行された。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-46",
+      "subject": "social",
+      "topic": "公民",
+      "level": "合格基礎",
+      "prompt": "衆議院議員の任期は原則何年か。",
+      "options": [
+        "2年",
+        "3年",
+        "4年",
+        "6年"
+      ],
+      "correct": 2,
+      "explanation": "衆議院議員の任期は原則4年。ただし解散がある。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-47",
+      "subject": "social",
+      "topic": "地理",
+      "level": "合格基礎",
+      "prompt": "冬に季節風の影響で雪が多く降る地域が多いのはどちら側か。",
+      "options": [
+        "太平洋側",
+        "日本海側",
+        "瀬戸内側だけ",
+        "南西諸島だけ"
+      ],
+      "correct": 1,
+      "explanation": "冬の北西季節風が日本海で水蒸気を含み、日本海側に雪を降らせる。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-48",
+      "subject": "social",
+      "topic": "地理",
+      "level": "合格基礎",
+      "prompt": "地球が西から東へ回転する運動を何というか。",
+      "options": [
+        "公転",
+        "自転",
+        "反射",
+        "歳差"
+      ],
+      "correct": 1,
+      "explanation": "地球が地軸を中心に回転する運動を自転という。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-49",
+      "subject": "social",
+      "topic": "地理",
+      "level": "合格基礎",
+      "prompt": "経度が表すものはどれか。",
+      "options": [
+        "赤道からの南北の位置",
+        "本初子午線からの東西の位置",
+        "海面からの高さ",
+        "土地の傾き"
+      ],
+      "correct": 1,
+      "explanation": "経度は本初子午線を基準に東西の位置を表す。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
+    },
+    {
+      "id": "sano-shoo-daily-20261118-50",
+      "subject": "social",
+      "topic": "公民",
+      "level": "合格基礎",
+      "prompt": "市場で商品価格に影響する基本的な組み合わせはどれか。",
+      "options": [
+        "需要と供給",
+        "人口と面積だけ",
+        "天気と曜日だけ",
+        "輸入量だけ"
+      ],
+      "correct": 0,
+      "explanation": "需要が増えると価格が上がりやすく、供給が増えると下がりやすい。",
+      "sourceLabel": "下積み・基礎反復",
+      "sourceNote": "5教科の基礎反復用に作成したオリジナル問題。公式問題の転載ではありません。"
     }
   ]
 }
