@@ -53,6 +53,34 @@ class FoundationQuestion {
   }
 }
 
+const List<String> _foundationSubjectOrder = [
+  'japanese',
+  'math',
+  'english',
+  'science',
+  'social',
+];
+
+List<FoundationQuestion> selectBalancedQuestions(
+  List<FoundationQuestion> questions, {
+  int perSubject = 10,
+  Random? random,
+}) {
+  final rng = random ?? Random();
+  final selected = <FoundationQuestion>[];
+  for (final subject in _foundationSubjectOrder) {
+    final candidates = questions.where((item) => item.subject == subject).toList()
+      ..shuffle(rng);
+    if (candidates.length < perSubject) {
+      throw StateError(subject + ' の問題が不足しています（' +
+          candidates.length.toString() + '/' + perSubject.toString() + '）。');
+    }
+    selected.addAll(candidates.take(perSubject));
+  }
+  selected.shuffle(rng);
+  return selected;
+}
+
 class FoundationPracticePage extends StatefulWidget {
   const FoundationPracticePage({
     super.key,
@@ -63,6 +91,7 @@ class FoundationPracticePage extends StatefulWidget {
     this.additionalDataPaths = const [],
     this.initialSubject = 'all',
     this.initialTopic = 'all',
+    this.balancedPerSubject = false,
   });
 
   final Future<List<FoundationQuestion>> Function()? loadQuestions;
@@ -72,6 +101,7 @@ class FoundationPracticePage extends StatefulWidget {
   final List<String> additionalDataPaths;
   final String initialSubject;
   final String initialTopic;
+  final bool balancedPerSubject;
 
   @override
   State<FoundationPracticePage> createState() => _FoundationPracticePageState();
@@ -163,8 +193,9 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
   @override
   void initState() {
     super.initState();
-    _subject = widget.initialSubject;
-    _topic = widget.initialTopic;
+    _subject = widget.balancedPerSubject ? 'all' : widget.initialSubject;
+    _topic = widget.balancedPerSubject ? 'all' : widget.initialTopic;
+    _amount = widget.balancedPerSubject ? '50' : '10';
     _load();
     _loadProgress();
   }
@@ -252,8 +283,22 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
   }
 
   void _start() {
-    final nextSession = [..._available]..shuffle(Random());
-    final count = _amount == 'all' ? nextSession.length : int.parse(_amount);
+    late final List<FoundationQuestion> nextSession;
+    if (widget.balancedPerSubject) {
+      try {
+        nextSession = selectBalancedQuestions(_questions, perSubject: 10);
+      } on StateError catch (error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(error.message)),
+        );
+        return;
+      }
+    } else {
+      nextSession = [..._available]..shuffle(Random());
+    }
+    final count = widget.balancedPerSubject
+        ? nextSession.length
+        : (_amount == 'all' ? nextSession.length : int.parse(_amount));
     if (nextSession.isEmpty) return;
     setState(() {
       _session = nextSession.take(count).toList(growable: false);
@@ -421,11 +466,13 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
                     fontWeight: FontWeight.w800,
                   )),
           const SizedBox(height: 8),
-          Text(widget.title == '基礎網羅問題'
-              ? '5教科の基礎問題から、今取り組む範囲を選びます。'
-              : widget.includeAllSubjects
-                  ? '5教科の問題を組み合わせて、実戦形式で演習します。'
-                  : '理科・社会の入試形式問題に挑戦します。出典情報も確認できます。'),
+          Text(widget.balancedPerSubject
+              ? '国語・数学・英語・理科・社会から各10問、合計50問を出題します。'
+              : widget.title == '基礎網羅問題'
+                  ? '5教科の基礎問題から、今取り組む範囲を選びます。'
+                  : widget.includeAllSubjects
+                      ? '5教科の問題を組み合わせて、実戦形式で演習します。'
+                      : '理科・社会の入試形式問題に挑戦します。出典情報も確認できます。'),
           const SizedBox(height: 24),
           Card(
             child: Padding(
@@ -460,55 +507,75 @@ class _FoundationPracticePageState extends State<FoundationPracticePage> {
                           ),
                     ),
                   const SizedBox(height: 20),
-                  DropdownButtonFormField<String>(
-                    initialValue: _subject,
-                    decoration: const InputDecoration(labelText: '教科'),
-                    items: [
-                      DropdownMenuItem(
-                        value: 'all',
-                        child: Text(widget.includeAllSubjects ? '全教科' : '理科・社会'),
+                  if (widget.balancedPerSubject) ...[
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(14),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF2B241D),
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(color: const Color(0xFF75502E)),
                       ),
-                      const DropdownMenuItem(value: 'science', child: Text('理科')),
-                      const DropdownMenuItem(value: 'social', child: Text('社会')),
-                      if (widget.includeAllSubjects) ...[
-                        const DropdownMenuItem(value: 'japanese', child: Text('国語')),
-                        const DropdownMenuItem(value: 'math', child: Text('数学')),
-                        const DropdownMenuItem(value: 'english', child: Text('英語')),
+                      child: const Text(
+                        '出題形式：5教科×10問（合計50問）',
+                        style: TextStyle(fontWeight: FontWeight.w800, color: Color(0xFFFFC27A)),
+                      ),
+                    ),
+                  ] else ...[
+                    DropdownButtonFormField<String>(
+                      initialValue: _subject,
+                      decoration: const InputDecoration(labelText: '教科'),
+                      items: [
+                        DropdownMenuItem(
+                          value: 'all',
+                          child: Text(widget.includeAllSubjects ? '全教科' : '理科・社会'),
+                        ),
+                        const DropdownMenuItem(value: 'science', child: Text('理科')),
+                        const DropdownMenuItem(value: 'social', child: Text('社会')),
+                        if (widget.includeAllSubjects) ...[
+                          const DropdownMenuItem(value: 'japanese', child: Text('国語')),
+                          const DropdownMenuItem(value: 'math', child: Text('数学')),
+                          const DropdownMenuItem(value: 'english', child: Text('英語')),
+                        ],
                       ],
-                    ],
-                    onChanged: (value) => setState(() {
-                      _subject = value ?? 'all';
-                      _topic = 'all';
-                    }),
-                  ),
-                  const SizedBox(height: 14),
-                  DropdownButtonFormField<String>(
-                    initialValue: _topic,
-                    decoration: const InputDecoration(labelText: '分野・単元'),
-                    items: [
-                      const DropdownMenuItem(value: 'all', child: Text('すべて')),
-                      ..._topics.map((topic) =>
-                          DropdownMenuItem(value: topic, child: Text(_topicLabel(topic)))),
-                    ],
-                    onChanged: (value) =>
-                        setState(() => _topic = value ?? 'all'),
-                  ),
-                  const SizedBox(height: 14),
-                  DropdownButtonFormField<String>(
-                    initialValue: _amount,
-                    decoration: const InputDecoration(labelText: '問題数'),
-                    items: const [
-                      DropdownMenuItem(value: '10', child: Text('10問')),
-                      DropdownMenuItem(value: '20', child: Text('20問')),
-                      DropdownMenuItem(value: '30', child: Text('30問')),
-                      DropdownMenuItem(value: '50', child: Text('50問')),
-                      DropdownMenuItem(value: 'all', child: Text('全問')),
-                    ],
-                    onChanged: (value) =>
-                        setState(() => _amount = value ?? '10'),
-                  ),
+                      onChanged: (value) => setState(() {
+                        _subject = value ?? 'all';
+                        _topic = 'all';
+                      }),
+                    ),
+                    const SizedBox(height: 14),
+                    DropdownButtonFormField<String>(
+                      initialValue: _topic,
+                      decoration: const InputDecoration(labelText: '分野・単元'),
+                      items: [
+                        const DropdownMenuItem(value: 'all', child: Text('すべて')),
+                        ..._topics.map((topic) =>
+                            DropdownMenuItem(value: topic, child: Text(_topicLabel(topic)))),
+                      ],
+                      onChanged: (value) =>
+                          setState(() => _topic = value ?? 'all'),
+                    ),
+                    const SizedBox(height: 14),
+                    DropdownButtonFormField<String>(
+                      initialValue: _amount,
+                      decoration: const InputDecoration(labelText: '問題数'),
+                      items: const [
+                        DropdownMenuItem(value: '10', child: Text('10問')),
+                        DropdownMenuItem(value: '20', child: Text('20問')),
+                        DropdownMenuItem(value: '30', child: Text('30問')),
+                        DropdownMenuItem(value: '50', child: Text('50問')),
+                        DropdownMenuItem(value: 'all', child: Text('全問')),
+                      ],
+                      onChanged: (value) =>
+                          setState(() => _amount = value ?? '10'),
+                    ),
+                  ],
                   const SizedBox(height: 20),
-                  Text('${_available.length}問から出題できます。',
+                  Text(
+                    widget.balancedPerSubject
+                        ? '全${_available.length}問から各教科10問ずつ、合計50問を出題します。'
+                        : '${_available.length}問から出題できます。',
+                  ),
                       style: Theme.of(context).textTheme.bodySmall),
                   const SizedBox(height: 12),
                   SizedBox(
