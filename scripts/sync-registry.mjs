@@ -24,9 +24,38 @@ for (const dataset of manifest.datasets) {
   if (!selected.has(dataset.id) || dataset.format !== 'json') continue;
   const file = await fetch(base + dataset.path.split('/').map(encodeURIComponent).join('/'));
   if (!file.ok) throw new Error('Dataset download failed: ' + dataset.id + ' (' + file.status + ')');
-  const content = await file.text();
+  let content = await file.text();
   JSON.parse(content);
   const target = path.join(root, 'static', 'data', output[dataset.id] || dataset.id + '.json');
+
+  // Daily question batches are curated locally and imported after registry sync.
+  // Preserve those reviewed records when the upstream question-bank snapshot is refreshed.
+  if (dataset.id === 'question-bank') {
+    const incoming = JSON.parse(content);
+    if (!Array.isArray(incoming.questions)) {
+      throw new Error('Question-bank registry dataset has no questions array');
+    }
+    let existing = null;
+    try {
+      existing = JSON.parse(await fs.readFile(target, 'utf8'));
+    } catch (error) {
+      if (error.code !== 'ENOENT') throw error;
+    }
+    if (existing && Array.isArray(existing.questions)) {
+      const incomingIds = new Set(incoming.questions.map((question) => question.id));
+      const dailyQuestions = existing.questions.filter((question) =>
+        typeof question.id === 'string' &&
+        question.id.startsWith('daily-') &&
+        !incomingIds.has(question.id)
+      );
+      if (dailyQuestions.length) {
+        incoming.questions.push(...dailyQuestions);
+        content = JSON.stringify(incoming, null, 2);
+        console.log('Preserved ' + dailyQuestions.length + ' reviewed daily questions');
+      }
+    }
+  }
+
   await fs.mkdir(path.dirname(target), { recursive: true });
   await fs.writeFile(target, content + '\n');
   console.log('Synced ' + dataset.id + ' (' + dataset.recordCount + ' records)');
