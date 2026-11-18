@@ -21036,6 +21036,516 @@
       "explanation": "国や地方公共団体の収入の中心は税金であり、教育・福祉・公共事業などに使われる。",
       "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
       "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-japanese-001",
+      "subject": "japanese",
+      "topic": "国語・接続語",
+      "level": "標準",
+      "prompt": "「一方で」が文と文をつなぐときに表す関係はどれか。",
+      "options": [
+        "理由",
+        "対比",
+        "順序",
+        "例示"
+      ],
+      "correct": 1,
+      "explanation": "「一方で」は、前の内容と異なる側面を示す対比の接続語。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-japanese-002",
+      "subject": "japanese",
+      "topic": "国語・語句",
+      "level": "基礎",
+      "prompt": "「推敲」の意味として正しいものはどれか。",
+      "options": [
+        "文章を声に出して読むこと",
+        "古い文章を現代語に直すこと",
+        "文章を練り直して表現をよくすること",
+        "文章を短く要約すること"
+      ],
+      "correct": 2,
+      "explanation": "推敲は、詩や文章の字句・表現を何度も練り直すこと。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-japanese-003",
+      "subject": "japanese",
+      "topic": "国語・文法",
+      "level": "基礎",
+      "prompt": "「雨が降ったので、試合は中止になった。」の「ので」が表す関係はどれか。",
+      "options": [
+        "原因・理由",
+        "逆接",
+        "並列",
+        "仮定"
+      ],
+      "correct": 0,
+      "explanation": "「ので」は前の内容を原因・理由として後ろの内容につなぐ接続助詞。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-japanese-004",
+      "subject": "japanese",
+      "topic": "国語・表現技法",
+      "level": "標準",
+      "prompt": "「まるで雪のように白い」の表現技法はどれか。",
+      "options": [
+        "擬人法",
+        "直喩",
+        "隠喩",
+        "反復法"
+      ],
+      "correct": 1,
+      "explanation": "「ように」を使って別のものにたとえているため直喩。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-japanese-005",
+      "subject": "japanese",
+      "topic": "国語・古典",
+      "level": "標準",
+      "prompt": "「古池や蛙飛びこむ水の音」に含まれる季語はどれか。",
+      "options": [
+        "古池",
+        "蛙",
+        "水",
+        "音"
+      ],
+      "correct": 1,
+      "explanation": "この句の季語は「蛙」で、春を表す。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-japanese-006",
+      "subject": "japanese",
+      "topic": "国語・文法",
+      "level": "基礎",
+      "prompt": "動詞「走る」の活用の種類はどれか。",
+      "options": [
+        "上一段活用",
+        "下一段活用",
+        "五段活用",
+        "カ行変格活用"
+      ],
+      "correct": 2,
+      "explanation": "「走ら・走り・走る・走る・走れ・走ろ」と活用する五段活用の動詞。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-math-007",
+      "subject": "math",
+      "topic": "数学・一次方程式",
+      "level": "基礎",
+      "prompt": "2x＋5＝17 のとき、x の値はどれか。",
+      "options": [
+        "5",
+        "6",
+        "7",
+        "11"
+      ],
+      "correct": 1,
+      "explanation": "両辺から5を引くと2x＝12。両辺を2で割ってx＝6。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-math-008",
+      "subject": "math",
+      "topic": "数学・分数",
+      "level": "標準",
+      "prompt": "3/4＋1/6 の値はどれか。",
+      "options": [
+        "5/10",
+        "9/12",
+        "11/12",
+        "1"
+      ],
+      "correct": 2,
+      "explanation": "通分して9/12＋2/12＝11/12。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-math-009",
+      "subject": "math",
+      "topic": "数学・一次関数",
+      "level": "基礎",
+      "prompt": "y＝−2x＋5 のとき、x＝3 に対応する y はどれか。",
+      "options": [
+        "−1",
+        "1",
+        "3",
+        "11"
+      ],
+      "correct": 0,
+      "explanation": "y＝−2×3＋5＝−6＋5＝−1。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-math-010",
+      "subject": "math",
+      "topic": "数学・三平方の定理",
+      "level": "標準",
+      "prompt": "直角をはさむ2辺が3cmと4cmの直角三角形で、斜辺の長さはどれか。",
+      "options": [
+        "5cm",
+        "6cm",
+        "7cm",
+        "12cm"
+      ],
+      "correct": 0,
+      "explanation": "三平方の定理より、斜辺は√(3²＋4²)＝√25＝5cm。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-math-011",
+      "subject": "math",
+      "topic": "数学・円",
+      "level": "基礎",
+      "prompt": "半径3cmの円の円周の長さはどれか。",
+      "options": [
+        "3πcm",
+        "6πcm",
+        "9πcm",
+        "12πcm"
+      ],
+      "correct": 1,
+      "explanation": "円周は直径×π。直径は6cmなので6πcm。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-math-012",
+      "subject": "math",
+      "topic": "数学・確率",
+      "level": "基礎",
+      "prompt": "1枚の硬貨を1回投げるとき、表が出る確率はどれか。",
+      "options": [
+        "1/4",
+        "1/3",
+        "1/2",
+        "1"
+      ],
+      "correct": 2,
+      "explanation": "表と裏の2通りが同様に確からしく、表は1通りなので1/2。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-english-013",
+      "subject": "english",
+      "topic": "英語・現在完了",
+      "level": "標準",
+      "prompt": "「私は2020年からここに住んでいます。」に合う英文はどれか。",
+      "options": [
+        "I live here for 2020.",
+        "I have lived here since 2020.",
+        "I lived here since 2020.",
+        "I am living here from 2020."
+      ],
+      "correct": 1,
+      "explanation": "過去のある時点から現在まで続く状態には現在完了を使い、起点にはsinceを使う。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-english-014",
+      "subject": "english",
+      "topic": "英語・受動態",
+      "level": "基礎",
+      "prompt": "「その窓はボールによって割られました。」に合う英文はどれか。",
+      "options": [
+        "The window broke the ball.",
+        "The window was broken by the ball.",
+        "The window is breaking by the ball.",
+        "The ball was broken the window."
+      ],
+      "correct": 1,
+      "explanation": "受動態はbe動詞＋過去分詞。過去の出来事なのでwas broken。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-english-015",
+      "subject": "english",
+      "topic": "英語・仮定法",
+      "level": "標準",
+      "prompt": "「もし私があなたなら、医者に相談するでしょう。」に合う英文はどれか。",
+      "options": [
+        "If I am you, I will ask a doctor.",
+        "If I were you, I would ask a doctor.",
+        "If I was you, I ask a doctor.",
+        "If I were you, I will ask a doctor."
+      ],
+      "correct": 1,
+      "explanation": "現在の事実と異なる仮定ではIf I were you, I would ～を使う。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-english-016",
+      "subject": "english",
+      "topic": "英語・不定詞",
+      "level": "標準",
+      "prompt": "「彼は車を運転できる年齢です。」に合う英文はどれか。",
+      "options": [
+        "He is enough old drive.",
+        "He is old enough to drive.",
+        "He is too old driving.",
+        "He is old to enough drive."
+      ],
+      "correct": 1,
+      "explanation": "形容詞＋enough＋to不定詞で「～するのに十分…だ」を表す。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-english-017",
+      "subject": "english",
+      "topic": "英語・不定詞",
+      "level": "基礎",
+      "prompt": "「私はあなたにこの本を読んでほしい。」に合う英文はどれか。",
+      "options": [
+        "I want you read this book.",
+        "I want you to read this book.",
+        "I want that you reading this book.",
+        "I want you reading this book."
+      ],
+      "correct": 1,
+      "explanation": "want＋人＋to不定詞で「人に～してほしい」を表す。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-english-018",
+      "subject": "english",
+      "topic": "英語・最上級",
+      "level": "標準",
+      "prompt": "「これは私が読んだ中で最もおもしろい本です。」に合う英文はどれか。",
+      "options": [
+        "This is the more interesting book I have read.",
+        "This is the most interesting book I have read.",
+        "This is the interestingest book I read.",
+        "This is most interesting book I have read."
+      ],
+      "correct": 1,
+      "explanation": "最上級にはthe most＋形容詞を使う。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-science-019",
+      "subject": "science",
+      "topic": "理科・電流と電圧",
+      "level": "基礎",
+      "prompt": "オームの法則を表す式はどれか。",
+      "options": [
+        "電流＝電圧×抵抗",
+        "電流＝電圧÷抵抗",
+        "電圧＝電流÷抵抗",
+        "抵抗＝電流×電圧"
+      ],
+      "correct": 1,
+      "explanation": "オームの法則は電流I＝電圧V÷抵抗R。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-science-020",
+      "subject": "science",
+      "topic": "理科・回路",
+      "level": "基礎",
+      "prompt": "直列回路の電流について正しい説明はどれか。",
+      "options": [
+        "各抵抗で電流の大きさは同じ",
+        "抵抗が大きいほど電流が増える",
+        "電流は枝分かれして分かれる",
+        "電流は回路の途中で消える"
+      ],
+      "correct": 0,
+      "explanation": "直列回路では電流の通り道が一つなので、回路のどの部分でも電流は同じ。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-science-021",
+      "subject": "science",
+      "topic": "理科・植物",
+      "level": "基礎",
+      "prompt": "植物の葉にあり、気体の出入りや蒸散に関係する小さな穴を何というか。",
+      "options": [
+        "維管束",
+        "気孔",
+        "葉脈",
+        "胚珠"
+      ],
+      "correct": 1,
+      "explanation": "気孔は主に葉の表皮にあり、二酸化炭素などの出入りや水蒸気の放出に関係する。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-science-022",
+      "subject": "science",
+      "topic": "理科・中和",
+      "level": "基礎",
+      "prompt": "酸とアルカリが反応して互いの性質を打ち消し合うとき、一般にできる物質の組み合わせはどれか。",
+      "options": [
+        "塩と水",
+        "酸素と水素",
+        "金属と酸素",
+        "二酸化炭素と水素"
+      ],
+      "correct": 0,
+      "explanation": "中和では酸とアルカリから塩と水ができる。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-science-023",
+      "subject": "science",
+      "topic": "理科・気象",
+      "level": "標準",
+      "prompt": "寒冷前線が通過するときに起こりやすい変化はどれか。",
+      "options": [
+        "気温が上がり、弱い雨が長く続く",
+        "気温が下がり、短時間に強い雨が降ることがある",
+        "風が必ず止む",
+        "湿度が必ず0％になる"
+      ],
+      "correct": 1,
+      "explanation": "寒気が暖気の下にもぐり込む寒冷前線では、積乱雲が発達し、短時間の強い雨や気温低下が起こることがある。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-science-024",
+      "subject": "science",
+      "topic": "理科・圧力",
+      "level": "基礎",
+      "prompt": "水中で深くなるほど水圧はどうなるか。",
+      "options": [
+        "小さくなる",
+        "変わらない",
+        "大きくなる",
+        "深さに関係なく0になる"
+      ],
+      "correct": 2,
+      "explanation": "水圧は水面からの深さが大きいほど大きくなる。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-social-025",
+      "subject": "social",
+      "topic": "社会・地理・日本",
+      "level": "基礎",
+      "prompt": "日本の都道府県の数はいくつか。",
+      "options": [
+        "43",
+        "45",
+        "47",
+        "49"
+      ],
+      "correct": 2,
+      "explanation": "日本は1都1道2府43県の合計47都道府県。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-social-026",
+      "subject": "social",
+      "topic": "社会・歴史・江戸時代",
+      "level": "標準",
+      "prompt": "江戸時代、長崎の出島で貿易を許されていたヨーロッパの国はどれか。",
+      "options": [
+        "イギリス",
+        "オランダ",
+        "フランス",
+        "スペイン"
+      ],
+      "correct": 1,
+      "explanation": "江戸時代、出島ではオランダとの貿易が行われた。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-social-027",
+      "subject": "social",
+      "topic": "社会・歴史・産業革命",
+      "level": "基礎",
+      "prompt": "18世紀後半に産業革命が始まった国はどこか。",
+      "options": [
+        "フランス",
+        "ドイツ",
+        "イギリス",
+        "アメリカ"
+      ],
+      "correct": 2,
+      "explanation": "産業革命は18世紀後半のイギリスで始まり、機械制工業が広がった。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-social-028",
+      "subject": "social",
+      "topic": "社会・歴史・現代",
+      "level": "基礎",
+      "prompt": "第二次世界大戦が終結した年はいつか。",
+      "options": [
+        "1939年",
+        "1941年",
+        "1945年",
+        "1951年"
+      ],
+      "correct": 2,
+      "explanation": "第二次世界大戦は1945年に終結した。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-social-029",
+      "subject": "social",
+      "topic": "社会・公民・日本国憲法",
+      "level": "基礎",
+      "prompt": "日本国憲法の三つの基本原理の組み合わせはどれか。",
+      "options": [
+        "国民主権・基本的人権の尊重・平和主義",
+        "天皇主権・納税義務・軍備拡大",
+        "議院内閣制・地方自治・市場経済",
+        "自由貿易・社会保障・三権分立"
+      ],
+      "correct": 0,
+      "explanation": "日本国憲法の三つの基本原理は国民主権、基本的人権の尊重、平和主義。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-18-foundation-social-030",
+      "subject": "social",
+      "topic": "社会・公民・財政",
+      "level": "標準",
+      "prompt": "景気が悪いとき、政府が公共事業などへの支出を増やして需要を支える政策はどれか。",
+      "options": [
+        "金融引き締め",
+        "財政政策",
+        "保護貿易",
+        "金融緩和のみ"
+      ],
+      "correct": 1,
+      "explanation": "政府の支出や税を調整して景気に働きかける政策を財政政策という。",
+      "sourceNote": "2026年11月18日に作成したオリジナル演習問題。教科書・ワーク・過去問の本文や設問の転載ではない。",
+      "sourceRef": ""
     }
   ]
 }
