@@ -1,5 +1,10 @@
 # Flutter版 更新履歴
 
+## 2026-11-19（Android APKリリース名の検証修正）
+
+- APK本体の生成・解析・テスト・workflow artifactのアップロードは成功していた一方、GitHub Release上のファイル名が `app-release.apk` のままで、検証処理が期待する `MANABIXX-Android.apk` と一致していませんでした。
+- Release用にAPKを `MANABIXX-Android.apk` としてコピーしてからアップロードする方式へ変更。元のビルド成果物とworkflow artifactは維持し、公開後のアセット名・サイズ検証と一致させます。
+
 ## 2026-11-19（Knowledge LibraryのWebビルド修正）
 
 - Rust + LeptosのKnowledge Libraryで、HTML見出し内の中点がRustマクロのトークンとして解釈される問題をASCII表記へ変更。
