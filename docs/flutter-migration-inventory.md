@@ -1,6 +1,6 @@
 # Flutter Web migration inventory
 
-Last inspected: 2026-11-18 (JST)  
+Last inspected: 2026-11-19 (JST)  
 Repository: `MANABIXX/MANABIXX.github.io`  
 Production branch: `main`  
 Production URL: https://manabixx.github.io/ (Flutter Web at Pages root)
@@ -65,3 +65,12 @@ Correction (2026-11-14): `main` の `.github/workflows/pages.yml` は `flutter/b
 - Current public UI, README, changelog, generated foundation-training metadata, and exam display titles no longer show individual school names. The old school-specific article paths were removed from the current tree and from the legacy service-worker shell.
 - Historical Git commits still contain earlier versions of those files. No history rewrite was performed; old commit objects may remain publicly reachable. A complete historical purge would require a separately approved history rewrite and cache review.
 - The legacy mode's password check is client-side only and is not server-side access control. Do not treat the mode or noindex as private storage.
+
+## 2026-11-19 execution update
+
+- Current inspected main HEAD: `35e3502c0798209b2690ab346545822f76435a97`.
+- Fixed two Rust + Leptos build errors in `knowledge-ui/src/main.rs`: an unquoted middle dot in the view macro and incompatible opaque component return types in the blog/library switch. The switch now uses Leptos `Show`; the heading separator uses ASCII.
+- The current `Build and deploy Study` run (44410945932) has already passed registry synchronization, question-data validation, TypeScript/Svelte checks, PWA checks, Flutter analyze, Flutter tests, and Flutter Web release build. At the last check it was still installing Trunk; Leptos/WASM compilation, artifact upload, and Pages deployment had not yet completed.
+- The previous Android release run built and tested the APK successfully and uploaded a workflow artifact, but the final Release asset check failed because the uploaded asset was named `app-release.apk` while the workflow expected `MANABIXX-Android.apk`. The workflow now copies the verified APK to the expected filename before Release upload. The new Android run (44410927897) was still building at the last check; release verification remains pending.
+- No question datasets, IDs, saved-progress formats, routes, or access boundaries were changed in this run. The public content-registry still contains legacy `private-*` files; the main Pages workflow's nine-file allowlist excludes them from the deployed Flutter data bundle, but the registry repository itself is public and those files remain directly downloadable there.
+
