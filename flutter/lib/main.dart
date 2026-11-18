@@ -454,11 +454,19 @@ class _ModeHomePageState extends State<_ModeHomePage> {
     required ValueChanged<DateTime> onPicked,
   }) async {
     final now = DateTime.now();
+    final firstDate = DateTime(now.year, now.month, now.day);
+    final lastDate = DateTime(now.year + 2);
+    final candidate = current ?? firstDate.add(const Duration(days: 60));
+    final initialDate = candidate.isBefore(firstDate)
+        ? firstDate
+        : candidate.isAfter(lastDate)
+            ? lastDate
+            : candidate;
     final picked = await showDatePicker(
       context: context,
-      initialDate: current ?? DateTime(now.year, now.month, now.day + 60),
-      firstDate: DateTime(now.year, now.month, now.day),
-      lastDate: DateTime(now.year + 2),
+      initialDate: initialDate,
+      firstDate: firstDate,
+      lastDate: lastDate,
       helpText: '$labelの日程を設定',
     );
     if (picked == null) return;
