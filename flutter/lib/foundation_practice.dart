@@ -72,8 +72,7 @@ List<FoundationQuestion> selectBalancedQuestions(
     final candidates = questions.where((item) => item.subject == subject).toList()
       ..shuffle(rng);
     if (candidates.length < perSubject) {
-      throw StateError(subject + ' の問題が不足しています（' +
-          candidates.length.toString() + '/' + perSubject.toString() + '）。');
+      throw StateError('$subject の問題が不足しています（${candidates.length}/$perSubject）。');
     }
     selected.addAll(candidates.take(perSubject));
   }
