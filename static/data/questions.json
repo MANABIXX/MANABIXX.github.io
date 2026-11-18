@@ -20186,6 +20186,856 @@
       "explanation": "主語が三人称単数の現在形なので、一般動詞playにsをつけてplays。",
       "sourceNote": "下積みモード基礎確認問題",
       "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-japanese-001",
+      "subject": "japanese",
+      "topic": "国語・漢字",
+      "level": "基礎",
+      "prompt": "「漸次」の読み方として正しいものはどれか。",
+      "options": [
+        "ぜんじ",
+        "ざんじ",
+        "せんじ",
+        "ぜんし"
+      ],
+      "correct": 0,
+      "explanation": "「漸次」は「ぜんじ」と読み、「少しずつ順を追って」という意味。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-japanese-002",
+      "subject": "japanese",
+      "topic": "国語・漢字",
+      "level": "基礎",
+      "prompt": "「踏襲」の読み方として正しいものはどれか。",
+      "options": [
+        "とうしゅう",
+        "ふしゅう",
+        "とうじゅう",
+        "ふじゅう"
+      ],
+      "correct": 0,
+      "explanation": "「踏襲」は「とうしゅう」。前の人のやり方や方針を受け継ぐこと。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-japanese-003",
+      "subject": "japanese",
+      "topic": "国語・漢字",
+      "level": "標準",
+      "prompt": "「懸念」の意味として最も近いものはどれか。",
+      "options": [
+        "強く期待すること",
+        "気にかかって不安に思うこと",
+        "物事を簡単にすること",
+        "過去を振り返ること"
+      ],
+      "correct": 1,
+      "explanation": "「懸念」は、ある事柄について心配したり不安に思ったりすること。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-japanese-004",
+      "subject": "japanese",
+      "topic": "国語・語句・慣用句",
+      "level": "基礎",
+      "prompt": "「胸をなで下ろす」の意味として正しいものはどれか。",
+      "options": [
+        "悔しがる",
+        "安心する",
+        "怒りをこらえる",
+        "自慢する"
+      ],
+      "correct": 1,
+      "explanation": "心配事が解決して安心することを「胸をなで下ろす」という。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-japanese-005",
+      "subject": "japanese",
+      "topic": "国語・語句・慣用句",
+      "level": "標準",
+      "prompt": "「話に水を差す」の意味として正しいものはどれか。",
+      "options": [
+        "話を分かりやすくする",
+        "話を途中で止めたり興ざめさせたりする",
+        "話を大げさにする",
+        "話を別の人に伝える"
+      ],
+      "correct": 1,
+      "explanation": "「水を差す」は、進んでいる物事や盛り上がっている雰囲気を妨げること。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-japanese-006",
+      "subject": "japanese",
+      "topic": "国語・語種",
+      "level": "基礎",
+      "prompt": "「やま」のように、昔から日本で使われてきた言葉を何というか。",
+      "options": [
+        "漢語",
+        "外来語",
+        "和語",
+        "複合語"
+      ],
+      "correct": 2,
+      "explanation": "和語は日本で古くから使われてきた言葉。「山」「走る」などが例。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-japanese-007",
+      "subject": "japanese",
+      "topic": "国語・語種",
+      "level": "基礎",
+      "prompt": "「読書」のように、もとになる漢字の音読みを組み合わせた言葉を何というか。",
+      "options": [
+        "和語",
+        "漢語",
+        "外来語",
+        "擬音語"
+      ],
+      "correct": 1,
+      "explanation": "漢語は中国から伝わった語や漢字音をもとにした語。「読書」は漢語。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-japanese-008",
+      "subject": "japanese",
+      "topic": "国語・語種",
+      "level": "基礎",
+      "prompt": "「コンピューター」はどの種類の言葉か。",
+      "options": [
+        "和語",
+        "漢語",
+        "外来語",
+        "季語"
+      ],
+      "correct": 2,
+      "explanation": "外国語をもとに日本語として使われるようになった言葉を外来語という。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-japanese-009",
+      "subject": "japanese",
+      "topic": "国語・言葉の変化",
+      "level": "標準",
+      "prompt": "昔と現在で意味や使い方が変化した言葉について、最も適切な説明はどれか。",
+      "options": [
+        "言葉の意味は一度決まると変わらない",
+        "社会や生活の変化に伴って言葉の意味・用法も変わることがある",
+        "新しい言葉は必ず誤りである",
+        "古い言葉はすべて使ってはいけない"
+      ],
+      "correct": 1,
+      "explanation": "言葉は社会や文化、生活の変化とともに意味や使い方が変わることがある。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-japanese-010",
+      "subject": "japanese",
+      "topic": "国語・古典",
+      "level": "標準",
+      "prompt": "『万葉集』『古今和歌集』『新古今和歌集』を成立した順に並べたものはどれか。",
+      "options": [
+        "古今→万葉→新古今",
+        "万葉→古今→新古今",
+        "新古今→古今→万葉",
+        "万葉→新古今→古今"
+      ],
+      "correct": 1,
+      "explanation": "『万葉集』が最も古く、次に『古今和歌集』、その後に『新古今和歌集』が成立した。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-math-001",
+      "subject": "math",
+      "topic": "数学・2次方程式",
+      "level": "基礎",
+      "prompt": "x²−5x＋6＝0 の解はどれか。",
+      "options": [
+        "x＝1,6",
+        "x＝−2,−3",
+        "x＝2,3",
+        "x＝−2,3"
+      ],
+      "correct": 2,
+      "explanation": "x²−5x＋6＝(x−2)(x−3) と因数分解できるので、x＝2,3。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-math-002",
+      "subject": "math",
+      "topic": "数学・2次方程式",
+      "level": "基礎",
+      "prompt": "2x²−8＝0 の解はどれか。",
+      "options": [
+        "x＝±2",
+        "x＝±4",
+        "x＝2のみ",
+        "x＝−2のみ"
+      ],
+      "correct": 0,
+      "explanation": "2x²＝8よりx²＝4。したがってx＝±2。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-math-003",
+      "subject": "math",
+      "topic": "数学・2次方程式",
+      "level": "標準",
+      "prompt": "x²＋4x−1＝0 の解はどれか。",
+      "options": [
+        "x＝−2±√5",
+        "x＝2±√5",
+        "x＝−4±√3",
+        "x＝−2±√3"
+      ],
+      "correct": 0,
+      "explanation": "解の公式より x＝(−4±√(16＋4))/2＝−2±√5。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-math-004",
+      "subject": "math",
+      "topic": "数学・2次方程式",
+      "level": "標準",
+      "prompt": "縦がx cm、横が(x＋3) cmの長方形の面積が40 cm²である。xの値として適切なものはどれか。",
+      "options": [
+        "4",
+        "5",
+        "8",
+        "10"
+      ],
+      "correct": 1,
+      "explanation": "x(x＋3)＝40よりx²＋3x−40＝0。(x＋8)(x−5)＝0。長さなのでx＝5。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-math-005",
+      "subject": "math",
+      "topic": "数学・関数 y=ax²",
+      "level": "基礎",
+      "prompt": "y＝2x² のとき、x＝−3に対応するyの値はどれか。",
+      "options": [
+        "−18",
+        "−6",
+        "6",
+        "18"
+      ],
+      "correct": 3,
+      "explanation": "y＝2×(−3)²＝2×9＝18。2乗すると正の値になる。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-math-006",
+      "subject": "math",
+      "topic": "数学・関数 y=ax²",
+      "level": "基礎",
+      "prompt": "y＝ax² のグラフが y軸について対称になる理由として正しいものはどれか。",
+      "options": [
+        "xと−xを代入するとyの値が等しいから",
+        "xを2倍するとyが半分になるから",
+        "必ず原点を通らないから",
+        "yの値が常に負になるから"
+      ],
+      "correct": 0,
+      "explanation": "x²＝(−x)²なので、xと−xに対するyの値が等しく、グラフはy軸対称。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-math-007",
+      "subject": "math",
+      "topic": "数学・関数 y=ax²",
+      "level": "標準",
+      "prompt": "y＝−3x² で、xの値が1から2に変わるとき、yの値はどう変化するか。",
+      "options": [
+        "−3から−12になり、12小さくなる",
+        "−3から−6になり、3小さくなる",
+        "3から12になり、9大きくなる",
+        "−3から12になる"
+      ],
+      "correct": 0,
+      "explanation": "x＝1ではy＝−3、x＝2ではy＝−12。−12−(−3)＝−9なので、値は9小さくなる。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-math-008",
+      "subject": "math",
+      "topic": "数学・相似な図形",
+      "level": "基礎",
+      "prompt": "相似な2つの三角形で、対応する辺の比が2：3である。小さい三角形の辺が8 cmのとき、対応する大きい三角形の辺は何cmか。",
+      "options": [
+        "10",
+        "12",
+        "14",
+        "16"
+      ],
+      "correct": 1,
+      "explanation": "拡大比は3/2。8×3/2＝12 cm。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-math-009",
+      "subject": "math",
+      "topic": "数学・相似な図形",
+      "level": "標準",
+      "prompt": "相似比が3：5の2つの図形の面積比はどれか。",
+      "options": [
+        "3：5",
+        "6：10",
+        "9：25",
+        "27：125"
+      ],
+      "correct": 2,
+      "explanation": "面積比は相似比の2乗なので、3²：5²＝9：25。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-math-010",
+      "subject": "math",
+      "topic": "数学・相似な図形",
+      "level": "標準",
+      "prompt": "三角形ABCで、DはAB上、EはAC上にあり、DE∥BCである。AD：DB＝2：3のとき、AE：ECはどれか。",
+      "options": [
+        "2：3",
+        "3：2",
+        "2：5",
+        "3：5"
+      ],
+      "correct": 0,
+      "explanation": "DE∥BCより、平行線による線分の比からAD：DB＝AE：EC。したがって2：3。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-english-001",
+      "subject": "english",
+      "topic": "英語・関係代名詞（主格）",
+      "level": "基礎",
+      "prompt": "次の空欄に入る語として正しいものはどれか。 I have a friend (　) lives in Canada.",
+      "options": [
+        "who",
+        "which",
+        "where",
+        "when"
+      ],
+      "correct": 0,
+      "explanation": "先行詞が人で、関係代名詞が後ろの節の主語になるためwhoを使う。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-english-002",
+      "subject": "english",
+      "topic": "英語・関係代名詞（主格）",
+      "level": "基礎",
+      "prompt": "次の空欄に入る語として正しいものはどれか。 This is the book (　) is popular among students.",
+      "options": [
+        "who",
+        "which",
+        "where",
+        "whose"
+      ],
+      "correct": 1,
+      "explanation": "先行詞が物（the book）で、関係代名詞が後ろの節の主語になるためwhichを使う。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-english-003",
+      "subject": "english",
+      "topic": "英語・関係代名詞（主格）",
+      "level": "標準",
+      "prompt": "「私は英語を話す先生を知っています。」に最も近い英文はどれか。",
+      "options": [
+        "I know a teacher who speaks English.",
+        "I know a teacher which speaks English.",
+        "I know a teacher who speak English.",
+        "I know a teacher where speaks English."
+      ],
+      "correct": 0,
+      "explanation": "先行詞a teacherは人で、関係代名詞節の主語。who speaksとする。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-english-004",
+      "subject": "english",
+      "topic": "英語・関係代名詞（目的格）",
+      "level": "基礎",
+      "prompt": "次の空欄に入る語として正しいものはどれか。 This is the movie (　) I watched yesterday.",
+      "options": [
+        "who",
+        "which",
+        "where",
+        "when"
+      ],
+      "correct": 1,
+      "explanation": "先行詞が物で、関係代名詞がwatchedの目的語になるためwhichを使う。目的格のwhichは省略できる場合もある。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-english-005",
+      "subject": "english",
+      "topic": "英語・関係代名詞（目的格）",
+      "level": "基礎",
+      "prompt": "次の空欄に入る語として正しいものはどれか。 The woman (　) I met yesterday was kind.",
+      "options": [
+        "which",
+        "where",
+        "who",
+        "when"
+      ],
+      "correct": 2,
+      "explanation": "先行詞が人で、関係代名詞がmetの目的語になるためwhoまたはwhomが使える。選択肢ではwho。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-english-006",
+      "subject": "english",
+      "topic": "英語・関係代名詞（主格・目的格）",
+      "level": "標準",
+      "prompt": "関係代名詞が主格として使われている文はどれか。",
+      "options": [
+        "The boy who runs fast is my brother.",
+        "The boy who I met is my brother.",
+        "The book which I bought is new.",
+        "The song that she likes is famous."
+      ],
+      "correct": 0,
+      "explanation": "whoの後ろにrunsという動詞が続き、who自身がrunsの主語になっているため主格。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-english-007",
+      "subject": "english",
+      "topic": "英語・関係代名詞（主格・目的格）",
+      "level": "標準",
+      "prompt": "関係代名詞が目的格として使われている文はどれか。",
+      "options": [
+        "The dog that lives here is cute.",
+        "I have a friend who studies math.",
+        "This is the cake that my mother made.",
+        "The girl who sings is my sister."
+      ],
+      "correct": 2,
+      "explanation": "thatの後ろにmy mother madeと主語・動詞がそろっており、thatはmadeの目的語なので目的格。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-english-008",
+      "subject": "english",
+      "topic": "英語・関係代名詞（書き換え）",
+      "level": "標準",
+      "prompt": "次の2文を関係代名詞を使って1文にしたものはどれか。 I know the girl. She is playing tennis.",
+      "options": [
+        "I know the girl which is playing tennis.",
+        "I know the girl who is playing tennis.",
+        "I know the girl where is playing tennis.",
+        "I know the girl who playing tennis."
+      ],
+      "correct": 1,
+      "explanation": "先行詞the girlは人で、Sheが関係代名詞節の主語になるためwho is playing tennisとする。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-english-009",
+      "subject": "english",
+      "topic": "英語・関係代名詞（書き換え）",
+      "level": "標準",
+      "prompt": "次の2文を関係代名詞を使って1文にしたものはどれか。 This is the pen. I bought it yesterday.",
+      "options": [
+        "This is the pen who I bought yesterday.",
+        "This is the pen where I bought yesterday.",
+        "This is the pen which I bought yesterday.",
+        "This is the pen which bought I yesterday."
+      ],
+      "correct": 2,
+      "explanation": "先行詞the penは物で、itはboughtの目的語。which I bought yesterdayとまとめる。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-english-010",
+      "subject": "english",
+      "topic": "英語・関係代名詞（主格・目的格）",
+      "level": "標準",
+      "prompt": "関係代名詞の目的格を省略できる文はどれか。",
+      "options": [
+        "The man who lives next door is kind.",
+        "The car which my father bought is new.",
+        "The student who speaks French is here.",
+        "The dog that runs fast is mine."
+      ],
+      "correct": 1,
+      "explanation": "whichはmy father boughtの目的語なので省略できる。主格の関係代名詞はこの形では省略できない。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-science-001",
+      "subject": "science",
+      "topic": "理科・中和",
+      "level": "基礎",
+      "prompt": "塩酸に水酸化ナトリウム水溶液を少しずつ加えたとき、酸とアルカリが互いの性質を打ち消し合う反応を何というか。",
+      "options": [
+        "分解",
+        "中和",
+        "酸化",
+        "還元"
+      ],
+      "correct": 1,
+      "explanation": "酸とアルカリが反応して互いの性質を打ち消し合う反応を中和という。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-science-002",
+      "subject": "science",
+      "topic": "理科・中和",
+      "level": "基礎",
+      "prompt": "塩酸と水酸化ナトリウム水溶液が中和するとき、できる物質の組み合わせはどれか。",
+      "options": [
+        "水と酸素",
+        "水と塩化ナトリウム",
+        "水素と塩素",
+        "二酸化炭素と水"
+      ],
+      "correct": 1,
+      "explanation": "塩酸と水酸化ナトリウムの中和では、水と塩化ナトリウムができる。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-science-003",
+      "subject": "science",
+      "topic": "理科・力の合成・分解",
+      "level": "基礎",
+      "prompt": "同じ一直線上で右向きに5 N、左向きに2 Nの力がはたらく物体に加わる合力はどれか。",
+      "options": [
+        "右向き3 N",
+        "左向き3 N",
+        "右向き7 N",
+        "左向き7 N"
+      ],
+      "correct": 0,
+      "explanation": "反対向きの力なので大きさを引き算する。5−2＝3 Nで、向きは大きい右向き。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-science-004",
+      "subject": "science",
+      "topic": "理科・力の合成・分解",
+      "level": "標準",
+      "prompt": "1点に働く2つの力を、同じはたらきをする1つの力にまとめたものを何というか。",
+      "options": [
+        "分力",
+        "合力",
+        "摩擦力",
+        "浮力"
+      ],
+      "correct": 1,
+      "explanation": "複数の力と同じはたらきをする1つの力を合力という。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-science-005",
+      "subject": "science",
+      "topic": "理科・記録タイマー",
+      "level": "基礎",
+      "prompt": "1秒間に50回打点する記録タイマーで、6打点ごとの時間は何秒か。",
+      "options": [
+        "0.02秒",
+        "0.06秒",
+        "0.12秒",
+        "0.50秒"
+      ],
+      "correct": 2,
+      "explanation": "50回で1秒なので1打点は0.02秒。6打点分は0.02×6＝0.12秒。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-science-006",
+      "subject": "science",
+      "topic": "理科・記録タイマー",
+      "level": "標準",
+      "prompt": "記録タイマーのテープで、同じ時間ごとの打点間隔がだんだん広くなっている。物体の運動として正しいものはどれか。",
+      "options": [
+        "速さがだんだん大きくなっている",
+        "速さが一定である",
+        "速さがだんだん小さくなっている",
+        "物体が静止している"
+      ],
+      "correct": 0,
+      "explanation": "同じ時間に進む距離が大きくなっているため、速さが増している。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-science-007",
+      "subject": "science",
+      "topic": "理科・道具と仕事",
+      "level": "基礎",
+      "prompt": "仕事の大きさを求める式として正しいものはどれか。",
+      "options": [
+        "力÷力の向きに動いた距離",
+        "力×力の向きに動いた距離",
+        "質量×時間",
+        "速さ×時間"
+      ],
+      "correct": 1,
+      "explanation": "仕事[J]＝力[N]×力の向きに動いた距離[m]。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-science-008",
+      "subject": "science",
+      "topic": "理科・道具と仕事",
+      "level": "標準",
+      "prompt": "物体を20 Nの力で、力の向きに3 m動かした。した仕事は何Jか。",
+      "options": [
+        "6 J",
+        "17 J",
+        "23 J",
+        "60 J"
+      ],
+      "correct": 3,
+      "explanation": "仕事＝20 N×3 m＝60 J。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-science-009",
+      "subject": "science",
+      "topic": "理科・力学的エネルギー",
+      "level": "基礎",
+      "prompt": "位置エネルギーと運動エネルギーの和を何というか。",
+      "options": [
+        "化学エネルギー",
+        "熱エネルギー",
+        "力学的エネルギー",
+        "電気エネルギー"
+      ],
+      "correct": 2,
+      "explanation": "位置エネルギーと運動エネルギーを合わせたものを力学的エネルギーという。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-science-010",
+      "subject": "science",
+      "topic": "理科・力学的エネルギー",
+      "level": "標準",
+      "prompt": "摩擦や空気抵抗を無視できるとき、物体が高い位置から落下する間の力学的エネルギーはどうなるか。",
+      "options": [
+        "常に増加する",
+        "常に減少する",
+        "一定に保たれる",
+        "必ず0になる"
+      ],
+      "correct": 2,
+      "explanation": "位置エネルギーが減る分、運動エネルギーが増えるため、力学的エネルギーの和は一定に保たれる。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-social-001",
+      "subject": "social",
+      "topic": "社会・公民・日本国憲法",
+      "level": "基礎",
+      "prompt": "日本国憲法の三つの基本原理に含まれないものはどれか。",
+      "options": [
+        "国民主権",
+        "基本的人権の尊重",
+        "平和主義",
+        "君主主権"
+      ],
+      "correct": 3,
+      "explanation": "日本国憲法の三つの基本原理は国民主権、基本的人権の尊重、平和主義。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-social-002",
+      "subject": "social",
+      "topic": "社会・公民・基本的人権",
+      "level": "基礎",
+      "prompt": "日本国憲法第13条に関係が深く、個人を尊重し幸福を求める権利を何というか。",
+      "options": [
+        "幸福追求権",
+        "請願権",
+        "参政権",
+        "請求権"
+      ],
+      "correct": 0,
+      "explanation": "幸福追求権は、個人の尊重を基礎として幸福を追求する権利。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-social-003",
+      "subject": "social",
+      "topic": "社会・公民・国会",
+      "level": "基礎",
+      "prompt": "日本国憲法で、国会はどのような機関と定められているか。",
+      "options": [
+        "行政権の最高機関",
+        "国権の最高機関であり唯一の立法機関",
+        "司法権を行使する機関",
+        "地方自治を監督する機関"
+      ],
+      "correct": 1,
+      "explanation": "憲法第41条は、国会を国権の最高機関であり、国の唯一の立法機関と定めている。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-social-004",
+      "subject": "social",
+      "topic": "社会・公民・三権分立",
+      "level": "標準",
+      "prompt": "内閣が国会の信任に基づいて成立し、国会に対して連帯して責任を負うしくみを何というか。",
+      "options": [
+        "大統領制",
+        "議院内閣制",
+        "直接民主制",
+        "司法制度"
+      ],
+      "correct": 1,
+      "explanation": "議院内閣制では、内閣は国会の信任に基づき、国会に対して責任を負う。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-social-005",
+      "subject": "social",
+      "topic": "社会・公民・裁判所",
+      "level": "基礎",
+      "prompt": "裁判所が、法律や命令などが憲法に違反していないかを判断する権限を何というか。",
+      "options": [
+        "行政権",
+        "立法権",
+        "違憲審査権",
+        "条例制定権"
+      ],
+      "correct": 2,
+      "explanation": "違憲審査権は、法律や命令などが憲法に適合するかを判断する権限。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-social-006",
+      "subject": "social",
+      "topic": "社会・公民・地方自治",
+      "level": "基礎",
+      "prompt": "地方公共団体の長である都道府県知事や市町村長は、原則としてどのように選ばれるか。",
+      "options": [
+        "住民の直接選挙",
+        "国会の指名",
+        "内閣の任命",
+        "裁判所の選出"
+      ],
+      "correct": 0,
+      "explanation": "知事や市町村長は、その地方公共団体の住民が直接選挙で選ぶ。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-social-007",
+      "subject": "social",
+      "topic": "社会・公民・選挙",
+      "level": "標準",
+      "prompt": "選挙で、一定の年齢に達したすべての国民に選挙権を認める原則を何というか。",
+      "options": [
+        "秘密選挙",
+        "平等選挙",
+        "普通選挙",
+        "直接選挙"
+      ],
+      "correct": 2,
+      "explanation": "普通選挙は、財産や納税額などによって選挙権を制限せず、一定年齢以上の国民に認める原則。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-social-008",
+      "subject": "social",
+      "topic": "社会・公民・基本的人権",
+      "level": "標準",
+      "prompt": "働く人が団結して労働組合をつくり、団体交渉や団体行動をする権利をまとめて何というか。",
+      "options": [
+        "自由権",
+        "社会権",
+        "労働基本権",
+        "参政権"
+      ],
+      "correct": 2,
+      "explanation": "団結権・団体交渉権・団体行動権をまとめて労働基本権（三つの権利）という。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-social-009",
+      "subject": "social",
+      "topic": "社会・公民・経済",
+      "level": "基礎",
+      "prompt": "需要量が供給量を上回る状態が続くと、一般に価格はどうなるか。",
+      "options": [
+        "下がりやすい",
+        "上がりやすい",
+        "必ず0円になる",
+        "変化しない"
+      ],
+      "correct": 1,
+      "explanation": "買いたい量が売りたい量を上回ると品不足になり、一般に価格は上がる方向に動く。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
+    },
+    {
+      "id": "daily-2026-11-17-social-010",
+      "subject": "social",
+      "topic": "社会・公民・財政",
+      "level": "標準",
+      "prompt": "国や地方公共団体が、公共サービスなどを行うために集める収入の中心となるものはどれか。",
+      "options": [
+        "税金",
+        "株式配当",
+        "個人の貯金",
+        "輸入品の価格"
+      ],
+      "correct": 0,
+      "explanation": "国や地方公共団体の収入の中心は税金であり、教育・福祉・公共事業などに使われる。",
+      "sourceNote": "2026年11月19日・20日の第3回定期テスト範囲表に基づくオリジナル問題。教科書・ワークの本文や設問の転載ではない。",
+      "sourceRef": ""
     }
   ]
 }
