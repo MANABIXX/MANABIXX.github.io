@@ -40,6 +40,46 @@ const add = (id, subject, topic, prompt, options, correct, explanation) => quest
 for (const q of questions) {
   if (q.options.length !== 4 || q.correct < 0 || q.correct > 3) throw new Error('Invalid foundation question: ' + q.id);
 }
-await fs.writeFile(path.join(root, 'static/data/foundation-training.json'),
-  JSON.stringify({ title: '下積みモード', target: '5教科の基礎反復', reviewPolicy: '間違えた問題を復習キューへ戻す', questions }, null, 2) + '\n');
-console.log('Generated ' + questions.length + ' five-subject foundation-training questions.');
+const outputPath = path.join(root, 'static/data/foundation-training.json');
+let existingPayload = {};
+try {
+  existingPayload = JSON.parse(await fs.readFile(outputPath, 'utf8'));
+} catch (error) {
+  if (error.code !== 'ENOENT') throw error;
+}
+const merged = new Map((existingPayload.questions ?? []).map((question) => [question.id, question]));
+for (const question of questions) {
+  const previous = merged.get(question.id);
+  if (previous && JSON.stringify(previous) !== JSON.stringify(question)) {
+    throw new Error('Foundation question ID collision: ' + question.id);
+  }
+  merged.set(question.id, question);
+}
+const allQuestions = [...merged.values()];
+const seenIds = new Set();
+const seenPrompts = new Set();
+const subjectCounts = Object.fromEntries(['japanese', 'math', 'english', 'science', 'social'].map((subject) => [subject, 0]));
+for (const question of allQuestions) {
+  if (!question.id || seenIds.has(question.id)) throw new Error('Duplicate/empty foundation ID: ' + question.id);
+  seenIds.add(question.id);
+  const promptKey = question.subject + '|' + question.prompt.trim();
+  if (seenPrompts.has(promptKey)) throw new Error('Duplicate foundation prompt: ' + question.prompt);
+  seenPrompts.add(promptKey);
+  if (!Array.isArray(question.options) || question.options.length !== 4 ||
+      new Set(question.options).size !== 4 || !Number.isInteger(question.correct) ||
+      question.correct < 0 || question.correct > 3 || !question.explanation?.trim()) {
+    throw new Error('Invalid foundation question: ' + question.id);
+  }
+  subjectCounts[question.subject] = (subjectCounts[question.subject] ?? 0) + 1;
+}
+for (const [subject, count] of Object.entries(subjectCounts)) {
+  if (count < 10) throw new Error('Insufficient ' + subject + ' questions: ' + count);
+}
+await fs.writeFile(outputPath, JSON.stringify({
+  ...existingPayload,
+  title: '下積みモード',
+  target: '5教科の基礎反復',
+  reviewPolicy: '間違えた問題を復習キューへ戻す',
+  questions: allQuestions
+}, null, 2) + '\n');
+console.log('Validated and preserved ' + allQuestions.length + ' five-subject foundation-training questions (' + JSON.stringify(subjectCounts) + ').');
