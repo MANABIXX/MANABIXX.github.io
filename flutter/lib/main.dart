@@ -380,7 +380,9 @@ class _ModeHomePage extends StatefulWidget {
 
 class _ModeHomePageState extends State<_ModeHomePage> {
   List<Map<String, dynamic>> _history = [];
-  DateTime? _examDate;
+  DateTime? _kosenExamDate;
+  DateTime? _prefecturalExamDate;
+  DateTime? _seiranExamDate;
   bool _loaded = false;
 
   bool get _kosen => widget.mode == 'kosen';
@@ -389,9 +391,10 @@ class _ModeHomePageState extends State<_ModeHomePage> {
   String get _historyKey => _kosen
       ? 'manabixx.mode.kosen.history'
       : 'manabixx.learning._data_foundation-training.json.history';
-  String get _examDateKey => _kosen
-      ? 'manabixx.mode.kosen.exam-date'
-      : 'manabixx.mode.foundation.exam-date';
+  String get _kosenExamDateKey => 'manabixx.mode.kosen.exam-date';
+  String get _legacyFoundationExamDateKey => 'manabixx.mode.foundation.exam-date';
+  String get _prefecturalExamDateKey => 'manabixx.mode.foundation.exam-date.tochigi';
+  String get _seiranExamDateKey => 'manabixx.mode.foundation.exam-date.seiran';
 
   @override
   void initState() {
@@ -403,11 +406,23 @@ class _ModeHomePageState extends State<_ModeHomePage> {
     final prefs = await SharedPreferences.getInstance();
     final raw = prefs.getString(_historyKey);
     final rows = raw == null ? <dynamic>[] : jsonDecode(raw) as List<dynamic>;
-    final date = prefs.getString(_examDateKey);
+    final legacyDate = prefs.getString(
+      _kosen ? _kosenExamDateKey : _legacyFoundationExamDateKey,
+    );
+    final prefecturalDate = _kosen
+        ? null
+        : (prefs.getString(_prefecturalExamDateKey) ?? legacyDate);
+    final seiranDate = _kosen ? null : prefs.getString(_seiranExamDateKey);
     if (!mounted) return;
     setState(() {
       _history = rows.whereType<Map<String, dynamic>>().toList();
-      _examDate = date == null ? null : DateTime.tryParse(date);
+      _kosenExamDate = _kosen && legacyDate != null
+          ? DateTime.tryParse(legacyDate)
+          : null;
+      _prefecturalExamDate = prefecturalDate == null
+          ? null
+          : DateTime.tryParse(prefecturalDate);
+      _seiranExamDate = seiranDate == null ? null : DateTime.tryParse(seiranDate);
       _loaded = true;
     });
   }
@@ -432,19 +447,40 @@ class _ModeHomePageState extends State<_ModeHomePage> {
     return count;
   }
 
-  Future<void> _setExamDate() async {
+  Future<void> _setExamDate({
+    required String storageKey,
+    required String label,
+    required DateTime? current,
+    required ValueChanged<DateTime> onPicked,
+  }) async {
     final now = DateTime.now();
     final picked = await showDatePicker(
       context: context,
-      initialDate: _examDate ?? DateTime(now.year, now.month, now.day + 60),
+      initialDate: current ?? DateTime(now.year, now.month, now.day + 60),
       firstDate: DateTime(now.year, now.month, now.day),
       lastDate: DateTime(now.year + 2),
-      helpText: '入試日を設定',
+      helpText: '$labelの日程を設定',
     );
     if (picked == null) return;
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_examDateKey, picked.toIso8601String());
-    if (mounted) setState(() => _examDate = picked);
+    await prefs.setString(storageKey, picked.toIso8601String());
+    if (mounted) setState(() => onPicked(picked));
+  }
+
+  Widget _countdownCard(String label, DateTime? date, VoidCallback onTap) {
+    final now = DateTime.now();
+    final days = date?.difference(DateTime(now.year, now.month, now.day)).inDays;
+    return Card(
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        title: Text(label),
+        subtitle: Text(days == null
+            ? '日程を設定すると残り日数を表示します。'
+            : days < 0 ? '試験日から ${-days} 日経過' : 'あと $days 日'),
+        trailing: const Icon(Icons.edit_calendar_outlined),
+        onTap: onTap,
+      ),
+    );
   }
 
 
@@ -475,7 +511,6 @@ class _ModeHomePageState extends State<_ModeHomePage> {
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
-    final examDays = _examDate?.difference(DateTime(now.year, now.month, now.day)).inDays;
     return Scaffold(
       appBar: AppBar(
         title: Text(_title),
@@ -524,13 +559,40 @@ class _ModeHomePageState extends State<_ModeHomePage> {
             ]),
           )),
           const SizedBox(height: 16),
-          Card(child: ListTile(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            title: const Text('入試までのカウントダウン'),
-            subtitle: Text(examDays == null ? '日程を設定すると残り日数を表示します。' : 'あと $examDays 日'),
-            trailing: const Icon(Icons.edit_calendar_outlined),
-            onTap: _setExamDate,
-          )),
+          if (_kosen)
+            _countdownCard(
+              '高専入試まで',
+              _kosenExamDate,
+              () => _setExamDate(
+                storageKey: _kosenExamDateKey,
+                label: '高専入試',
+                current: _kosenExamDate,
+                onPicked: (date) => _kosenExamDate = date,
+              ),
+            )
+          else ...[
+            _countdownCard(
+              '栃木県立高校入試まで',
+              _prefecturalExamDate,
+              () => _setExamDate(
+                storageKey: _prefecturalExamDateKey,
+                label: '栃木県立高校入試',
+                current: _prefecturalExamDate,
+                onPicked: (date) => _prefecturalExamDate = date,
+              ),
+            ),
+            const SizedBox(height: 10),
+            _countdownCard(
+              '青藍泰斗高校入試まで',
+              _seiranExamDate,
+              () => _setExamDate(
+                storageKey: _seiranExamDateKey,
+                label: '青藍泰斗高校入試',
+                current: _seiranExamDate,
+                onPicked: (date) => _seiranExamDate = date,
+              ),
+            ),
+          ],
           const SizedBox(height: 20),
           Card(child: Padding(padding: const EdgeInsets.all(14), child: Column(
             crossAxisAlignment: CrossAxisAlignment.start, children: [
