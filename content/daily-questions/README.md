@@ -17,8 +17,7 @@ Allowed categories:
 - `publicExam` → `static/data/public-exam.json`
 - `kosen` → `static/data/kosen-questions.json`
 
-Every batch must contain at least 10 original questions for each of the five subjects
-(`japanese`, `math`, `english`, `science`, `social`). Each item must have a unique
+Batch balance follows the destination dataset: `foundation` requires at least 6 questions for each of the five subjects; `publicExam` requires at least 10 science and 10 social-studies questions (the current public-exam bank's supported subjects); `kosen` requires at least 10 questions for each of the five subjects. Each item must have a unique
 ID beginning with `daily-YYYY-MM-DD-`, a prompt, exactly four options, a correct index
 from 0 to 3, and a meaningful explanation.
 
