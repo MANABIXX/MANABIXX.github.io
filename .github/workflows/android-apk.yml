@@ -133,8 +133,12 @@ jobs:
           TAG: ${{ steps.version.outputs.tag }}
           VERSION: ${{ steps.version.outputs.version }}
           APK: flutter/build/app/outputs/flutter-apk/app-release.apk
+          RELEASE_APK: flutter/build/app/outputs/flutter-apk/MANABIXX-Android.apk
           APK_SHA256: ${{ steps.apk.outputs.sha256 }}
         run: |
+          test -s "$APK"
+          cp "$APK" "$RELEASE_APK"
+          test -s "$RELEASE_APK"
           cat > "$RUNNER_TEMP/release-notes.md" <<EOF
           MANABIXX Android APK release.
 
@@ -143,10 +147,10 @@ jobs:
           SHA-256: $APK_SHA256
           EOF
           if gh release view "$TAG" >/dev/null 2>&1; then
-            gh release upload "$TAG" "$APK#MANABIXX-Android.apk" --clobber
+            gh release upload "$TAG" "$RELEASE_APK" --clobber
             gh release edit "$TAG" --title "MANABIXX v$VERSION" --notes-file "$RUNNER_TEMP/release-notes.md"
           else
-            gh release create "$TAG" "$APK#MANABIXX-Android.apk" --title "MANABIXX v$VERSION" --notes-file "$RUNNER_TEMP/release-notes.md"
+            gh release create "$TAG" "$RELEASE_APK" --title "MANABIXX v$VERSION" --notes-file "$RUNNER_TEMP/release-notes.md"
           fi
 
       - name: Verify published release asset
