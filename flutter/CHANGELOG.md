@@ -5,6 +5,7 @@
 - 旧 `/shitadumi/opinion/` のURLを維持し、Flutter版でも「意見受付停止中」の案内を表示するようにしました。新しい `/practice/foundation-training/opinion` からも同じ案内を開けます。
 - 現行の受付停止方針を維持し、入力フォーム・送信処理・端末内の下書き保存は追加していません。GitHub Issueや外部送信先へ自動送信する動作もありません。
 - Flutterのウィジェットテストで旧URLの表示、フォーム非表示、更新履歴への導線を確認するようにし、Pages成果物の検証でもルート登録を必須にしました。
+- CIのFlutter analyzerで検出された新しい案内カードのconst警告を修正し、テスト・Webビルドへ進める状態にしました。
 
 
 ## 2026-11-19（Android APKリリース名の検証修正）

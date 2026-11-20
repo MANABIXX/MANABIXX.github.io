@@ -26,7 +26,7 @@ class FeedbackPausedPage extends StatelessWidget {
                     style: TextStyle(fontSize: 23, fontWeight: FontWeight.w900),
                   ),
                   const SizedBox(height: 18),
-                  Card(
+                  const Card(
                     child: Padding(
                       padding: const EdgeInsets.all(20),
                       child: Column(
