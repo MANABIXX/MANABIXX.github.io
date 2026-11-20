@@ -468,4 +468,21 @@ void main() {
     tester.view.resetPhysicalSize();
   });
 
+
+
+  testWidgets('keeps foundation exam countdown labels school-neutral', (tester) async {
+    SharedPreferences.setMockInitialValues({
+      'manabixx.mode.auth.haru': DateTime.now().toIso8601String(),
+    });
+    await prepareViewport(tester);
+    await tester.pumpWidget(const ManabiXXApp());
+    await tester.pumpAndSettle();
+
+    final navigationContext = tester.element(find.byType(NavigationBar));
+    Navigator.of(navigationContext).pushNamed('/practice/foundation-training');
+    await tester.pumpAndSettle();
+
+    expect(find.text('県立高校入試まで'), findsOneWidget);
+    expect(find.text('私立高校入試まで'), findsOneWidget);
+  });
 }
