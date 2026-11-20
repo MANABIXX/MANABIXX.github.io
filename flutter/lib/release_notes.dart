@@ -4,6 +4,8 @@ class ReleaseNotesPage extends StatelessWidget {
   const ReleaseNotesPage({super.key});
 
   static const _items = <_ReleaseEntry>[
+    _ReleaseEntry(date: '2026-11-21', category: 'PRIVACY', title: '入試表示と模試データの学校名を一般化',
+      body: '下積みモードのカウントダウン表示から個別の学校名を除き、県立高校入試・私立高校入試の一般表記に変更。模試データ100問の入試区分とタイトル、旧ブランド表記も整理しました。問題文・選択肢・正答・解説・既存IDは保持し、端末内の学習履歴との互換性を維持します。'),
     _ReleaseEntry(date: '2026-11-21', category: 'ROUTING / PRIVACY', title: '下積みモードの意見受付停止ページをFlutterへ移植',
       body: '旧 /shitadumi/opinion/ のURLを維持し、Flutter版でも受付停止中の案内を表示。新しい下積みモード配下のURLからも開けます。入力フォーム・送信処理・下書き保存は追加せず、更新履歴への導線だけを提供します。'),
     _ReleaseEntry(date: '2026-11-16', category: 'BLOG', title: '「君へ」画面をRust・Leptosで再構築',
