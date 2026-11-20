@@ -28,16 +28,16 @@ class FeedbackPausedPage extends StatelessWidget {
                   const SizedBox(height: 18),
                   const Card(
                     child: Padding(
-                      padding: const EdgeInsets.all(20),
+                      padding: EdgeInsets.all(20),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                          Text(
                             '送信機能は現在利用できません',
                             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
                           ),
-                          const SizedBox(height: 10),
-                          const Text(
+                          SizedBox(height: 10),
+                          Text(
                             '意見を安全に保存する方法を整えるまで、受付を停止しています。'
                             'この画面では入力・送信・下書き保存を行いません。',
                             style: TextStyle(
