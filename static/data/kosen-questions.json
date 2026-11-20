@@ -1,7 +1,7 @@
 {
   "title": "高専入試対策・5教科オリジナル演習",
-  "generatedAt": "2026-11-20T00:27:11.414Z",
-  "registryCommit": "df26f3f5a27c8ff225cfdf590d4c032e4ba0b839",
+  "generatedAt": "2026-11-20T23:51:07.600Z",
+  "registryCommit": "9860c71243c775372deeddcb38808c61aba3e483",
   "questionPolicy": "過去問PDFそのものの転載ではなく、出題形式と抽出した分野語句を参考に新規作成した4択問題。",
   "questions": [
     {
@@ -950,7 +950,7 @@
       "sourceNote": "2024年度の社会過去問PDFから「地形図」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2024,
       "sourceFile": "/data/kosen-past-papers/2024-social.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2024_syakai_monndai2.pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2024_syakai_monndai2.pdf"
     },
     {
       "id": "registry-2024-social-貿易",
@@ -970,7 +970,7 @@
       "sourceNote": "2024年度の社会過去問PDFから「貿易」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2024,
       "sourceFile": "/data/kosen-past-papers/2024-social.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2024_syakai_monndai2.pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2024_syakai_monndai2.pdf"
     },
     {
       "id": "registry-2024-social-産業",
@@ -990,7 +990,7 @@
       "sourceNote": "2024年度の社会過去問PDFから「産業」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2024,
       "sourceFile": "/data/kosen-past-papers/2024-social.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2024_syakai_monndai2.pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2024_syakai_monndai2.pdf"
     },
     {
       "id": "registry-2024-social-明治",
@@ -1010,7 +1010,7 @@
       "sourceNote": "2024年度の社会過去問PDFから「明治」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2024,
       "sourceFile": "/data/kosen-past-papers/2024-social.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2024_syakai_monndai2.pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2024_syakai_monndai2.pdf"
     },
     {
       "id": "registry-2024-social-憲法",
@@ -1030,7 +1030,7 @@
       "sourceNote": "2024年度の社会過去問PDFから「憲法」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2024,
       "sourceFile": "/data/kosen-past-papers/2024-social.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2024_syakai_monndai2.pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2024_syakai_monndai2.pdf"
     },
     {
       "id": "registry-2025-social-気候",
@@ -1050,7 +1050,7 @@
       "sourceNote": "2025年度の社会過去問PDFから「気候」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2025,
       "sourceFile": "/data/kosen-past-papers/2025-social.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2025_syakai_mondai%20(1).pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2025_syakai_mondai%20(1).pdf"
     },
     {
       "id": "registry-2025-social-地形図",
@@ -1070,7 +1070,7 @@
       "sourceNote": "2025年度の社会過去問PDFから「地形図」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2025,
       "sourceFile": "/data/kosen-past-papers/2025-social.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2025_syakai_mondai%20(1).pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2025_syakai_mondai%20(1).pdf"
     },
     {
       "id": "registry-2025-social-明治",
@@ -1090,7 +1090,7 @@
       "sourceNote": "2025年度の社会過去問PDFから「明治」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2025,
       "sourceFile": "/data/kosen-past-papers/2025-social.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2025_syakai_mondai%20(1).pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2025_syakai_mondai%20(1).pdf"
     },
     {
       "id": "registry-2025-social-憲法",
@@ -1110,7 +1110,7 @@
       "sourceNote": "2025年度の社会過去問PDFから「憲法」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2025,
       "sourceFile": "/data/kosen-past-papers/2025-social.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2025_syakai_mondai%20(1).pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2025_syakai_mondai%20(1).pdf"
     },
     {
       "id": "registry-2026-social-貿易",
@@ -1130,7 +1130,7 @@
       "sourceNote": "2026年度の社会過去問PDFから「貿易」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2026,
       "sourceFile": "/data/kosen-past-papers/2026-social.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2026_syakai_mondai2%20(1).pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2026_syakai_mondai2%20(1).pdf"
     },
     {
       "id": "registry-2026-social-産業",
@@ -1150,7 +1150,7 @@
       "sourceNote": "2026年度の社会過去問PDFから「産業」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2026,
       "sourceFile": "/data/kosen-past-papers/2026-social.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2026_syakai_mondai2%20(1).pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2026_syakai_mondai2%20(1).pdf"
     },
     {
       "id": "registry-2026-social-明治",
@@ -1170,7 +1170,7 @@
       "sourceNote": "2026年度の社会過去問PDFから「明治」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2026,
       "sourceFile": "/data/kosen-past-papers/2026-social.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2026_syakai_mondai2%20(1).pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2026_syakai_mondai2%20(1).pdf"
     },
     {
       "id": "registry-2026-social-憲法",
@@ -1190,7 +1190,7 @@
       "sourceNote": "2026年度の社会過去問PDFから「憲法」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2026,
       "sourceFile": "/data/kosen-past-papers/2026-social.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2026_syakai_mondai2%20(1).pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2026_syakai_mondai2%20(1).pdf"
     },
     {
       "id": "registry-2026-social-需要",
@@ -1210,7 +1210,7 @@
       "sourceNote": "2026年度の社会過去問PDFから「需要」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2026,
       "sourceFile": "/data/kosen-past-papers/2026-social.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2026_syakai_mondai2%20(1).pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2026_syakai_mondai2%20(1).pdf"
     },
     {
       "id": "registry-2026-social-供給",
@@ -1230,7 +1230,7 @@
       "sourceNote": "2026年度の社会過去問PDFから「供給」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2026,
       "sourceFile": "/data/kosen-past-papers/2026-social.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2026_syakai_mondai2%20(1).pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/02_2026_syakai_mondai2%20(1).pdf"
     },
     {
       "id": "registry-2024-math-確率",
@@ -1250,7 +1250,7 @@
       "sourceNote": "2024年度の数学過去問PDFから「確率」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2024,
       "sourceFile": "/data/kosen-past-papers/2024-math.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/03_2024_sugaku_mondai.pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/03_2024_sugaku_mondai.pdf"
     },
     {
       "id": "registry-2025-math-確率",
@@ -1270,7 +1270,7 @@
       "sourceNote": "2025年度の数学過去問PDFから「確率」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2025,
       "sourceFile": "/data/kosen-past-papers/2025-math.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/03_2025_sugaku_mondai%20(1).pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/03_2025_sugaku_mondai%20(1).pdf"
     },
     {
       "id": "registry-2026-math-確率",
@@ -1290,7 +1290,7 @@
       "sourceNote": "2026年度の数学過去問PDFから「確率」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2026,
       "sourceFile": "/data/kosen-past-papers/2026-math.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/03_2026_sugaku_mondai%20(1).pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/03_2026_sugaku_mondai%20(1).pdf"
     },
     {
       "id": "registry-2026-math-図形",
@@ -1310,7 +1310,7 @@
       "sourceNote": "2026年度の数学過去問PDFから「図形」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2026,
       "sourceFile": "/data/kosen-past-papers/2026-math.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/03_2026_sugaku_mondai%20(1).pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/03_2026_sugaku_mondai%20(1).pdf"
     },
     {
       "id": "registry-2024-science-電流",
@@ -1330,7 +1330,7 @@
       "sourceNote": "2024年度の理科過去問PDFから「電流」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2024,
       "sourceFile": "/data/kosen-past-papers/2024-science.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2024_rika_mondai.pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2024_rika_mondai.pdf"
     },
     {
       "id": "registry-2024-science-電圧",
@@ -1350,7 +1350,7 @@
       "sourceNote": "2024年度の理科過去問PDFから「電圧」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2024,
       "sourceFile": "/data/kosen-past-papers/2024-science.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2024_rika_mondai.pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2024_rika_mondai.pdf"
     },
     {
       "id": "registry-2024-science-抵抗",
@@ -1370,7 +1370,7 @@
       "sourceNote": "2024年度の理科過去問PDFから「抵抗」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2024,
       "sourceFile": "/data/kosen-past-papers/2024-science.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2024_rika_mondai.pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2024_rika_mondai.pdf"
     },
     {
       "id": "registry-2024-science-中和",
@@ -1390,7 +1390,7 @@
       "sourceNote": "2024年度の理科過去問PDFから「中和」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2024,
       "sourceFile": "/data/kosen-past-papers/2024-science.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2024_rika_mondai.pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2024_rika_mondai.pdf"
     },
     {
       "id": "registry-2024-science-天体",
@@ -1410,7 +1410,7 @@
       "sourceNote": "2024年度の理科過去問PDFから「天体」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2024,
       "sourceFile": "/data/kosen-past-papers/2024-science.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2024_rika_mondai.pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2024_rika_mondai.pdf"
     },
     {
       "id": "registry-2026-science-電流",
@@ -1430,7 +1430,7 @@
       "sourceNote": "2026年度の理科過去問PDFから「電流」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2026,
       "sourceFile": "/data/kosen-past-papers/2026-science.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2026_rika_mondai%20(1).pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2026_rika_mondai%20(1).pdf"
     },
     {
       "id": "registry-2026-science-電圧",
@@ -1450,7 +1450,7 @@
       "sourceNote": "2026年度の理科過去問PDFから「電圧」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2026,
       "sourceFile": "/data/kosen-past-papers/2026-science.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2026_rika_mondai%20(1).pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2026_rika_mondai%20(1).pdf"
     },
     {
       "id": "registry-2026-science-抵抗",
@@ -1470,7 +1470,7 @@
       "sourceNote": "2026年度の理科過去問PDFから「抵抗」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2026,
       "sourceFile": "/data/kosen-past-papers/2026-science.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2026_rika_mondai%20(1).pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2026_rika_mondai%20(1).pdf"
     },
     {
       "id": "registry-2026-science-中和",
@@ -1490,7 +1490,7 @@
       "sourceNote": "2026年度の理科過去問PDFから「中和」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2026,
       "sourceFile": "/data/kosen-past-papers/2026-science.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2026_rika_mondai%20(1).pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2026_rika_mondai%20(1).pdf"
     },
     {
       "id": "registry-2026-science-遺伝",
@@ -1510,7 +1510,7 @@
       "sourceNote": "2026年度の理科過去問PDFから「遺伝」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2026,
       "sourceFile": "/data/kosen-past-papers/2026-science.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2026_rika_mondai%20(1).pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2026_rika_mondai%20(1).pdf"
     },
     {
       "id": "registry-2026-science-地震",
@@ -1530,7 +1530,7 @@
       "sourceNote": "2026年度の理科過去問PDFから「地震」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2026,
       "sourceFile": "/data/kosen-past-papers/2026-science.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2026_rika_mondai%20(1).pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/9860c71243c775372deeddcb38808c61aba3e483/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/04_2026_rika_mondai%20(1).pdf"
     }
   ]
 }
