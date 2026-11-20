@@ -1,5 +1,12 @@
 # Flutter版 更新履歴
 
+## 2026-11-21（下積みモードの意見受付停止ページをFlutterへ移植）
+
+- 旧 `/shitadumi/opinion/` のURLを維持し、Flutter版でも「意見受付停止中」の案内を表示するようにしました。新しい `/practice/foundation-training/opinion` からも同じ案内を開けます。
+- 現行の受付停止方針を維持し、入力フォーム・送信処理・端末内の下書き保存は追加していません。GitHub Issueや外部送信先へ自動送信する動作もありません。
+- Flutterのウィジェットテストで旧URLの表示、フォーム非表示、更新履歴への導線を確認するようにし、Pages成果物の検証でもルート登録を必須にしました。
+
+
 ## 2026-11-19（Android APKリリース名の検証修正）
 
 - APK本体の生成・解析・テスト・workflow artifactのアップロードは成功していた一方、GitHub Release上のファイル名が `app-release.apk` のままで、検証処理が期待する `MANABIXX-Android.apk` と一致していませんでした。

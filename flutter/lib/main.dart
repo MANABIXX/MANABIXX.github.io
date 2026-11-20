@@ -8,6 +8,7 @@ import 'package:manabixx_web/foundation_roadmap.dart';
 import 'package:manabixx_web/to_you.dart';
 import 'package:manabixx_web/workspace.dart';
 import 'package:manabixx_web/release_notes.dart';
+import 'package:manabixx_web/feedback_paused.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
@@ -105,6 +106,10 @@ class ManabiXXApp extends StatelessWidget {
         '/to-you': (_) => const ToYouPage(),
         '/releases': (_) => const ReleaseNotesPage(),
         '/release-notes': (_) => const ReleaseNotesPage(),
+        '/shitadumi/opinion': (_) => const FeedbackPausedPage(),
+        '/shitadumi/opinion/': (_) => const FeedbackPausedPage(),
+        '/practice/foundation-training/opinion': (_) => const FeedbackPausedPage(),
+        '/practice/foundation-training/opinion/': (_) => const FeedbackPausedPage(),
         '/foundation': (_) => const FoundationPracticePage(includeAllSubjects: true),
         '/foundation/': (_) => const FoundationPracticePage(),
         '/exam': (_) => const FoundationPracticePage(

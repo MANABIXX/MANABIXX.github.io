@@ -36,7 +36,7 @@ if (!index.includes('navigator.serviceWorker.register("/flutter-sw.js"')) {
   throw new Error('Root service worker registration is missing.');
 }
 if (/<(?:script|link)[^>]+(?:src|href)=["']\/flutter\//i.test(index)) throw new Error('Root app entry point still references /flutter/ assets.');
-for (const route of ['/practice/kosen', '/practice/kosen/study', '/practice/kosen/math-section-1', '/practice/foundation-training', '/practice/foundation-training/study', '/records', '/summary', '/to-you']) {
+for (const route of ['/practice/kosen', '/practice/kosen/study', '/practice/kosen/math-section-1', '/practice/foundation-training', '/practice/foundation-training/study', '/shitadumi/opinion', '/records', '/summary', '/to-you']) {
   if (!routes.includes(`'${route}'`)) throw new Error(`Flutter route is missing: ${route}`);
 }
 

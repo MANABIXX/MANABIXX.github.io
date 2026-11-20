@@ -26,7 +26,7 @@ Correction (2026-11-14): `main` の `.github/workflows/pages.yml` は `flutter/b
 | Summary / notes | `src/routes/summary/`; legacy `summary.html`; `static/data/summary-foundation.json` | Flutter `/summary` implemented with 450 records; visual note/library parity pending |
 | Workspace | `src/routes/workspace/` | Flutter `/workspace` implemented: daily task list, 15/25/45/60-minute focus timer, question-backed flashcards, and daily notes. Uses the legacy local persistence keys; cross-device sync is not provided. Widget tests added; browser/mobile parity still needs production verification |
 | Private content | legacy `private.html`, `n-exclusive.html`, `s-exclusive.html`; matching JSON | Not started; audit access boundary first |
-| Shitadumi mode | `shitadumi/` static app, articles, mock exams, opinion, PWA and release notes | Not started |
+| Shitadumi mode | `shitadumi/` static app, articles, mock exams, opinion, PWA and release notes | Flutter now preserves `/shitadumi/opinion/` and `/practice/foundation-training/opinion` as a read-only paused-feedback notice; no form, submission, or draft storage is exposed. Home/practice, mock exams, articles, PWA/install guide, and full release-history parity remain pending |
 | PWA / offline | Flutter service worker, root resource manifest, mode-specific manifests | Flutter runtime and nine explicitly approved route datasets are precached; weekly Periodic Background Sync is browser-dependent |
 | Next.js prototype | `next-app/` | Inventory only; not assumed to be production |
 | Code lab | Former `src/routes/code-lab/`, `src/lib/code-lab.ts` | Removed 2026-11-15: route, legacy menu entry and sample module removed; no Flutter route or sitemap entry exists |
@@ -74,3 +74,9 @@ Correction (2026-11-14): `main` の `.github/workflows/pages.yml` は `flutter/b
 - The previous Android release run built and tested the APK successfully and uploaded a workflow artifact, but the final Release asset check failed because the uploaded asset was named `app-release.apk` while the workflow expected `MANABIXX-Android.apk`. The workflow now copies the verified APK to the expected filename before Release upload. The new Android run (44410927897) was still building at the last check; release verification remains pending.
 - No question datasets, IDs, saved-progress formats, routes, or access boundaries were changed in this run. The public content-registry still contains legacy `private-*` files; the main Pages workflow's nine-file allowlist excludes them from the deployed Flutter data bundle, but the registry repository itself is public and those files remain directly downloadable there.
 
+
+## 2026-11-21 execution update
+
+- Ported the legacy paused-feedback page to Flutter at `/shitadumi/opinion/` and added the equivalent `/practice/foundation-training/opinion` route. The page is informational only: it does not accept input, save drafts, or submit feedback.
+- Added a widget test for the legacy route and a root-build route-presence check so the route cannot silently disappear from the Pages artifact.
+- Remaining Shitadumi migration work is unchanged: the full workspace/practice flow, mock exams, advice articles, install guide/PWA behavior, and complete release-history parity still require separate migration and parity checks.

@@ -4,6 +4,8 @@ class ReleaseNotesPage extends StatelessWidget {
   const ReleaseNotesPage({super.key});
 
   static const _items = <_ReleaseEntry>[
+    _ReleaseEntry(date: '2026-11-21', category: 'ROUTING / PRIVACY', title: '下積みモードの意見受付停止ページをFlutterへ移植',
+      body: '旧 /shitadumi/opinion/ のURLを維持し、Flutter版でも受付停止中の案内を表示。新しい下積みモード配下のURLからも開けます。入力フォーム・送信処理・下書き保存は追加せず、更新履歴への導線だけを提供します。'),
     _ReleaseEntry(date: '2026-11-16', category: 'BLOG', title: '「君へ」画面をRust・Leptosで再構築',
       body: '「君へ」画面をFlutterのDart実装からRust＋LeptosのWebAssembly画面へ移行。Flutterは画面遷移とアプリ全体を担当し、Leptos画面から独立したMANABIXXブログへ移動できる構成にしました。'),
     _ReleaseEntry(date: '2026-11-16', category: 'KNOWLEDGE / WASM', title: '要点まとめをLeptos・SQLite構成へ移行',

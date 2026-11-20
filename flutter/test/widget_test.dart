@@ -447,4 +447,25 @@ void main() {
     await tester.pumpWidget(const MaterialApp(home: ToYouPage()));
     expect(find.text('MANABIXXブログはWeb版で利用できます。'), findsOneWidget);
   });
+  testWidgets('keeps the legacy Shitadumi opinion route explicitly paused', (tester) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+    await tester.pumpWidget(const ManabiXXApp());
+    await tester.pumpAndSettle();
+
+    final navigator = tester.state<NavigatorState>(find.byType(Navigator).first);
+    navigator.pushNamed('/shitadumi/opinion/');
+    await tester.pumpAndSettle();
+
+    expect(find.text('意見受付は一時停止中です。'), findsOneWidget);
+    expect(find.text('送信機能は現在利用できません'), findsOneWidget);
+    expect(find.byType(TextField), findsNothing);
+    expect(find.text('意見を送信する'), findsNothing);
+    expect(find.text('更新履歴を見る'), findsOneWidget);
+
+    await tapVisible(tester, find.text('更新履歴を見る'));
+    expect(find.text('MANABIXXの更新記録'), findsOneWidget);
+    tester.view.resetPhysicalSize();
+  });
+
 }
