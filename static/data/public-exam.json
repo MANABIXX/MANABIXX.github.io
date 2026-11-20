@@ -1,12 +1,12 @@
 {
   "version": 8,
-  "updatedAt": "2026-11-09",
+  "updatedAt": "2026-11-18",
   "title": "公立高校入試問題精講",
   "notice": "各設問は栃木県立高校入試の原資料との照合を進めています。年度・教科・大問を確認できた設問のみ、出典情報を明記します。照合未完了の設問は「出典照合中」と表示し、未確認の年度を付けません。",
   "counts": {
-    "science": 179,
-    "social": 144,
-    "total": 323
+    "total": 343,
+    "science": 189,
+    "social": 154
   },
   "questions": [
     {
@@ -6157,7 +6157,386 @@
       "sourceNote": "栃木県立高校入試を意識して独自に作成した練習問題です。特定年度・大問の原文ではありません。",
       "sourceLabel": "オリジナル類題",
       "sourceStatus": "original"
+    },
+    {
+      "id": "daily-2026-11-18-publicExam-science-001",
+      "subject": "science",
+      "topic": "物理・運動",
+      "level": "公立入試標準",
+      "prompt": "自転車が150mの道のりを25秒で進んだ。平均の速さは何m/sか。",
+      "options": [
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "correct": 2,
+      "explanation": "平均の速さ＝道のり÷時間。150÷25＝6m/s。",
+      "takeaway": "速さは道のりを時間で割って求める。",
+      "sourceNote": "公立高校入試の出題形式を参考にした新作問題。実在の過去問の転載ではない。",
+      "sourceLabel": "MANABIXXオリジナル",
+      "sourceStatus": "original"
+    },
+    {
+      "id": "daily-2026-11-18-publicExam-science-002",
+      "subject": "science",
+      "topic": "化学・密度",
+      "level": "公立入試標準",
+      "prompt": "質量54g、体積20cm³の物体の密度は何g/cm³か。",
+      "options": [
+        "2.0",
+        "2.4",
+        "2.7",
+        "3.0"
+      ],
+      "correct": 2,
+      "explanation": "密度＝質量÷体積。54÷20＝2.7g/cm³。",
+      "takeaway": "密度の単位と計算式を確認する。",
+      "sourceNote": "公立高校入試の出題形式を参考にした新作問題。実在の過去問の転載ではない。",
+      "sourceLabel": "MANABIXXオリジナル",
+      "sourceStatus": "original"
+    },
+    {
+      "id": "daily-2026-11-18-publicExam-science-003",
+      "subject": "science",
+      "topic": "物理・電流",
+      "level": "公立入試標準",
+      "prompt": "抵抗4Ωの電熱線に12Vの電圧を加えた。流れる電流は何Aか。",
+      "options": [
+        "2",
+        "3",
+        "4",
+        "48"
+      ],
+      "correct": 1,
+      "explanation": "オームの法則より電流＝電圧÷抵抗。12÷4＝3A。",
+      "takeaway": "電流＝電圧÷抵抗を使う。",
+      "sourceNote": "公立高校入試の出題形式を参考にした新作問題。実在の過去問の転載ではない。",
+      "sourceLabel": "MANABIXXオリジナル",
+      "sourceStatus": "original"
+    },
+    {
+      "id": "daily-2026-11-18-publicExam-science-004",
+      "subject": "science",
+      "topic": "物理・熱量",
+      "level": "公立入試標準",
+      "prompt": "水100gの温度を20℃から30℃まで上げるのに必要な熱量は何Jか。水の比熱を4.2J/(g・℃)とする。",
+      "options": [
+        "420",
+        "840",
+        "2100",
+        "4200"
+      ],
+      "correct": 3,
+      "explanation": "熱量＝質量×比熱×温度変化。100×4.2×10＝4200J。",
+      "takeaway": "温度変化は30−20＝10℃。",
+      "sourceNote": "公立高校入試の出題形式を参考にした新作問題。実在の過去問の転載ではない。",
+      "sourceLabel": "MANABIXXオリジナル",
+      "sourceStatus": "original"
+    },
+    {
+      "id": "daily-2026-11-18-publicExam-science-005",
+      "subject": "science",
+      "topic": "物理・てこ",
+      "level": "公立入試標準",
+      "prompt": "支点から0.3mの位置に20Nの力を加えた。反対側の0.6mの位置でつり合う力は何Nか。",
+      "options": [
+        "5",
+        "10",
+        "20",
+        "40"
+      ],
+      "correct": 1,
+      "explanation": "力のモーメントが等しいので20×0.3＝F×0.6。F＝10N。",
+      "takeaway": "力×支点からの距離が左右で等しくなる。",
+      "sourceNote": "公立高校入試の出題形式を参考にした新作問題。実在の過去問の転載ではない。",
+      "sourceLabel": "MANABIXXオリジナル",
+      "sourceStatus": "original"
+    },
+    {
+      "id": "daily-2026-11-18-publicExam-science-006",
+      "subject": "science",
+      "topic": "物理・凸レンズ",
+      "level": "公立入試標準",
+      "prompt": "焦点距離10cmの凸レンズから30cmの位置に物体を置いた。できる実像はレンズから何cmの位置か。",
+      "options": [
+        "10",
+        "12",
+        "15",
+        "30"
+      ],
+      "correct": 2,
+      "explanation": "1/f＝1/a＋1/b。1/10＝1/30＋1/bより1/b＝1/15、b＝15cm。",
+      "takeaway": "レンズの公式に焦点距離と物体距離を代入する。",
+      "sourceNote": "公立高校入試の出題形式を参考にした新作問題。実在の過去問の転載ではない。",
+      "sourceLabel": "MANABIXXオリジナル",
+      "sourceStatus": "original"
+    },
+    {
+      "id": "daily-2026-11-18-publicExam-science-007",
+      "subject": "science",
+      "topic": "生物・遺伝",
+      "level": "公立入試標準",
+      "prompt": "遺伝子型Aaの個体どうしを交配したとき、劣性形質aaが現れる確率はどれか。",
+      "options": [
+        "1/2",
+        "1/3",
+        "1/4",
+        "3/4"
+      ],
+      "correct": 2,
+      "explanation": "組み合わせはAA、Aa、Aa、aaの4通りで、aaは1通り。",
+      "takeaway": "遺伝子の組み合わせを表にして数える。",
+      "sourceNote": "公立高校入試の出題形式を参考にした新作問題。実在の過去問の転載ではない。",
+      "sourceLabel": "MANABIXXオリジナル",
+      "sourceStatus": "original"
+    },
+    {
+      "id": "daily-2026-11-18-publicExam-science-008",
+      "subject": "science",
+      "topic": "物理・回路",
+      "level": "公立入試標準",
+      "prompt": "3Ωと5Ωの抵抗を直列につないだとき、全体の抵抗は何Ωか。",
+      "options": [
+        "2",
+        "8",
+        "15",
+        "1.875"
+      ],
+      "correct": 1,
+      "explanation": "直列回路の合成抵抗は足し算。3＋5＝8Ω。",
+      "takeaway": "直列では抵抗を足し合わせる。",
+      "sourceNote": "公立高校入試の出題形式を参考にした新作問題。実在の過去問の転載ではない。",
+      "sourceLabel": "MANABIXXオリジナル",
+      "sourceStatus": "original"
+    },
+    {
+      "id": "daily-2026-11-18-publicExam-science-009",
+      "subject": "science",
+      "topic": "物理・エネルギー",
+      "level": "公立入試標準",
+      "prompt": "質量100gの物体を高さ2mまで持ち上げた。重力加速度を10N/kgとすると、位置エネルギーは何Jか。",
+      "options": [
+        "0.2",
+        "1",
+        "2",
+        "20"
+      ],
+      "correct": 2,
+      "explanation": "100g＝0.1kg。位置エネルギー＝質量×重力加速度×高さ＝0.1×10×2＝2J。",
+      "takeaway": "質量をkgに直してから計算する。",
+      "sourceNote": "公立高校入試の出題形式を参考にした新作問題。実在の過去問の転載ではない。",
+      "sourceLabel": "MANABIXXオリジナル",
+      "sourceStatus": "original"
+    },
+    {
+      "id": "daily-2026-11-18-publicExam-science-010",
+      "subject": "science",
+      "topic": "化学・中和",
+      "level": "公立入試標準",
+      "prompt": "同じ濃度の塩酸20mLを中和するのに必要な水酸化ナトリウム水溶液の体積は何mLか。",
+      "options": [
+        "10",
+        "20",
+        "30",
+        "40"
+      ],
+      "correct": 1,
+      "explanation": "同じ濃度の一価の酸とアルカリを中和する体積は等しくなるため20mL。",
+      "takeaway": "濃度が同じで反応比が1対1なら体積も等しい。",
+      "sourceNote": "公立高校入試の出題形式を参考にした新作問題。実在の過去問の転載ではない。",
+      "sourceLabel": "MANABIXXオリジナル",
+      "sourceStatus": "original"
+    },
+    {
+      "id": "daily-2026-11-18-publicExam-social-011",
+      "subject": "social",
+      "topic": "地理・地形図",
+      "level": "公立入試標準",
+      "prompt": "縮尺1:25,000の地形図で、地図上の距離が4cmのとき、実際の距離は何kmか。",
+      "options": [
+        "0.1",
+        "0.5",
+        "1",
+        "10"
+      ],
+      "correct": 2,
+      "explanation": "4cm×25,000＝100,000cm＝1,000m＝1km。",
+      "takeaway": "縮尺を使って実際の長さに直し、単位を変換する。",
+      "sourceNote": "公立高校入試の出題形式を参考にした新作問題。実在の過去問の転載ではない。",
+      "sourceLabel": "MANABIXXオリジナル",
+      "sourceStatus": "original"
+    },
+    {
+      "id": "daily-2026-11-18-publicExam-social-012",
+      "subject": "social",
+      "topic": "地理・人口",
+      "level": "公立入試標準",
+      "prompt": "人口12万人、面積300km²の地域の人口密度は何人/km²か。",
+      "options": [
+        "40",
+        "300",
+        "400",
+        "3,600"
+      ],
+      "correct": 2,
+      "explanation": "人口密度＝人口÷面積。120,000÷300＝400人/km²。",
+      "takeaway": "人口を面積で割る。",
+      "sourceNote": "公立高校入試の出題形式を参考にした新作問題。実在の過去問の転載ではない。",
+      "sourceLabel": "MANABIXXオリジナル",
+      "sourceStatus": "original"
+    },
+    {
+      "id": "daily-2026-11-18-publicExam-social-013",
+      "subject": "social",
+      "topic": "地理・貿易",
+      "level": "公立入試標準",
+      "prompt": "ある国の輸出額が120億円、輸入額が100億円である。この国の貿易収支はどれか。",
+      "options": [
+        "20億円の黒字",
+        "20億円の赤字",
+        "100億円の黒字",
+        "220億円の赤字"
+      ],
+      "correct": 0,
+      "explanation": "貿易収支＝輸出額−輸入額。120−100＝20億円の黒字。",
+      "takeaway": "輸出額から輸入額を引く。",
+      "sourceNote": "公立高校入試の出題形式を参考にした新作問題。実在の過去問の転載ではない。",
+      "sourceLabel": "MANABIXXオリジナル",
+      "sourceStatus": "original"
+    },
+    {
+      "id": "daily-2026-11-18-publicExam-social-014",
+      "subject": "social",
+      "topic": "公民・国会",
+      "level": "公立入試標準",
+      "prompt": "日本の衆議院議員の任期は原則何年か。",
+      "options": [
+        "2年",
+        "3年",
+        "4年",
+        "6年"
+      ],
+      "correct": 2,
+      "explanation": "衆議院議員の任期は原則4年。ただし解散がある。",
+      "takeaway": "参議院の任期6年と混同しない。",
+      "sourceNote": "公立高校入試の出題形式を参考にした新作問題。実在の過去問の転載ではない。",
+      "sourceLabel": "MANABIXXオリジナル",
+      "sourceStatus": "original"
+    },
+    {
+      "id": "daily-2026-11-18-publicExam-social-015",
+      "subject": "social",
+      "topic": "公民・日本国憲法",
+      "level": "公立入試標準",
+      "prompt": "日本国憲法が施行された年はいつか。",
+      "options": [
+        "1945年",
+        "1946年",
+        "1947年",
+        "1952年"
+      ],
+      "correct": 2,
+      "explanation": "日本国憲法は1946年11月3日に公布され、1947年5月3日に施行された。",
+      "takeaway": "公布日と施行日を区別する。",
+      "sourceNote": "公立高校入試の出題形式を参考にした新作問題。実在の過去問の転載ではない。",
+      "sourceLabel": "MANABIXXオリジナル",
+      "sourceStatus": "original"
+    },
+    {
+      "id": "daily-2026-11-18-publicExam-social-016",
+      "subject": "social",
+      "topic": "地理・気候",
+      "level": "公立入試標準",
+      "prompt": "冬に日本海側で雪が多くなる主な理由はどれか。",
+      "options": [
+        "南東の季節風が太平洋から乾いた空気を運ぶため",
+        "北西の季節風が日本海で水蒸気を含み、山地にぶつかるため",
+        "夏の太平洋高気圧が強まるため",
+        "偏西風が一年中止まるため"
+      ],
+      "correct": 1,
+      "explanation": "冬の北西季節風は日本海で水蒸気を含み、山地にぶつかって雪を降らせる。",
+      "takeaway": "季節風の向きと日本海で水蒸気を含む過程を押さえる。",
+      "sourceNote": "公立高校入試の出題形式を参考にした新作問題。実在の過去問の転載ではない。",
+      "sourceLabel": "MANABIXXオリジナル",
+      "sourceStatus": "original"
+    },
+    {
+      "id": "daily-2026-11-18-publicExam-social-017",
+      "subject": "social",
+      "topic": "歴史・明治維新",
+      "level": "公立入試標準",
+      "prompt": "明治政府が成立し、明治維新が始まった年はいつか。",
+      "options": [
+        "1603年",
+        "1868年",
+        "1889年",
+        "1947年"
+      ],
+      "correct": 1,
+      "explanation": "1868年に明治政府が成立し、近代国家への改革が進められた。",
+      "takeaway": "明治維新の年は1868年。",
+      "sourceNote": "公立高校入試の出題形式を参考にした新作問題。実在の過去問の転載ではない。",
+      "sourceLabel": "MANABIXXオリジナル",
+      "sourceStatus": "original"
+    },
+    {
+      "id": "daily-2026-11-18-publicExam-social-018",
+      "subject": "social",
+      "topic": "国際・国際連合",
+      "level": "公立入試標準",
+      "prompt": "国際連合が発足した年はいつか。",
+      "options": [
+        "1919年",
+        "1939年",
+        "1945年",
+        "1955年"
+      ],
+      "correct": 2,
+      "explanation": "国際連合は第二次世界大戦後の1945年に発足した。",
+      "takeaway": "国際連合の発足は第二次世界大戦後。",
+      "sourceNote": "公立高校入試の出題形式を参考にした新作問題。実在の過去問の転載ではない。",
+      "sourceLabel": "MANABIXXオリジナル",
+      "sourceStatus": "original"
+    },
+    {
+      "id": "daily-2026-11-18-publicExam-social-019",
+      "subject": "social",
+      "topic": "公民・市場経済",
+      "level": "公立入試標準",
+      "prompt": "ある商品の需要が増え、供給量が変わらないとき、一般に価格はどうなるか。",
+      "options": [
+        "上がりやすい",
+        "下がりやすい",
+        "必ず変わらない",
+        "必ず0円になる"
+      ],
+      "correct": 0,
+      "explanation": "需要が増えて供給が変わらないと、品不足になりやすく価格は上がる方向に動く。",
+      "takeaway": "需要と供給の関係を整理する。",
+      "sourceNote": "公立高校入試の出題形式を参考にした新作問題。実在の過去問の転載ではない。",
+      "sourceLabel": "MANABIXXオリジナル",
+      "sourceStatus": "original"
+    },
+    {
+      "id": "daily-2026-11-18-publicExam-social-020",
+      "subject": "social",
+      "topic": "公民・地方自治",
+      "level": "公立入試標準",
+      "prompt": "都道府県知事や市町村長を選ぶ方法はどれか。",
+      "options": [
+        "国会の指名",
+        "内閣の任命",
+        "住民の直接選挙",
+        "裁判所の選出"
+      ],
+      "correct": 2,
+      "explanation": "地方公共団体の長は、その地域の住民が直接選挙で選ぶ。",
+      "takeaway": "地方自治では住民による直接選挙が行われる。",
+      "sourceNote": "公立高校入試の出題形式を参考にした新作問題。実在の過去問の転載ではない。",
+      "sourceLabel": "MANABIXXオリジナル",
+      "sourceStatus": "original"
     }
   ]
 }
-

@@ -1,6 +1,6 @@
 {
   "title": "高専数学・大問1集中演習",
-  "registryCommit": "ee77f47e5cdff43bad800c6aa646115112b2b265",
+  "registryCommit": "df26f3f5a27c8ff225cfdf590d4c032e4ba0b839",
   "questions": [
     {
       "id": "k1-001",
@@ -744,7 +744,7 @@
       "sourceNote": "2024年度の数学過去問PDFから「確率」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2024,
       "sourceFile": "/data/kosen-past-papers/2024-math.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/03_2024_sugaku_mondai.pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/03_2024_sugaku_mondai.pdf"
     },
     {
       "id": "registry-2025-math-確率",
@@ -764,7 +764,7 @@
       "sourceNote": "2025年度の数学過去問PDFから「確率」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2025,
       "sourceFile": "/data/kosen-past-papers/2025-math.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/03_2025_sugaku_mondai%20(1).pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/03_2025_sugaku_mondai%20(1).pdf"
     },
     {
       "id": "registry-2026-math-確率",
@@ -784,7 +784,7 @@
       "sourceNote": "2026年度の数学過去問PDFから「確率」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2026,
       "sourceFile": "/data/kosen-past-papers/2026-math.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/03_2026_sugaku_mondai%20(1).pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/03_2026_sugaku_mondai%20(1).pdf"
     },
     {
       "id": "registry-2026-math-図形",
@@ -804,7 +804,7 @@
       "sourceNote": "2026年度の数学過去問PDFから「図形」を抽出し、その分野をもとに新規作成した類題。原文の転載ではありません。",
       "sourceYear": 2026,
       "sourceFile": "/data/kosen-past-papers/2026-math.pdf",
-      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/ee77f47e5cdff43bad800c6aa646115112b2b265/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/03_2026_sugaku_mondai%20(1).pdf"
+      "registryUrl": "https://github.com/MANABIXX/content-registry/blob/df26f3f5a27c8ff225cfdf590d4c032e4ba0b839/%E9%AB%98%E5%B0%82%E9%81%8E%E5%8E%BB%E5%95%8F%E4%B8%89%E5%B9%B4%E5%88%86%E5%9B%BD%E8%AA%9E%E4%BB%A5%E5%A4%96/03_2026_sugaku_mondai%20(1).pdf"
     }
   ]
 }
