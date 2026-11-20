@@ -585,22 +585,22 @@ class _ModeHomePageState extends State<_ModeHomePage> {
             )
           else ...[
             _countdownCard(
-              '栃木県立高校入試まで',
+              '県立高校入試まで',
               _prefecturalExamDate,
               () => _setExamDate(
                 storageKey: _prefecturalExamDateKey,
-                label: '栃木県立高校入試',
+                label: '県立高校入試',
                 current: _prefecturalExamDate,
                 onPicked: (date) => _prefecturalExamDate = date,
               ),
             ),
             const SizedBox(height: 10),
             _countdownCard(
-              '青藍泰斗高校入試まで',
+              '私立高校入試まで',
               _seiranExamDate,
               () => _setExamDate(
                 storageKey: _seiranExamDateKey,
-                label: '青藍泰斗高校入試',
+                label: '私立高校入試',
                 current: _seiranExamDate,
                 onPicked: (date) => _seiranExamDate = date,
               ),

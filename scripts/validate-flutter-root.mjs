@@ -13,6 +13,12 @@ const offline = await readJson('offline-data-manifest.json');
 const app = await readJson('offline-app-manifest.json');
 const worker = await fs.readFile(path.join(root, 'flutter-sw.js'), 'utf8');
 const routes = await fs.readFile(path.join(process.cwd(), 'flutter', 'lib', 'main.dart'), 'utf8');
+const mockExams = JSON.parse(await fs.readFile(path.join(process.cwd(), 'static', 'data', 'mock-exams.json'), 'utf8'));
+if (!Array.isArray(mockExams.questions) || mockExams.questions.length === 0) throw new Error('Mock-exam dataset is empty or invalid.');
+const allowedExamTitles = new Set(['私立高校入試予想問題', '栃木県立高校入試予想問題']);
+if (mockExams.questions.some((question) => !allowedExamTitles.has(question.examTitle) || question.exam === 'seiran' || (typeof question.sourceNote === 'string' && question.sourceNote.startsWith('KNOT')))) {
+  throw new Error('Mock-exam metadata must use school-neutral labels and must not contain legacy brand attribution.');
+}
 
 if (!index.includes('<base href="/">')) throw new Error('Flutter base href must be /.');
 if (fallback !== index) throw new Error('404.html must mirror the Flutter entry point for GitHub Pages deep links.');
